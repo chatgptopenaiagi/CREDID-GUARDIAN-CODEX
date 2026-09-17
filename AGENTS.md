@@ -7,7 +7,7 @@ Read README.md, docs/DECISIONS.md, docs/ROADMAP.md, docs/SECURITY_MODEL.md and d
 THE GUARDIAN OBSERVES. CODEX PRESERVES.
 ONE SENSOR. MULTIPLE CONSUMERS.
 
-V0 is concept-first foundation only. No live quota source is verified. Do not fabricate a reader/API, claim unimplemented commands work, or begin V1 without an explicit task. Roadmap entries are not authorization. Distinguish CONCEPT, IMPLEMENTED, VERIFIED and PLANNED; missing information remains UNKNOWN.
+V0 foundation and V1 quota-source experiment are complete. Read docs/QUOTA_SOURCE_DISCOVERY.md before continuation. One live app-server read is consumed; do not repeat it without a new task. No daemon, hook, cache or GUI exists; V2 needs explicit authorization. Do not fabricate a reader/API or claim unimplemented commands work. Roadmap entries are not authorization. Distinguish CONCEPT, IMPLEMENTED, VERIFIED and PLANNED; missing information remains UNKNOWN.
 
 This repository is standalone. Do not modify HHS, huggingface-helper-scanner, ARX, SWAMI OS, VIGILIA, BETBOY-X or unrelated repositories. CGC must not autonomously modify external repositories. Preserve user changes; never reset, force-push, amend published history or discard work.
 

@@ -46,3 +46,27 @@ Completed during genesis: all 13 requested files present; README first line and 
 Apache-2.0 was explicitly selected by the human. LICENSE was retrieved unchanged from https://www.apache.org/licenses/LICENSE-2.0.txt (11,358 bytes); no dependency was installed.
 
 HHS preservation checked read-only with Git optional locks disabled: clean main at `280b7090edf51aadf694db04d6d5f6bceff289a2`, matching its preceding checkpoint. All CGC writes used the explicit new workspace. No HHS or other project content was modified. No usage source discovery, quota request, service, registry change, model download or credential inspection occurred. Final staged whitespace, clean-tree and remote equality checks are reported after publication.
+
+
+## CGC V1 — quota-source discovery and minimal reader
+
+2026-09-17. Explicitly authorized from clean `8968cad670ce344226ebccaf4974d624594e5605`. Installed CLI 0.154.0 help and locally generated protocol schema inspected; no authentication files opened. Official documentation confirms account/rateLimits/read. Existing-daemon version check exited 1; transient stdio selected instead, without installing a daemon.
+
+The human narrowed the experiment to exactly one app-server read before factoring the abstraction. At 2026-09-17T00:50:35.462546+00:00 that read succeeded: codex bucket, 300-minute used=64 (derived remaining=36), 10080-minute used=42 (derived remaining=58), both resets present, ordinaryUsageAllowed=true. Raw response/account identifiers/credits/plan omitted; only sanitized quota fields retained. Source is documented/experimental, not production-stable. No private backend endpoint, AI task, credential extraction or repeated polling.
+
+Initial test-first run failed to import cgc.quota (zero test bodies ran). After the authorized experiment, implemented the smallest standard-library reader/normalizer; 21 normalization tests passed, then 31 tests including bounded synthetic transport peers passed. No second live read. Offline normalization of the retained sanitized projection succeeded. During document validation, two manually typed reset-time renderings disagreed with the code-converted Unix timestamps; corrected them to 2026-09-17T05:15:51Z and 2026-09-20T17:57:44Z before publication. No source change or further read was needed for that correction.
+
+Later user instruction supersedes the V0 reject-before-clamp proposal for reader output: derive clamp(100-used,0,100), mark derived, retain INVALID state for out-of-range source values. Multiple buckets stay distinct; no global minimum/permission is inferred. Direct remaining exists for individualLimit in installed schema, tested synthetically but not observed live. Source sample timestamp is unavailable; local observation time is explicit.
+
+Current-session `/status` cross-check requested from the human, NOT_VERIFIED at publication. No screenshot, account scrape or new TUI session substituted. This limitation does not erase the genuine structured read, but correspondence must not be claimed. Full evidence/candidate inventory: QUOTA_SOURCE_DISCOVERY.md. Live read authorization is consumed; stop before V2.
+
+Created: src/cgc/quota.py; tests/test_quota.py; tests/test_quota_protocol.py; tests/fixtures/quota.json; docs/QUOTA_SOURCE_DISCOVERY.md; docs/v1-app-server-observation.json; docs/v1-normalized-observation.json. Updated: README.md, AGENTS.md, src/cgc/__init__.py, tests/README.md, docs/ARCHITECTURE.md, docs/SECURITY_MODEL.md, docs/DATA_MODEL.md, docs/PRESERVATION_POLICY.md, docs/ROADMAP.md and this decisions journal. No installs, services, GUI, hooks, daemon or HHS/other-repository operations.
+
+Publication: inspect diff and tracked content for secrets, validate tests/docs/JSON, normal forward commit and push only CGC main, then verify HEAD/origin/main/live remote equality and clean tree. Latest commit is HEAD after publication; exact hash belongs in the final human report. Recommended next authorized mission is CGC V2 canonical cache/policy and bounded daemon, not an automatic continuation.
+
+
+Final human-requested workspace integrity gate: pwd and git show-toplevel both resolve to /mnt/c/Codex-Projects/CREDID-GUARDIAN-CODEX; realpath confirms quota.py and both test modules under that root. HHS inspected read-only with optional Git locks disabled, clean at unchanged `280b7090edf51aadf694db04d6d5f6bceff289a2`. No files needed moving or restoring. The shell command workdir was explicit throughout despite the UI footer retaining HHS. No additional live quota request was made.
+
+Final review added rejection of invalid direct remaining percentages (only derived values are clamped) and clarified local observation time as read completion, not an upstream sample timestamp. A corresponding regression brings the deterministic suite to 32 tests. Independent /status values were not provided; cross-check remains PENDING. No V2 functionality was added.
+
+Final acceptance checks passed: 32 synthetic tests; 20 text files reviewed; three JSON files parse; Python syntax valid; 24 local Markdown targets resolve; exact preservation directives unchanged; normalized live projection reproduces offline and reset timestamps agree; recognizable credential/private-path patterns found zero matches. Pattern checks are not proof of universal secret absence. Git diff whitespace passed; origin is the CGC repository and remote main still matched the starting commit before publication. No further live request.

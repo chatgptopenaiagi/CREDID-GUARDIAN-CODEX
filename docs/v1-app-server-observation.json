@@ -1,0 +1,41 @@
+{
+  "artifact_kind": "sanitized_live_experiment",
+  "product": "CREDID GUARDIAN CODEX",
+  "acronym": "CGC",
+  "started_at": "2026-09-17T00:50:34.447068+00:00",
+  "observed_at": "2026-09-17T00:50:35.462546+00:00",
+  "source": "codex app-server: account/rateLimits/read",
+  "cli_version": "0.154.0",
+  "transport": "stdio",
+  "quota_requests_sent": 1,
+  "timeout_seconds": 20,
+  "raw_response_persisted": false,
+  "status_cross_check": "PENDING: current-session /status values not provided; no further live request authorized",
+  "status": "OBSERVED",
+  "observation": {
+    "buckets": [
+      {
+        "mapKey": "codex",
+        "limitId": "codex",
+        "limitName": null,
+        "primary": {
+          "usedPercent": 64,
+          "remainingPercent": 36,
+          "windowDurationMins": 300,
+          "resetsAt": 1789622151,
+          "remainingPercentOrigin": "derived"
+        },
+        "secondary": {
+          "usedPercent": 42,
+          "remainingPercent": 58,
+          "windowDurationMins": 10080,
+          "resetsAt": 1789927064,
+          "remainingPercentOrigin": "derived"
+        },
+        "individualLimit": null
+      }
+    ],
+    "ordinaryUsageAllowed": true,
+    "account_information_omitted": true
+  }
+}

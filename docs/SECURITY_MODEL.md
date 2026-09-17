@@ -4,7 +4,7 @@
 
 THE GUARDIAN OBSERVES. CODEX PRESERVES.
 
-CGC should need only a permitted usage-information interface and its own tiny cache. Authentication remains under the control of the software that owns it. Prefer an already-authenticated supported local/internal usage interface if one is verified; its existence is NOT YET VERIFIED. Do not obtain credential material to make an otherwise inaccessible source work.
+CGC should need only a permitted usage-information interface and its own tiny cache. Authentication remains under the control of the software that owns it. Prefer an already-authenticated supported local/internal usage interface if one is verified; V1 verified one such app-server read (experimental protocol; see QUOTA_SOURCE_DISCOVERY.md). Do not obtain credential material to make an otherwise inaccessible source work.
 
 ## Absolute prohibitions
 
@@ -38,3 +38,10 @@ CGC does not autonomously edit arbitrary projects. Codex may act on a directive 
 The human authorized GitHub account verification through the existing CLI, repository existence checking, creation of a new public repository and normal publication. Authentication status output is withheld rather than logging token fields. No new token is requested. This output workflow is distinct from CGC runtime behavior.
 
 No live quota investigation, authentication-file inspection, installations, services, registry changes, GUI/tray, browser access or unrelated repository modifications occur in genesis. V1 must be explicitly authorized before source discovery.
+
+
+## V1 observed boundary
+
+CGC executed one initialize/initialized/account/rateLimits/read exchange over a transient stdio child. No raw response, initialization identity/path data or stderr was retained. Quota fields were screened/projected in memory first. Codex handled its own authentication; CGC did not inspect, copy, parse or change any authentication file or token. No private HTTP endpoint, browser state, environment dump, AI turn, services or external-repository operation was used. Ordinary internal Codex startup/authentication bookkeeping is not an audited zero-write guarantee.
+
+The prototype refuses server requests (including external token refresh/attestation); it never answers them with credentials. It reports fixed failure codes, rejects recognized sensitive field names, constrains identifiers and discards unneeded fields. Tests use synthetic secret strings, not credentials. No filter proves universal secrecy; minimized collection/export remains primary. POSIX time/byte/frame/process-termination behavior is tested with synthetic peers; native Windows is unsupported. The one allowed live experiment is consumed.

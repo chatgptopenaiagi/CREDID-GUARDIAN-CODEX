@@ -1,6 +1,6 @@
 # CREDID GUARDIAN CODEX (CGC) — provisional data model
 
-Status: CONCEPT. These fields are CGC design proposals, not a verified upstream schema. No live field availability or account quota is asserted. No stable API or JSON Schema is frozen in V0.
+Status: V0 conceptual model retained below; V1 implemented projection is specified in the appended section. The provisional format is not frozen. See [source discovery](QUOTA_SOURCE_DISCOVERY.md) for verified upstream fields and limits.
 
 ## Observation envelope
 
@@ -88,3 +88,16 @@ Candidate state.json carries last_valid_observation plus last_refresh_attempt_at
 If refresh fails, retain last_valid_observation unchanged while recording failure metadata. If no prior valid observation exists, keep it null and report UNKNOWN. Do not replace good data with empty results. Readers must assess stale state and clock anomalies and avoid presenting historical GREEN as current capacity.
 
 Atomic replacement writes one validated envelope, so windows, policy and refresh status belong to the same cache generation. A future cache revision/generation identifier supports consistency. Crash durability, permissions, retention, maximum age and source-specific polling are open design questions for V1/V2, not implemented guarantees.
+
+
+## V1 implemented projection (0.1.0-provisional)
+
+The V0 cache/policy envelope above remains future design. V1 outputs observed_at (local post-read time), source_observed_at=null (backend age unknown), source_kind=codex_app_server, source_supported=true (documented interface, NOT a production-support claim), source_maturity=experimental, mode, source_confidence, status, coverage=UNKNOWN, buckets, windows and optional ordinary_usage_allowed. It omits account identity, plan, credit balances, banners and raw error messages. No policy_state/global minimum is implemented.
+
+Each returned map key is retained as bucket identity. The legacy rateLimits view is used only when the mapping is absent/empty; it is not duplicated into a populated mapping. Within each bucket, primary and secondary have usedPercent, windowDurationMins and resetsAt. Duration, not slot position, determines the optional 5-hour/weekly label. individualLimit uses direct remainingPercent and has unknown duration; it is a separate spend-control kind. Unknown fields are not invented or guessed. Coverage remains UNKNOWN even on a successful read.
+
+Window fields: window_id, bucket_id, name, window_kind, duration_seconds, used_percent, used_percent_origin, remaining_percent, value_origin, derivation, clamped, reset_at, reset_origin and validity. Used is direct. Remaining is derived as clamp(100-usedPercent,0,100) for rolling windows; individual-limit remaining is direct. This follows the later explicit V1 user instruction. Out-of-range source values retain INVALID validity after clamping so they cannot become trustworthy policy inputs. Missing values remain null/unknown. Dates converted from Unix seconds are labeled derived_from_unix_seconds.
+
+V1 has fixed limits of 32 buckets, 512 KiB combined process output, 128 KiB buffered frame, 100 frames and a configurable finite timeout up to 30 seconds (default 20), plus bounded cleanup. All limits fail closed; no silent truncated all-clear. Errors contain a fixed code, attempted_at, observed_at=null and empty windows, explicitly ERROR rather than a fabricated empty observation. No cache exists to overwrite.
+
+[Retained normalized live projection](v1-normalized-observation.json) was normalized offline from the already-sanitized experiment artifact; it did not consume another live read. [Synthetic fixture](../tests/fixtures/quota.json) is hand-authored and contains no actual account data. Synthetic normalizer calls use mode=synthetic and source_confidence=SYNTHETIC. Publication of test results does not make them live observations.

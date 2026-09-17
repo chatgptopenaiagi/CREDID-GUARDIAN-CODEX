@@ -1,0 +1,58 @@
+{
+  "schema_version": "0.1.0-provisional",
+  "mode": "live",
+  "observed_at": "2026-09-17T00:50:35.462546Z",
+  "observation_time_origin": "local_read_completion",
+  "source_observed_at": null,
+  "source": "codex app-server: account/rateLimits/read",
+  "source_kind": "codex_app_server",
+  "source_supported": true,
+  "source_maturity": "experimental",
+  "source_confidence": "DOCUMENTED_LOCAL_PROTOCOL",
+  "status": "OK",
+  "coverage": "UNKNOWN",
+  "buckets": [
+    "codex"
+  ],
+  "windows": [
+    {
+      "window_id": "codex:primary",
+      "bucket_id": "codex",
+      "name": "5-hour",
+      "window_kind": "primary",
+      "duration_seconds": 18000,
+      "used_percent": 64,
+      "used_percent_origin": "direct",
+      "remaining_percent": 36,
+      "value_origin": "derived",
+      "derivation": "clamp(100 - usedPercent, 0, 100)",
+      "clamped": false,
+      "reset_at": "2026-09-17T05:15:51Z",
+      "reset_origin": "derived_from_unix_seconds",
+      "validity": "VALID"
+    },
+    {
+      "window_id": "codex:secondary",
+      "bucket_id": "codex",
+      "name": "weekly",
+      "window_kind": "secondary",
+      "duration_seconds": 604800,
+      "used_percent": 42,
+      "used_percent_origin": "direct",
+      "remaining_percent": 58,
+      "value_origin": "derived",
+      "derivation": "clamp(100 - usedPercent, 0, 100)",
+      "clamped": false,
+      "reset_at": "2026-09-20T17:57:44Z",
+      "reset_origin": "derived_from_unix_seconds",
+      "validity": "VALID"
+    }
+  ],
+  "ordinary_usage_allowed": true,
+  "limitations": [
+    "Backend observation age is unavailable.",
+    "Coverage is limited to recognized fields in returned buckets.",
+    "Bucket applicability is not inferred; no global policy state is calculated."
+  ],
+  "validation_input": "Retained sanitized quota projection from the single live experiment; no second source read."
+}

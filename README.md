@@ -8,16 +8,20 @@ Long-running development can approach a usage boundary while discoveries, partia
 
 ## Current status
 
-**CGC V0 — FOUNDATION**
+**CGC V1 — QUOTA OBSERVATION**
 
-**IMPLEMENTATION STATUS: NOT YET VERIFIED** — no supported live quota source has been established for CGC. No quota reader, daemon, CLI, hook or GUI is implemented. The only Python file is an inert package placeholder.
+A documented Codex app-server quota source was successfully read once with installed `codex-cli 0.154.0`. V1 provides a Python standard-library, one-shot reader and normalizer. The protocol remains **experimental**; no production stability or polling cadence is claimed. Independent current-session `/status` comparison is **NOT_VERIFIED**.
 
 | Classification | What exists or is proposed |
 |---|---|
-| CONCEPT | Usage-aware preservation with explicit source validity and authorization |
-| IMPLEMENTED | Foundation documents, repository safeguards and an inert package placeholder |
-| VERIFIED | Foundation structure and policy/directive consistency are checked during genesis; no live quota functionality is verified |
-| PLANNED | Source discovery, normalization, validation, atomic cache, policy evaluation, daemon, CLI, Codex integration and future desktop meter |
+| CONCEPT | Usage-aware preservation with explicit validity and authorization |
+| IMPLEMENTED | Bounded POSIX stdio reader, quota-only normalization and synthetic tests |
+| VERIFIED | One `account/rateLimits/read` experiment; 32 synthetic tests; offline normalization of the retained sanitized quota projection |
+| PLANNED | Applicability/policy aggregation, atomic cache, daemon, CLI, preservation hooks and desktop meter |
+
+See [source discovery and live evidence](docs/QUOTA_SOURCE_DISCOVERY.md). At the recorded time, the `codex` bucket reported 64% used over 300 minutes and 42% used over 10080 minutes; 36%/58% remaining were **derived**, not directly supplied. These are historical observations, not current readings.
+
+The library interface is `from cgc.quota import read_quota` with `PYTHONPATH=src`. An explicit `read_quota(timeout=20)` invocation initiates a fresh read through Codex. **Do not run it automatically:** the V1 session's single live-read authorization is consumed. Deterministic verification is `PYTHONPATH=src python3 -B -m unittest discover -s tests -v`; tests use synthetic peers, never live Codex.
 
 ## Initial policy
 
@@ -30,9 +34,9 @@ These are CGC defaults, not claims about Codex limits or available quota fields.
 | RED | > 5% and <= 10% | Stop starting major new work; prepare a resumable checkpoint |
 | EMERGENCY | <= 5% | Minimum safe preservation only |
 
-Values must first be valid percentages in [0, 100]. Unknown, invalid or stale readings do not become 0% or GREEN. Incomplete window coverage cannot establish that all capacity is healthy. See [policy](docs/PRESERVATION_POLICY.md).
+Policy inputs must be valid percentages in [0, 100]. The V1 reader clamps derived values as requested but marks out-of-range source values INVALID. Unknown, invalid or stale readings do not become 0% or GREEN. Incomplete window coverage cannot establish that all capacity is healthy. See [policy](docs/PRESERVATION_POLICY.md).
 
-## Proposed architecture
+## Architecture (reader implemented; later stages planned)
 
 ```text
 Usage source → Quota reader → Normalizer → Validator
@@ -68,8 +72,8 @@ CGC reports policy; it does not autonomously edit, commit, push or otherwise mod
 
 ## Limitations and next mission
 
-This foundation cannot observe remaining capacity or automatically detect a threshold. Source availability, access, semantics, freshness and supported integration points are unverified. Cache failure behavior and policy evaluation are specified, not implemented. Examples are synthetic; none describes this account. No runtime tests or live quota requests are claimed.
+V1 observes one snapshot only when explicitly invoked; it does not monitor usage or trigger preservation. Native Windows transport is not implemented. Backend observation age, sustained polling reliability, full bucket applicability and current-session `/status` correspondence remain unknown. No raw response, authentication material or unrelated account fields are retained.
 
-The next separately authorized mission is **CGC V1 — QUOTA OBSERVATION**: discover and verify the safest supported usage-information source without inspecting credential material. Stop at V0 until that mission is authorized.
+The next separately authorized mission is **CGC V2 — GUARDIAN DAEMON**: canonical state, applicable-bucket policy, atomic last-known-good cache and bounded polling with tested failure/staleness behavior. No daemon, cache, hooks or GUI has begun. See the [roadmap](docs/ROADMAP.md).
 
 Product name: **CREDID GUARDIAN CODEX**. Acronym: **CGC**. GitHub identifier: `CREDID-GUARDIAN-CODEX` (a space-free repository identifier only). Licensed under [Apache-2.0](LICENSE).

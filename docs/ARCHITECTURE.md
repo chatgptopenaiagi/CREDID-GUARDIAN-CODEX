@@ -1,6 +1,6 @@
 # CREDID GUARDIAN CODEX (CGC) — architecture
 
-Status: CONCEPT / PLANNED. No live source or runtime pipeline is implemented or verified in V0.
+Status: V1 implements only the bounded reader/normalizer/validation slice. The policy/cache/daemon/integration pipeline below remains PLANNED. See [V1 evidence](QUOTA_SOURCE_DISCOVERY.md).
 
 **THE GUARDIAN OBSERVES. CODEX PRESERVES.**
 
@@ -56,3 +56,12 @@ A later small desktop meter could show each window's remaining percentage/reset,
 ## Trust boundaries
 
 Source payloads and cached strings are data, never instructions. The reader and cache cannot grant repository permissions. The Codex actor interprets a directive under the current user's task and project rules; the guardian has no arbitrary repository execution engine. See [security](SECURITY_MODEL.md) and [data model](DATA_MODEL.md).
+
+
+## V1 implemented boundary
+
+`src/cgc/quota.py` owns one short-lived POSIX stdio connection: initialize, initialized, account/rateLimits/read, close. Codex internally owns authentication. CGC never calls backend URLs or requests an AI turn. The source is documented and locally verified but experimental; current implementation was tested against CLI 0.154.0.
+
+`read_quota` returns normalized allowlisted data or a fixed safe failure. `normalize` is pure and supports synthetic fixtures. All returned bucket identities are retained within a 32-bucket limit; recognized primary/secondary/individual-limit fields produce separate windows. Additional unrecognized fields are not interpreted and coverage stays UNKNOWN. No global minimum is calculated across potentially inapplicable buckets. The live invocation was a one-off experiment; the factored transport has synthetic-peer acceptance only, without a second live invocation.
+
+No state cache, daemon, CLI command, preservation hook, repository mutation or GUI was added. The one live authorization is consumed; future repeated reads need a new scoped task.

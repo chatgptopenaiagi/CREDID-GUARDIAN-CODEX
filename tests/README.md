@@ -1,6 +1,6 @@
 # CREDID GUARDIAN CODEX (CGC) — future test theory
 
-V0 has no runtime test suite or working quota/policy implementation. The cases below are specifications, NOT_TESTED as application behavior. Genesis checks documentation/fixture consistency only and must not be reported as runtime tests passing.
+V1 has 32 passing synthetic normalization/protocol tests: `PYTHONPATH=src python3 -B -m unittest discover -s tests -v`. test_quota.py uses hand-authored quota data; test_quota_protocol.py substitutes local Python peers for Codex, so tests make no live quota requests. The policy/cache/hook cases below remain future specifications, NOT_TESTED as application behavior; V1 implements none of those components.
 
 ## Deterministic thresholds
 
@@ -35,3 +35,6 @@ Add fractional boundary cases without preclassification rounding. Reject invalid
 - Synthetic isolation: fixture observations cannot drive a live trigger.
 
 Use deterministic fixtures/mocks before any separately authorized live source validation. No installation, account quota request or credential access is needed for V0.
+
+
+V1 clamp behavior follows the later user instruction: clamped out-of-range source values remain INVALID, not valid future policy input. The initial missing-module failure and the single successful live experiment are recorded in docs/QUOTA_SOURCE_DISCOVERY.md. A current-session `/status` cross-check has not been supplied.

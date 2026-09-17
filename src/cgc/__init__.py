@@ -1,5 +1,5 @@
-"""CREDID GUARDIAN CODEX (CGC): inert foundation placeholder.
+"""CREDID GUARDIAN CODEX (CGC): read-only quota observation.
 
 THE GUARDIAN OBSERVES. CODEX PRESERVES.
-No quota reader, policy engine, daemon, cache or CLI is implemented.
+V1 library: cgc.quota. No daemon, cache, preservation hook or CLI entry point.
 """

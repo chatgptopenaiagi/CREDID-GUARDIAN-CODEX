@@ -13,12 +13,10 @@ Roadmap entries describe future missions, not authorization to execute them.
 
 ## Current boundary
 
-V0 is foundation only. The synthetic policy model consists of documented ranges, examples and future test cases; no executable policy engine is implemented. Services, GUI/tray, installers and quota collection are absent.
+V0 foundation complete. V1 observed a real quota snapshot via documented experimental Codex app-server and added the bounded reader/normalizer plus 32 synthetic tests. Independent current-session `/status` comparison remains NOT_VERIFIED; no production stability, polling cadence or global bucket applicability is claimed. See [V1 discovery](QUOTA_SOURCE_DISCOVERY.md). The one live-read authorization is consumed.
 
 ## Exact next mission
 
-**CGC V1 — QUOTA OBSERVATION: discover and verify the safest supported local Codex usage-information source, without extracting credentials or modifying authentication.**
+**CGC V2 — GUARDIAN DAEMON:** one canonical normalized state, applicable-bucket policy, atomic last-known-good cache and bounded observation loop with tested source failures, staleness, concurrency and shutdown. Establish source-appropriate cadence and resolve the independent status comparison without extracting credentials or invoking AI tasks for test traffic.
 
-Begin with authoritative supported-interface documentation and permitted usage data. Determine availability, provenance, window identity/applicability, percentages, reset semantics, freshness, limits and errors. Do not scrape tokens or browser sessions, guess private endpoints, or promise a reader before evidence supports one. If no safe supported source can be established, report that result explicitly and stop at the source gate.
-
-V1 requires a new explicit task. Do not perform source discovery during V0 or automatically begin daemon, hook or UI work.
+V2 requires a new explicit task. No daemon, cache, preservation hooks, GUI or repeated polling was started during V1.

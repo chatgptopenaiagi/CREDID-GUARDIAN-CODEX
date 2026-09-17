@@ -90,3 +90,8 @@ Do not start another task.
 | 0% | EMERGENCY |
 
 Also test fractional values around each threshold, unknown/stale input and partial coverage. No rounding before classification. These are deterministic future expectations, not results from an implemented policy engine. See [test plan](../tests/README.md).
+
+
+## V1 reader clarification
+
+The human subsequently specified clamping for the observation prototype: derive remaining with `clamp(100 - usedPercent, 0, 100)`. V1 preserves the original used value and labels out-of-range source input INVALID even if the result is clamped. Thus clamping cannot admit invalid input into future policy. No policy engine or preservation action is implemented in V1; all threshold behavior above remains a future contract. See [V1 data model](DATA_MODEL.md).
