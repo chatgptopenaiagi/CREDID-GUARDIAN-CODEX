@@ -70,3 +70,73 @@ Final human-requested workspace integrity gate: pwd and git show-toplevel both r
 Final review added rejection of invalid direct remaining percentages (only derived values are clamped) and clarified local observation time as read completion, not an upstream sample timestamp. A corresponding regression brings the deterministic suite to 32 tests. Independent /status values were not provided; cross-check remains PENDING. No V2 functionality was added.
 
 Final acceptance checks passed: 32 synthetic tests; 20 text files reviewed; three JSON files parse; Python syntax valid; 24 local Markdown targets resolve; exact preservation directives unchanged; normalized live projection reproduces offline and reset timestamps agree; recognizable credential/private-path patterns found zero matches. Pattern checks are not proof of universal secret absence. Git diff whitespace passed; origin is the CGC repository and remote main still matched the starting commit before publication. No further live request.
+
+## CGC V2 — engine, policy, cache, status CLI and bounded daemon
+
+2026-09-17. Explicit V2 resume mission. Entered and verified the CGC root before changes.
+Clean HEAD, fetched origin/main and read-only remote main all matched
+`45010646facbd75e17124e7e00572b8c34b6af27`. Read all requested V1 handoff files before
+implementation. Preserved quota.py and both V1 test files unchanged. Baseline 32 tests
+passed; first V2 suite passed 56; expanded safety/shutdown suite passed 60; final timestamp/cache-consistency regressions brought the suite to 62. No test
+failures occurred during these runs.
+
+Implemented engine.py, cache.py, daemon.py and __main__.py; added test_engine.py and
+test_cache_daemon.py. Updated README, AGENTS, package description, architecture, data
+model, security, policy, roadmap and tests documentation; added V2_OPERATIONS.md.
+Thresholds remain 20/10/5, versioned cgc-default-v2. Bucket applicability requires explicit
+operator selection; coverage never claims global completeness. Status is cache-only.
+Failure retains last usable data, stale/skewed state loses current policy, synthetic
+state cannot produce a live directive. Explicit ordinary-usage denial withholds current
+policy. POSIX private cache uses no-follow paths, bounded strict decoding, atomic replace,
+fsync and a process-lifetime single-writer flock. Same-user tampering is not cryptographically
+prevented. Foreground daemon requires --live and a finite max-reads; default 300-second
+spacing, 900-second max age and capped backoff are local engineering choices, not verified
+source cadence. SIGTERM wait interruption and cross-process exclusion tested offline.
+
+No live reads, default ~/.codex cache creation, services, installs, hooks, GUI, authentication
+inspection, HHS inspection or unrelated-repository changes. Independent human /status
+comparison remains PENDING / NOT VERIFIED; it did not block V2. Source maturity remains
+experimental. No V2 commit or push requested/performed; modifications remain local for
+review. Exact next scope and runtime limitations: V2_OPERATIONS.md. Do not automatically
+run a live validation, repeat V1 discovery or advance to V3.
+
+Final local validation: 62 tests passed in 1.917 seconds; top-level and daemon CLI help
+worked without a source request. Python AST/JSON checks passed; 31 local Markdown targets
+resolved; exact preservation directives and V1 reader/test bytes match the baseline.
+Recognizable credential/private-key/credential-URL pattern screening found no matches
+(not proof of universal absence). Git diff whitespace passed. HEAD remains the V1 baseline;
+V2 consists of 10 modified tracked files and seven new files, uncommitted for review.
+
+## V2 recovery block — full mission audit and preservation
+
+Resumed from unchanged V1 HEAD `45010646facbd75e17124e7e00572b8c34b6af27`; fetch and
+live remote main matched. The user supplied the full V2_MISSION.md and an empty-heading
+V2_PROGRESS.md, so no exact next action was recorded. Chose one preservation/audit block
+before feature expansion. Retained all existing code/tests and the mission text, corrected
+broad completion claims to PARTIAL, and wrote the detailed acceptance gaps and next
+configuration unit in V2_PROGRESS.md. No new runtime feature or V3 action.
+
+Workspace-contained test run: 62 attempted, 48 passed, 13 errors and 1 failure. A synthetic
+probe confirmed this Windows mount returns 0777 for requested 0700 creation; cache refusal
+is the expected security boundary. The signal-test peer also refused its cache. All V1
+and engine tests passed. Did not relax permissions, alter mount settings or silently skip
+tests. Requested permission for disposable Linux /tmp synthetic cache files because the
+new user instruction confines work to CGC. Publication remains conditional on validation.
+Historical 62-pass evidence is retained, not presented as this session's result.
+
+Python/JSON, local links, exact directives, unchanged V1 code/tests, bounded recognizable
+credential-pattern screening, CLI help and whitespace checks passed. No live V2 quota
+read occurred; no default cache or authentication path inspected. HHS was not accessed:
+the current workspace-only instruction supersedes the older mission's external integrity
+check. Its current state is not independently verified. Full resumable record and exact
+next action are in V2_PROGRESS.md. A local partial checkpoint is authorized; normal push
+requires successful validation and remote verification.
+
+The initial staged whitespace check rejected CRLF endings in the newly supplied mission.
+Normalized only its line endings to LF; mission text is unchanged. Local checkpoint
+publication is withheld while supported-filesystem validation permission is pending;
+remote main remains the verified V1 commit. No successful push is claimed.
+
+Checkpoint creation initially failed because this environment had no Git author identity.
+Resolved using the existing V1 commit's public author name and GitHub noreply address
+as per-command Git options; no global or persistent identity configuration changed.

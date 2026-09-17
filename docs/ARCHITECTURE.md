@@ -1,5 +1,16 @@
 # CREDID GUARDIAN CODEX (CGC) — architecture
 
+## V2 current status
+
+V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
+implementation, not full mission acceptance. See [current progress](V2_PROGRESS.md) for current validation and remaining requirements.
+See [V2 operations and handoff](V2_OPERATIONS.md) for the canonical state, scoped policy, atomic cache, status CLI,
+finite daemon, security limits and validation evidence. No V2 live quota request ran.
+The V0/V1 descriptions and future proposals below are retained as historical context;
+V2 operations supersedes their statements that policy/cache/CLI/daemon are unimplemented.
+Hooks, GUI and preservation execution remain unimplemented.
+
+
 Status: V1 implements only the bounded reader/normalizer/validation slice. The policy/cache/daemon/integration pipeline below remains PLANNED. See [V1 evidence](QUOTA_SOURCE_DISCOVERY.md).
 
 **THE GUARDIAN OBSERVES. CODEX PRESERVES.**

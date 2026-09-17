@@ -1,5 +1,16 @@
 # CREDID GUARDIAN CODEX (CGC) — provisional data model
 
+## V2 current status
+
+V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
+implementation, not full mission acceptance. See [current progress](V2_PROGRESS.md) for current validation and remaining requirements.
+See [V2 operations and handoff](V2_OPERATIONS.md) for the canonical state, scoped policy, atomic cache, status CLI,
+finite daemon, security limits and validation evidence. No V2 live quota request ran.
+The V0/V1 descriptions and future proposals below are retained as historical context;
+V2 operations supersedes their statements that policy/cache/CLI/daemon are unimplemented.
+Hooks, GUI and preservation execution remain unimplemented.
+
+
 Status: V0 conceptual model retained below; V1 implemented projection is specified in the appended section. The provisional format is not frozen. See [source discovery](QUOTA_SOURCE_DISCOVERY.md) for verified upstream fields and limits.
 
 ## Observation envelope

@@ -1,4 +1,15 @@
-# CREDID GUARDIAN CODEX (CGC) — future test theory
+# CREDID GUARDIAN CODEX (CGC) — offline tests and preserved test theory
+
+## V2 current status
+
+V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
+implementation, not full mission acceptance. See [current progress](../docs/V2_PROGRESS.md) for current validation and remaining requirements.
+See [V2 operations and handoff](../docs/V2_OPERATIONS.md) for the canonical state, scoped policy, atomic cache, status CLI,
+finite daemon, security limits and validation evidence. No V2 live quota request ran.
+The V0/V1 descriptions and future proposals below are retained as historical context;
+V2 operations supersedes their statements that policy/cache/CLI/daemon are unimplemented.
+Hooks, GUI and preservation execution remain unimplemented.
+
 
 V1 has 32 passing synthetic normalization/protocol tests: `PYTHONPATH=src python3 -B -m unittest discover -s tests -v`. test_quota.py uses hand-authored quota data; test_quota_protocol.py substitutes local Python peers for Codex, so tests make no live quota requests. The policy/cache/hook cases below remain future specifications, NOT_TESTED as application behavior; V1 implements none of those components.
 

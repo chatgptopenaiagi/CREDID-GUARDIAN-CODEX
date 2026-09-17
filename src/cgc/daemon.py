@@ -1,0 +1,38 @@
+"""Finite foreground CGC observation loop. No service or background installation."""
+import threading
+
+from .engine import empty_state, refresh, selection, StateError, utcnow
+from .quota import read_quota, _validate_timeout
+
+
+def run(cache, *, buckets, max_reads, interval=300, max_age=900, timeout=20,
+        reader=read_quota, clock=utcnow, stop=None):
+    """At most max_reads attempts, completion-to-start spacing and capped backoff.
+
+    Reader injection is for offline tests. The production reader has V1 bounds.
+    Hold the writer lock across reads and waits, preventing competing sensors.
+    """
+    buckets = selection(buckets)
+    if type(max_reads) is not int or not 1 <= max_reads <= 100:
+        raise StateError('INVALID_CONFIG')
+    if type(interval) is not int or not 60 <= interval <= 3600:
+        raise StateError('INVALID_CONFIG')
+    _validate_timeout(timeout)
+    initial = empty_state(buckets, max_age)
+    stop = stop if stop is not None else threading.Event()
+    attempts = failures = 0
+    with cache.writer():
+        state = cache.read() or initial
+        if state['policy']['selected_buckets'] != buckets or state['max_age_seconds'] != max_age:
+            raise StateError('CONFIG_MISMATCH')
+        for _ in range(max_reads):
+            if stop.is_set():
+                break
+            result = reader(timeout=timeout)
+            attempts += 1
+            state = refresh(state, result, now=clock())
+            cache.write(state)
+            failures = failures + 1 if state['last_refresh_status'] == 'ERROR' else 0
+            if attempts < max_reads and stop.wait(min(3600, interval * 2 ** min(failures, 6))):
+                break
+    return attempts
