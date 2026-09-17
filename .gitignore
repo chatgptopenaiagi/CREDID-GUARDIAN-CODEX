@@ -1,0 +1,23 @@
+# CREDID GUARDIAN CODEX (CGC): generated state and credential material stay local.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+auth.json
+.codex/
+.cgc/
+state.json
+state.json.*
+*.log
+.DS_Store
+Thumbs.db
