@@ -140,3 +140,14 @@ remote main remains the verified V1 commit. No successful push is claimed.
 Checkpoint creation initially failed because this environment had no Git author identity.
 Resolved using the existing V1 commit's public author name and GitHub noreply address
 as per-command Git options; no global or persistent identity configuration changed.
+
+The subsequent full-access authorization superseded the workspace-only restriction.
+Reran the complete suite with TMPDIR=/tmp: 62 passed in 1.918 seconds, zero failures,
+errors or skips. Temporary cache files cleaned by tests; no dependency installation,
+mount/permission weakening, system setting change or live read. HHS inspected read-only
+per mission item 69: clean main at unchanged 280b7090edf51aadf694db04d6d5f6bceff289a2.
+Local recovery commit d953acaab3e1024b3c099ea68cee0acb34a6c3b6 is retained; create a
+normal follow-up documenting resolved validation, push both forward to CGC main, verify
+local/tracking/live refs and clean tree, then stop this preservation block. Next work:
+canonical configurable thresholds (mission 9, 32, 33), not V3. Final checkpoint self-reference
+is HEAD; exact resolved hash/publication outcome is reported after the Git operations.

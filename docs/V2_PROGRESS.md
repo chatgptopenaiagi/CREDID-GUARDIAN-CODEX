@@ -70,8 +70,8 @@ A bounded synthetic directory probe confirmed `mkdir(mode=0700)` yields mode `07
 on this workspace mount. No security checks or mount settings were weakened. Temporary
 probe/test directories were cleaned by their context managers; ignored `.cgc/test-tmp`
 is the test root. Authorization to use disposable Linux /tmp test caches was requested,
-because the current instruction limits work to CGC. No such outside write has occurred
-in this session while that question is pending.
+because the current instruction limits work to CGC. The user subsequently authorized Linux-native disposable storage and superseded the
+workspace-only restriction. This permission persists for the current CGC session.
 
 Other checks passed: Python AST, JSON parsing, 42 local Markdown targets, unchanged exact
 preservation directives, unchanged V1 reader/tests, CLI help and Git diff whitespace. The initial staged whitespace check rejected the
@@ -79,13 +79,24 @@ user-supplied mission CRLF endings; normalizing only line endings to LF resolved
 Bounded recognizable credential/private-key/credential-URL screening of CGC candidate
 files found no matches; this is not proof of universal secret absence.
 
-Tests remaining: rerun all 62 on a permitted filesystem enforcing POSIX modes, then add
-tests alongside each remaining acceptance unit listed above. Current failed execution
-must not be replaced by a claim that the historical 62-pass run happened this session.
+Final current-session command:
+
+```bash
+TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -v
+```
+
+**62 tests passed in 1.918 seconds; zero errors, failures or skips.** Disposable Linux
+cache directories were cleaned by the tests. The earlier workspace failure remains
+recorded above; no security checks were weakened. No package installation, mount or
+system configuration change was needed. No default cache or live quota read occurred.
+
+Tests remaining: add tests alongside each remaining mission acceptance unit above.
+The existing-suite validation gate for this partial checkpoint is now satisfied.
 
 ## KNOWN_FAILURES
 
-- Workspace-only cache validation is blocked by the Windows mount's permission semantics.
+- RESOLVED validation blocker: Windows mount permission semantics required Linux-native
+  temporary storage. The mount limitation remains; all tests pass using /tmp.
 - No NEXT_EXACT_ACTION existed in the supplied initial progress stub; recovered here.
 - Earlier docs overclaimed V2 completion against the now-complete mission; corrected.
 - Configurable thresholds, full applicability/freshness output and refresh CLI are gaps,
@@ -109,11 +120,7 @@ No runtime source/test edits were made in this recovery session.
 
 ## NEXT_EXACT_ACTION
 
-First resolve the permitted location for POSIX synthetic cache validation and rerun the
-complete deterministic suite without weakening cache security. If all tests pass, finish
-normal checkpoint publication and verify HEAD = origin/main = remote main.
-
-After that preservation gate, the next implementation block is **canonical configurable
+After verifying the published checkpoint, the next implementation block is **canonical configurable
 policy thresholds** (mission 9, 32, 33): add tests first for defaults, alternate/fractional
 boundaries, ordering, booleans/nonfinite/out-of-range values; implement one validated
 configuration carried through classification, cache validation, daemon and CLI without
@@ -123,12 +130,12 @@ CLI as subsequent blocks. No live reads or V3 work in that configuration block.
 
 ## LAST_SAFE_COMMIT
 
-Verified published baseline: `45010646facbd75e17124e7e00572b8c34b6af27`.
-The recovery checkpoint refers to **HEAD after commit**; its resolved hash and actual
-publication result must be reported after Git operations, never invented here.
-Local recovery checkpoint: HEAD after commit. Push is withheld because the full current-session
-suite did not pass under workspace-only storage. origin/main and remote main remain at
-the verified V1 baseline; local HEAD will be ahead by one. No remote equality claim is made.
+Starting published baseline: `45010646facbd75e17124e7e00572b8c34b6af27`.
+Local recovery checkpoint: `d953acaab3e1024b3c099ea68cee0acb34a6c3b6`.
+Validated follow-up checkpoint: **HEAD after commit** (this document cannot contain its
+own commit hash). Publish by normal forward push; verify HEAD = origin/main = remote main
+and a clean working tree. The resolved hash and verified result belong in the final report.
+No completion of the remaining V2 mission is implied by publication.
 
 ## Operations and integrity
 
@@ -136,12 +143,12 @@ V1 live reads consumed historically: **1**. V2 live reads consumed total: **0**.
 Do not redo V1 discovery, repeat live experiments, scrape `/status`, or launch AI tasks
 for quota testing. No capacity threshold was observed; preservation is scope-driven.
 
-HHS and all other repositories were neither inspected nor modified in this session.
-The newer workspace-only instruction takes precedence over mission item 69's external
-read-only check. HHS integrity is therefore **NOT independently reverified**, not claimed
-clean or restored. No credentials, authentication files or unrelated home directories
-were inspected. V3 remains NOT_STARTED; future mission name only:
-CGC V3 — CODEX PRESERVATION INTEGRATION, after completed V2 and separate authorization.
+After the full-access authorization superseded the workspace-only limit, mission item 69
+was checked read-only: HHS is clean on main at the expected
+`280b7090edf51aadf694db04d6d5f6bceff289a2`. No HHS or unrelated repository modification.
+No credentials, authentication files or unrelated home directories were inspected.
+V3 remains NOT_STARTED; future mission name only: CGC V3 — CODEX PRESERVATION INTEGRATION,
+after completed V2 and separate authorization.
 
 Checkpoint creation initially failed because this environment had no Git author identity.
 Resolved using the existing V1 commit's public author name and GitHub noreply address

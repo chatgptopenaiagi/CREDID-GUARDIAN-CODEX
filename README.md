@@ -13,7 +13,7 @@ Long-running development can approach a usage boundary while discoveries, partia
 | Classification | Status |
 |---|---|
 | IMPLEMENTED | Existing V1 reader, scoped policy engine, atomic last-known-good cache, cache-only status CLI and finite foreground daemon |
-| VERIFIED | Earlier 62-test POSIX run; one historical V1 observation. Current validation is recorded in V2_PROGRESS.md |
+| VERIFIED | 62 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
 | PARTIAL | Configurable policy thresholds, applicability distinctions, separate freshness output and full mission acceptance |
 | NOT IMPLEMENTED | One-shot refresh CLI; automatic preservation; hooks, GUI/tray and services |
 | UNKNOWN | Backend sample age, complete bucket applicability, supported polling cadence and sustained live reliability |

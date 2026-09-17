@@ -49,3 +49,10 @@ Use deterministic fixtures/mocks before any separately authorized live source va
 
 
 V1 clamp behavior follows the later user instruction: clamped out-of-range source values remain INVALID, not valid future policy input. The initial missing-module failure and the single successful live experiment are recorded in docs/QUOTA_SOURCE_DISCOVERY.md. A current-session `/status` cross-check has not been supplied.
+
+## Filesystem-sensitive test execution
+
+Use `TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -v` on WSL
+when the checkout is on a Windows mount that does not enforce POSIX 0700/0600 modes.
+The full suite passes with Linux-native temporary caches. Workspace-contained caches
+are intentionally refused on the current Windows mount; do not weaken the checks.
