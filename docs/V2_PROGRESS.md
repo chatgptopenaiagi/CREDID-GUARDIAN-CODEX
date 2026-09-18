@@ -7,131 +7,131 @@ PRESERVE BEFORE EXPANDING.
 
 ## Session block
 
-2026-09-18: freshness + provenance (mission 11, 12, 14, 47 and aligned status),
-exactly the previous NEXT_EXACT_ACTION. Verified clean repository, fetched origin,
-and verified local HEAD = origin/main = live remote main =
-`54b51bf1b2e7dd3b1510f0b6703199ea9130785d` before implementation.
-Read the complete mission, handoff and required project memory. No next unit started.
+2026-09-18: one-shot refresh CLI (mission 20, 61, 63.10), exactly the previous
+NEXT_EXACT_ACTION. Verified repository root and clean main; fetched origin and verified
+local HEAD = origin/main = live remote main =
+`b170491e8d2afad320517370d3f3006b48733f8f` before modifying anything.
+Read the complete authoritative mission, progress and required preserved project memory.
 
 ## COMPLETE
 
-- Canonical FRESH / STALE / UNKNOWN / ERROR assessments, with local observation and
-  evaluation times, age, configured maximum age and fixed reason codes. Freshness is
-  independent of applicability and refresh health. Exactly maximum age is FRESH;
-  greater age is STALE. Future time is ERROR; missing time UNKNOWN; malformed time ERROR.
-- Existing max_age_seconds / --max-age configuration retained: integer 1–86400,
-  default 900, rejecting booleans, fractions, nonfinite values and invalid types.
-- Current policy requires fresh, usable, applicable data and a successful refresh.
-  Failed refresh retains evidence but withholds current policy even while its age is fresh.
-  Stale arrivals cannot replace last-known-good. Clock/observation regression is rejected.
-- Latest and last-known-good assessments are independent. CURRENT / RETAINED /
-  HISTORICAL / UNAVAILABLE describe storage role; DIRECT / DERIVED / UNAVAILABLE
-  describe value origin. Source/backend time stays unavailable rather than guessed.
-- Human/JSON output agrees on freshness, disposition, origins and historical evidence.
-  Read-time evaluation recomputes age without writing or reading the source.
-- Schema cgc-state-v2.3 persists a reconstructed, validated write-time temporal snapshot.
-  Older caches are rejected without migration/deletion. Policy cgc-applicability-v2.2
-  and V1 normalization remain unchanged. Atomic publication, 256 KiB bound and private
-  permission checks remain intact; maximum 96-window retained state is tested.
+- `python -m cgc refresh --live --bucket codex` performs at most one bounded reader
+  attempt, validates/evaluates and atomically publishes through the shared daemon path.
+  No retry, polling interval, sleep or catch-up. --max-reads/--interval are rejected.
+- Same private writer lock spans cache validation, source read and publication. Lock,
+  corruption, old schema, configuration mismatch and unsafe paths block source access.
+- Existing bucket, threshold, max-age and timeout configuration reused; invalid scope,
+  age, timeout and thresholds rejected before cache creation. Explicit --live and
+  --bucket required. No CLI applicability override or synthetic source argument added.
+- Human/JSON output shares status rendering and exit semantics. Reports this writer's
+  resulting snapshot, avoiding a post-unlock reread of another writer's generation.
+  Status remains cache-only. Production applicability remains UNKNOWN.
+- Failure metadata preserves last-known-good and withholds current authority. Synthetic
+  state never becomes live policy. Pre-read cancellation skips read/publication; signal
+  handlers are restored. In-flight reads retain the existing bounded completion behavior.
+- Cache schema cgc-state-v2.3, policy cgc-applicability-v2.2, 256 KiB bound, private modes,
+  normalization, freshness and applicability rules unchanged. All prior tests preserved.
 
 ## PARTIAL
 
-V2 acceptance remains PARTIAL. Real source applicability, backend sample age and live
-reliability remain UNKNOWN. No real live policy is currently available through the CLI.
-Default-path conflict preflight, remaining crash/Ctrl+C coverage and final mission matrix
-acceptance remain pending. Native Windows is unsupported; Linux-native storage is required
-for private POSIX cache permissions. Human /status comparison remains PENDING / NOT VERIFIED.
+Overall V2 acceptance is PARTIAL: remaining crash/Ctrl+C coverage, default-path conflict
+preflight and final mission matrix audit remain pending. Real applicability, backend
+sample age and sustained live reliability remain UNKNOWN. Native Windows unsupported.
+Human /status comparison remains PENDING / NOT VERIFIED, not a V2 blocker.
 
 ## NOT_STARTED
 
-One-shot refresh CLI; optional V2 live verification (zero consumed); V3; hooks;
-automatic external preservation; GUI/tray; services; native Windows transport.
+Optional V2 live verification (zero consumed); V3 preservation integration; automatic
+external preservation; hooks; GUI/tray; service installation; native Windows transport.
 
 ## TESTS PASSED
 
-Baseline: 87 tests passed in 2.065s. Final command:
+Baseline: **115 tests passed in 2.193s**. Test-first import failed because refresh_once
+was not yet implemented (one loader error, zero new test bodies). After implementation,
+129 tests passed in 2.279s. Added four production-reader-path/path/cancellation cases.
 
 ```bash
 TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -q
 ```
 
-**115 tests passed in 2.184s; zero failures, errors or skips.** 28 new tests cover
-fresh/stale/boundary/missing/malformed/future times, independent historical age, newer and
-regressing observations, refresh failure with/without history, recovery, direct/derived
-origins, unknown applicability, invalid values, configuration, human/JSON consistency,
-cache round-trip/tampering/old schema, clock rollback, 96 windows and read/write size bounds.
-One existing expectation intentionally changed: failed refresh no longer authorizes a
-current RED conclusion; historical RED remains visible. No tests or V1 coverage removed.
-
-Test-first run exposed missing freshness interface (one import error). Intermediate
-22-test run exposed missing CLI fields/labels (one failure, one error). All resolved;
-109 then 115 tests passed. No unresolved deterministic failure.
+Final: **133 tests passed in 2.234s; zero failures, errors or skips.**
+18 new tests cover one read/no wait, safe human/JSON output, synthetic isolation,
+UNKNOWN applicability, retained failure with/without history, configuration forwarding,
+pre-creation rejection, cache mismatch/corruption/old schema, shared locking, write
+failure preservation, signal handler restoration, simulated production normalization/
+timeout, unsafe path refusal and pre-read cancellation. No prior tests changed/deleted.
+No live source was used; injected transport data labeled live is explicitly simulated.
 
 ## TESTS REMAINING
 
-Refresh CLI tests first in its own block; remaining crash/Ctrl+C cases; default-path
-preflight and full mission acceptance audit. No live test is needed for freshness.
+Remaining deterministic crash-stage and real-process Ctrl+C coverage, default-path
+conflict preflight, then complete V2 acceptance matrix review. Optional bounded live
+verification remains unused; it is not needed to validate this CLI block.
 
 ## KNOWN_FAILURES
 
-None unresolved in this block. Source applicability and backend age are evidence limits,
-not inferred successes. Old cache versions intentionally fail closed.
+None unresolved in this block. The expected test-first missing-interface error is resolved.
+Older cache schemas intentionally fail closed. Unknown applicability is not a successful
+policy result, even when the source supplied valid percentages.
 
 ## IMPORTANT_DISCOVERIES
 
-Freshness of retained bytes can remain FRESH after a refresh ERROR; policy authority is
-still withheld. Calculation origin must remain separate from retention role. Persisted
-age is only a write-time snapshot, never read-time authority. No clock tolerance is
-introduced. Local completion time is not proof of backend sample freshness.
+Refresh should report its own published state, not reread after releasing writer exclusion.
+The shared runner now returns a state snapshot internally; the public daemon run function
+retains its attempt-count return. CLI exits match status (0 current usable live policy,
+1 unavailable/unknown/synthetic policy or refresh failure, 2 argument/config/cache errors).
+Thus a successful source read can still exit 1 and publish useful UNKNOWN diagnostics;
+this must not trigger automatic repeated reads. Production has no verified live contract.
 
 ## FILES_CHANGED
 
-Created: tests/test_freshness.py.
-Modified runtime: src/cgc/engine.py, src/cgc/__main__.py, src/cgc/daemon.py.
-Modified existing test: tests/test_policy_config.py.
+Created: tests/test_refresh_cli.py.
+Modified runtime: src/cgc/__main__.py, src/cgc/daemon.py.
 Modified docs: README.md, AGENTS.md, docs/ARCHITECTURE.md, docs/DATA_MODEL.md,
-docs/PRESERVATION_POLICY.md, docs/ROADMAP.md, docs/SECURITY_MODEL.md,
-docs/DECISIONS.md, docs/V2_OPERATIONS.md, docs/V2_PROGRESS.md, tests/README.md.
-Cache implementation and original V1 reader/tests unchanged.
+docs/PRESERVATION_POLICY.md, docs/ROADMAP.md, docs/DECISIONS.md,
+docs/V2_OPERATIONS.md, docs/V2_PROGRESS.md, tests/README.md.
+Engine, cache, V1 reader and all previous tests unchanged.
 
 ## DO_NOT_REPEAT
 
-Do not redo thresholds, applicability or freshness blocks; do not repeat V1 live
-experiments or poll quota to learn semantics. Do not migrate/delete old caches silently,
-weaken permissions, touch unrelated repositories or begin V3.
+Do not redo completed threshold/applicability/freshness/refresh blocks. Do not repeat
+V1 live experiments, poll to resolve applicability, inspect credentials, weaken private
+permissions, silently migrate/delete caches, touch unrelated projects or begin V3.
 
 ## NEXT_EXACT_ACTION
 
-Verify the latest published checkpoint and read the complete mission/handoff. Implement
-one separate **one-shot refresh CLI** block (mission 20 and 63.10): write synthetic
-failure/success/configuration/lock/cache tests first, reuse the existing bounded reader,
-configuration, engine and private atomic cache with shared writer exclusion. Preserve
-freshness, provenance, applicability evidence, retained history and synthetic isolation.
-Do not claim unverified live applicability. Complete/test/document/checkpoint/push only
-that unit; no live quota reads, V3 or automatic external preservation. Then record the
-remaining crash/Ctrl+C/default-path preflight/final acceptance work for a later block.
+Verify the published checkpoint and read the full mission/handoff. Complete one bounded
+**crash and interruption safety** block (mission 28, 29, 55, 56): audit existing tests,
+then add deterministic synthetic process tests for missing termination stages before/
+during refresh, after observation and during temporary write/before replace, plus real
+SIGINT/Ctrl+C shutdown for daemon and one-shot refresh. Verify coherent old-or-new cache,
+retained history, bounded child cleanup and writer-lock release. Fix only demonstrated
+in-scope failures; do not weaken POSIX permissions or use live quota. Validate/document/
+checkpoint/push that unit only. Leave default-target conflict preflight and final full
+mission acceptance audit for the subsequent coherent block. Do not begin V3.
 
 ## LAST_SAFE_COMMIT
 
-Starting published checkpoint: `54b51bf1b2e7dd3b1510f0b6703199ea9130785d`.
-Freshness checkpoint: **HEAD after commit/publication**; resolved hash and verified
-local/tracking/live equality are reported after Git operations. Normal forward push only.
+Starting published checkpoint: `b170491e8d2afad320517370d3f3006b48733f8f`.
+Current refresh checkpoint: **HEAD after commit/publication**; resolved hash and
+local/tracking/live equality reported after Git operations. Normal forward push only.
 If publication fails, record LOCAL_CHECKPOINT_ONLY.
 
 ## Operations and integrity
 
-V1 historical live reads: 1. V2 session and total live quota reads: **0**.
-No installs, persistent system/environment changes, default cache creation, credential
-inspection or unrelated repository writes. Synthetic tests use disposable Linux /tmp
-storage. Temporary documentation/validation scripts are removed before stopping.
-No reliable capacity indicator or threshold crossing was observed; preservation is scoped.
+V1 historical live quota reads: 1. V2 session and total live quota reads: **0**.
+No installs, persistent system/environment changes, default ~/.codex cache creation,
+authentication inspection or unrelated repository writes. Disposable Linux /tmp test
+storage only. Temporary documentation/validation scripts removed before stopping.
+No reliable capacity indicator or threshold crossing observed; preservation is scoped.
 Public Git author metadata may be supplied per command without persistent configuration.
 Publication gate results follow after execution.
 
-Publication gates passed: 14 Python files parsed, three JSON files parsed, 50 local
-Markdown targets resolved; top-level/status/daemon help passed without source access.
-V1 reader and original tests, mission text and verbatim preservation directives remain
-byte-for-byte unchanged. Bounded recognizable credential-pattern scan: zero matches
-(not a guarantee of universal secret absence). Git diff whitespace passed. Runtime and
-test diff reviewed. HHS read-only check: clean main at unchanged
-`280b7090edf51aadf694db04d6d5f6bceff289a2`; no unrelated repository was modified.
+Publication gates passed: 15 Python files parse; three JSON files parse; 56 local
+Markdown targets resolve. Refresh CLI help succeeds without source access. All previous
+Python tests, V1 reader, engine, cache, mission text and verbatim preservation directives
+match the starting checkpoint byte-for-byte. Bounded recognizable credential-pattern
+scan found zero matches (not proof of universal secret absence). Changed runtime/tests
+and documentation reviewed; Git whitespace checks passed.
+HHS read-only integrity check: clean main at unchanged
+`280b7090edf51aadf694db04d6d5f6bceff289a2`. No unrelated repository writes.

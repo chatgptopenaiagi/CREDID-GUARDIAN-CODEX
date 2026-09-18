@@ -88,3 +88,12 @@ TMPDIR=/tmp as above. Tests cover time boundaries, origin/retention separation, 
 failures, independent last-known-good age, CLI agreement, schema tampering, maximum
 window capacity and cache bounds. Failure now withholds current policy; historical
 classification remains visible. V1 tests are unchanged. See V2_PROGRESS.md for exact results.
+
+## One-shot refresh checkpoint
+
+133 tests pass, including 18 new tests in test_refresh_cli.py. Synthetic tests exercise
+the actual CLI/shared runner with private /tmp caches and injected normalized data or
+raw transport fixtures. No real source calls, prior test edits or skipped assertions.
+Coverage includes one-read/no-wait, current/history output, config rejection, locking,
+corruption/schema/path refusal, atomic write failure and cancellation. Remaining real
+process crash/SIGINT cases are explicitly deferred to the next block.

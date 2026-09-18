@@ -87,3 +87,8 @@ No state cache, daemon, CLI command, preservation hook, repository mutation or G
 Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
 and policy authority; failed refresh withholds current policy while retaining evidence.
 See [V2 operations](V2_OPERATIONS.md) for canonical semantics and schema details.
+
+One-shot refresh CLI is IMPLEMENTED and VERIFIED OFFLINE. It requires --live and
+--bucket, shares the daemon writer lock/configuration/cache path, and makes at most
+one bounded read without retry. Unknown applicability remains UNKNOWN; no preservation
+action is executed. See [V2 operations](V2_OPERATIONS.md) for output and exit semantics.

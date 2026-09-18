@@ -10,12 +10,12 @@ for current test results, remaining acceptance and the exact next block.
 
 IMPLEMENTED and VERIFIED OFFLINE: configurable policy, explicit per-window applicability
 and limiting-window reasoning, canonical state, private POSIX atomic cache, cache-only
-human/JSON status and finite foreground daemon. **115 deterministic tests pass**, including
+human/JSON status, one-shot refresh and finite foreground daemon. **133 deterministic tests pass**, including
 unchanged original V1 tests. No V2 live source read was consumed. Source remains experimental.
 Actual live applicability is UNKNOWN: no preserved source contract proves which individual
 windows govern the work. The production CLI therefore cannot currently report a live policy.
 
-NOT IMPLEMENTED: refresh CLI, preservation integration,
+NOT IMPLEMENTED: preservation integration,
 hooks, GUI/tray, services or native Windows transport. Human `/status` comparison remains
 PENDING / NOT VERIFIED and is not a V2 blocker. No external-repository action exists.
 
@@ -69,6 +69,34 @@ corrupt/unsafe cache or operational error. Zero never means global all-clear. Wi
 applicability contract, status cannot currently return zero for real source data.
 Daemon: 0 after usable final refresh, 1 after no usable observation/final refresh failure,
 2 for configuration/operational error. Diagnostics never echo raw input or exception text.
+
+## One-shot refresh
+
+Implemented command for a future authorized live operation, **not executed live here**:
+
+```bash
+PYTHONPATH=src python3 -B -m cgc refresh --live --bucket codex --json
+```
+
+Omit --json for the same human rendering as status. --cache-dir chooses an existing-parent,
+private CGC directory; the default path still requires the preflight described above.
+--bucket (repeatable), --max-age, --timeout and policy thresholds share daemon semantics.
+--live is mandatory. No --interval, --max-reads, retry or fixture/proof CLI option exists.
+
+The command uses the daemon's bounded pipeline once, including writer exclusion across
+cache/config validation, read and atomic publication. It returns its own state snapshot
+and renders freshness at output time. Status itself remains cache-only. Contending writer,
+corrupt/old cache or configuration mismatch prevents a read. Bad scope, timeout, age or
+thresholds fail before directory creation. Source failure publishes safe failure metadata
+without erasing retained history; publication errors do not claim success.
+
+Refresh exit codes match status: 0 requires current usable live policy; 1 includes UNKNOWN
+applicability, source failure, stale/blocked or synthetic policy; 2 indicates invalid
+arguments/configuration or cache/operational failure. A source read can succeed while
+policy remains UNKNOWN and exit is 1. Do not retry automatically to resolve uncertainty.
+SIGINT/SIGTERM sets a stop event; cancellation before read skips publication, while an
+in-flight bounded read completes or times out and publishes before exit. No background
+process/service is installed. Detailed real-process interruption acceptance is the next block.
 
 ## Applicability and reasoning
 
@@ -132,7 +160,7 @@ for compatibility but does not replace the separate freshness assessment.
 
 ## Threshold configuration
 
-One immutable PolicyConfig defines inclusive upper boundaries. Daemon flags `--amber-at`,
+One immutable PolicyConfig defines inclusive upper boundaries. Daemon/refresh flags `--amber-at`,
 `--red-at`, `--emergency-at` accept finite percentages including fractions; defaults 20/10/5.
 Require `0 <= emergency_at < red_at < amber_at <= 100`; no collapsed bands, booleans,
 nonfinite/out-of-range values or rounding. GREEN is above amber_at; AMBER above red_at
@@ -140,7 +168,7 @@ through amber_at; RED above emergency_at through red_at; EMERGENCY at/below emer
 
 Thresholds are persisted in each canonical policy. Status uses cached settings without
 overrides. Invalid threshold CLI arguments are rejected before cache creation. Bucket
-scope, thresholds or max-age mismatch blocks a daemon before any source read. For an
+scope, thresholds or max-age mismatch blocks daemon/refresh before any source read. For an
 intentional configuration change, choose a new dedicated private cache directory and
 retain the old cache. No config file or automatic deletion is introduced.
 
@@ -170,7 +198,8 @@ unsigned-cache integrity guarantee.
 
 ## Handoff
 
-This is a validated freshness/provenance checkpoint, not full V2 acceptance. Current checkpoint
+This is a validated one-shot refresh checkpoint, not full V2 acceptance. Current checkpoint
 is HEAD after publication; exact hash and next action are in the final report and
 [V2 progress](V2_PROGRESS.md). Do not redo V1 experiments, run live polling, or start V3.
-Next coherent block: one-shot refresh CLI. Stop after its own validated checkpoint.
+Next coherent block: remaining crash/interruption safety. Default-path preflight and
+full mission acceptance audit follow in a separate block.

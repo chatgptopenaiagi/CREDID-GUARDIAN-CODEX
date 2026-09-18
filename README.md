@@ -12,10 +12,10 @@ Long-running development can approach a usage boundary while discoveries, partia
 
 | Classification | Status |
 |---|---|
-| IMPLEMENTED | Existing V1 reader, configurable policy with explicit per-window evidence, freshness/provenance, atomic last-known-good cache, cache-only status CLI and finite foreground daemon |
-| VERIFIED | 115 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
-| PARTIAL | Live applicability evidence, refresh CLI and full mission acceptance |
-| NOT IMPLEMENTED | One-shot refresh CLI; automatic preservation; hooks, GUI/tray and services |
+| IMPLEMENTED | Existing V1 reader, configurable policy with explicit per-window evidence, freshness/provenance, atomic last-known-good cache, cache-only status CLI, one-shot refresh CLI and finite foreground daemon |
+| VERIFIED | 133 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
+| PARTIAL | Live applicability evidence and full mission acceptance |
+| NOT IMPLEMENTED | Automatic preservation; hooks, GUI/tray and services |
 | UNKNOWN | Backend sample age, complete bucket applicability, supported polling cadence and sustained live reliability |
 | PLANNED | Preservation integration/hooks, desktop meter and native Windows support |
 
@@ -99,3 +99,8 @@ Product name: **CREDID GUARDIAN CODEX**. Acronym: **CGC**. GitHub identifier: `C
 Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
 and policy authority; failed refresh withholds current policy while retaining evidence.
 See [V2 operations](docs/V2_OPERATIONS.md) for canonical semantics and schema details.
+
+One-shot refresh CLI is IMPLEMENTED and VERIFIED OFFLINE. It requires --live and
+--bucket, shares the daemon writer lock/configuration/cache path, and makes at most
+one bounded read without retry. Unknown applicability remains UNKNOWN; no preservation
+action is executed. See [V2 operations](docs/V2_OPERATIONS.md) for output and exit semantics.

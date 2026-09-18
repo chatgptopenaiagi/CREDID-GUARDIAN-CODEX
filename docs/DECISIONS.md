@@ -234,3 +234,22 @@ Test-first failures exposed missing interfaces/output, then resolved. Final 115 
 pass; 28 added, one old failed-refresh assertion intentionally updated to require
 historical rather than current RED. No live reads or persistent environment changes.
 Refresh CLI remains the next separate block; full V2 remains PARTIAL.
+
+## 2026-09-18 — One-shot refresh CLI
+
+Resumed clean published b170491e8d2afad320517370d3f3006b48733f8f. Added refresh with
+explicit --live/--bucket, shared daemon configuration and writer exclusion, exactly one
+bounded attempt and no retry/wait. The internal runner returns its own state snapshot
+so refresh output cannot accidentally report a later competing writer. Public daemon
+run still returns attempt count; its interval/backoff behavior is unchanged.
+
+Refresh shares status human/JSON rendering and exit codes. Source success without known
+applicability still exits 1 with UNKNOWN policy and retained diagnostic evidence. No
+synthetic evidence CLI override or live applicability assumption was added. Cache schema
+cgc-state-v2.3 and policy cgc-applicability-v2.2 stay unchanged, as do V1 reader/tests.
+
+Baseline 115 tests passed in 2.193s. Test-first import exposed missing refresh_once;
+implementation passed 129 tests, expanded acceptance passed 133 in 2.234s. Eighteen new
+tests, zero final failures/errors/skips. Zero live reads; no installs or persistent
+system changes. Remaining crash/interruption acceptance is next; default-path preflight
+and full mission audit follow separately. Full V2 remains PARTIAL and V3 NOT_STARTED.

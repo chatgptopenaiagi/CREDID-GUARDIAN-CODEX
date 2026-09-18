@@ -5,7 +5,7 @@ from .engine import empty_state, refresh, selection, StateError, utcnow, DEFAULT
 from .quota import read_quota, _validate_timeout
 
 
-def run(cache, *, buckets, max_reads, interval=300, max_age=MAX_AGE, timeout=20, config=DEFAULT_POLICY,
+def _run(cache, *, buckets, max_reads, interval=300, max_age=MAX_AGE, timeout=20, config=DEFAULT_POLICY,
         reader=read_quota, clock=utcnow, stop=None, evidence_provider=None):
     """At most max_reads attempts, completion-to-start spacing and capped backoff.
 
@@ -39,4 +39,26 @@ def run(cache, *, buckets, max_reads, interval=300, max_age=MAX_AGE, timeout=20,
             failures = failures + 1 if state['last_refresh_status'] == 'ERROR' else 0
             if attempts < max_reads and stop.wait(min(3600, interval * 2 ** min(failures, 6))):
                 break
+    return attempts, state
+
+
+def run(cache, *, buckets, max_reads, interval=300, max_age=MAX_AGE, timeout=20,
+        config=DEFAULT_POLICY, reader=read_quota, clock=utcnow, stop=None, evidence_provider=None):
+    """Finite foreground loop; return the number of attempted observations."""
+    attempts, _ = _run(cache, buckets=buckets, max_reads=max_reads, interval=interval,
+                       max_age=max_age, timeout=timeout, config=config, reader=reader,
+                       clock=clock, stop=stop, evidence_provider=evidence_provider)
     return attempts
+
+
+def refresh_once(cache, *, buckets, max_age=MAX_AGE, timeout=20, config=DEFAULT_POLICY,
+                 reader=read_quota, clock=utcnow, stop=None, evidence_provider=None):
+    """One bounded attempt, no retry/wait; return this writer's state snapshot.
+
+    Uses the daemon's lock and validation path. A pre-set stop event performs no read
+    or publication. Test-only injection never changes production applicability.
+    """
+    _, state = _run(cache, buckets=buckets, max_reads=1, max_age=max_age, timeout=timeout,
+                    config=config, reader=reader, clock=clock, stop=stop,
+                    evidence_provider=evidence_provider)
+    return state
