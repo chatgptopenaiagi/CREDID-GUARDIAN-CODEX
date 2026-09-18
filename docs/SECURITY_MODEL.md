@@ -56,3 +56,21 @@ No live quota investigation, authentication-file inspection, installations, serv
 CGC executed one initialize/initialized/account/rateLimits/read exchange over a transient stdio child. No raw response, initialization identity/path data or stderr was retained. Quota fields were screened/projected in memory first. Codex handled its own authentication; CGC did not inspect, copy, parse or change any authentication file or token. No private HTTP endpoint, browser state, environment dump, AI turn, services or external-repository operation was used. Ordinary internal Codex startup/authentication bookkeeping is not an audited zero-write guarantee.
 
 The prototype refuses server requests (including external token refresh/attestation); it never answers them with credentials. It reports fixed failure codes, rejects recognized sensitive field names, constrains identifiers and discards unneeded fields. Tests use synthetic secret strings, not credentials. No filter proves universal secrecy; minimized collection/export remains primary. POSIX time/byte/frame/process-termination behavior is tested with synthetic peers; native Windows is unsupported. The one allowed live experiment is consumed.
+
+
+## V2 applicability evidence boundary
+
+Schema cgc-state-v2.2 accepts at most 96 unique evidence entries for windows actually
+present in the associated normalized observation. Exact fields: window_id,
+applicability, basis, observed_at. Applicability is a fixed enum; the only accepted
+basis is SYNTHETIC_CONTRACT, and only for synthetic observations with the exact same
+timestamp. Arbitrary descriptions, URLs, proof strings, identities and extra keys are
+rejected. Operator selection and ordinaryUsageAllowed never establish applicability.
+No live contract is verified; live windows remain UNKNOWN and no live directive results.
+The daemon's injectable evidence provider is an offline Python test seam, not a CLI
+proof override. New observations do not inherit evidence from earlier observations.
+Cache reconstruction validates current and retained historical policies independently;
+no cached label or limiting ID is trusted without recomputation. Cache bound is 256 KiB
+for two bounded observations/evaluations, tested with all 96 windows. POSIX modes,
+no-follow path checks, locking and atomic replacement are unchanged. Same-user coordinated
+tampering remains outside the unsigned cache guarantee; synthetic data cannot prove live facts.

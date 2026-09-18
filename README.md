@@ -12,9 +12,9 @@ Long-running development can approach a usage boundary while discoveries, partia
 
 | Classification | Status |
 |---|---|
-| IMPLEMENTED | Existing V1 reader, configurable scoped policy engine, atomic last-known-good cache, cache-only status CLI and finite foreground daemon |
-| VERIFIED | 71 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
-| PARTIAL | Applicability distinctions, separate freshness output and full mission acceptance |
+| IMPLEMENTED | Existing V1 reader, configurable policy with explicit per-window evidence, atomic last-known-good cache, cache-only status CLI and finite foreground daemon |
+| VERIFIED | 87 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
+| PARTIAL | Live applicability evidence, separate freshness output and full mission acceptance |
 | NOT IMPLEMENTED | One-shot refresh CLI; automatic preservation; hooks, GUI/tray and services |
 | UNKNOWN | Backend sample age, complete bucket applicability, supported polling cadence and sustained live reliability |
 | PLANNED | Preservation integration/hooks, desktop meter and native Windows support |
@@ -65,6 +65,8 @@ Usage source → Quota reader → Normalizer → Validator
 The implemented default cache is `~/.codex/cgc/state.json`; it was not created during
 development. `python -m cgc status` and `python -m cgc status --json` consume this same
 state. The daemon uses one finite writer with an explicit selected bucket scope.
+Selection is not applicability evidence: live windows currently remain UNKNOWN. Synthetic
+contracts verify policy behavior offline; they cannot authorize live policy.
 `hook-check` and desktop integration remain PLANNED, not working commands.
 
 ## Security and authority

@@ -178,3 +178,39 @@ This threshold block is COMPLETE; overall V2 PARTIAL; V3 NOT_STARTED.
 Checkpoint self-reference: HEAD after normal commit/publication; report resolved hash
 and local/tracking/live equality after the operations. Next block is explicit per-window
 applicability and constrained-window reasoning, not refresh CLI or V3.
+
+
+## V2 applicability and limiting-window block — 2026-09-18
+
+Verified clean CGC root and local/fetched/live main at
+939961cdd2dc06cb7c03ad2591f25807ae1bfdcd. Resumed the exact applicability block only,
+mission 10/26/47/49. Baseline 71 tests passed in 1.970s. The test-first run exposed
+selection-based classification and missing evidence interfaces (10 tests: one failure,
+10 errors including subtest reporting). After implementation, 81 passed in 1.996s.
+The new 96-window retained-state test failed at the old 128 KiB cache bound. Raised the
+fixed bound to 256 KiB to accommodate two bounded observation/evidence pairs without
+weakening modes or source bounds: 86 passed in 2.054s. Final 87 passed in 2.048s.
+
+No preserved live source evidence establishes per-window applicability. Chose honest
+UNKNOWN for every live window, rather than invent a bucket/duration/selection rule.
+Implemented fixed per-window applicability states with observation-bound, allowlisted
+SYNTHETIC_CONTRACT assertions for offline fixtures only. No CLI proof override, arbitrary
+source-contract claim or automatic inheritance. Future live applicability needs reviewed
+source evidence and tests, not more polling by default.
+
+Policy considers only valid, selected APPLICABLE windows; all other windows remain
+explicit diagnostics. Tied minima include all sorted window IDs. Fixed reason codes,
+thresholds and evidence reconstruct exactly through cache validation. V1 normalization
+unchanged. Existing V2 tests now supply explicit fixture facts; simulated-live policy
+without evidence is UNKNOWN, not an all-clear. No V1 test edits.
+
+Schema cgc-state-v2.2 / policy cgc-applicability-v2.2 separate latest evaluated data from
+last-known-good. A new unusable evaluation reports no current limit yet retains the prior
+usable observation/policy. Transport failures retain both pairs; timestamp/mode checks
+use latest observation even if applicability is unknown. Status gates current limits by
+existing age/skew/usage checks and labels retained reasoning historical. Freshness redesign
+was not started. No refresh CLI or V3 work; zero V2 live reads and no system installs.
+
+Full inventory, validation, limitations and exact next freshness block are in
+V2_PROGRESS.md. Publish a normal forward checkpoint; self-reference HEAD, resolved hash
+and equality verified after publication. HHS check is read-only. Stop after preservation.

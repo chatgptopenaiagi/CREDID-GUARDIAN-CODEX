@@ -4,7 +4,10 @@
 
 The configurable-threshold block (mission 9, 32, 33) is COMPLETE: one validated
 PolicyConfig, persisted thresholds, daemon configuration checks and cache-only status.
-Schema cgc-state-v2.1 rejects older caches without replacing them. Full V2 remains PARTIAL.
+The applicability/limiting-window block (10, 26, 47, 49) is also COMPLETE offline.
+Per-window evidence is distinct from selection; live applicability remains UNKNOWN.
+Schema cgc-state-v2.2 preserves latest diagnostics and last-known-good separately and
+rejects older caches without replacing them. Full V2 remains PARTIAL.
 
 V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
 implementation, not full mission acceptance. See [current progress](V2_PROGRESS.md) for current validation and remaining requirements.

@@ -7,145 +7,165 @@ PRESERVE BEFORE EXPANDING.
 
 ## Session block
 
-2026-09-18: completed the recorded NEXT_EXACT_ACTION, canonical configurable policy
-thresholds (mission 9, 32, 33). One coherent configuration block; no later phase started.
-Read the complete mission, progress and preserved V1/V2 handoff before implementation.
-Verified root `/mnt/c/Codex-Projects/CREDID-GUARDIAN-CODEX`, clean main and equality of
-HEAD, fetched origin/main and live remote main at
-`b4c05229e4d8b5210bd99821c77e46f0c0257267` before modifications.
+2026-09-18: explicit per-window applicability and limiting-window reasoning (mission
+10, 26, 47, 49), exactly the previous NEXT_EXACT_ACTION. No subsequent unit started.
+Verified clean root `/mnt/c/Codex-Projects/CREDID-GUARDIAN-CODEX`; fetched origin and
+verified local HEAD = origin/main = live remote main =
+`939961cdd2dc06cb7c03ad2591f25807ae1bfdcd` before modifications.
+Read mission, progress and preserved handoff. Configurable thresholds were retained.
 
 ## COMPLETE
 
-- Configurable thresholds through one immutable validated PolicyConfig: defaults 20/10/5,
-  fractional boundaries without rounding, strict ordering and finite [0,100] values.
-- Configuration persisted in canonical policy; refresh, failed-refresh retention,
-  cache validation, daemon and human/JSON status agree. Status has no threshold override.
-- Daemon flags --amber-at, --red-at, --emergency-at. Invalid thresholds are rejected
-  before cache creation; incompatible existing configuration blocks source reads.
-- Provisional schema cgc-state-v2.1 and policy cgc-thresholds-v2.1. Old schemas are refused
-  without replacing/deleting their files. Choose a new private directory for an
-  intentionally changed configuration; no silent migration.
-- Prior engine/cache/status/finite-daemon work retained, with POSIX atomic replacement,
-  last-known-good retention, writer lock, bounded reader, backoff and stop handling.
-- V1 reader and its original 32 tests unchanged; no V1 experiment repeated.
+- Per-window APPLICABLE / NOT_APPLICABLE / UNKNOWN and evidence basis, separate from
+  operator selection and numeric validity. No inference from names, duration, quota
+  percentages, ordinaryUsageAllowed or operator bucket selection.
+- Bounded allowlisted evidence: at most 96 unique observed window IDs, exact observation
+  timestamp, fixed applicability enum and SYNTHETIC_CONTRACT basis. Only synthetic
+  observations accept that basis; absent evidence means UNKNOWN. No unverified live
+  contract or arbitrary source-proof claim is accepted.
+- Minimum over valid, selected, known applicable windows only. Sorted limiting-window
+  identities include all ties; fixed reasoning codes and exclusion diagnostics retain
+  invalid, unknown and out-of-scope windows. Global all-clear remains false.
+- Latest evaluated observation/policy separate from last-known-good observation/policy.
+  A newer UNKNOWN or invalid-window evaluation withholds current policy/limit without
+  deleting last-known-good. Transport/structural failure preserves both retained pairs.
+  Evidence is never silently reused on another refresh. Timestamp regression is checked
+  against the latest observation, including UNKNOWN evaluations.
+- Cache validation reconstructs both policies from normalized observations and evidence.
+  Schema cgc-state-v2.2, policy cgc-applicability-v2.2; old schemas rejected, not migrated.
+- Human/JSON status reports matching applicability, limiting identities/reason and source/
+  observation time. Current limiting data is withheld when existing stale/skew/blocked
+  checks disallow policy; historical reasoning remains explicitly historical.
+- Daemon synthetic evidence injection for offline acceptance; production CLI supplies no
+  evidence and honestly reports live applicability UNKNOWN. Existing finite bounds,
+  backoff, writer lock, last-known-good behavior and threshold validation retained.
+- V1 normalization and its original two test modules remain byte-for-byte unchanged.
 
 ## PARTIAL
 
 | Mission items | Existing behavior | Remaining acceptance work |
 |---|---|---|
-| 10, 26, 47, 49 | Explicit selected buckets; partial coverage; excluded buckets retained | Per-window APPLICABLE / NOT_APPLICABLE / UNKNOWN with evidence, diagnostics and limiting-window reasoning; selection alone is not verified applicability |
-| 11, 12, 14, 47 | Structural validation, max-age and clock-skew handling | Separate FRESH / STALE / UNKNOWN / ERROR field; preserve applicability/freshness provenance |
-| 13, 17, 46 | Private POSIX directory enforcement | Target-path conflict preflight before actual default-cache use; Windows mount refuses private modes; native Windows unsupported |
-| 18, 19, 50–52 | Cache-only human/JSON status, including thresholds and documented exit codes | Align output with later applicability/freshness schema, source/time and constrained-window reasoning |
-| 25–30, 55 | 71 deterministic tests including configuration and unsupported cache schema | Unknown vs non-applicable windows, refresh CLI, Ctrl+C and remaining crash stages |
-| 37, 38, 63 | Current docs and exact progress handoff | Final full-mission acceptance remains pending |
+| 11, 12, 14, 47 | Existing max-age and skew logic; applicability provenance added | Separate FRESH / STALE / UNKNOWN / ERROR field and freshness provenance |
+| 13, 17, 46 | Private POSIX directory enforcement | Default target-path conflict preflight before actual use; native Windows unsupported |
+| 18, 19, 50–52 | Human/JSON applicability, thresholds, limiting reasoning, source/time | Align output with separate freshness model in next block |
+| 25–30, 55 | 87 passing deterministic tests | Refresh CLI, Ctrl+C and remaining crash stages; final mission matrix audit |
+| 37, 38, 63 | Current docs/handoff | Full V2 acceptance remains pending |
+
+The applicability mechanism is implemented and verified offline. Actual live source
+applicability is **UNKNOWN**, not verified by the historical V1 snapshot. Any future live
+contract needs preserved evidence and dedicated tests; do not invent one to make policy
+GREEN. No live policy/directive is currently available through the production CLI.
 
 ## NOT_STARTED
 
-- One-shot `python -m cgc refresh` CLI (mission 20 and success criterion 63.10).
-- Optional single V2 live verification: **0 consumed**. Defer until offline acceptance;
-  may be skipped with explicit rationale. No live polling session.
-- CGC V3 — CODEX PRESERVATION INTEGRATION. Requires separate authorization after V2.
-- Automatic preservation/injection, external-repository mutation, hooks, GUI/tray,
-  services, installation and native Windows support.
+- Separate freshness redesign and one-shot `python -m cgc refresh` CLI.
+- Optional V2 live verification: **0 consumed**. Defer until offline acceptance;
+  may be skipped with explicit rationale. No live monitoring session.
+- CGC V3 — CODEX PRESERVATION INTEGRATION; requires separate authorization after V2.
+- Hooks, automatic preservation, injection, GUI/tray, services, native Windows support.
 
 ## TESTS PASSED
-
-Canonical command on this Windows-mounted WSL checkout:
 
 ```bash
 TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -v
 ```
 
-Final: **71 tests passed in 1.991 seconds; zero failures, errors or skips.**
-Baseline: 62 passed in 1.953s. First test-first invocation failed to import the not-yet
-implemented PolicyConfig (one loader error, zero new test bodies); resolved by implementation.
-Intermediate: 70 passed in 1.976s, followed by a disk-cache preservation regression.
+Final: **87 tests passed in 2.048 seconds; zero failures, errors or skips.**
+Baseline: 71 passed in 1.970s. Test-first applicability run: 10 tests, one failure and
+10 errors (subtest reporting included); missing evidence interfaces and the old selection
+assumption were exposed. After implementation/adapting V2 fixtures: 81 passed in 1.996s.
+A 96-window retained-state test exposed CACHE_SIZE_LIMIT at 128 KiB. Bounded cache size
+advanced to 256 KiB for two observation/evidence pairs; 86 passed in 2.054s, then the final
+multi-window boundary test brought the suite to 87. All observed failures are resolved.
 
-Nine new tests cover defaults, alternate/fractional boundaries, invalid ordering,
-booleans/nonfinite/out-of-range/huge integers, strict configuration projection, custom
-refresh/failure retention, cache tampering/schema rejection, daemon mismatch before source
-reads, equivalent integer/float configuration, CLI forwarding and human/JSON consistency.
-Original synthetic protocol, privacy, atomic-write, locking and SIGTERM tests still pass.
-Tests use disposable Linux-native caches and synthetic peers only.
+Sixteen new applicability tests cover mixed 30% applicable / 2% unknown, explicit
+non-applicability, no inference, invalid/unknown values, scope, deterministic ties,
+all four policy bands, evidence shape/types/count/duplicates/timestamp/live isolation,
+unknown refresh and recovery, transport failure, stale current-limit suppression,
+cache tampering/old schemas, daemon/CLI agreement, retained diagnostics, and 96-window
+cache capacity. Existing V2 fixtures now supply explicit synthetic evidence rather than
+relying on selection; the old simulated-live all-clear assertion now expects UNKNOWN.
+No V1 tests were modified. No source call was made by status tests.
 
-Additional publication checks: Python AST, JSON syntax, local Markdown targets, CLI help,
-unchanged V1 reader/tests and verbatim preservation directives, bounded recognizable
-credential-pattern screening, Git whitespace and changed-content review. Exact results
-are recorded below after validation. Pattern screening is not proof of universal secrecy.
+Publication checks: Python syntax, JSON parsing, local Markdown links, CLI help,
+unchanged V1 bytes/mission/verbatim directives, bounded credential-pattern screening,
+Git whitespace and diff review. Results recorded below after execution.
 
 ## TESTS REMAINING
 
-Add deterministic tests alongside the remaining applicability/freshness, refresh command,
-crash-stage and Ctrl+C acceptance work. Full V2 acceptance is not claimed by 71 passing tests.
+Add tests with the separate freshness block, then refresh CLI and outstanding crash/
+Ctrl+C cases. Final acceptance must review the full mission matrix, not just test count.
 
 ## KNOWN_FAILURES AND DISCOVERIES
 
-- No unresolved test failure in this block. Expected initial missing-class import resolved.
-- Windows-mounted workspace cannot enforce required 0700 semantics. Earlier recovery run
-  had 48 passes, 13 errors and one failure; Linux /tmp resolved that validation blocker.
-  Do not weaken private-cache checks. Historical details remain in DECISIONS.md and
-  checkpoint b4c05229e4d8b5210bd99821c77e46f0c0257267.
-- Strict threshold ordering intentionally rejects equal boundaries, preventing collapsed bands.
-- Huge integer percentage validation must check range before math.isfinite conversion.
-- Old cache schema is intentionally incompatible and preserved; no automatic migration.
-- Applicability is still operator selection, freshness still encoded in validity.
-  Backend sample age, supported cadence and complete applicability remain UNKNOWN.
-- Independent human `/status` cross-check remains PENDING / NOT VERIFIED, not a blocker.
+- No unresolved deterministic failure in this block.
+- Selection was previously used as applicability; corrected. The preserved source
+  evidence does not justify a real per-window contract, so live applicability stays UNKNOWN.
+- Latest diagnostics must not erase or masquerade as last-known-good. Separate pairs
+  retain both, with UNKNOWN current policy after a newer unusable evaluation.
+- Expanded provenance requires more cache space: fixed 256 KiB bound, verified with 96
+  long-identity windows and retained history. Source bounds and private modes unchanged.
+- Unsupported old cache schemas are preserved; no automatic migration or deletion.
+- Windows-mounted workspace cannot enforce required 0700; use Linux /tmp. No weakening.
+- Freshness still uses the existing validity vocabulary. Backend sample age, supported
+  cadence and live reliability remain UNKNOWN. Human `/status` comparison is still
+  PENDING / NOT VERIFIED and is not a blocker.
+- Earlier threshold-block history remains in DECISIONS.md and checkpoint 939961c.
 
 ## FILES_CHANGED
 
-Created: `tests/test_policy_config.py`.
+Created: `tests/test_applicability.py`, `tests/synthetic_support.py`.
 
-Modified runtime: `src/cgc/engine.py`, `src/cgc/daemon.py`, `src/cgc/__main__.py`.
+Modified runtime: `src/cgc/engine.py`, `src/cgc/cache.py`, `src/cgc/daemon.py`,
+`src/cgc/__main__.py`.
+
+Modified V2 tests: `tests/test_engine.py`, `tests/test_cache_daemon.py`,
+`tests/test_policy_config.py` (explicit fixture evidence; preserve their original purposes).
 
 Modified documentation: `README.md`, `AGENTS.md`, `docs/ARCHITECTURE.md`,
 `docs/DATA_MODEL.md`, `docs/PRESERVATION_POLICY.md`, `docs/ROADMAP.md`,
-`docs/DECISIONS.md`, `docs/V2_OPERATIONS.md`, `docs/V2_PROGRESS.md`, `tests/README.md`.
-
-No V1 normalization change; no cache permission weakening; no unrelated project changes.
+`docs/SECURITY_MODEL.md`, `docs/DECISIONS.md`, `docs/V2_OPERATIONS.md`,
+`docs/V2_PROGRESS.md`, `tests/README.md`.
 
 ## NEXT_EXACT_ACTION
 
-Verify this published checkpoint, then implement one explicit **per-window applicability
-and limiting-window reasoning** block (mission 10, 26, 47, 49). Write synthetic tests first:
-known applicable 30% plus unknown 2% must not force EMERGENCY; distinguish explicitly
-non-applicable from unknown; no known applicable usable window must yield UNKNOWN;
-invalid selected windows must remain diagnostic. Define a bounded, allowlisted evidence
-model without inferring applicability from duration or bucket name and without treating
-operator selection as verified source semantics. Carry applicability and constrained-window
-identity/reason consistently through canonical cache validation and human/JSON status.
-Preserve V1 normalization and last-known-good; version the provisional cache if required.
-Stop at that coherent unit, document/test/checkpoint/push. Keep separate freshness redesign
-and refresh CLI for subsequent blocks. No live reads or V3 work in that applicability block.
+Verify this published checkpoint, then implement one **separate freshness/provenance
+block** (mission 11, 12, 14, 47 plus aligned status output). Write deterministic tests
+first for FRESH / STALE / UNKNOWN / ERROR, exact age boundaries, missing observations,
+failed refresh with fresh/stale last-known-good, future timestamps and latest UNKNOWN
+applicability distinct from historical usable data. Define and document the relationship
+between observation freshness, refresh health, validity and policy availability; do not
+conflate a transport error with the age of retained data. Keep existing max-age defaults
+unless evidence justifies a change. Carry explicit freshness/source-time provenance
+through canonical validation and human/JSON status, versioning incompatible cache changes.
+Preserve applicability evidence, threshold behavior, last-known-good, synthetic isolation,
+V1 normalization and cache security. Complete/test/document/checkpoint/push that unit only.
+Do not implement refresh CLI, perform live reads or begin V3 in the freshness block.
 
 ## LAST_SAFE_COMMIT
 
-Starting published checkpoint: `b4c05229e4d8b5210bd99821c77e46f0c0257267`.
-Current configurable-threshold checkpoint: **HEAD after commit/publication** (a document
-cannot contain its own commit hash). Normal forward push only to
-`chatgptopenaiagi/CREDID-GUARDIAN-CODEX` main. Verify local HEAD = origin/main = live
-remote main and clean tree; resolved hash and outcome belong in the final report.
+Starting published checkpoint: `939961cdd2dc06cb7c03ad2591f25807ae1bfdcd`.
+Current applicability checkpoint: **HEAD after commit/publication**, with resolved hash
+and verified local/tracking/live equality reported after Git operations. Normal forward
+push to `chatgptopenaiagi/CREDID-GUARDIAN-CODEX` main only. If publication fails, record
+LOCAL_CHECKPOINT_ONLY; do not claim remote equality without checking.
 
 ## Operations and integrity
 
 Live reads: V1 historical **1**; V2 this session **0**, V2 total **0**.
-No source/API rediscovery, default ~/.codex cache creation, credential inspection,
-package installation, persistent system/environment changes, services or GUI.
-Only disposable /tmp synthetic test caches were used and cleaned by test context managers.
-No capacity indicator or threshold crossing was observed; preservation is scope-driven.
-Git author identity, if needed, uses existing public commit metadata via per-command
-options, without persistent configuration changes. HHS integrity is checked read-only
-under mission item 69; outcome recorded below. No unrelated repository is modified.
+No live API/source rediscovery, default ~/.codex cache creation, auth inspection,
+installation, persistent environment/system changes or unrelated repository writes.
+Used disposable /tmp caches and synthetic child processes. A temporary test-result log
+was used for the final test summary and is removed before stopping. No usage indicator
+or threshold crossing was observed. Preservation is scope-driven.
+Git author identity uses existing public commit metadata per command if needed; no
+persistent configuration changes. HHS integrity checked read-only per mission item 69;
+result recorded below. CGC V3 remains NOT_STARTED.
 
-Final publication gates passed: 11 Python files parse; three JSON files parse;
-43 local Markdown targets resolve; daemon help exposes threshold flags without a
-source read; V1 reader/test bytes and verbatim directives are unchanged; recognizable
-credential-pattern scan found zero matches; Git whitespace passed. HHS is clean on
-main at unchanged `280b7090edf51aadf694db04d6d5f6bceff289a2` (read-only check).
-The user's emergency-preservation steering arrived after these gates; no new work
-was started. Proceed only with the coherent local checkpoint and verified publication.
-
-User-added change preserved: docs/V2_MISSION.md now includes the supplied LOW-CAPACITY
-EMERGENCY PRESERVATION instructions. Reviewed this concurrent documentation addition
-and include it unchanged in the checkpoint; it is also part of FILES_CHANGED.
+Final publication gates passed: 13 Python files parse, three JSON files parse, 43 local
+Markdown targets resolve, top-level/status CLI help succeeds without source access.
+V1 reader/tests, mission text and verbatim preservation directives are unchanged.
+Bounded recognizable credential-pattern screening found zero matches (not proof of
+universal secret absence). Changed runtime/tests/docs reviewed; Git whitespace passed.
+HHS read-only integrity check: clean main at unchanged
+`280b7090edf51aadf694db04d6d5f6bceff289a2`. No HHS modifications.

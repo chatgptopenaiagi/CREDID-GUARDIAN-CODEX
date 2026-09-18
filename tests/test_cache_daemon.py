@@ -9,8 +9,8 @@ import threading
 import unittest
 from unittest.mock import patch
 
-from cgc.cache import Cache, CacheError
-from cgc.daemon import run
+from cgc.cache import Cache, CacheError, MAX_CACHE_BYTES
+from synthetic_support import run
 from cgc.engine import StateError
 from cgc.__main__ import main
 from test_engine import STAMP, populated, observation
@@ -72,7 +72,7 @@ class CacheTests(unittest.TestCase):
 
     def test_corruption_and_size_limits(self):
         with Cache(self.path,create=True) as cache:
-            for raw in ['{','{"x":1,"x":2}', 'x'*131073, json.dumps({'token':'synthetic-secret'})]:
+            for raw in ['{','{"x":1,"x":2}', 'x'*(MAX_CACHE_BYTES + 1), json.dumps({'token':'synthetic-secret'})]:
                 p=self.path/'state.json';p.write_text(raw);p.chmod(0o600)
                 with self.assertRaises(CacheError) as cm:cache.read()
                 self.assertNotIn('synthetic-secret',str(cm.exception))

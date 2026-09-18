@@ -8,10 +8,10 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from cgc.engine import (PolicyConfig, StateError, classify, empty_state, refresh,
+from cgc.engine import (PolicyConfig, StateError, classify, empty_state,
                         validate_state, status)
 from cgc.cache import Cache, CacheError
-from cgc.daemon import run
+from synthetic_support import run, refresh
 from cgc.__main__ import main
 from test_engine import observation, STAMP
 

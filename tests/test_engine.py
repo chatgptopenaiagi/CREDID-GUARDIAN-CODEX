@@ -2,8 +2,10 @@
 import copy
 import unittest
 from cgc.quota import normalize
-from cgc.engine import (StateError, classify, empty_state, refresh, status,
+from cgc.engine import (StateError, classify, empty_state, status,
                         validate_observation, validate_state)
+
+from synthetic_support import refresh
 
 STAMP = '2026-09-17T00:00:00Z'
 
@@ -88,12 +90,12 @@ class EngineTests(unittest.TestCase):
 
     def test_live_policy_with_uncertainty(self):
         s=status(populated(95,'live'),now=STAMP)
-        self.assertTrue(s['live_policy_available'])
-        self.assertEqual(s['policy_state'],'EMERGENCY')
+        self.assertFalse(s['live_policy_available'])
+        self.assertIsNone(s['policy_state'])
         self.assertFalse(s['global_all_clear'])
 
     def test_reset_passage_never_replenishes(self):
-        obs=normalize({'rateLimits':{'limitId':'codex','primary':{'usedPercent':99,'resetsAt':0}}},observed_at=STAMP)
+        obs=normalize({'rateLimits':{'limitId':'codex','primary':{'usedPercent':99,'resetsAt':0}}},observed_at=STAMP,mode='synthetic')
         s=refresh(empty_state(['codex']),obs,now=STAMP)
         self.assertEqual(status(s,now=STAMP)['policy_state'],'EMERGENCY')
 

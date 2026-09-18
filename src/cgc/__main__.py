@@ -72,8 +72,22 @@ def main(argv=None):
             thresholds = output.get('historical_policy', {}).get('thresholds')
             if thresholds:
                 print(f"Thresholds: AMBER <= {thresholds['amber_at']:g}%; RED <= {thresholds['red_at']:g}%; EMERGENCY <= {thresholds['emergency_at']:g}%")
+            observation = output.get('observation')
+            if observation:
+                print(f"Source: {observation['source']}; observed: {observation['observed_at']}")
+            diagnostics = {w['window_id']: w for w in output.get('evaluated_policy', {}).get('window_diagnostics', [])}
             for window in (output.get('observation') or {}).get('windows', []):
                 print(f"{window['window_id']}: remaining={window['remaining_percent']}% ({window['value_origin']}), validity={window['validity']}, reset={window['reset_at']}")
+                diagnostic = diagnostics.get(window['window_id'])
+                if diagnostic:
+                    print(f"  applicability={diagnostic['applicability']}; evidence={diagnostic['evidence_basis']}; selected={diagnostic['selected']}; exclusions={','.join(diagnostic['exclusion_reasons']) or 'NONE'}")
+            print('Most constrained applicable: ' + (', '.join(output.get('limiting_window_ids', [])) or 'UNKNOWN'))
+            if output.get('reason'):
+                print('Reason: ' + output['reason'])
+            retained = output.get('last_valid_observation')
+            if retained and (retained != observation or output['historical_policy'] != output.get('evaluated_policy')):
+                historical = output['historical_policy']
+                print(f"Last known good (historical): {retained['observed_at']}; policy={historical['policy_state']}; limiting={','.join(historical['limiting_window_ids'])}")
             if output.get('error_code'):
                 print('Error: ' + output['error_code'])
             if output.get('directive'):

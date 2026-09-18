@@ -6,8 +6,8 @@ import json
 
 from .quota import normalize, QuotaError, _identifier, ERRORS
 
-POLICY_VERSION = 'cgc-thresholds-v2.1'
-SCHEMA_VERSION = 'cgc-state-v2.1'
+POLICY_VERSION = 'cgc-applicability-v2.2'
+SCHEMA_VERSION = 'cgc-state-v2.2'
 MAX_AGE = 900
 DIRECTIVES = {
     'GREEN': 'Continue authorized development. Coverage remains limited to selected observed windows.',
@@ -130,18 +130,67 @@ def validate_observation(obs):
         raise StateError() from None
 
 
-def policy(obs, buckets, config=DEFAULT_POLICY):
+def applicability_evidence(obs, entries):
+    """Bounded evidence for this exact observation; no live contract is established.
+
+    Synthetic assertions describe test facts only. No operator flag, bucket name,
+    duration, value or ordinary-usage allowance can promote a live window.
+    """
+    if entries == ():
+        entries = []
+    if not isinstance(entries, list) or len(entries) > 96:
+        raise StateError('INVALID_EVIDENCE')
+    windows = {w['window_id'] for w in obs['windows']} if obs else set()
+    result = {}
+    for entry in entries:
+        if not isinstance(entry, dict) or set(entry) != {'window_id', 'applicability', 'basis', 'observed_at'}:
+            raise StateError('INVALID_EVIDENCE')
+        identity = entry['window_id']
+        if (not isinstance(identity, str) or identity not in windows or identity in result
+                or entry['applicability'] not in ('APPLICABLE', 'NOT_APPLICABLE', 'UNKNOWN')
+                or entry['basis'] != 'SYNTHETIC_CONTRACT'
+                or obs['mode'] != 'synthetic' or entry['observed_at'] != obs['observed_at']):
+            raise StateError('INVALID_EVIDENCE')
+        result[identity] = dict(entry)
+    return [result[key] for key in sorted(result)]
+
+
+def policy(obs, buckets, config=DEFAULT_POLICY, *, evidence=()):
     buckets = selection(buckets)
-    selected = [w for w in obs['windows'] if w['bucket_id'] in buckets] if obs else []
-    usable = [w for w in selected if w['validity'] == 'VALID']
+    if obs is not None:
+        validate_observation(obs)
+    evidence = applicability_evidence(obs, evidence)
+    facts = {entry['window_id']: entry for entry in evidence}
+    diagnostics = []
+    for w in sorted(obs['windows'] if obs else [], key=lambda w: w['window_id']):
+        fact = facts.get(w['window_id'])
+        applies = fact['applicability'] if fact else 'UNKNOWN'
+        selected = w['bucket_id'] in buckets
+        exclusions = []
+        if not selected:
+            exclusions.append('OUTSIDE_SELECTED_SCOPE')
+        if applies != 'APPLICABLE':
+            exclusions.append('NOT_APPLICABLE' if applies == 'NOT_APPLICABLE' else 'UNKNOWN_APPLICABILITY')
+        if w['validity'] != 'VALID':
+            exclusions.append('INVALID_VALUE' if w['validity'] == 'INVALID' else 'UNKNOWN_VALUE')
+        diagnostics.append({'window_id': w['window_id'], 'bucket_id': w['bucket_id'],
+                            'selected': selected, 'applicability': applies,
+                            'evidence_basis': fact['basis'] if fact else 'NO_EVIDENCE',
+                            'validity': w['validity'], 'remaining_percent': w['remaining_percent'],
+                            'exclusion_reasons': exclusions})
+    usable = [w for w in diagnostics if not w['exclusion_reasons']]
     minimum = min((percentage(w['remaining_percent']) for w in usable), default=None)
     state = classify(minimum, config) if minimum is not None else None
     return {'policy_version': POLICY_VERSION, 'thresholds': config.to_dict(), 'selected_buckets': buckets,
-            'applicability_basis': 'explicit_operator_selection',
+            'applicability_basis': 'per_window_evidence', 'evidence': evidence,
+            'window_diagnostics': diagnostics,
             'coverage': 'PARTIAL' if usable else 'UNKNOWN',
-            'missing_buckets': sorted(set(buckets) - {w['bucket_id'] for w in selected}),
-            'usable_windows': len(usable), 'selected_windows': len(selected),
+            'missing_buckets': sorted(set(buckets) - {w['bucket_id'] for w in diagnostics}),
+            'usable_windows': len(usable), 'selected_windows': sum(w['selected'] for w in diagnostics),
             'most_constrained_remaining_percent': minimum, 'policy_state': state,
+            'limiting_window_ids': [w['window_id'] for w in usable if w['remaining_percent'] == minimum],
+            'reason': ('MINIMUM_KNOWN_APPLICABLE_SELECTED_WINDOW' if usable else
+                       'NO_KNOWN_APPLICABLE_USABLE_WINDOW'),
             'directive': DIRECTIVES.get(state), 'global_all_clear': False}
 
 
@@ -150,11 +199,12 @@ def empty_state(buckets, max_age=MAX_AGE, *, config=DEFAULT_POLICY):
         raise StateError()
     return {'schema_version': SCHEMA_VERSION, 'generation': 0,
             'max_age_seconds': max_age, 'last_valid_observation': None,
+            'last_observation': None, 'last_valid_policy': None,
             'policy': policy(None, buckets, config), 'last_refresh_attempt_at': None,
             'last_refresh_status': 'NEVER', 'error_code': None, 'cache_written_at': None}
 
 
-def refresh(previous, result, *, now):
+def refresh(previous, result, *, now, evidence=()):
     validate_state(previous)
     timestamp(now)
     state = dict(previous)
@@ -164,15 +214,17 @@ def refresh(previous, result, *, now):
         obs = validate_observation(result)
         if timestamp(obs['observed_at']) > timestamp(now):
             raise StateError()
-        if previous['last_valid_observation'] and timestamp(obs['observed_at']) < timestamp(previous['last_valid_observation']['observed_at']):
+        if previous['last_observation'] and timestamp(obs['observed_at']) < timestamp(previous['last_observation']['observed_at']):
             raise StateError()
-        if previous['last_valid_observation'] and obs['mode'] != previous['last_valid_observation']['mode']:
+        if previous['last_observation'] and obs['mode'] != previous['last_observation']['mode']:
             raise StateError('MODE_MISMATCH')
         p = policy(obs, previous['policy']['selected_buckets'],
-                   PolicyConfig.from_dict(previous['policy']['thresholds']))
+                   PolicyConfig.from_dict(previous['policy']['thresholds']), evidence=evidence)
+        state.update(last_observation=obs, policy=p)
         if p['policy_state'] is None:
             raise StateError('NO_USABLE_DATA')
-        state.update(last_valid_observation=obs, policy=p, last_refresh_status='OK', error_code=None)
+        state.update(last_valid_observation=obs, last_valid_policy=p,
+                     last_refresh_status='OK', error_code=None)
     except StateError as error:
         code = error.code
         if isinstance(result, dict) and result.get('status') == 'ERROR':
@@ -184,23 +236,42 @@ def refresh(previous, result, *, now):
     return state
 
 
+def _same_json(left, right):
+    return json.dumps(left, sort_keys=True, allow_nan=False) == json.dumps(right, sort_keys=True, allow_nan=False)
+
+
 def validate_state(state):
     try:
         if not isinstance(state, dict) or state.get('schema_version') != SCHEMA_VERSION:
             raise StateError()
         config = PolicyConfig.from_dict(state['policy']['thresholds'])
-        template = empty_state(state['policy']['selected_buckets'], state['max_age_seconds'], config=config)
+        buckets = state['policy']['selected_buckets']
+        template = empty_state(buckets, state['max_age_seconds'], config=config)
         if set(state) != set(template) or type(state['generation']) is not int or not 0 <= state['generation'] <= 10**12:
             raise StateError()
-        obs = state['last_valid_observation']
-        if obs is not None:
-            validate_observation(obs)
-        if json.dumps(state['policy'], sort_keys=True, allow_nan=False) != json.dumps(policy(obs, state['policy']['selected_buckets'], config), sort_keys=True, allow_nan=False):
-            raise StateError()
-        if obs is not None and state['policy']['policy_state'] is None:
-            raise StateError()
+        obs = state['last_observation']
+        good = state['last_valid_observation']
+        for observation, evaluation in ((obs, state['policy']), (good, state['last_valid_policy'])):
+            if evaluation is None:
+                if observation is not None:
+                    raise StateError()
+                continue
+            expected = policy(observation, buckets, config, evidence=evaluation['evidence'])
+            if not _same_json(evaluation, expected):
+                raise StateError()
+        if good is None:
+            if state['last_valid_policy'] is not None or state['policy']['policy_state'] is not None:
+                raise StateError()
+        else:
+            if (obs is None or state['last_valid_policy']['policy_state'] is None
+                    or good['mode'] != obs['mode']
+                    or timestamp(good['observed_at']) > timestamp(obs['observed_at'])):
+                raise StateError()
+        if state['policy']['policy_state'] is not None:
+            if not _same_json(obs, good) or not _same_json(state['policy'], state['last_valid_policy']):
+                raise StateError()
         if state['generation'] == 0:
-            if state != template:
+            if not _same_json(state, template):
                 raise StateError()
         else:
             written = timestamp(state['cache_written_at'])
@@ -209,7 +280,7 @@ def validate_state(state):
             if obs and timestamp(obs['observed_at']) > written:
                 raise StateError()
             if state['last_refresh_status'] == 'OK':
-                if obs is None or state['error_code'] is not None:
+                if state['policy']['policy_state'] is None or state['error_code'] is not None:
                     raise StateError()
             elif state['last_refresh_status'] != 'ERROR' or state['error_code'] not in ERRORS | {'INVALID_STATE', 'NO_USABLE_DATA', 'MODE_MISMATCH'}:
                 raise StateError()
@@ -221,19 +292,24 @@ def validate_state(state):
 def status(state, *, now):
     validate_state(state)
     current = timestamp(now)
-    obs = state['last_valid_observation']
+    obs = state['last_observation']
     age = (current - timestamp(obs['observed_at'])).total_seconds() if obs else None
     skew = (age is not None and age < 0) or (state['cache_written_at'] is not None and current < timestamp(state['cache_written_at']))
     validity = 'CLOCK_SKEW' if skew else 'UNKNOWN' if age is None else 'STALE' if age > state['max_age_seconds'] else 'VALID'
     if validity == 'VALID' and obs['ordinary_usage_allowed'] is False:
         validity = 'USAGE_BLOCKED'
-    available = validity == 'VALID'
+    available = validity == 'VALID' and state['policy']['policy_state'] is not None
     p = state['policy']
     return {'schema_version': SCHEMA_VERSION, 'generation': state['generation'],
             'validity': validity, 'age_seconds': age, 'mode': obs['mode'] if obs else None,
             'policy_state': p['policy_state'] if available else None,
             'directive': p['directive'] if available and obs['mode'] == 'live' else None,
-            'historical_policy': p, 'coverage': p['coverage'], 'global_all_clear': False,
+            'historical_policy': state['last_valid_policy'] or p,
+            'evaluated_policy': p,
+            'limiting_window_ids': p['limiting_window_ids'] if available else [],
+            'most_constrained_remaining_percent': p['most_constrained_remaining_percent'] if available else None,
+            'reason': p['reason'] if available or p['policy_state'] is None else 'CURRENT_POLICY_UNAVAILABLE',
+            'last_valid_observation': state['last_valid_observation'], 'coverage': p['coverage'], 'global_all_clear': False,
             'last_refresh_status': state['last_refresh_status'], 'error_code': state['error_code'],
             'live_policy_available': available and obs['mode'] == 'live',
             'observation': obs}

@@ -9,7 +9,8 @@ import uuid
 from .engine import StateError, validate_state
 from .quota import _decode, QuotaError
 
-MAX_CACHE_BYTES = 131072
+# Two bounded observations/evaluations retain diagnostics and last-known-good evidence.
+MAX_CACHE_BYTES = 262144
 
 
 class CacheError(StateError):

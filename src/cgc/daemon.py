@@ -6,10 +6,12 @@ from .quota import read_quota, _validate_timeout
 
 
 def run(cache, *, buckets, max_reads, interval=300, max_age=900, timeout=20, config=DEFAULT_POLICY,
-        reader=read_quota, clock=utcnow, stop=None):
+        reader=read_quota, clock=utcnow, stop=None, evidence_provider=None):
     """At most max_reads attempts, completion-to-start spacing and capped backoff.
 
-    Reader injection is for offline tests. The production reader has V1 bounds.
+    Reader and evidence-provider injection are for offline tests. Evidence must be
+    observation-bound and synthetic; production has no verified applicability contract.
+    The production reader has V1 bounds.
     Hold the writer lock across reads and waits, preventing competing sensors.
     """
     buckets = selection(buckets)
@@ -31,7 +33,8 @@ def run(cache, *, buckets, max_reads, interval=300, max_age=900, timeout=20, con
                 break
             result = reader(timeout=timeout)
             attempts += 1
-            state = refresh(state, result, now=clock())
+            evidence = evidence_provider(result) if evidence_provider else ()
+            state = refresh(state, result, now=clock(), evidence=evidence)
             cache.write(state)
             failures = failures + 1 if state['last_refresh_status'] == 'ERROR' else 0
             if attempts < max_reads and stop.wait(min(3600, interval * 2 ** min(failures, 6))):

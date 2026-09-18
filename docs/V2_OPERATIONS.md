@@ -1,4 +1,4 @@
-# CREDID GUARDIAN CODEX (CGC) — V2 operations
+# CREDID GUARDIAN CODEX — CGC V2 operations
 
 THE GUARDIAN OBSERVES. CODEX PRESERVES.
 ONE SENSOR. MULTIPLE CONSUMERS.
@@ -6,160 +6,154 @@ ONE SENSOR. MULTIPLE CONSUMERS.
 ## Status and boundaries
 
 V2 is PARTIAL against [the full mission](V2_MISSION.md). See [progress](V2_PROGRESS.md)
-for current test results, acceptance gaps and the exact next block. The schema is provisional.
+for current test results, remaining acceptance and the exact next block.
 
-IMPLEMENTED: pure policy engine, canonical versioned state, private POSIX atomic cache,
-cache-only human/JSON status and finite foreground daemon. VERIFIED: 71 offline tests,
-including the original 32 V1 tests. No V2 live source request or sustained live polling
-was performed. The experimental V1 app-server reader is unchanged.
+IMPLEMENTED and VERIFIED OFFLINE: configurable policy, explicit per-window applicability
+and limiting-window reasoning, canonical state, private POSIX atomic cache, cache-only
+human/JSON status and finite foreground daemon. **87 deterministic tests pass**, including
+unchanged original V1 tests. No V2 live source read was consumed. Source remains experimental.
+Actual live applicability is UNKNOWN: no preserved source contract proves which individual
+windows govern the work. The production CLI therefore cannot currently report a live policy.
 
-PLANNED: supported preservation integration, hook, GUI/tray and native Windows support.
-No service, startup entry, registry change, dependency installation, external repository
-action or preservation execution exists. The independent human `/status` comparison
-remains PENDING / NOT VERIFIED and is not a V2 blocker.
+NOT IMPLEMENTED: refresh CLI, separate freshness vocabulary, preservation integration,
+hooks, GUI/tray, services or native Windows transport. Human `/status` comparison remains
+PENDING / NOT VERIFIED and is not a V2 blocker. No external-repository action exists.
 
 ## Commands
 
-Run from the CGC root with Python 3 and `PYTHONPATH=src`; no installation is required.
+Run in CGC with Python 3; no installation required:
 
 ```bash
 PYTHONPATH=src python3 -B -m cgc --help
 PYTHONPATH=src python3 -B -m cgc status
 PYTHONPATH=src python3 -B -m cgc status --json
-PYTHONPATH=src python3 -B -m unittest discover -s tests -v
+TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -v
 ```
 
-Status only reads the cache. A missing cache reports UNKNOWN without creating a
-directory or initiating Codex. Human output includes age, refresh health, coverage,
-mode, per-window validity, remaining provenance and reset timestamps. JSON includes
-the same observation plus canonical historical policy and current policy availability.
+Status reads the cache only. Missing cache means UNKNOWN, with no directory creation or
+source read. Human output includes source/time, observation age, policy, threshold values,
+window values/reset/provenance, applicability, selection and exclusion reasons. JSON exposes
+`evaluated_policy` with matching diagnostics; `historical_policy` and `last_valid_observation`
+retain last-known-good. Top-level `limiting_window_ids`, minimum and policy describe current
+availability only. Unknown or stale state does not advertise a current limiting window.
 
-Default cache: `~/.codex/cgc/state.json`. Only this dedicated directory and fixed
-CGC cache/lock basenames are accessed; authentication files are never opened.
-No default cache was created during V2 development. `--cache-dir` selects another
-CGC-owned private directory; its parent must exist. Use a dedicated Linux filesystem
-directory with enforced POSIX owner permissions. Native Windows is unsupported.
-WSL access to Windows-mounted filesystems may reject the permissions checks; CGC
-fails closed rather than relaxing permissions or claiming Windows ACL protection.
+Default cache: `~/.codex/cgc/state.json`, not created during development. Before actual
+use, the mission's default-path conflict preflight remains required. `--cache-dir` selects
+a dedicated private directory whose parent exists. Use Linux-native storage for POSIX
+0700/0600 enforcement. The current Windows-mounted workspace cannot enforce these modes;
+CGC refuses unsafe permissions rather than weakening them. Native Windows is unsupported.
 
-A future operator-authorized live run can use this command; **it was not executed**:
+Example for a future separately authorized live operation, **not executed here**:
 
 ```bash
 PYTHONPATH=src python3 -B -m cgc daemon --live --bucket codex --max-reads 1 --interval 300
 ```
 
-`--live`, at least one `--bucket`, and `--max-reads` are required. This initiates real
-quota reads through the existing V1 reader. It performs no AI turn. A daemon invocation
-is a foreground finite process, not a background service. Maximum reads: 1–100;
-interval: integer 60–3600 seconds, default 300; timeout: integer 1–30 seconds,
-default 20; maximum observation age: integer 1–86400 seconds, default 900.
-These are local engineering bounds, **not verified upstream polling recommendations**.
-Source polling constraints, backend sample age and sustained reliability remain UNKNOWN.
+`--live`, one or more `--bucket` and `--max-reads` are required. Selection restricts scope;
+it is never proof of applicability. A live observation is retained with UNKNOWN policy
+and NO_USABLE_DATA until a verified contract is implemented. Do not repeatedly poll to
+resolve a missing semantic contract. No AI turn is generated.
 
-Each iteration makes one bounded read, normalizes/classifies, publishes one generation,
-then waits from completion. Failure waits double (first failure: twice the configured
-interval), capped at 3600 seconds; success resets backoff. No overlapping or catch-up
-reads. At most the requested number of attempts are consumed. SIGINT/SIGTERM wakes
-waiting immediately; an in-flight V1 read completes or times out before exit (up to
-30 seconds plus bounded V1 process cleanup, subject to OS scheduling). The writer lock
-covers the entire run, including source reads and waits. Locks coordinate only writers
-sharing the same cache directory; separate explicitly selected directories are independent.
+Limits: max-reads 1–100; integer interval 60–3600 seconds (default 300); integer timeout
+1–30 (default 20); maximum observation age 1–86400 (default 900). These are local bounds,
+not verified upstream cadence recommendations. Foreground finite daemon only, no service.
+Each iteration makes one bounded read, evaluates, atomically publishes, then waits from
+completion. Failure doubles delay, capped at 3600; success resets backoff. No overlapping
+or catch-up reads. SIGINT/SIGTERM interrupts waiting; in-flight reads finish or time out
+before shutdown, with bounded V1 cleanup subject to OS scheduling. Writer lock covers reads
+and waits within one cache directory; different directories are independent.
 
-Status exit codes: 0 = fresh live scoped policy with successful last refresh;
-1 = unavailable/stale/synthetic/blocked/missing data or last refresh failed; 2 = invalid
-arguments, corrupt/unsafe cache or operational failure. **0 never means global all-clear**
-and is independent of GREEN/AMBER/RED/EMERGENCY. Daemon: 0 after successful final
-refresh, 1 with no observation or final refresh failure, 2 on operational/configuration
-failure. Signal-stopped runs report `stopped: true` and the attempt count.
-Errors use fixed diagnostics; raw source text, arbitrary arguments and paths are not echoed.
+Status exit codes: 0 = available fresh live policy and successful last refresh; 1 = unavailable,
+unknown/stale/synthetic/blocked/missing policy or refresh failure; 2 = argument/configuration,
+corrupt/unsafe cache or operational error. Zero never means global all-clear. With no live
+applicability contract, status cannot currently return zero for real source data.
+Daemon: 0 after usable final refresh, 1 after no usable observation/final refresh failure,
+2 for configuration/operational error. Diagnostics never echo raw input or exception text.
 
-## Applicability, policy and freshness
+## Applicability and reasoning
 
-Policy version `cgc-thresholds-v2.1` uses validated configurable thresholds, defaulting
-to 20/10/5 without rounding. Operator-selected bucket identities define the scope; their selection is
-explicitly labeled `explicit_operator_selection`, not verified universal applicability.
-All recognized usable windows in that scope participate, including individual limits;
-other buckets remain visible but do not lower the selected minimum. Missing buckets
-and invalid/unknown selected windows are explicit. There is no duration-based applicability
-guess. Coverage stays PARTIAL when usable windows exist, otherwise UNKNOWN. The source's
-unrecognized-field coverage remains UNKNOWN. `global_all_clear` is always false.
+`policy_version: cgc-applicability-v2.2` evaluates per-window evidence separately from scope
+and validity. Operator selection, source names, bucket IDs, durations, percentages and
+ordinaryUsageAllowed do not establish applicability. All observed windows have diagnostics:
 
-A successful refresh requires at least one usable selected window. Empty, invalid,
-failed or irrelevant observations retain the last usable observation and its original
-timestamp, with new failure metadata. A partial observation may become the latest
-usable observation; coverage never claims completeness. Reset passage never replenishes
-capacity. Explicit `ordinaryUsageAllowed=false` withholds current policy/directive and
-reports USAGE_BLOCKED. Unknown allowance is retained as unknown.
+- window_id and bucket_id;
+- selected (boolean), applicability (APPLICABLE / NOT_APPLICABLE / UNKNOWN);
+- evidence_basis (SYNTHETIC_CONTRACT / NO_EVIDENCE), numeric validity and remaining percent;
+- exclusion_reasons: OUTSIDE_SELECTED_SCOPE, NOT_APPLICABLE, UNKNOWN_APPLICABILITY,
+  INVALID_VALUE or UNKNOWN_VALUE, including multiple applicable exclusions.
 
-Age uses local completion time and the current clock. At age > max-age, current policy
-is null and validity STALE; historical policy remains visible. Future observation/cache
-write timestamps report CLOCK_SKEW with no current directive. There is no clock-skew
-tolerance. Refresh timestamps older than retained observations are rejected without
-replacing the cache. Fresh retained data after failure remains available with explicit
-failed refresh health; it ages normally and cannot reset its timestamp on failure.
+Only selected, VALID, APPLICABLE windows enter the minimum. All tied limiting IDs are
+returned in sorted order. If none qualify, policy/minimum are null, limiting IDs empty,
+reason NO_KNOWN_APPLICABLE_USABLE_WINDOW. Otherwise reason is
+MINIMUM_KNOWN_APPLICABLE_SELECTED_WINDOW. A 30% applicable window plus a 2% unknown
+window yields scoped GREEN at 30%, PARTIAL coverage, and visible UNKNOWN diagnostics.
+Coverage is never COMPLETE; `global_all_clear` always false.
 
-Synthetic observations remain labeled. They can demonstrate classification but never
-expose a live directive or `live_policy_available=true`. Mixed live/synthetic cache
-refreshes are rejected. A cache's bucket scope, thresholds and max-age cannot silently change during
-a daemon run; use a separately designated private directory for a changed configuration.
+Evidence is a list of at most 96 unique entries, each with exactly `window_id`,
+`applicability`, `basis`, `observed_at`. IDs must occur in the normalized observation;
+the timestamp must match exactly. Only SYNTHETIC_CONTRACT for synthetic observations
+is accepted. Extra fields, duplicates, stale evidence, arbitrary proof text and live
+synthetic evidence are rejected. The daemon's Python evidence-provider injection exists
+for offline tests; no CLI flag can assert a live contract. Evidence is supplied anew per
+observation and never inherited from last-known-good. V1 normalization is unchanged.
 
-## Cache security and failure behavior
+## Current and retained data
 
-`cgc-state-v2.1` stores generation, maximum age, last_valid_observation, canonical policy,
-last_refresh_attempt_at/status, fixed error_code and cache_written_at. The V1 observation
-must exactly reproduce through V1 normalization; altered provenance, validity, values,
-extra identity fields, duplicate JSON keys and nonfinite numbers are rejected. Cached
-policy must match the engine's policy. Maximum file size is 128 KiB.
+`last_observation` plus `policy` describe the latest structurally valid evaluated data,
+including UNKNOWN applicability or invalid windows. `last_valid_observation` plus
+`last_valid_policy` retain the most recent usable evaluation. Both pairs preserve original
+observation times and independent evidence. A newer unknown/no-usable evaluation updates
+diagnostics and reports NO_USABLE_DATA, without erasing last-known-good or presenting it
+as the new current policy. Transport/malformed-data failures leave both pairs unchanged
+and update safe refresh metadata. Mode changes and timestamp regression are rejected.
 
-Every path component is opened without following symlinks. The dedicated directory
-must be owned by the effective user with no group/other permissions. Files must be
-owner-only regular files, owned by the effective user, with exactly one hard link.
-New directory/files use 0700/0600 subject to umask. The persistent lock inode is never
-unlinked; POSIX flock releases automatically on process termination. A corrupt or
-unsafe cache blocks the writer before a source request; it is not silently repaired.
+Existing freshness behavior is retained: age uses local completion time; age > max-age
+withholds current policy/limit as STALE. Future timestamps give CLOCK_SKEW; explicit
+ordinaryUsageAllowed=false gives USAGE_BLOCKED. Historical reasoning remains labeled.
+No replenishment is inferred from reset passage. Backend sample age is unknown. A separate
+freshness model is the next block. Synthetic observations never expose a live directive.
 
-Writes validate first, serialize to a unique sibling, flush/fsync it, atomically replace
-state.json and fsync the directory. Readers see an old or new complete generation.
-Before-replace failure retains the old generation; directory-fsync failure after replace
-can leave the new complete generation while reporting failure. Atomic visibility is
-not a universal power-loss durability guarantee. Abrupt process death before replacement
-may leave a private temporary file; CGC does not automatically delete unknown artifacts.
-Same-user malicious processes and privileged filesystem attackers are outside the
-integrity guarantee; this is not a signed or tamper-proof quota attestation.
+## Threshold configuration
+
+One immutable PolicyConfig defines inclusive upper boundaries. Daemon flags `--amber-at`,
+`--red-at`, `--emergency-at` accept finite percentages including fractions; defaults 20/10/5.
+Require `0 <= emergency_at < red_at < amber_at <= 100`; no collapsed bands, booleans,
+nonfinite/out-of-range values or rounding. GREEN is above amber_at; AMBER above red_at
+through amber_at; RED above emergency_at through red_at; EMERGENCY at/below emergency_at.
+
+Thresholds are persisted in each canonical policy. Status uses cached settings without
+overrides. Invalid threshold CLI arguments are rejected before cache creation. Bucket
+scope, thresholds or max-age mismatch blocks a daemon before any source read. For an
+intentional configuration change, choose a new dedicated private cache directory and
+retain the old cache. No config file or automatic deletion is introduced.
+
+## Cache security and schema
+
+Provisional schema `cgc-state-v2.2` rejects older schemas, including v2.1, without migration
+or replacement. The schema/policy versions describe CGC's experimental local contract.
+Each observation must reproduce exactly through V1 normalization, and each policy must
+reproduce through applicability evaluation with its own evidence and common configuration.
+Altered identities, diagnostics, limiting IDs, reason, values, provenance, booleans-as-numbers,
+extra fields, duplicate keys and nonfinite JSON fail closed. Maximum cache size is **256 KiB**,
+increased from 128 KiB for two observation/evidence pairs and tested with all 96 windows.
+Source bounds remain unchanged; cache limits still fail rather than truncate state.
+
+Every path component opens without following symlinks. Directory must be owned by the
+effective user with no group/other permissions. Files must be owner-only regular files,
+same owner, exactly one hard link. Creation modes 0700/0600 subject to umask. Persistent
+flock inode is never unlinked; kernel releases locks on process termination. Corrupt/unsafe
+cache blocks the sensor and is not repaired automatically.
+
+Writes validate, serialize to a unique sibling, flush/fsync, atomically replace state.json,
+then fsync the directory. Before-replace failure retains the old generation; post-replace
+sync failure can leave the complete new generation while reporting error. This is not a
+universal power-loss durability guarantee. Abrupt death may leave private temporary files;
+CGC does not delete unknown artifacts. Same-user coordinated tampering is outside the
+unsigned-cache integrity guarantee.
 
 ## Handoff
 
-The full mission audit found missing requirements that the earlier implementation summary
-had not accounted for. This is a partial checkpoint, not a V2 completion claim. The prior
-safe commit is `45010646facbd75e17124e7e00572b8c34b6af27`; the current checkpoint is HEAD
-after publication. [V2 progress](V2_PROGRESS.md) records tests, failures and next scope.
-No live V2 quota read has been consumed. V1 values remain historical.
-
-Do not invoke the optional live test before the offline acceptance gaps are resolved.
-Do not repeat V1 discovery or start V3, services or GUI. Current status relies on explicit
-operator bucket selection, not established per-window applicability. Thresholds are configurable; freshness is currently encoded in validity, and the refresh
-subcommand is absent.
-These gaps must be closed before claiming full mission acceptance.
-
-## Threshold configuration (implemented and verified offline)
-
-The immutable `PolicyConfig` in engine.py is the single threshold model. Daemon flags
-`--amber-at`, `--red-at`, `--emergency-at` accept percentages, including fractions;
-defaults are 20, 10, 5. Require `0 <= emergency_at < red_at < amber_at <= 100`.
-Equal boundaries are rejected to avoid collapsing a policy band. Booleans, strings
-in the Python/cache model, nonfinite and out-of-range values are rejected.
-GREEN is above amber_at; AMBER is above red_at through amber_at; RED is above
-emergency_at through red_at; EMERGENCY is at or below emergency_at. No rounding.
-
-The canonical policy includes `thresholds: {amber_at, red_at, emergency_at}`.
-Refresh, failed-refresh retention, cache validation and both status formats use that
-configuration. Status has no override flags and performs no source read. Human status
-prints boundaries; JSON exposes them under historical_policy even when current data
-is stale. Invalid threshold CLI options return 2 before creating a cache.
-
-The schema advances to `cgc-state-v2.1`; old `cgc-state-v2` caches are refused, preserved
-and never silently migrated. A mismatched daemon configuration is rejected before a
-source request or state replacement. To intentionally use a different configuration,
-select a new dedicated private cache directory; retain the old cache. No config file,
-installation or automatic cache deletion is introduced. These versions describe CGC's
-experimental local contract, not an upstream API version or production-readiness claim.
+This is a validated applicability checkpoint, not full V2 acceptance. Current checkpoint
+is HEAD after publication; exact hash and next action are in the final report and
+[V2 progress](V2_PROGRESS.md). Do not redo V1 experiments, run live polling, or start V3.
+Next coherent block: separate freshness/provenance. Refresh CLI remains subsequent work.

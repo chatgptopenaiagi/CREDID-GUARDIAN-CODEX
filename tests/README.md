@@ -65,3 +65,18 @@ refresh/failure retention, daemon mismatch before reads, equivalent numeric conf
 CLI forwarding and human/JSON consistency. V1 code and its original 32 tests are unchanged.
 The initial test-first invocation failed to import the not-yet-implemented PolicyConfig;
 that expected failure is resolved. Full mission acceptance remains pending.
+
+
+## Applicability and limiting-window block
+
+87 deterministic tests pass using Linux /tmp, including 16 new applicability tests.
+The 30% APPLICABLE plus 2% UNKNOWN case keeps a 30% scoped minimum and PARTIAL coverage.
+NOT_APPLICABLE, UNKNOWN, invalid values and out-of-scope windows remain distinct;
+selection/name/duration/allowance never establish applicability. Tests verify ties,
+all policy bands, evidence limits and injection rejection, unknown/failure/recovery,
+cache reconstruction, old schema refusal, human/JSON agreement and 96-window capacity.
+`synthetic_support.py` supplies explicit synthetic fixture facts to the existing V2
+policy/configuration/daemon tests. Runtime code never imports it. Original V1 tests
+remain unchanged; test data labeled live now expects UNKNOWN without verified evidence.
+The cache bound is 256 KiB because the retained observation and latest diagnostics each
+carry evidence. This does not change source limits or permission requirements.
