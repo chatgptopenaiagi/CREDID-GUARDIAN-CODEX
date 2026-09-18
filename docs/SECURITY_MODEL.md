@@ -2,7 +2,7 @@
 
 ## V2 current status
 
-V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
+V2 is COMPLETE under offline POSIX acceptance. The earlier 62-test POSIX run is historical verification of the existing
 implementation, not full mission acceptance. See [current progress](V2_PROGRESS.md) for current validation and remaining requirements.
 See [V2 operations and handoff](V2_OPERATIONS.md) for the canonical state, scoped policy, atomic cache, status CLI,
 finite daemon, security limits and validation evidence. No V2 live quota request ran.
@@ -78,3 +78,7 @@ tampering remains outside the unsigned cache guarantee; synthetic data cannot pr
 Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
 and policy authority; failed refresh withholds current policy while retaining evidence.
 See [V2 operations](V2_OPERATIONS.md) for canonical semantics and schema details.
+
+Final V2 offline acceptance: [evidence matrix](V2_ACCEPTANCE.md).
+153 deterministic tests pass. Zero V2 live reads; optional live verification skipped.
+V3 remains NOT_STARTED and requires separate authorization.

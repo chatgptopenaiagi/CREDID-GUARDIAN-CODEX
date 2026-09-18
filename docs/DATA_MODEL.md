@@ -7,9 +7,9 @@ PolicyConfig, persisted thresholds, daemon configuration checks and cache-only s
 The applicability/limiting-window block (10, 26, 47, 49) is also COMPLETE offline.
 Per-window evidence is distinct from selection; live applicability remains UNKNOWN.
 Schema cgc-state-v2.3 preserves latest diagnostics and last-known-good separately and
-rejects older caches without replacing them. Full V2 remains PARTIAL.
+rejects older caches without replacing them. Full V2 offline acceptance is complete; live semantic limits remain explicit.
 
-V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
+V2 is COMPLETE under offline POSIX acceptance. The earlier 62-test POSIX run is historical verification of the existing
 implementation, not full mission acceptance. See [current progress](V2_PROGRESS.md) for current validation and remaining requirements.
 See [V2 operations and handoff](V2_OPERATIONS.md) for the canonical state, scoped policy, atomic cache, status CLI,
 finite daemon, security limits and validation evidence. No V2 live quota request ran.
@@ -132,4 +132,8 @@ action is executed. See [V2 operations](V2_OPERATIONS.md) for output and exit se
 Crash/interruption safety is VERIFIED OFFLINE with synchronized process tests: old/new
 canonical state survives tested SIGKILL publication stages, locks release, and graceful
 CLI signals preserve bounded read cleanup. Power-loss durability and descendant cleanup
-after SIGKILL of CGC are not guaranteed. Default-target preflight/final audit remain pending.
+after SIGKILL of CGC are not guaranteed. Default-target metadata preflight and final offline acceptance audit are complete.
+
+Final V2 offline acceptance: [evidence matrix](V2_ACCEPTANCE.md).
+153 deterministic tests pass. Zero V2 live reads; optional live verification skipped.
+V3 remains NOT_STARTED and requires separate authorization.

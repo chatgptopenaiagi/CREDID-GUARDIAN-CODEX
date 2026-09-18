@@ -270,3 +270,21 @@ distinct from SIGKILL of the parent, which cannot execute cleanup and carries no
 descendant-lifetime guarantee. Keep these limits explicit. No live reads or persistent
 system changes. Next block is exact default-target metadata preflight and full V2
 acceptance audit. V2 remains PARTIAL; V3 remains NOT_STARTED.
+
+## 2026-09-19 — Default target preflight and final V2 audit
+
+Resumed clean local/fetched/live 9d002936c145a758fb2c6a1893f7c4a4df0517ba. Exact-target
+metadata-only preflight found owned non-symlink .codex directory and absent cgc child;
+no protected-path conflict observed. No directory enumeration, authentication access,
+default cache creation or permission modification. Eight synthetic-home tests confirm
+existing no-follow/private-cache checks refuse conflicts and do not access siblings.
+No runtime change necessary. Baseline 145 passed in 13.818s; new eight passed in 0.024s;
+final 153 passed in 13.630s, zero failures/errors/skips. All existing runtime/tests intact.
+
+Mission 63's twenty criteria have an explicit matrix in V2_ACCEPTANCE.md. V2 is COMPLETE
+under offline POSIX acceptance after this HEAD is published and verified. UNKNOWN live
+applicability is the required safe behavior, not a missing permission to guess. Optional
+live verification explicitly skipped: another snapshot would not establish applicability,
+backend age or sustained reliability. V2 quota reads remain zero. No production-readiness
+or native-Windows claim. V3 and automatic project preservation remain NOT_STARTED.
+Next action: verify publication and STOP; wait for separately scoped authorization.

@@ -1,136 +1,134 @@
 # CREDID GUARDIAN CODEX — CGC V2 progress
 
-Overall: **PARTIAL**. Authoritative specification: [V2_MISSION.md](V2_MISSION.md).
+Overall: **COMPLETE — offline POSIX acceptance**, subject to final publication verification
+for this HEAD. Authoritative specification: [V2_MISSION.md](V2_MISSION.md).
+Full evidence matrix and residual limits: [V2_ACCEPTANCE.md](V2_ACCEPTANCE.md).
 
 THE GUARDIAN OBSERVES. CODEX PRESERVES.
 PRESERVE BEFORE EXPANDING.
 
 ## Session block
 
-2026-09-18: crash and interruption safety (mission 28, 29, 55, 56), exactly the prior
-NEXT_EXACT_ACTION. Verified clean repository root, fetched origin, and verified
-local HEAD = origin/main = live remote main =
-`36197f33a6437e44c6c95b01815c159628133704` before modifications.
-Read the complete mission, current handoff, README, AGENTS and decisions; preserved
-project memory and V1 source/tests were already read during this resumed conversation.
-Audited existing exception-injection, exclusion, timeout and SIGTERM tests before additions.
+2026-09-19: default-cache target preflight and final V2 acceptance audit (mission 13, 17,
+46, 63), exactly the previous NEXT_EXACT_ACTION. Verified clean repository, fetched origin,
+and checked local HEAD = origin/main = live remote main =
+`9d002936c145a758fb2c6a1893f7c4a4df0517ba` before modifications. Reread complete mission,
+progress, README, AGENTS and decisions; audited preserved source, tests and project memory.
 
 ## COMPLETE
 
-- Real-process SIGKILL at six deterministic rendezvous points: before refresh, during
-  synthetic refresh, after valid observation/evaluation, during partial temporary write,
-  before atomic replace and immediately after replace. Each runs with absent and existing
-  state. Before replace, old bytes (or absence) survive; after replace, complete new state.
-- Competing writer refused while each crash peer holds its lock. Kernel releases the lock
-  after death. Restart validates and publishes successfully in the same directory.
-- Partial/complete abandoned temporary siblings retain private 0600 permissions, are never
-  interpreted as canonical state, and remain untouched by later publication.
-- Actual CLI SIGINT during daemon wait, daemon read and one-shot refresh read; in-flight
-  successful synthetic result finishes/publishes exactly once, with no second read.
-- SIGINT during daemon/refresh transport timeouts and SIGTERM during refresh timeout:
-  actual V1 transport runs a synthetic Python child. Explicit child startup handshake
-  confirms TERM-ignore handler installed; cleanup escalates to SIGKILL and reaps it.
-  Failure publication retains last-known-good; no fabricated exhaustion or live policy.
-- Runtime already satisfied these tests: no source changes or schema changes necessary.
-  Existing 133 tests preserved unchanged. No live source or default-cache access.
+- Exact default-target metadata preflight: /home/love/.codex is an owned non-symlink
+  directory (0755), home is owned 0700, ancestors are directories with no symlink in
+  the checked chain, and ~/.codex/cgc is absent. No observed protected-path conflict.
+  No directory enumeration, unrelated/authentication file open, default cache creation
+  or mode change. This is point-in-time evidence; runtime no-follow checks still apply.
+- Eight new synthetic-home tests: absent parent status/read behavior, refusal to create
+  the Codex parent, creation of only CGC child, no sibling read/enumeration, default vs
+  explicit path status equivalence, parent symlink, file/dangling-link/public-directory
+  target conflicts and state symlink/hardlink aliases. Existing enforcement passed;
+  no production change or security relaxation was necessary.
+- Mission 63's twenty acceptance criteria audited with named implementation/test evidence.
+  Offline policy/applicability/freshness/cache/status/refresh/daemon/crash/security acceptance
+  is complete. Normal publication and live-ref equality are checked after this commit.
+- All V2 components and their limits documented. No schema change: cgc-state-v2.3,
+  policy cgc-applicability-v2.2. Source normalization remains 0.1.0-provisional.
+- Optional V2 live verification explicitly SKIPPED: synthetic coverage and preserved V1
+  evidence validate this implementation; another percentage snapshot would not prove
+  window applicability, backend age or sustained reliability. V2 live reads remain zero.
 
 ## PARTIAL
 
-Overall V2 acceptance remains PARTIAL pending default-target conflict preflight and full
-mission acceptance audit. Live applicability, backend sample age and sustained reliability
-remain UNKNOWN. Native Windows remains unsupported. Human /status comparison is
-PENDING / NOT VERIFIED and is not a V2 blocker.
+No required V2 implementation/test block remains partial after this audit. Operational
+knowledge remains limited: actual live applicability, backend sample age, supported
+polling cadence and sustained live reliability are UNKNOWN. Human /status comparison
+is PENDING / NOT VERIFIED, explicitly permitted by the mission. These are not fabricated
+successes or production-readiness claims. See acceptance limits below and in V2_ACCEPTANCE.
 
 ## NOT_STARTED
 
-Optional V2 live verification (zero consumed); V3; automatic external preservation;
-hooks; GUI/tray; services; native Windows transport.
+V3 — CODEX PRESERVATION INTEGRATION; automatic external project preservation; hooks;
+GUI/tray; services; native Windows transport. They require separate authorization.
+Optional live verification is SKIPPED, not consumed or silently deferred as required work.
 
 ## TESTS PASSED
 
-Baseline: **133 tests passed in 2.258s**. New test-first process suite:
-**12 passed in 11.306s**, with no runtime modification or test failure.
-Strengthened synthetic transport startup synchronization and verified SIGKILL reaping.
+Baseline: **145 tests passed in 13.818s**. Eight new test-first default-path tests all
+passed in 0.024s against unchanged runtime; no regression exposed.
 
 ```bash
 TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -q
 ```
 
-Final: **145 tests passed in 13.539s; zero failures, errors or skips.**
-12 new test methods include 12 crash cases (six stages with/without prior state) and six
-signal cases. Parent/child pipe rendezvous replaces timing guesses; waits have bounded
-test deadlines. Tests use disposable Linux-native temporary directories and local Python
-processes only. Existing policy, freshness, provenance, refresh CLI and V1 tests unchanged.
+Final: **153 tests passed in 13.630s; zero failures, errors or skips.**
+All prior 145 tests unchanged. Original V1 reader and 32 tests unchanged. No source read
+was made except synthetic peers/injected fixtures. Permission-sensitive storage uses /tmp.
 
 ## TESTS REMAINING
 
-Default-target conflict preflight and full mission matrix audit. Review any gaps identified
-by that audit before claiming V2 COMPLETE. No repeated live experiment needed.
+None required by this V2 offline acceptance matrix. Future upstream compatibility/live
+applicability investigations, native Windows support and V3 integration need separately
+scoped authorization and tests. No automatic repeat of V1 or live monitoring.
 
 ## KNOWN_FAILURES
 
-No deterministic failures occurred in this block. No unresolved runtime regression found.
+No deterministic failures in this block. Old cache schemas intentionally fail closed.
+The Windows-mounted workspace cannot enforce private POSIX modes; use Linux-native storage.
+No universal power-loss durability, same-user tamper resistance or bounded descendant
+cleanup after SIGKILL of CGC is claimed. Private crash temp files may remain.
 
 ## IMPORTANT_DISCOVERIES
 
-Atomic visibility survives abrupt process death at the tested stages. This is not a
-power-loss durability guarantee. A crash before publication leaves no new failure record;
-consumers still assess retained observation age. Temporary crash artifacts may accumulate;
-CGC deliberately does not guess ownership or delete unknown files. Graceful SIGINT/SIGTERM
-allows a bounded in-flight read to finish and publish; it does not instantly abort it.
-SIGKILL cannot run CGC cleanup: descendant lifetime after abrupt parent death is not
-promised or tested as bounded. Crash-stage fixtures use an in-process synthetic sensor;
-separate graceful-signal tests verify real transport child cleanup. OS scheduling prevents
-hard realtime guarantees. Preserve these limits rather than claiming universal recovery.
+The exact default target is absent and does not collide with an observed protected path.
+Existing descriptor-relative no-follow/private-file checks already enforce the tested
+conflict boundaries; new preflight runtime/configuration machinery was unnecessary.
+Completion means the stated V2 offline success criteria are satisfied, not that live
+windows are known applicable. UNKNOWN is the required truthful result without evidence.
+The production CLI currently cannot produce a live policy/directive; selection is not proof.
 
 ## FILES_CHANGED
 
-Created: tests/test_interruption.py; tests/helpers/interruption_peer.py.
-Modified documentation: README.md, AGENTS.md, docs/ARCHITECTURE.md, docs/DATA_MODEL.md,
-docs/PRESERVATION_POLICY.md, docs/ROADMAP.md, docs/DECISIONS.md,
-docs/V2_OPERATIONS.md, docs/V2_PROGRESS.md, tests/README.md.
-All src/cgc runtime files and previous tests unchanged.
+Created: tests/test_default_cache.py; docs/V2_ACCEPTANCE.md.
+Modified docs: README.md, AGENTS.md, docs/ARCHITECTURE.md, docs/DATA_MODEL.md,
+docs/PRESERVATION_POLICY.md, docs/ROADMAP.md, docs/SECURITY_MODEL.md,
+docs/DECISIONS.md, docs/V2_OPERATIONS.md, docs/V2_PROGRESS.md, tests/README.md.
+All runtime files and previous tests unchanged.
 
 ## DO_NOT_REPEAT
 
-Do not redo completed policy/applicability/freshness/refresh or crash tests without new
-regression evidence. Do not repeat V1 experiments, poll to infer applicability, inspect
-authentication stores, weaken cache permissions, delete unknown crash artifacts, mutate
-unrelated projects or start V3.
+Do not redo completed V1/V2 blocks, repeat live quota reads, infer applicability from
+selection/names/percentages, inspect auth stores, weaken permissions, delete unknown
+crash artifacts, mutate unrelated projects or infer V3 authorization from this handoff.
 
 ## NEXT_EXACT_ACTION
 
-Verify the published checkpoint, then read the complete mission/handoff. Complete one
-bounded **default-cache target preflight and V2 acceptance audit** block (mission 13, 17,
-46, 63): inspect only metadata for the exact proposed ~/.codex/cgc target and necessary
-ancestors; never enumerate/open unrelated Codex or authentication files. Verify no protected
-path conflict before actual default-path use, and add synthetic conflict/path tests if the
-audit shows missing enforcement. Keep actual quota reads at zero unless separately needed
-under the mission's one-read ceiling; prefer explicitly skipping live verification with
-rationale. Audit every V2 success criterion against preserved implementation/tests and
-record COMPLETE/PARTIAL with exact evidence and residual limits. Fix only demonstrated
-in-scope gaps, then test/document/checkpoint/push and stop. V3 requires separate authorization.
+Verify this final V2 checkpoint and its publication, then **STOP**. No V2 implementation
+block remains scheduled. Await a separately scoped authorized mission. The proposed next
+version is CGC V3 — CODEX PRESERVATION INTEGRATION, but it is NOT_STARTED and is not
+authorized by this handoff. Any future live-applicability investigation must preserve
+explicit UNKNOWN until supported evidence exists; do not repeat reads merely to guess.
 
 ## LAST_SAFE_COMMIT
 
-Starting checkpoint: `36197f33a6437e44c6c95b01815c159628133704`.
-Crash/interruption checkpoint: **HEAD after commit/publication**, resolved hash and
-local/tracking/live equality reported after Git operations. Normal forward push only.
-If publication fails, record LOCAL_CHECKPOINT_ONLY.
+Starting published checkpoint: `9d002936c145a758fb2c6a1893f7c4a4df0517ba`.
+Final V2 acceptance checkpoint: **HEAD after commit/publication**. Resolved hash and
+verified local HEAD = origin/main = live remote main belong in the final report.
+Normal forward push only. If publication fails, record LOCAL_CHECKPOINT_ONLY and do not
+claim criterion 63.20 or overall publication complete.
 
 ## Operations and integrity
 
-V1 historical live reads: 1. V2 session and total live quota reads: **0**.
-No installations, persistent system/environment changes, default cache creation, auth
-inspection or unrelated repository writes. Used disposable /tmp caches and synthetic
-processes. Temporary documentation/validation scripts removed before stopping.
-No reliable capacity indicator or threshold crossing observed; preservation is scoped.
-Git public author identity may be supplied per command without persistent configuration.
-Publication gate results follow after execution.
+V1 historical quota reads: 1. V2 session and total live quota reads: **0**.
+No installations, persistent environment/system changes, default cache creation or unrelated
+repository writes. Actual default-path inspection was metadata-only on necessary ancestors
+and exact target. No Codex directory listing or authentication-file inspection.
+Synthetic private /tmp caches removed by tests; temporary scripts removed before stopping.
+No reliable capacity indicator or threshold crossing observed. Per-command public Git
+author metadata only, no persistent configuration change. Publication gate results follow.
 
-Publication gates passed: 17 Python files parse, three JSON files parse and 56 local
-Markdown targets resolve. All runtime files, prior tests, mission text and verbatim
-preservation directives match the starting checkpoint. Bounded recognizable credential-
-pattern screening found zero matches (not a universal secrecy guarantee). Test harness
-and documentation diff reviewed; Git whitespace passed. HHS read-only integrity check:
-clean main at unchanged `280b7090edf51aadf694db04d6d5f6bceff289a2`.
+Publication gates passed: 18 Python files parse; three JSON files parse; 82 local
+Markdown targets resolve; top-level/status/refresh/daemon help succeeds without source
+access. All runtime, prior tests, mission text and verbatim preservation directives
+match the starting checkpoint. Bounded recognizable credential-pattern screening found
+zero matches (not proof of universal secret absence). New test and acceptance/documentation
+changes reviewed; Git whitespace passed. HHS read-only check: clean main at unchanged
+`280b7090edf51aadf694db04d6d5f6bceff289a2`. No unrelated project was modified.

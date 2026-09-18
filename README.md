@@ -8,13 +8,13 @@ Long-running development can approach a usage boundary while discoveries, partia
 
 ## Current status
 
-**CGC V2 — PARTIAL CHECKPOINT: GUARDIAN ENGINE, POLICY, CACHE, STATUS CLI AND BOUNDED DAEMON**
+**CGC V2 — COMPLETE OFFLINE POSIX ACCEPTANCE: GUARDIAN ENGINE, POLICY, CACHE, STATUS CLI AND BOUNDED DAEMON**
 
 | Classification | Status |
 |---|---|
 | IMPLEMENTED | Existing V1 reader, configurable policy with explicit per-window evidence, freshness/provenance, atomic last-known-good cache, cache-only status CLI, one-shot refresh CLI and finite foreground daemon |
-| VERIFIED | 145 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
-| PARTIAL | Live applicability evidence and full mission acceptance |
+| VERIFIED | 153 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
+| COMPLETE | V2 mission offline acceptance; see V2_ACCEPTANCE.md for evidence and limits |
 | NOT IMPLEMENTED | Automatic preservation; hooks, GUI/tray and services |
 | UNKNOWN | Backend sample age, complete bucket applicability, supported polling cadence and sustained live reliability |
 | PLANNED | Preservation integration/hooks, desktop meter and native Windows support |
@@ -108,4 +108,8 @@ action is executed. See [V2 operations](docs/V2_OPERATIONS.md) for output and ex
 Crash/interruption safety is VERIFIED OFFLINE with synchronized process tests: old/new
 canonical state survives tested SIGKILL publication stages, locks release, and graceful
 CLI signals preserve bounded read cleanup. Power-loss durability and descendant cleanup
-after SIGKILL of CGC are not guaranteed. Default-target preflight/final audit remain pending.
+after SIGKILL of CGC are not guaranteed. Default-target metadata preflight and final offline acceptance audit are complete.
+
+Final V2 offline acceptance: [evidence matrix](docs/V2_ACCEPTANCE.md).
+153 deterministic tests pass. Zero V2 live reads; optional live verification skipped.
+V3 remains NOT_STARTED and requires separate authorization.

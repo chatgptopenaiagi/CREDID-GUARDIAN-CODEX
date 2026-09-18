@@ -2,7 +2,7 @@
 
 ## V2 current status
 
-V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
+V2 is COMPLETE under offline POSIX acceptance. The earlier 62-test POSIX run is historical verification of the existing
 implementation, not full mission acceptance. See [current progress](../docs/V2_PROGRESS.md) for current validation and remaining requirements.
 See [V2 operations and handoff](../docs/V2_OPERATIONS.md) for the canonical state, scoped policy, atomic cache, status CLI,
 finite daemon, security limits and validation evidence. No V2 live quota request ran.
@@ -106,3 +106,14 @@ with/without prior state; six graceful signal cases cover daemon/refresh and tim
 transport cleanup. Pipe rendezvous selects exact boundaries; bounded test waits avoid
 sleep-based scheduling assumptions. Runtime and previous tests remain unchanged.
 No live reads, power-loss claim or abrupt-parent descendant cleanup guarantee.
+
+Final V2 offline acceptance: [evidence matrix](../docs/V2_ACCEPTANCE.md).
+153 deterministic tests pass. Zero V2 live reads; optional live verification skipped.
+V3 remains NOT_STARTED and requires separate authorization.
+
+## Final default-path and acceptance audit
+
+Eight new tests in test_default_cache.py use synthetic homes for default-path selection,
+no sibling access/enumeration, absence behavior and alias/permission/file conflicts.
+Existing runtime passed without changes. Final suite: 153 tests, no failures/errors/skips.
+No required V2 acceptance tests remain pending; future scopes require new authorization.

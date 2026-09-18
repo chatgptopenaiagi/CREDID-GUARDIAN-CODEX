@@ -5,12 +5,12 @@ ONE SENSOR. MULTIPLE CONSUMERS.
 
 ## Status and boundaries
 
-V2 is PARTIAL against [the full mission](V2_MISSION.md). See [progress](V2_PROGRESS.md)
-for current test results, remaining acceptance and the exact next block.
+V2 is COMPLETE under offline POSIX acceptance against [the full mission](V2_MISSION.md). See [progress](V2_PROGRESS.md)
+for current test results, residual limits and the final stop instruction.
 
 IMPLEMENTED and VERIFIED OFFLINE: configurable policy, explicit per-window applicability
 and limiting-window reasoning, canonical state, private POSIX atomic cache, cache-only
-human/JSON status, one-shot refresh and finite foreground daemon. **145 deterministic tests pass**, including
+human/JSON status, one-shot refresh and finite foreground daemon. **153 deterministic tests pass**, including
 unchanged original V1 tests. No V2 live source read was consumed. Source remains experimental.
 Actual live applicability is UNKNOWN: no preserved source contract proves which individual
 windows govern the work. The production CLI therefore cannot currently report a live policy.
@@ -37,8 +37,10 @@ window values/reset/provenance, applicability, selection and exclusion reasons. 
 retain last-known-good. Top-level `limiting_window_ids`, minimum and policy describe current
 availability only. Unknown or stale state does not advertise a current limiting window.
 
-Default cache: `~/.codex/cgc/state.json`, not created during development. Before actual
-use, the mission's default-path conflict preflight remains required. `--cache-dir` selects
+Default cache: `~/.codex/cgc/state.json`, not created during development. Exact-target
+metadata preflight found cgc absent with non-symlink directory ancestors and no observed
+conflict. No siblings or credentials were inspected. Runtime no-follow/private checks
+still apply on every use; inspect only exact-target metadata when preparing another host. `--cache-dir` selects
 a dedicated private directory whose parent exists. Use Linux-native storage for POSIX
 0700/0600 enforcement. The current Windows-mounted workspace cannot enforce these modes;
 CGC refuses unsafe permissions rather than weakening them. Native Windows is unsupported.
@@ -79,7 +81,7 @@ PYTHONPATH=src python3 -B -m cgc refresh --live --bucket codex --json
 ```
 
 Omit --json for the same human rendering as status. --cache-dir chooses an existing-parent,
-private CGC directory; the default path still requires the preflight described above.
+private CGC directory; the default path has the metadata preflight described above.
 --bucket (repeatable), --max-age, --timeout and policy thresholds share daemon semantics.
 --live is mandatory. No --interval, --max-reads, retry or fixture/proof CLI option exists.
 
@@ -198,10 +200,10 @@ unsigned-cache integrity guarantee.
 
 ## Handoff
 
-This is a validated crash/interruption checkpoint, not full V2 acceptance. Current checkpoint
+This is the final V2 offline POSIX acceptance checkpoint. See [acceptance](V2_ACCEPTANCE.md). Current checkpoint
 is HEAD after publication; exact hash and next action are in the final report and
 [V2 progress](V2_PROGRESS.md). Do not redo V1 experiments, run live polling, or start V3.
-Next coherent block: default-path conflict preflight and full mission acceptance audit.
+No V2 block remains scheduled. STOP after publication; V3 needs separate authorization.
 
 ## Verified interruption boundaries
 
