@@ -9,7 +9,7 @@ V2 is PARTIAL against [the full mission](V2_MISSION.md). See [progress](V2_PROGR
 for current test results, acceptance gaps and the exact next block. The schema is provisional.
 
 IMPLEMENTED: pure policy engine, canonical versioned state, private POSIX atomic cache,
-cache-only human/JSON status and finite foreground daemon. HISTORICALLY VERIFIED: 62 offline tests,
+cache-only human/JSON status and finite foreground daemon. VERIFIED: 71 offline tests,
 including the original 32 V1 tests. No V2 live source request or sustained live polling
 was performed. The experimental V1 app-server reader is unchanged.
 
@@ -75,8 +75,8 @@ Errors use fixed diagnostics; raw source text, arbitrary arguments and paths are
 
 ## Applicability, policy and freshness
 
-Policy version `cgc-default-v2` implements the unchanged 20/10/5 thresholds without
-rounding. Operator-selected bucket identities define the scope; their selection is
+Policy version `cgc-thresholds-v2.1` uses validated configurable thresholds, defaulting
+to 20/10/5 without rounding. Operator-selected bucket identities define the scope; their selection is
 explicitly labeled `explicit_operator_selection`, not verified universal applicability.
 All recognized usable windows in that scope participate, including individual limits;
 other buckets remain visible but do not lower the selected minimum. Missing buckets
@@ -100,12 +100,12 @@ failed refresh health; it ages normally and cannot reset its timestamp on failur
 
 Synthetic observations remain labeled. They can demonstrate classification but never
 expose a live directive or `live_policy_available=true`. Mixed live/synthetic cache
-refreshes are rejected. A cache's bucket scope and max-age cannot silently change during
+refreshes are rejected. A cache's bucket scope, thresholds and max-age cannot silently change during
 a daemon run; use a separately designated private directory for a changed configuration.
 
 ## Cache security and failure behavior
 
-`cgc-state-v2` stores generation, maximum age, last_valid_observation, canonical policy,
+`cgc-state-v2.1` stores generation, maximum age, last_valid_observation, canonical policy,
 last_refresh_attempt_at/status, fixed error_code and cache_written_at. The V1 observation
 must exactly reproduce through V1 normalization; altered provenance, validity, values,
 extra identity fields, duplicate JSON keys and nonfinite numbers are rejected. Cached
@@ -137,6 +137,29 @@ No live V2 quota read has been consumed. V1 values remain historical.
 
 Do not invoke the optional live test before the offline acceptance gaps are resolved.
 Do not repeat V1 discovery or start V3, services or GUI. Current status relies on explicit
-operator bucket selection, not established per-window applicability. Thresholds are fixed
-at 20/10/5, freshness is currently encoded in validity, and the refresh subcommand is absent.
+operator bucket selection, not established per-window applicability. Thresholds are configurable; freshness is currently encoded in validity, and the refresh
+subcommand is absent.
 These gaps must be closed before claiming full mission acceptance.
+
+## Threshold configuration (implemented and verified offline)
+
+The immutable `PolicyConfig` in engine.py is the single threshold model. Daemon flags
+`--amber-at`, `--red-at`, `--emergency-at` accept percentages, including fractions;
+defaults are 20, 10, 5. Require `0 <= emergency_at < red_at < amber_at <= 100`.
+Equal boundaries are rejected to avoid collapsing a policy band. Booleans, strings
+in the Python/cache model, nonfinite and out-of-range values are rejected.
+GREEN is above amber_at; AMBER is above red_at through amber_at; RED is above
+emergency_at through red_at; EMERGENCY is at or below emergency_at. No rounding.
+
+The canonical policy includes `thresholds: {amber_at, red_at, emergency_at}`.
+Refresh, failed-refresh retention, cache validation and both status formats use that
+configuration. Status has no override flags and performs no source read. Human status
+prints boundaries; JSON exposes them under historical_policy even when current data
+is stale. Invalid threshold CLI options return 2 before creating a cache.
+
+The schema advances to `cgc-state-v2.1`; old `cgc-state-v2` caches are refused, preserved
+and never silently migrated. A mismatched daemon configuration is rejected before a
+source request or state replacement. To intentionally use a different configuration,
+select a new dedicated private cache directory; retain the old cache. No config file,
+installation or automatic cache deletion is introduced. These versions describe CGC's
+experimental local contract, not an upstream API version or production-readiness claim.

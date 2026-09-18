@@ -7,7 +7,7 @@ import threading
 
 from .cache import Cache
 from .daemon import run
-from .engine import StateError, status, utcnow
+from .engine import StateError, status, utcnow, PolicyConfig, DEFAULT_POLICY
 
 
 class Parser(argparse.ArgumentParser):
@@ -30,10 +30,15 @@ def main(argv=None):
             p.add_argument('--interval', type=int, default=300)
             p.add_argument('--max-age', type=int, default=900)
             p.add_argument('--timeout', type=int, default=20)
+            for field, default in DEFAULT_POLICY.to_dict().items():
+                p.add_argument('--' + field.replace('_', '-'), type=float, default=default,
+                               help='inclusive remaining-percent upper boundary')
             p.add_argument('--live', action='store_true', required=True,
                            help='explicitly initiate live quota reads (no AI turns)')
     args = parser.parse_args(argv)
     try:
+        config = (PolicyConfig(args.amber_at, args.red_at, args.emergency_at)
+                  if args.command == 'daemon' else None)
         # Status must not create a cache directory when none exists.
         if args.command == 'status' and not args.cache_dir.exists():
             # A dangling symlink is unsafe rather than an absent cache.
@@ -48,7 +53,7 @@ def main(argv=None):
                     try:
                         attempts = run(cache, buckets=args.bucket, max_reads=args.max_reads,
                                        interval=args.interval, max_age=args.max_age,
-                                       timeout=args.timeout, stop=stop)
+                                       timeout=args.timeout, stop=stop, config=config)
                     finally:
                         for s, handler in old.items():
                             signal.signal(s, handler)
@@ -64,6 +69,9 @@ def main(argv=None):
             print(f"Validity: {output['validity']}; policy: {output['policy_state'] or 'UNKNOWN'}")
             print(f"Mode: {output.get('mode') or 'UNKNOWN'}; coverage: {output.get('coverage', 'UNKNOWN')}; global all-clear: false")
             print(f"Age seconds: {output.get('age_seconds')}; refresh: {output.get('last_refresh_status', 'NEVER')}")
+            thresholds = output.get('historical_policy', {}).get('thresholds')
+            if thresholds:
+                print(f"Thresholds: AMBER <= {thresholds['amber_at']:g}%; RED <= {thresholds['red_at']:g}%; EMERGENCY <= {thresholds['emergency_at']:g}%")
             for window in (output.get('observation') or {}).get('windows', []):
                 print(f"{window['window_id']}: remaining={window['remaining_percent']}% ({window['value_origin']}), validity={window['validity']}, reset={window['reset_at']}")
             if output.get('error_code'):

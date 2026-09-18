@@ -151,3 +151,30 @@ normal follow-up documenting resolved validation, push both forward to CGC main,
 local/tracking/live refs and clean tree, then stop this preservation block. Next work:
 canonical configurable thresholds (mission 9, 32, 33), not V3. Final checkpoint self-reference
 is HEAD; exact resolved hash/publication outcome is reported after the Git operations.
+
+
+## V2 configurable thresholds — 2026-09-18
+
+Verified clean CGC root and local/fetched/live main at
+b4c05229e4d8b5210bd99821c77e46f0c0257267 before changes. Resumed the recorded
+NEXT_EXACT_ACTION only: mission 9, 32, 33. Baseline 62 tests passed in 1.953s on /tmp.
+Test-first import failed because PolicyConfig did not yet exist; implemented it and
+70 tests passed in 1.976s, then added an old-cache disk-preservation regression.
+
+One immutable PolicyConfig stores inclusive amber/red/emergency boundaries, default
+20/10/5. Require strict ordering in [0,100] so bands cannot collapse; fractions work
+without rounding. Range checking precedes isfinite to reject huge integers safely.
+Persist threshold values with policy version cgc-thresholds-v2.1; advance provisional
+state schema to cgc-state-v2.1 instead of silently upgrading ambiguous old caches.
+Daemon mismatch blocks the sensor and preserves state; status uses cached configuration.
+CLI-only settings suffice; no new hidden config file. Same-user coordinated tampering
+remains outside the unsigned cache integrity guarantee.
+
+New file: tests/test_policy_config.py. Runtime edits: engine.py, daemon.py, __main__.py.
+Documentation changes and final validation are enumerated in V2_PROGRESS.md. V1 reader
+and tests remain unchanged. No source/API research, live read, dependency installation,
+system setting change, default cache creation or external repository mutation.
+This threshold block is COMPLETE; overall V2 PARTIAL; V3 NOT_STARTED.
+Checkpoint self-reference: HEAD after normal commit/publication; report resolved hash
+and local/tracking/live equality after the operations. Next block is explicit per-window
+applicability and constrained-window reasoning, not refresh CLI or V3.

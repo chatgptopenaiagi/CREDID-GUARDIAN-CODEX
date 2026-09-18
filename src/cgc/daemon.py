@@ -1,11 +1,11 @@
 """Finite foreground CGC observation loop. No service or background installation."""
 import threading
 
-from .engine import empty_state, refresh, selection, StateError, utcnow
+from .engine import empty_state, refresh, selection, StateError, utcnow, DEFAULT_POLICY
 from .quota import read_quota, _validate_timeout
 
 
-def run(cache, *, buckets, max_reads, interval=300, max_age=900, timeout=20,
+def run(cache, *, buckets, max_reads, interval=300, max_age=900, timeout=20, config=DEFAULT_POLICY,
         reader=read_quota, clock=utcnow, stop=None):
     """At most max_reads attempts, completion-to-start spacing and capped backoff.
 
@@ -18,12 +18,13 @@ def run(cache, *, buckets, max_reads, interval=300, max_age=900, timeout=20,
     if type(interval) is not int or not 60 <= interval <= 3600:
         raise StateError('INVALID_CONFIG')
     _validate_timeout(timeout)
-    initial = empty_state(buckets, max_age)
+    initial = empty_state(buckets, max_age, config=config)
     stop = stop if stop is not None else threading.Event()
     attempts = failures = 0
     with cache.writer():
         state = cache.read() or initial
-        if state['policy']['selected_buckets'] != buckets or state['max_age_seconds'] != max_age:
+        if (state['policy']['selected_buckets'] != buckets or state['max_age_seconds'] != max_age
+                or state['policy']['thresholds'] != config.to_dict()):
             raise StateError('CONFIG_MISMATCH')
         for _ in range(max_reads):
             if stop.is_set():

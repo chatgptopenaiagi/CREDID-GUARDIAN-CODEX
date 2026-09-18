@@ -12,9 +12,9 @@ Long-running development can approach a usage boundary while discoveries, partia
 
 | Classification | Status |
 |---|---|
-| IMPLEMENTED | Existing V1 reader, scoped policy engine, atomic last-known-good cache, cache-only status CLI and finite foreground daemon |
-| VERIFIED | 62 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
-| PARTIAL | Configurable policy thresholds, applicability distinctions, separate freshness output and full mission acceptance |
+| IMPLEMENTED | Existing V1 reader, configurable scoped policy engine, atomic last-known-good cache, cache-only status CLI and finite foreground daemon |
+| VERIFIED | 71 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
+| PARTIAL | Applicability distinctions, separate freshness output and full mission acceptance |
 | NOT IMPLEMENTED | One-shot refresh CLI; automatic preservation; hooks, GUI/tray and services |
 | UNKNOWN | Backend sample age, complete bucket applicability, supported polling cadence and sustained live reliability |
 | PLANNED | Preservation integration/hooks, desktop meter and native Windows support |
@@ -27,7 +27,7 @@ V1 percentages are historical evidence, not current quota.
 
 ```bash
 PYTHONPATH=src python3 -B -m cgc status --json
-PYTHONPATH=src python3 -B -m unittest discover -s tests -v
+TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -v
 ```
 
 Status reads only the shared cache and reports UNKNOWN if none exists. The finite daemon

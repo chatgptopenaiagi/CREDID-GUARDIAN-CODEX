@@ -56,3 +56,12 @@ Use `TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -v` on 
 when the checkout is on a Windows mount that does not enforce POSIX 0700/0600 modes.
 The full suite passes with Linux-native temporary caches. Workspace-contained caches
 are intentionally refused on the current Windows mount; do not weaken the checks.
+
+## Configurable-threshold block
+
+71 deterministic tests now pass, including nine tests in test_policy_config.py for
+fractional boundaries, invalid configuration, cache schema/policy rejection, custom
+refresh/failure retention, daemon mismatch before reads, equivalent numeric configuration,
+CLI forwarding and human/JSON consistency. V1 code and its original 32 tests are unchanged.
+The initial test-first invocation failed to import the not-yet-implemented PolicyConfig;
+that expected failure is resolved. Full mission acceptance remains pending.

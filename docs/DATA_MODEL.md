@@ -2,6 +2,10 @@
 
 ## V2 current status
 
+The configurable-threshold block (mission 9, 32, 33) is COMPLETE: one validated
+PolicyConfig, persisted thresholds, daemon configuration checks and cache-only status.
+Schema cgc-state-v2.1 rejects older caches without replacing them. Full V2 remains PARTIAL.
+
 V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
 implementation, not full mission acceptance. See [current progress](V2_PROGRESS.md) for current validation and remaining requirements.
 See [V2 operations and handoff](V2_OPERATIONS.md) for the canonical state, scoped policy, atomic cache, status CLI,

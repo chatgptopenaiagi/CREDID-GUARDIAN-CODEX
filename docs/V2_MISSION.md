@@ -1935,5 +1935,26 @@ Then state exactly:
 * commit hash
 * remote state
 * HHS integrity
+## LOW-CAPACITY EMERGENCY PRESERVATION
 
+When remaining Codex capacity is observed to be low:
+
+1. Immediately stop beginning new architectural work.
+2. Finish only the smallest currently coherent operation when safe.
+3. Do not start another mission item.
+4. Run the minimum deterministic validation necessary to establish
+   the state of completed work.
+5. Update V2_PROGRESS.md before optional documentation.
+6. Record the exact current state even if work is PARTIAL.
+7. Record NEXT_EXACT_ACTION so another Codex session can resume
+   without reconstructing reasoning.
+8. Create a local Git checkpoint whenever the repository is coherent.
+9. Push only if validation requirements are satisfied.
+10. If remote publication cannot be completed, explicitly record:
+    LOCAL_CHECKPOINT_ONLY.
+11. Prefer preservation over additional testing, refactoring,
+    optimization, or documentation when capacity becomes critical.
+
+A PARTIAL but precisely preserved state is preferable to an
+unrecorded almost-complete state.
 Then STOP.
