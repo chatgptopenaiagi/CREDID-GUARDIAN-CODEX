@@ -10,7 +10,7 @@ for current test results, remaining acceptance and the exact next block.
 
 IMPLEMENTED and VERIFIED OFFLINE: configurable policy, explicit per-window applicability
 and limiting-window reasoning, canonical state, private POSIX atomic cache, cache-only
-human/JSON status, one-shot refresh and finite foreground daemon. **133 deterministic tests pass**, including
+human/JSON status, one-shot refresh and finite foreground daemon. **145 deterministic tests pass**, including
 unchanged original V1 tests. No V2 live source read was consumed. Source remains experimental.
 Actual live applicability is UNKNOWN: no preserved source contract proves which individual
 windows govern the work. The production CLI therefore cannot currently report a live policy.
@@ -96,7 +96,7 @@ arguments/configuration or cache/operational failure. A source read can succeed 
 policy remains UNKNOWN and exit is 1. Do not retry automatically to resolve uncertainty.
 SIGINT/SIGTERM sets a stop event; cancellation before read skips publication, while an
 in-flight bounded read completes or times out and publishes before exit. No background
-process/service is installed. Detailed real-process interruption acceptance is the next block.
+process/service is installed. Real-process interruption tests verify these boundaries with synthetic sources.
 
 ## Applicability and reasoning
 
@@ -198,8 +198,22 @@ unsigned-cache integrity guarantee.
 
 ## Handoff
 
-This is a validated one-shot refresh checkpoint, not full V2 acceptance. Current checkpoint
+This is a validated crash/interruption checkpoint, not full V2 acceptance. Current checkpoint
 is HEAD after publication; exact hash and next action are in the final report and
 [V2 progress](V2_PROGRESS.md). Do not redo V1 experiments, run live polling, or start V3.
-Next coherent block: remaining crash/interruption safety. Default-path preflight and
-full mission acceptance audit follow in a separate block.
+Next coherent block: default-path conflict preflight and full mission acceptance audit.
+
+## Verified interruption boundaries
+
+Synchronized process tests kill a writer before/during refresh, after evaluation, during
+partial temporary write, before replace and after replace, both with and without prior
+state. Readers see absence/old canonical data before replacement and a complete new
+generation after it. Locks release on process death; restart can publish while preserving
+private abandoned temporary files. These tests establish atomic visibility, not power-loss
+durability. Crash before publication cannot record its own refresh failure.
+
+Real CLI SIGINT tests cover daemon wait/read and refresh read. In-flight success finishes
+and publishes once. SIGINT daemon/refresh and SIGTERM refresh timeout tests retain history
+and verify V1 cleanup kills/reaps a TERM-ignoring synthetic child. SIGKILL of CGC cannot
+execute cleanup; arbitrary descendant lifetime after abrupt parent death is not guaranteed.
+No live source was used, and no production changes were needed for these tests.

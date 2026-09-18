@@ -13,7 +13,7 @@ Long-running development can approach a usage boundary while discoveries, partia
 | Classification | Status |
 |---|---|
 | IMPLEMENTED | Existing V1 reader, configurable policy with explicit per-window evidence, freshness/provenance, atomic last-known-good cache, cache-only status CLI, one-shot refresh CLI and finite foreground daemon |
-| VERIFIED | 133 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
+| VERIFIED | 145 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
 | PARTIAL | Live applicability evidence and full mission acceptance |
 | NOT IMPLEMENTED | Automatic preservation; hooks, GUI/tray and services |
 | UNKNOWN | Backend sample age, complete bucket applicability, supported polling cadence and sustained live reliability |
@@ -104,3 +104,8 @@ One-shot refresh CLI is IMPLEMENTED and VERIFIED OFFLINE. It requires --live and
 --bucket, shares the daemon writer lock/configuration/cache path, and makes at most
 one bounded read without retry. Unknown applicability remains UNKNOWN; no preservation
 action is executed. See [V2 operations](docs/V2_OPERATIONS.md) for output and exit semantics.
+
+Crash/interruption safety is VERIFIED OFFLINE with synchronized process tests: old/new
+canonical state survives tested SIGKILL publication stages, locks release, and graceful
+CLI signals preserve bounded read cleanup. Power-loss durability and descendant cleanup
+after SIGKILL of CGC are not guaranteed. Default-target preflight/final audit remain pending.

@@ -97,3 +97,12 @@ raw transport fixtures. No real source calls, prior test edits or skipped assert
 Coverage includes one-read/no-wait, current/history output, config rejection, locking,
 corruption/schema/path refusal, atomic write failure and cancellation. Remaining real
 process crash/SIGINT cases are explicitly deferred to the next block.
+
+## Crash/interruption checkpoint
+
+145 tests pass, including 12 new methods in test_interruption.py and the dedicated
+helpers/interruption_peer.py synthetic process harness. Six SIGKILL stages each run
+with/without prior state; six graceful signal cases cover daemon/refresh and timeout
+transport cleanup. Pipe rendezvous selects exact boundaries; bounded test waits avoid
+sleep-based scheduling assumptions. Runtime and previous tests remain unchanged.
+No live reads, power-loss claim or abrupt-parent descendant cleanup guarantee.

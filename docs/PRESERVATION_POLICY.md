@@ -122,3 +122,8 @@ One-shot refresh CLI is IMPLEMENTED and VERIFIED OFFLINE. It requires --live and
 --bucket, shares the daemon writer lock/configuration/cache path, and makes at most
 one bounded read without retry. Unknown applicability remains UNKNOWN; no preservation
 action is executed. See [V2 operations](V2_OPERATIONS.md) for output and exit semantics.
+
+Crash/interruption safety is VERIFIED OFFLINE with synchronized process tests: old/new
+canonical state survives tested SIGKILL publication stages, locks release, and graceful
+CLI signals preserve bounded read cleanup. Power-loss durability and descendant cleanup
+after SIGKILL of CGC are not guaranteed. Default-target preflight/final audit remain pending.

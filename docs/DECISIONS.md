@@ -253,3 +253,20 @@ implementation passed 129 tests, expanded acceptance passed 133 in 2.234s. Eight
 tests, zero final failures/errors/skips. Zero live reads; no installs or persistent
 system changes. Remaining crash/interruption acceptance is next; default-path preflight
 and full mission audit follow separately. Full V2 remains PARTIAL and V3 NOT_STARTED.
+
+## 2026-09-18 — Crash and interruption safety
+
+Resumed clean local/fetched/live checkpoint 36197f33a6437e44c6c95b01815c159628133704.
+Audited exception-injection and prior signal coverage; added synchronized real-process
+tests at six SIGKILL publication stages with/without existing state, plus six CLI signal
+cases. Existing runtime passed without changes. A separate TERM-ignoring synthetic
+transport startup handshake verifies graceful timeout cleanup escalates to KILL and reaps.
+Baseline 133 tests passed in 2.258s; initial new suite 12 passed in 11.306s; final full
+suite 145 passed in 13.539s. No failures/errors/skips; no earlier tests changed.
+
+Private abandoned temp siblings are ignored, not automatically deleted. Process-crash
+atomic visibility is distinct from power-loss durability. Graceful bounded cleanup is
+distinct from SIGKILL of the parent, which cannot execute cleanup and carries no bounded
+descendant-lifetime guarantee. Keep these limits explicit. No live reads or persistent
+system changes. Next block is exact default-target metadata preflight and full V2
+acceptance audit. V2 remains PARTIAL; V3 remains NOT_STARTED.
