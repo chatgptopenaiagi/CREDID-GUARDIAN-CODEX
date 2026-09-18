@@ -60,7 +60,7 @@ The prototype refuses server requests (including external token refresh/attestat
 
 ## V2 applicability evidence boundary
 
-Schema cgc-state-v2.2 accepts at most 96 unique evidence entries for windows actually
+Schema cgc-state-v2.3 accepts at most 96 unique evidence entries for windows actually
 present in the associated normalized observation. Exact fields: window_id,
 applicability, basis, observed_at. Applicability is a fixed enum; the only accepted
 basis is SYNTHETIC_CONTRACT, and only for synthetic observations with the exact same
@@ -74,3 +74,7 @@ no cached label or limiting ID is trusted without recomputation. Cache bound is 
 for two bounded observations/evaluations, tested with all 96 windows. POSIX modes,
 no-follow path checks, locking and atomic replacement are unchanged. Same-user coordinated
 tampering remains outside the unsigned cache guarantee; synthetic data cannot prove live facts.
+
+Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
+and policy authority; failed refresh withholds current policy while retaining evidence.
+See [V2 operations](V2_OPERATIONS.md) for canonical semantics and schema details.

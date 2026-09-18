@@ -69,7 +69,7 @@ that expected failure is resolved. Full mission acceptance remains pending.
 
 ## Applicability and limiting-window block
 
-87 deterministic tests pass using Linux /tmp, including 16 new applicability tests.
+At the previous checkpoint, 87 deterministic tests passed using Linux /tmp, including 16 new applicability tests.
 The 30% APPLICABLE plus 2% UNKNOWN case keeps a 30% scoped minimum and PARTIAL coverage.
 NOT_APPLICABLE, UNKNOWN, invalid values and out-of-scope windows remain distinct;
 selection/name/duration/allowance never establish applicability. Tests verify ties,
@@ -80,3 +80,11 @@ policy/configuration/daemon tests. Runtime code never imports it. Original V1 te
 remain unchanged; test data labeled live now expects UNKNOWN without verified evidence.
 The cache bound is 256 KiB because the retained observation and latest diagnostics each
 carry evidence. This does not change source limits or permission requirements.
+
+## Freshness/provenance checkpoint
+
+115 deterministic tests pass (28 new in test_freshness.py). Run the complete suite with
+TMPDIR=/tmp as above. Tests cover time boundaries, origin/retention separation, refresh
+failures, independent last-known-good age, CLI agreement, schema tampering, maximum
+window capacity and cache bounds. Failure now withholds current policy; historical
+classification remains visible. V1 tests are unchanged. See V2_PROGRESS.md for exact results.

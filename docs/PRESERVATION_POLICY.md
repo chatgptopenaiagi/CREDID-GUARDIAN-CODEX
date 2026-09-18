@@ -6,7 +6,7 @@ The configurable-threshold block (mission 9, 32, 33) is COMPLETE: one validated
 PolicyConfig, persisted thresholds, daemon configuration checks and cache-only status.
 The applicability/limiting-window block (10, 26, 47, 49) is also COMPLETE offline.
 Per-window evidence is distinct from selection; live applicability remains UNKNOWN.
-Schema cgc-state-v2.2 preserves latest diagnostics and last-known-good separately and
+Schema cgc-state-v2.3 preserves latest diagnostics and last-known-good separately and
 rejects older caches without replacing them. Full V2 remains PARTIAL.
 
 V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
@@ -113,3 +113,7 @@ Also test fractional values around each threshold, unknown/stale input and parti
 ## V1 reader clarification
 
 The human subsequently specified clamping for the observation prototype: derive remaining with `clamp(100 - usedPercent, 0, 100)`. V1 preserves the original used value and labels out-of-range source input INVALID even if the result is clamped. Thus clamping cannot admit invalid input into future policy. No policy engine or preservation action is implemented in V1; all threshold behavior above remains a future contract. See [V1 data model](DATA_MODEL.md).
+
+Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
+and policy authority; failed refresh withholds current policy while retaining evidence.
+See [V2 operations](V2_OPERATIONS.md) for canonical semantics and schema details.

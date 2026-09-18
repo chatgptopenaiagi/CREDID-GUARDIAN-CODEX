@@ -10,12 +10,12 @@ for current test results, remaining acceptance and the exact next block.
 
 IMPLEMENTED and VERIFIED OFFLINE: configurable policy, explicit per-window applicability
 and limiting-window reasoning, canonical state, private POSIX atomic cache, cache-only
-human/JSON status and finite foreground daemon. **87 deterministic tests pass**, including
+human/JSON status and finite foreground daemon. **115 deterministic tests pass**, including
 unchanged original V1 tests. No V2 live source read was consumed. Source remains experimental.
 Actual live applicability is UNKNOWN: no preserved source contract proves which individual
 windows govern the work. The production CLI therefore cannot currently report a live policy.
 
-NOT IMPLEMENTED: refresh CLI, separate freshness vocabulary, preservation integration,
+NOT IMPLEMENTED: refresh CLI, preservation integration,
 hooks, GUI/tray, services or native Windows transport. Human `/status` comparison remains
 PENDING / NOT VERIFIED and is not a V2 blocker. No external-repository action exists.
 
@@ -107,11 +107,28 @@ diagnostics and reports NO_USABLE_DATA, without erasing last-known-good or prese
 as the new current policy. Transport/malformed-data failures leave both pairs unchanged
 and update safe refresh metadata. Mode changes and timestamp regression are rejected.
 
-Existing freshness behavior is retained: age uses local completion time; age > max-age
-withholds current policy/limit as STALE. Future timestamps give CLOCK_SKEW; explicit
-ordinaryUsageAllowed=false gives USAGE_BLOCKED. Historical reasoning remains labeled.
-No replenishment is inferred from reset passage. Backend sample age is unknown. A separate
-freshness model is the next block. Synthetic observations never expose a live directive.
+Freshness is FRESH / STALE / UNKNOWN / ERROR, separate from refresh health and
+applicability. Local observation completion time is the age basis; backend sample time
+remains unavailable. Age <= max-age is FRESH, greater is STALE, future time ERROR,
+missing time UNKNOWN, malformed time ERROR. No future tolerance or reset-based
+replenishment inference is introduced. Read-time evaluation recomputes both latest and
+last-known-good ages. Cached temporal snapshots are validated at their original write time.
+
+Current policy requires FRESH age, successful refresh and usable applicable data, with
+ordinary usage not explicitly blocked. A failed refresh with fresh retained data can
+therefore show freshness FRESH, refresh ERROR, disposition RETAINED and no current policy.
+Stale evidence is HISTORICAL. No observation is UNAVAILABLE. Fresh accepted observations
+are CURRENT even when unknown applicability prevents policy. Last-known-good is always
+labeled HISTORICAL and cannot substitute for current authority. Stale arrivals do not
+replace last-known-good. Clock regression before the cache write rejects publication.
+
+JSON exposes observation_freshness, last_known_good_freshness, data_disposition,
+policy_available and provenance for latest/historical observations. Value origins DIRECT /
+DERIVED / UNAVAILABLE remain distinct from retention roles: source usedPercent=64 yields
+remainingPercent=36 with DERIVED origin. Normalized duration/reset conversions are DERIVED;
+source time is UNAVAILABLE. Human output shows the same freshness, role and value origins.
+Synthetic observations never expose a live directive. The legacy validity field remains
+for compatibility but does not replace the separate freshness assessment.
 
 ## Threshold configuration
 
@@ -129,7 +146,7 @@ retain the old cache. No config file or automatic deletion is introduced.
 
 ## Cache security and schema
 
-Provisional schema `cgc-state-v2.2` rejects older schemas, including v2.1, without migration
+Provisional schema `cgc-state-v2.3` rejects older schemas, including v2.2, without migration
 or replacement. The schema/policy versions describe CGC's experimental local contract.
 Each observation must reproduce exactly through V1 normalization, and each policy must
 reproduce through applicability evaluation with its own evidence and common configuration.
@@ -153,7 +170,7 @@ unsigned-cache integrity guarantee.
 
 ## Handoff
 
-This is a validated applicability checkpoint, not full V2 acceptance. Current checkpoint
+This is a validated freshness/provenance checkpoint, not full V2 acceptance. Current checkpoint
 is HEAD after publication; exact hash and next action are in the final report and
 [V2 progress](V2_PROGRESS.md). Do not redo V1 experiments, run live polling, or start V3.
-Next coherent block: separate freshness/provenance. Refresh CLI remains subsequent work.
+Next coherent block: one-shot refresh CLI. Stop after its own validated checkpoint.

@@ -52,7 +52,8 @@ class PolicyConfigTests(unittest.TestCase):
         self.assertEqual(state['policy']['policy_state'], 'RED')
         failed = refresh(state, {'status': 'ERROR', 'error_code': 'TIMEOUT'}, now=STAMP)
         self.assertEqual(failed['policy'], state['policy'])
-        self.assertEqual(status(failed, now=STAMP)['policy_state'], 'RED')
+        self.assertIsNone(status(failed, now=STAMP)['policy_state'])
+        self.assertEqual(status(failed, now=STAMP)['historical_policy']['policy_state'], 'RED')
         self.assertEqual(state['policy']['thresholds'], config.to_dict())
 
     def test_tampered_and_old_cache_rejected(self):

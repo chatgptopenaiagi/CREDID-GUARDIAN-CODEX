@@ -6,7 +6,7 @@ The configurable-threshold block (mission 9, 32, 33) is COMPLETE: one validated
 PolicyConfig, persisted thresholds, daemon configuration checks and cache-only status.
 The applicability/limiting-window block (10, 26, 47, 49) is also COMPLETE offline.
 Per-window evidence is distinct from selection; live applicability remains UNKNOWN.
-Schema cgc-state-v2.2 preserves latest diagnostics and last-known-good separately and
+Schema cgc-state-v2.3 preserves latest diagnostics and last-known-good separately and
 rejects older caches without replacing them. Full V2 remains PARTIAL.
 
 V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
@@ -119,3 +119,7 @@ Window fields: window_id, bucket_id, name, window_kind, duration_seconds, used_p
 V1 has fixed limits of 32 buckets, 512 KiB combined process output, 128 KiB buffered frame, 100 frames and a configurable finite timeout up to 30 seconds (default 20), plus bounded cleanup. All limits fail closed; no silent truncated all-clear. Errors contain a fixed code, attempted_at, observed_at=null and empty windows, explicitly ERROR rather than a fabricated empty observation. No cache exists to overwrite.
 
 [Retained normalized live projection](v1-normalized-observation.json) was normalized offline from the already-sanitized experiment artifact; it did not consume another live read. [Synthetic fixture](../tests/fixtures/quota.json) is hand-authored and contains no actual account data. Synthetic normalizer calls use mode=synthetic and source_confidence=SYNTHETIC. Publication of test results does not make them live observations.
+
+Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
+and policy authority; failed refresh withholds current policy while retaining evidence.
+See [V2 operations](V2_OPERATIONS.md) for canonical semantics and schema details.

@@ -214,3 +214,23 @@ was not started. No refresh CLI or V3 work; zero V2 live reads and no system ins
 Full inventory, validation, limitations and exact next freshness block are in
 V2_PROGRESS.md. Publish a normal forward checkpoint; self-reference HEAD, resolved hash
 and equality verified after publication. HHS check is read-only. Stop after preservation.
+
+## 2026-09-18 — Freshness and provenance checkpoint
+
+Implemented independent FRESH / STALE / UNKNOWN / ERROR age assessments and refresh
+health, with CURRENT / RETAINED / HISTORICAL / UNAVAILABLE storage roles separate from
+DIRECT / DERIVED / UNAVAILABLE value origins. Local completion time is the only known
+age basis; backend sample time remains unavailable. Existing integer max-age 1–86400,
+default 900, is inclusive at the boundary; future timestamps have no tolerance.
+
+Failed refresh now withholds current policy even for fresh retained evidence. Stale
+arrivals preserve last-known-good. Read-time age is recalculated without cache writes.
+Schema cgc-state-v2.3 adds a validated temporal snapshot; incompatible older caches are
+rejected without migration. Policy cgc-applicability-v2.2 and V1 normalization stay intact.
+Provenance views derive from validated normalized origin fields, avoiding duplicated
+cache payloads. The private 256 KiB bound remains sufficient for all 96 windows.
+
+Test-first failures exposed missing interfaces/output, then resolved. Final 115 tests
+pass; 28 added, one old failed-refresh assertion intentionally updated to require
+historical rather than current RED. No live reads or persistent environment changes.
+Refresh CLI remains the next separate block; full V2 remains PARTIAL.

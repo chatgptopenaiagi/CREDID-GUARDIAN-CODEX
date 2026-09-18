@@ -1,11 +1,11 @@
 """Finite foreground CGC observation loop. No service or background installation."""
 import threading
 
-from .engine import empty_state, refresh, selection, StateError, utcnow, DEFAULT_POLICY
+from .engine import empty_state, refresh, selection, StateError, utcnow, DEFAULT_POLICY, MAX_AGE
 from .quota import read_quota, _validate_timeout
 
 
-def run(cache, *, buckets, max_reads, interval=300, max_age=900, timeout=20, config=DEFAULT_POLICY,
+def run(cache, *, buckets, max_reads, interval=300, max_age=MAX_AGE, timeout=20, config=DEFAULT_POLICY,
         reader=read_quota, clock=utcnow, stop=None, evidence_provider=None):
     """At most max_reads attempts, completion-to-start spacing and capped backoff.
 

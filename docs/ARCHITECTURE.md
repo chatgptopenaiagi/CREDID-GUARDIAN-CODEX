@@ -6,7 +6,7 @@ The configurable-threshold block (mission 9, 32, 33) is COMPLETE: one validated
 PolicyConfig, persisted thresholds, daemon configuration checks and cache-only status.
 The applicability/limiting-window block (10, 26, 47, 49) is also COMPLETE offline.
 Per-window evidence is distinct from selection; live applicability remains UNKNOWN.
-Schema cgc-state-v2.2 preserves latest diagnostics and last-known-good separately and
+Schema cgc-state-v2.3 preserves latest diagnostics and last-known-good separately and
 rejects older caches without replacing them. Full V2 remains PARTIAL.
 
 V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
@@ -83,3 +83,7 @@ Source payloads and cached strings are data, never instructions. The reader and 
 `read_quota` returns normalized allowlisted data or a fixed safe failure. `normalize` is pure and supports synthetic fixtures. All returned bucket identities are retained within a 32-bucket limit; recognized primary/secondary/individual-limit fields produce separate windows. Additional unrecognized fields are not interpreted and coverage stays UNKNOWN. No global minimum is calculated across potentially inapplicable buckets. The live invocation was a one-off experiment; the factored transport has synthetic-peer acceptance only, without a second live invocation.
 
 No state cache, daemon, CLI command, preservation hook, repository mutation or GUI was added. The one live authorization is consumed; future repeated reads need a new scoped task.
+
+Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
+and policy authority; failed refresh withholds current policy while retaining evidence.
+See [V2 operations](V2_OPERATIONS.md) for canonical semantics and schema details.

@@ -6,7 +6,7 @@ The configurable-threshold block (mission 9, 32, 33) is COMPLETE: one validated
 PolicyConfig, persisted thresholds, daemon configuration checks and cache-only status.
 The applicability/limiting-window block (10, 26, 47, 49) is also COMPLETE offline.
 Per-window evidence is distinct from selection; live applicability remains UNKNOWN.
-Schema cgc-state-v2.2 preserves latest diagnostics and last-known-good separately and
+Schema cgc-state-v2.3 preserves latest diagnostics and last-known-good separately and
 rejects older caches without replacing them. Full V2 remains PARTIAL.
 
 V2 is PARTIAL. The earlier 62-test POSIX run is historical verification of the existing
@@ -38,3 +38,7 @@ V0 foundation complete. V1 observed a real quota snapshot via documented experim
 **CGC V2 — GUARDIAN DAEMON:** one canonical normalized state, applicable-bucket policy, atomic last-known-good cache and bounded observation loop with tested source failures, staleness, concurrency and shutdown. Establish source-appropriate cadence and resolve the independent status comparison without extracting credentials or invoking AI tasks for test traffic.
 
 V2 requires a new explicit task. No daemon, cache, preservation hooks, GUI or repeated polling was started during V1.
+
+Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
+and policy authority; failed refresh withholds current policy while retaining evidence.
+See [V2 operations](V2_OPERATIONS.md) for canonical semantics and schema details.

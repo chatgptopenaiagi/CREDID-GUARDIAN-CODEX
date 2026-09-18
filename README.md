@@ -12,9 +12,9 @@ Long-running development can approach a usage boundary while discoveries, partia
 
 | Classification | Status |
 |---|---|
-| IMPLEMENTED | Existing V1 reader, configurable policy with explicit per-window evidence, atomic last-known-good cache, cache-only status CLI and finite foreground daemon |
-| VERIFIED | 87 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
-| PARTIAL | Live applicability evidence, separate freshness output and full mission acceptance |
+| IMPLEMENTED | Existing V1 reader, configurable policy with explicit per-window evidence, freshness/provenance, atomic last-known-good cache, cache-only status CLI and finite foreground daemon |
+| VERIFIED | 115 tests pass using Linux-native temporary storage; one historical V1 observation. See V2_PROGRESS.md |
+| PARTIAL | Live applicability evidence, refresh CLI and full mission acceptance |
 | NOT IMPLEMENTED | One-shot refresh CLI; automatic preservation; hooks, GUI/tray and services |
 | UNKNOWN | Backend sample age, complete bucket applicability, supported polling cadence and sustained live reliability |
 | PLANNED | Preservation integration/hooks, desktop meter and native Windows support |
@@ -95,3 +95,7 @@ hook is claimed. Unknown/partial coverage cannot establish global all-clear. CGC
 executes preservation actions. See the [V2 handoff](docs/V2_OPERATIONS.md#handoff).
 
 Product name: **CREDID GUARDIAN CODEX**. Acronym: **CGC**. GitHub identifier: `CREDID-GUARDIAN-CODEX` (a space-free repository identifier only). Licensed under [Apache-2.0](LICENSE).
+
+Freshness/provenance is IMPLEMENTED and VERIFIED OFFLINE: separate age, refresh health
+and policy authority; failed refresh withholds current policy while retaining evidence.
+See [V2 operations](docs/V2_OPERATIONS.md) for canonical semantics and schema details.

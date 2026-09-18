@@ -7,8 +7,9 @@ import json
 from .quota import normalize, QuotaError, _identifier, ERRORS
 
 POLICY_VERSION = 'cgc-applicability-v2.2'
-SCHEMA_VERSION = 'cgc-state-v2.2'
+SCHEMA_VERSION = 'cgc-state-v2.3'
 MAX_AGE = 900
+STATE_ERRORS = {'INVALID_STATE', 'NO_USABLE_DATA', 'MODE_MISMATCH', 'STALE_OBSERVATION', 'USAGE_BLOCKED'}
 DIRECTIVES = {
     'GREEN': 'Continue authorized development. Coverage remains limited to selected observed windows.',
     'AMBER': 'Continue with awareness; consider checkpoint readiness.',
@@ -194,19 +195,97 @@ def policy(obs, buckets, config=DEFAULT_POLICY, *, evidence=()):
             'directive': DIRECTIVES.get(state), 'global_all_clear': False}
 
 
+def validate_max_age(value):
+    if type(value) is not int or not 1 <= value <= 86400:
+        raise StateError('INVALID_CONFIG')
+    return value
+
+
+def freshness(observed_at, *, now, max_age=MAX_AGE):
+    """Age of local observation, independent of refresh health or applicability."""
+    validate_max_age(max_age)
+    result = {'state': 'UNKNOWN', 'age_seconds': None, 'observed_at': None,
+              'evaluated_at': None, 'max_age_seconds': max_age,
+              'basis': 'LOCAL_OBSERVATION_TIME', 'reason': 'NO_OBSERVATION_TIME'}
+    try:
+        current = timestamp(now)
+        result['evaluated_at'] = current.isoformat().replace('+00:00', 'Z')
+        if observed_at is None:
+            return result
+        observed = timestamp(observed_at)
+        result['observed_at'] = observed.isoformat().replace('+00:00', 'Z')
+        age = (current - observed).total_seconds()
+        result['age_seconds'] = age
+        if age < 0:
+            result.update(state='ERROR', reason='FUTURE_OBSERVATION')
+        elif age > max_age:
+            result.update(state='STALE', reason='MAX_AGE_EXCEEDED')
+        else:
+            result.update(state='FRESH', reason='WITHIN_MAX_AGE')
+    except StateError:
+        result.update(state='ERROR', reason='INVALID_TIMESTAMP')
+    return result
+
+
+def temporal_state(state, *, now):
+    """Reconstructed write-time snapshot or read-time assessment; no cached authority."""
+    obs, good = state['last_observation'], state['last_valid_observation']
+    latest = freshness(obs['observed_at'] if obs else None, now=now,
+                       max_age=state['max_age_seconds'])
+    historical = freshness(good['observed_at'] if good else None, now=now,
+                           max_age=state['max_age_seconds'])
+    if now is None and state['generation'] == 0:
+        for item in (latest, historical):
+            item.update(state='UNKNOWN', reason='NOT_EVALUATED')
+    elif state['cache_written_at'] and timestamp(now) < timestamp(state['cache_written_at']):
+        latest.update(state='ERROR', reason='CLOCK_BEFORE_CACHE_WRITE')
+        historical.update(state='ERROR', reason='CLOCK_BEFORE_CACHE_WRITE')
+    fresh = latest['state'] == 'FRESH'
+    failed = state['last_refresh_status'] != 'OK'
+    available = (fresh and not failed and state['policy']['policy_state'] is not None
+                 and obs['ordinary_usage_allowed'] is not False)
+    disposition = ('UNAVAILABLE' if obs is None else
+                   'HISTORICAL' if latest['state'] == 'STALE' else
+                   'RETAINED' if not fresh or (failed and state['error_code'] != 'NO_USABLE_DATA') else 'CURRENT')
+    return {'evaluated_at': latest['evaluated_at'], 'freshness': latest['state'],
+            'observation_freshness': latest, 'last_known_good_freshness': historical,
+            'data_disposition': disposition, 'policy_available': bool(available)}
+
+
+def provenance(obs, disposition):
+    """Value origin and storage role are separate axes; preserve V1 projection unchanged."""
+    origins = {'direct': 'DIRECT', 'derived': 'DERIVED', 'unknown': 'UNAVAILABLE'}
+    return {'disposition': disposition if obs else 'UNAVAILABLE',
+            'source_kind': obs['source_kind'] if obs else None,
+            'source_maturity': obs['source_maturity'] if obs else None,
+            'observed_at': obs['observed_at'] if obs else None,
+            'observation_time_origin': obs['observation_time_origin'] if obs else 'UNAVAILABLE',
+            'source_observed_at': obs['source_observed_at'] if obs else None,
+            'source_time_origin': 'UNAVAILABLE',
+            'windows': [{'window_id': w['window_id'],
+                         'used_percent': origins[w['used_percent_origin']],
+                         'remaining_percent': origins[w['value_origin']],
+                         'duration_seconds': 'DERIVED' if w['duration_seconds'] is not None else 'UNAVAILABLE',
+                         'reset_at': 'DERIVED' if w['reset_at'] is not None else 'UNAVAILABLE'}
+                        for w in (obs['windows'] if obs else [])]}
+
+
 def empty_state(buckets, max_age=MAX_AGE, *, config=DEFAULT_POLICY):
-    if type(max_age) is not int or not 1 <= max_age <= 86400:
-        raise StateError()
-    return {'schema_version': SCHEMA_VERSION, 'generation': 0,
+    validate_max_age(max_age)
+    state = {'schema_version': SCHEMA_VERSION, 'generation': 0,
             'max_age_seconds': max_age, 'last_valid_observation': None,
             'last_observation': None, 'last_valid_policy': None,
             'policy': policy(None, buckets, config), 'last_refresh_attempt_at': None,
             'last_refresh_status': 'NEVER', 'error_code': None, 'cache_written_at': None}
+    state['temporal'] = temporal_state(state, now=None)
+    return state
 
 
 def refresh(previous, result, *, now, evidence=()):
     validate_state(previous)
-    timestamp(now)
+    now = timestamp(now).isoformat().replace('+00:00', 'Z')
+    if previous['cache_written_at'] and timestamp(now) < timestamp(previous['cache_written_at']):
+        raise StateError('CLOCK_REGRESSION')
     state = dict(previous)
     state.update(generation=previous['generation'] + 1,
                  last_refresh_attempt_at=now, cache_written_at=now)
@@ -223,15 +302,20 @@ def refresh(previous, result, *, now, evidence=()):
         state.update(last_observation=obs, policy=p)
         if p['policy_state'] is None:
             raise StateError('NO_USABLE_DATA')
+        if freshness(obs['observed_at'], now=now, max_age=state['max_age_seconds'])['state'] != 'FRESH':
+            raise StateError('STALE_OBSERVATION')
+        if obs['ordinary_usage_allowed'] is False:
+            raise StateError('USAGE_BLOCKED')
         state.update(last_valid_observation=obs, last_valid_policy=p,
                      last_refresh_status='OK', error_code=None)
     except StateError as error:
         code = error.code
         if isinstance(result, dict) and result.get('status') == 'ERROR':
             code = result.get('error_code')
-        if not isinstance(code, str) or code not in ERRORS | {'MODE_MISMATCH', 'NO_USABLE_DATA'}:
+        if not isinstance(code, str) or code not in ERRORS | STATE_ERRORS:
             code = 'INVALID_STATE'
         state.update(last_refresh_status='ERROR', error_code=code)
+    state['temporal'] = temporal_state(state, now=now)
     validate_state(state)
     return state
 
@@ -260,14 +344,14 @@ def validate_state(state):
             if not _same_json(evaluation, expected):
                 raise StateError()
         if good is None:
-            if state['last_valid_policy'] is not None or state['policy']['policy_state'] is not None:
+            if state['last_valid_policy'] is not None:
                 raise StateError()
         else:
             if (obs is None or state['last_valid_policy']['policy_state'] is None
                     or good['mode'] != obs['mode']
                     or timestamp(good['observed_at']) > timestamp(obs['observed_at'])):
                 raise StateError()
-        if state['policy']['policy_state'] is not None:
+        if state['last_refresh_status'] == 'OK':
             if not _same_json(obs, good) or not _same_json(state['policy'], state['last_valid_policy']):
                 raise StateError()
         if state['generation'] == 0:
@@ -282,8 +366,13 @@ def validate_state(state):
             if state['last_refresh_status'] == 'OK':
                 if state['policy']['policy_state'] is None or state['error_code'] is not None:
                     raise StateError()
-            elif state['last_refresh_status'] != 'ERROR' or state['error_code'] not in ERRORS | {'INVALID_STATE', 'NO_USABLE_DATA', 'MODE_MISMATCH'}:
+            elif state['last_refresh_status'] != 'ERROR' or state['error_code'] not in ERRORS | STATE_ERRORS:
                 raise StateError()
+        expected_temporal = temporal_state(state, now=state['cache_written_at'])
+        if not _same_json(state['temporal'], expected_temporal):
+            raise StateError()
+        if state['last_refresh_status'] == 'OK' and not expected_temporal['policy_available']:
+            raise StateError()
         return state
     except (KeyError, TypeError, ValueError, RecursionError):
         raise StateError() from None
@@ -291,16 +380,18 @@ def validate_state(state):
 
 def status(state, *, now):
     validate_state(state)
-    current = timestamp(now)
+    now = timestamp(now).isoformat().replace('+00:00', 'Z')
+    temporal = temporal_state(state, now=now)
     obs = state['last_observation']
-    age = (current - timestamp(obs['observed_at'])).total_seconds() if obs else None
-    skew = (age is not None and age < 0) or (state['cache_written_at'] is not None and current < timestamp(state['cache_written_at']))
-    validity = 'CLOCK_SKEW' if skew else 'UNKNOWN' if age is None else 'STALE' if age > state['max_age_seconds'] else 'VALID'
+    age = temporal['observation_freshness']['age_seconds']
+    validity = {'FRESH': 'VALID', 'STALE': 'STALE', 'UNKNOWN': 'UNKNOWN', 'ERROR': 'CLOCK_SKEW'}[temporal['freshness']]
     if validity == 'VALID' and obs['ordinary_usage_allowed'] is False:
         validity = 'USAGE_BLOCKED'
-    available = validity == 'VALID' and state['policy']['policy_state'] is not None
+    available = temporal['policy_available']
     p = state['policy']
-    return {'schema_version': SCHEMA_VERSION, 'generation': state['generation'],
+    return {**temporal, 'schema_version': SCHEMA_VERSION, 'generation': state['generation'],
+            'provenance': {'latest': provenance(obs, temporal['data_disposition']),
+                           'last_known_good': provenance(state['last_valid_observation'], 'HISTORICAL')},
             'validity': validity, 'age_seconds': age, 'mode': obs['mode'] if obs else None,
             'policy_state': p['policy_state'] if available else None,
             'directive': p['directive'] if available and obs['mode'] == 'live' else None,
