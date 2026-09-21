@@ -288,3 +288,41 @@ live verification explicitly skipped: another snapshot would not establish appli
 backend age or sustained reliability. V2 quota reads remain zero. No production-readiness
 or native-Windows claim. V3 and automatic project preservation remain NOT_STARTED.
 Next action: verify publication and STOP; wait for separately scoped authorization.
+
+## 2026-09-19 — V3 initial contract and evidence-based frontier
+
+Dynamic Git inspection found published V2 main 1e3a1c54217101f87c8eb45baad354f7daec834a
+and one user-supplied untracked V3_MISSION.md; no V3 code/progress existed. Read all 126
+sections and retained specification content, normalizing only CRLF to LF for publication.
+The latest user instruction supersedes static starting-SHA wording: future resumes must
+inspect actual evidence, preserve newer work and reconcile discrepancies. Historical V2
+NOT_STARTED warnings do not negate explicit V3 authorization.
+
+First block is pure attempt schema/lifecycle, not project mutation. Separate requested
+project/level from adapter-reported receipts; separate project tests, preservation,
+publication and resume conclusions. A failing test may be accurately preserved; push
+exit alone cannot establish remote success. Outcomes say LOCAL_CHECKPOINT/REMOTE_VERIFIED
+without inventing a newly created commit/push from ref identity alone. Synthetic receipts
+remain synthetic; manual records work without quota; automatic authority stays false.
+
+Initial tests exposed missing module; 19 then 22 tests covered phase replay, strict bounds,
+independent statuses, partial local survival, remote mismatch, bad phases and immutable
+receipts. Two expanded-test errors were fixed. Full suite reached 175 passes. No V1/V2
+runtime/test change, live reads, installs, real target preservation or synthetic end-to-end
+preservation. Model validation is structural, not external evidence verification or
+secret-proofing arbitrary curated notes. Next block: bounded non-mutating explicit project
+inspection in disposable Git fixtures. V3 PARTIAL; no preserve command, V4 or automation.
+
+
+## 2026-09-21 — V3 foundation recovery before expansion
+
+Present evidence contradicted the preceding handoff's publication claim: main, tracking
+and live remote remained at the V2 checkpoint, with eight modified documentation files
+and six untracked V3 files. The existing attempt model and 22 tests were retained.
+Selected one coherent reconciliation/validation/publication block before project inspection.
+The current three-section, 870-line V3 mission supersedes the older mission structure
+referenced in the historical entry above; this session does not alter the mission file.
+Removed obsolete mission-number references from the active next action and corrected the
+premature acceptance claim. No new runtime phase, target mutation or live quota read.
+Current tests and publication evidence are in V3_PROGRESS.md. The next implementation
+block remains bounded, non-mutating explicit project inspection in disposable repositories.

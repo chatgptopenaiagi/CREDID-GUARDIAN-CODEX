@@ -117,3 +117,13 @@ Eight new tests in test_default_cache.py use synthetic homes for default-path se
 no sibling access/enumeration, absence behavior and alias/permission/file conflicts.
 Existing runtime passed without changes. Final suite: 153 tests, no failures/errors/skips.
 No required V2 acceptance tests remain pending; future scopes require new authorization.
+
+## V3 current frontier
+
+V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
+are implemented/tested; project inspection, handoff writes, Git mutation and automation
+are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+Resume by present repository evidence and [V3 progress](../docs/V3_PROGRESS.md), under the complete
+[V3 mission](../docs/V3_MISSION.md) and current user instructions. Historical V2 notes
+that V3 was not authorized describe the earlier boundary; this explicit V3 mission
+supersedes that boundary without authorizing unrelated project mutation or V4.

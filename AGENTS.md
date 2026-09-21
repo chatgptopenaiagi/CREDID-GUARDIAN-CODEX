@@ -1,5 +1,16 @@
 # CREDID GUARDIAN CODEX (CGC) — agent instructions
 
+## V3 current frontier
+
+V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
+are implemented/tested; project inspection, handoff writes, Git mutation and automation
+are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete
+[V3 mission](docs/V3_MISSION.md) and current user instructions. Historical V2 notes
+that V3 was not authorized describe the earlier boundary; this explicit V3 mission
+supersedes that boundary without authorizing unrelated project mutation or V4.
+
+
 The immutable product name is CREDID GUARDIAN CODEX. The immutable acronym is CGC. Never correct CREDID, reorder the name or introduce another acronym. CREDID-GUARDIAN-CODEX is only the GitHub-safe repository identifier.
 
 Read README.md, docs/DECISIONS.md, docs/ROADMAP.md, docs/SECURITY_MODEL.md and docs/PRESERVATION_POLICY.md before work.

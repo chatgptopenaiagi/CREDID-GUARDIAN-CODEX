@@ -137,3 +137,16 @@ after SIGKILL of CGC are not guaranteed. Default-target metadata preflight and f
 Final V2 offline acceptance: [evidence matrix](V2_ACCEPTANCE.md).
 153 deterministic tests pass. Zero V2 live reads; optional live verification skipped.
 V3 remains NOT_STARTED and requires separate authorization.
+
+## V3 current frontier
+
+V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
+are implemented/tested; project inspection, handoff writes, Git mutation and automation
+are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under the complete
+[V3 mission](V3_MISSION.md) and current user instructions. Historical V2 notes
+that V3 was not authorized describe the earlier boundary; this explicit V3 mission
+supersedes that boundary without authorizing unrelated project mutation or V4.
+
+V3 uses a separate `cgc-preservation-v3.0-provisional` record; see [contract](V3_CONTRACT.md).
+V2 caches do not acquire V3 fields. Typed receipts are not externally verified by the model.

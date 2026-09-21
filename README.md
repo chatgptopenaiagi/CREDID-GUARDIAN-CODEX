@@ -1,5 +1,16 @@
 # CREDID GUARDIAN CODEX (CGC)
 
+## V3 current frontier
+
+V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
+are implemented/tested; project inspection, handoff writes, Git mutation and automation
+are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete
+[V3 mission](docs/V3_MISSION.md) and current user instructions. Historical V2 notes
+that V3 was not authorized describe the earlier boundary; this explicit V3 mission
+supersedes that boundary without authorizing unrelated project mutation or V4.
+
+
 CREDID GUARDIAN CODEX (CGC) is a concept-first, local usage-awareness, quota-observation and intelligent project-preservation architecture for Codex workflows.
 
 **THE GUARDIAN OBSERVES. CODEX PRESERVES.**
@@ -19,8 +30,9 @@ Long-running development can approach a usage boundary while discoveries, partia
 | UNKNOWN | Backend sample age, complete bucket applicability, supported polling cadence and sustained live reliability |
 | PLANNED | Preservation integration/hooks, desktop meter and native Windows support |
 
-The authoritative specification is [V2 mission](docs/V2_MISSION.md). Resume from
-[NEXT_EXACT_ACTION in V2 progress](docs/V2_PROGRESS.md#next_exact_action).
+The accepted V2 specification is [V2 mission](docs/V2_MISSION.md). Active development
+follows [V3 mission](docs/V3_MISSION.md) and
+[NEXT_EXACT_ACTION in V3 progress](docs/V3_PROGRESS.md#next_exact_action).
 The Codex app-server source remains experimental. V2 consumed **zero live quota reads**.
 Independent human `/status` comparison remains PENDING / NOT VERIFIED. The retained
 V1 percentages are historical evidence, not current quota.
