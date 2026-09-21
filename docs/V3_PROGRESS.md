@@ -25,11 +25,14 @@ and numbered-section references are not current requirements. The prior acceptan
 claim that V3 publication was verified was unsupported by actual refs and is corrected.
 The previous 175-test result is historical; validation below establishes current evidence.
 
-The coherent frontier is the pure attempt contract, awaiting its first safe publication.
+The coherent frontier is the pure attempt contract, now validated and published.
 Reconcile and validate this foundation before expanding to filesystem/Git inspection.
 No implementation or test was restarted or rewritten; no V1/V2 behavior changed.
 
 ## COMPLETE
+
+- Recovery block COMPLETE: reconciled stale continuity claims, retained all existing
+  V3 work, passed current validation and verified first V3 foundation publication.
 
 - Pure versioned cgc-preservation-v3.0-provisional attempt contract in preservation.py.
   Exact fields, bounded notes/events/record size, UTC timestamps, replayed legal phase
@@ -154,16 +157,20 @@ the provisional snapshot contract explicitly, validate/document/checkpoint/push,
 
 ## LAST SAFE CHECKPOINT
 
-Starting published checkpoint: 1e3a1c54217101f87c8eb45baad354f7daec834a.
-Recovery checkpoint: HEAD after normal commit/publication; resolved hash in
-final report. No self-containing SHA. Preserve local checkpoint if publication fails.
+Starting published V2 checkpoint: `1e3a1c54217101f87c8eb45baad354f7daec834a`.
+Validated V3 foundation: `0edee399f2f4411a413956929f2be012e8b32e35`.
+Final recovery documentation checkpoint: HEAD after normal commit/publication; resolved
+hash in final report. No self-containing SHA. Preserve local checkpoint if publication fails.
 
 ## PUBLICATION STATE
 
-At reconciliation, V3 was UNPUBLISHED; the prior success claim was unsupported.
-Normal forward CGC main publication authorized. Verify HEAD = origin/main = live main
-and clean tree after push. If unsuccessful, record LOCAL_CHECKPOINT_ONLY. No target
-project checkpoint/publication feature was exercised or implemented.
+Foundation REMOTE_VERIFIED on 2026-09-21: normal forward push to the authorized
+chatgptopenaiagi/CREDID-GUARDIAN-CODEX main succeeded, then local HEAD, origin/main
+and live refs/heads/main all equaled `0edee399f2f4411a413956929f2be012e8b32e35`; tree clean.
+This is observed publication evidence, superseding the unsupported entry-time claim.
+This follow-up records that verified foundation; its own publication is verified after
+commit, with HEAD/tracking/live equality and resolved hash in the final session report.
+No target-project checkpoint/publication feature was exercised or implemented.
 
 ## OPERATIONS / INTEGRITY
 
