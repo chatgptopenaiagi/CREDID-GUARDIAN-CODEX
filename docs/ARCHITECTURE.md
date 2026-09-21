@@ -104,10 +104,17 @@ V3 remains NOT_STARTED and requires separate authorization.
 
 ## V3 current frontier
 
-V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
-are implemented/tested; project inspection, handoff writes, Git mutation and automation
-are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+V3 is authorized and PARTIAL. The pure preservation attempt contract and bounded,
+non-mutating explicit project inspection are implemented/tested. Handoff persistence,
+target Git mutation and automation are NOT_STARTED. The inspect CLI is observational;
+there is no preserve CLI yet. V1/V2 remain accepted with regression coverage.
 Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under the complete
 [V3 mission](V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
 supersedes that boundary without authorizing unrelated project mutation or V4.
+
+
+The V3 inspector is an explicit, bounded local evidence collector alongside the pure
+attempt model. It produces a separately versioned snapshot and inspection_digest receipt;
+it does not run the preservation lifecycle or write a canonical handoff. The inspect CLI
+returns before entering V2 cache/sensor code. See [contract](V3_CONTRACT.md#bounded-project-inspection).

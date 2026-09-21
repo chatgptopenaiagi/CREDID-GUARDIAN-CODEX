@@ -85,10 +85,19 @@ V3 remains NOT_STARTED and requires separate authorization.
 
 ## V3 current frontier
 
-V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
-are implemented/tested; project inspection, handoff writes, Git mutation and automation
-are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+V3 is authorized and PARTIAL. The pure preservation attempt contract and bounded,
+non-mutating explicit project inspection are implemented/tested. Handoff persistence,
+target Git mutation and automation are NOT_STARTED. The inspect CLI is observational;
+there is no preserve CLI yet. V1/V2 remain accepted with regression coverage.
 Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under the complete
 [V3 mission](V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
 supersedes that boundary without authorizing unrelated project mutation or V4.
+
+
+V3 inspection's accepted target/configuration boundary, resource limits, non-mutation
+proof and concurrency limitations are specified in
+[V3 inspection contract](V3_CONTRACT.md#bounded-project-inspection). It emits local
+metadata only, refuses unsafe/unsupported targets, and grants no mutation authority.
+Git may read tracked content internally for status; no content or remote URL is exported.
+Owner-controlled quiescent targets are required; no hostile same-user race guarantee.

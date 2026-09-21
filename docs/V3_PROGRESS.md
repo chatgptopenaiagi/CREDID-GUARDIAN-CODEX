@@ -2,180 +2,174 @@
 
 ## OVERALL STATUS
 
-**PARTIAL.** V3 is authorized and active. V1/V2 remain accepted foundations.
-Authoritative detailed specification: [V3_MISSION.md](V3_MISSION.md), read together with
-current user instructions. [V3_ACCEPTANCE.md](V3_ACCEPTANCE.md) tracks remaining criteria.
-
-THE GUARDIAN OBSERVES. CODEX PRESERVES.
-PRESERVE BEFORE EXPANDING.
+**PARTIAL.** V3 is active under [V3_MISSION.md](V3_MISSION.md). V1/V2 remain accepted.
+[Acceptance](V3_ACCEPTANCE.md) distinguishes this completed inspection block from the
+remaining preservation mission. THE GUARDIAN OBSERVES. CODEX PRESERVES.
 
 ## CURRENT SESSION BLOCK
 
-2026-09-21: reconciliation and preservation of the existing, uncommitted V3
-foundation. This is one recovery block; project inspection is the next separate block.
-Before edits, root was verified and main HEAD, origin/main and live remote main all
-matched `1e3a1c54217101f87c8eb45baad354f7daec834a`. Eight tracked documentation files
-were modified and six V3 files were untracked, including the implementation and tests.
-No V3 commit existed in recent history. All existing work was retained.
-
-The previous progress described an older 126-section mission and its hashes, while the
-actual authoritative V3_MISSION.md now has three main sections (870 lines). The current
-mission was read completely and is preserved byte-for-byte in this session. Old phase
-and numbered-section references are not current requirements. The prior acceptance
-claim that V3 publication was verified was unsupported by actual refs and is corrected.
-The previous 175-test result is historical; validation below establishes current evidence.
-
-The coherent frontier is the pure attempt contract, now validated and published.
-Reconcile and validate this foundation before expanding to filesystem/Git inspection.
-No implementation or test was restarted or rewritten; no V1/V2 behavior changed.
+2026-09-21: **bounded, non-mutating explicit project inspection — COMPLETE** within the
+supported Linux ordinary-root/configuration contract. Before edits, clean main, fetched
+origin/main and live refs/heads/main all equaled
+`4299df1039b3cf18d263b1024278471fce5ee16a`. Recent history, source, tests and progress agreed:
+attempt model/recovery/publication complete; inspector absent. No newer work was discarded.
+Read the full active mission/contract/progress/acceptance and required repository records.
+Executed the recorded inspection block; did not repeat recovery or start handoff writes.
 
 ## COMPLETE
 
-- Recovery block COMPLETE: reconciled stale continuity claims, retained all existing
-  V3 work, passed current validation and verified first V3 foundation publication.
-
-- Pure versioned cgc-preservation-v3.0-provisional attempt contract in preservation.py.
-  Exact fields, bounded notes/events/record size, UTC timestamps, replayed legal phase
-  transitions, immutable receipt accumulation and terminal-state refusal to resume.
-- MANUAL requests independent of Guardian availability; SYNTHETIC explicitly labeled.
-  Automatic/RED/UNKNOWN/STALE/etc. are not accepted triggers in this first phase.
-  automatic_mutation_authorized is always false. No duplicate quota reader.
-- Separate PROJECT_TEST_STATUS, PRESERVATION_STATUS, PUBLICATION_STATUS and SAFE_TO_RESUME.
-  YES requires terminal PRESERVED and inspection/handoff/fresh-resume receipts plus
-  checkpoints appropriate to requested level. Failed tests need documented test evidence
-  and known failures; accurate preservation of failing work can still be resumable.
-- Requested level remains visible if only local work survives. Push attempt alone is
-  insufficient; remote receipt equality is required. Explicit verification mismatch can
-  retain diagnostic refs without claiming remote success. No claim that a commit was
-  newly created merely because its identity exists.
-- Bounded COMPLETE/PARTIAL/NOT_STARTED, test commands/results, failures, decisions,
-  discoveries, changed-file notes, do-not-repeat and exact next action fields.
-  Human/JSON renderers validate one model; human data is quoted rather than executable.
-- 22 new pure synthetic tests. All inherited V1/V2 runtime and tests remain unchanged.
+- Previously published pure attempt model and 22 tests retained unchanged. Manual requests
+  do not depend on Guardian state; automatic authority remains denied.
+- New inspection.py explicit-root collector and `inspect --project PATH [--json]` CLI.
+  Separate `cgc-inspection-v3.0-provisional` snapshot; attempt/V2 schemas unchanged.
+- Owned, safe-mode, no-follow root and metadata validation; bounded same-device traversal;
+  explicit rejection of special/hardlinked files, unsafe metadata, credential directories,
+  Gitfiles, alternates/promisor/shared-index layouts and unreviewed Git configuration.
+- Git HEAD/branch/unborn/detached/upstream/local ahead-behind, staged/unstaged/untracked/
+  deleted/renamed/conflicted paths, operation markers, remote names, gitlinks, hidden index
+  flags, nested boundaries, main linked-worktree presence and document candidates.
+- No document content/URL/diagnostic export. Instructions NOT_READ, test_command UNKNOWN,
+  remote_state NOT_QUERIED, submodule_worktrees NOT_INSPECTED. No project command execution.
+- Fixed environment/executable, read-only Git command set, optional locks disabled;
+  bounded output/time with process cleanup and SIGINT/SIGTERM cancellation. Repeat status,
+  index and metadata checks refuse detected races. No atomic snapshot claim.
+- Human/JSON views share validation and receipt digest. Receipt can populate the existing
+  attempt's inspection_digest without granting preservation/resume/mutation authority.
+- 29 new deterministic inspection tests; full 204-test regression passes.
 
 ## PARTIAL
 
-Phase A is an initial attempt contract, not the final complete preservation envelope.
-Evidence receipts are typed assertions from a trusted future adapter, not externally
-verified facts: current tests supply synthetic receipts. SAFE_TO_RESUME=YES in a fixture
-proves model semantics only. No actual project was declared preserved by this code.
-Project snapshot shape/collector and the latest-attempt/last-known-good persistence envelope
-are deferred to their coherent blocks. Full V3 acceptance is PARTIAL.
+Full V3 preservation remains PARTIAL. Snapshot evidence is local, bounded, observational
+and non-atomic; no target was declared preserved. Attempt receipts still depend on trusted
+adapters. Gitfile/linked-worktree targets are detected/refused rather than followed;
+submodule and nested repository contents are outside this target's scope. Unknown test
+commands/instructions require explicit curated knowledge in a later handoff block.
+Remote names/counts are not verified publication identity or live remote state.
 
 ## NOT_STARTED
 
-Explicit project inspection CLI; filesystem/Git target validation; actual handoff writing;
-project test execution; safe staging; local commit creation; push and remote verification;
-project writer locks; canonical atomic preservation cache; idempotency; process resume;
-Guardian integration and automatic preservation. V4/cloud/GUI/ARX work NOT_STARTED.
-No preserve or preservation-status command exists yet.
+Handoff persistence, preservation executor/CLI, project test execution, deliberate staging,
+local target commits, target push/remote verification, project writer exclusion, canonical
+latest-attempt/last-known-good state, preservation idempotency, fresh-process handoff
+resume, Guardian integration and automatic preservation. V4/cloud/GUI are not authorized.
 
 ## TESTS PASSED
 
-Inherited checkpoint: 153 passing tests. Test-first new-module run failed at import
-(one loader error, zero new bodies) because preservation.py did not yet exist.
-Initial model: 19 new tests passed. Expanded 22-test run found two errors (bad phase
-handling and verification-mismatch evidence); both resolved. Full suite reportedly reached 175
-passing tests in 13.543s in the prior handoff. This is historical evidence only.
-Current-session full regression result is recorded below.
+Test-first inspection run: one expected loader error (missing cgc.inspection), zero new
+bodies; resolved by implementation. First 14 tests passed in 0.427s; expanded 26 passed in
+1.365s; final inspection suite **29 passed in 1.573s**, no failures/errors/skips.
 
-Canonical command:
+Canonical final command:
 
 ```bash
 TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -q
 ```
 
-Current recovery run: **175 tests passed in 15.270s; zero failures, errors or skips.**
-This includes all 153 V1/V2 regressions and 22 existing V3 model tests. No new tests
-were added and no completed experiment was repeated. The mission requires this
-pre-publication regression run. No unresolved test failure was found.
-
-Publication gates: 20 Python files parse, three JSON files parse, 106 local Markdown
-targets resolve, and 44 candidate repository files pass bounded recognizable
-credential-pattern screening (zero findings, not proof of universal secret absence).
-Inherited runtime/tests, V2 mission/progress/acceptance and verbatim directives match
-HEAD. Git whitespace passes. No configured custom hooksPath was found (Git query
-exit 1 means unset, not a validation failure); no hooks were bypassed.
+**204 tests passed in 15.936s; zero failures, errors or skips.** Includes all 153 V1/V2
+regressions, 22 existing V3 attempt tests and 29 new inspection tests. No existing test
+was changed or weakened. Inspection help also succeeds without a sensor/cache operation.
+Git version tested: 2.55.0. Previous 175-test recovery run is historical, not repeated as
+another work block. Publication static gates: **22 Python files parse, three JSON files parse, 115 local
+Markdown targets resolve; 46 repository files screened.** One credential-URL pattern
+finding in tests/test_inspection.py is the deliberate synthetic URL fixture used to prove
+non-export; reviewed, no real credential involved. No other recognizable pattern findings.
+Pattern screening is not proof of universal secrecy. Git whitespace passes. Existing
+runtime (apart from additive CLI dispatch), all prior tests, both mission texts, V2 records
+and exact directives match the entry checkpoint.
 
 ## TESTS REMAINING
 
-All external-effect V3 acceptance: synthetic project inspection/path cases, actual
-handoff publication/fresh-process resume, deliberate staging/secrets/large files,
-local checkpoint, local bare remotes, failure/publication verification, project locks,
-crash/signals/atomic last-known-good state, canonical Guardian integration. No live quota
-read is required for the next block. See full acceptance matrix.
+Future handoff persistence/atomic last-known-good/writer/fresh-process tests, deliberate
+staging/secrets/large-file policy, target commit/local bare-remote publication/failures,
+crash/interruption throughout mutation, canonical Guardian integration and safe automation.
+No live quota read is needed for the next block. No inspection test failure remains.
 
-## KNOWN FAILURES
+## KNOWN FAILURES / LIMITATIONS
 
-No unresolved observed deterministic failure. Structurally consistent receipts are not
-proof of external effects; no signing or tamper-proof claim. Curated notes may contain
-sensitive text if the caller supplies it; this model does not inspect files or implement
-universal secret detection. Future capture/staging adapters must screen/minimize data.
-Requested project path validation is lexical only (absolute, bounded, no parent traversal
-or control characters); it is not filesystem identity, ownership or symlink validation.
+No unresolved observed deterministic failures. Strict configuration/size/mode/layout
+refusals are intentional compatibility limits. Native Windows/0777-mounted targets are
+unsupported; do not weaken security to accept them. Full limits and error semantics:
+[V3_CONTRACT.md](V3_CONTRACT.md#bounded-project-inspection).
+
+Repeated observations do not protect against hostile concurrent same-UID mutation or
+establish atomicity. Git can read/hash tracked content internally; no content is exported.
+Reads may update atime. Metadata traversal includes ignored files and can refuse a large
+ignored build tree. No hard memory/CPU sandbox or realtime blocked-kernel-call guarantee.
+Remote URL values and user identity are discarded during config validation. Filenames
+can themselves be sensitive; pattern rejection is not universal secret detection.
+No automatic publication of inspection output. Inspection does not authorize mutation.
 
 ## IMPORTANT DISCOVERIES
 
-Preservation success and passing project tests are independent. A requested path is
-OPERATOR_REQUESTED, not an observed root. Receipt identity does not prove a new Git action.
-Phase A must not fabricate project snapshots or instantiate automatic mutation authority.
-The failure of an advance operation leaves its input record unchanged; that is pure value
-semantics, not yet last-known-good disk persistence. Unknown project test command remains
-UNKNOWN; stored commands are inert curated notes and are never executed here.
+A nominally read-only Git command needs configuration isolation: fsmonitor/filters and
+includes can invoke helpers or access external data. This first collector refuses such
+configuration before status rather than modifying it. Optional locks must be disabled to
+avoid index refresh writes. Synthetic sentinel/FIFO tests prove selected config hazards
+are not executed/followed. Local ahead/behind is not live remote verification. Hidden
+index flags and ignored submodules must remain visible limitations, not an all-clean claim.
 
-## FILES CHANGED
+## NON-MUTATION / SECRET SAFETY EVIDENCE
 
-Included existing user-supplied file: docs/V3_MISSION.md (unchanged this session).
-Created: src/cgc/preservation.py, tests/test_preservation.py, docs/V3_PROGRESS.md,
-docs/V3_ACCEPTANCE.md, docs/V3_CONTRACT.md.
-Modified: README.md, AGENTS.md, docs/DECISIONS.md, docs/ARCHITECTURE.md,
-docs/DATA_MODEL.md, docs/PRESERVATION_POLICY.md, docs/SECURITY_MODEL.md, tests/README.md.
-V2 mission/progress/acceptance and all inherited runtime/tests unchanged.
-This recovery session edited only README.md, docs/DECISIONS.md, docs/V3_PROGRESS.md
-and docs/V3_ACCEPTANCE.md; the other listed changes were retained from entry.
+Fixture comparisons cover every regular-file byte hash, mode, size and mtime, including
+HEAD, refs, index, objects, config, hooks, ignored files and working-tree bytes. Clean,
+dirty, conflict, symlink, index-flag, unsafe-helper and interrupted inspections preserve
+those comparisons. Only test setup intentionally constructs dirty/conflicted Git states.
+No inspected target is committed/staged/reset/cleaned/stashed by the inspector.
+Synthetic content secrets, credential-bearing URL and helper/error strings do not enter
+output. Known credential directory and external include FIFO tests refuse without opening
+those contents. Recognizable credential-like filename produces no snapshot or receipt.
+
+## FILES CREATED / MODIFIED
+
+Created: src/cgc/inspection.py, tests/test_inspection.py.
+Modified: src/cgc/__main__.py (isolated inspect dispatch), README.md, AGENTS.md,
+docs/ARCHITECTURE.md, docs/DATA_MODEL.md, docs/PRESERVATION_POLICY.md,
+docs/SECURITY_MODEL.md, docs/V3_CONTRACT.md, docs/V3_ACCEPTANCE.md,
+docs/V3_PROGRESS.md, docs/DECISIONS.md, tests/README.md.
+All existing tests, preservation.py, V1/V2 runtime except additive CLI dispatch, V2
+records, active V3 mission and verbatim preservation directives remain unchanged.
 
 ## DO_NOT_REPEAT
 
-Do not repeat V1 discovery/live reads, reopen V2 acceptance, discard newer work, trust an
-old SHA over present evidence, or treat synthetic receipts as observed external actions.
-Do not mutate real projects, add a second sensor or start automation before manual
-preservation/resume proof. No blind staging, force push, destructive cleanup or V4.
+Do not redo foundation/recovery/inspection blocks absent a demonstrated defect. Do not
+repeat V1 discovery/live quota reads, infer current authority from supplied percentages,
+scan unrelated projects/authentication stores, follow Gitfiles automatically, relax
+security modes, blindly stage, force-push or begin V4. Inspection receipts are not
+handoff/resume/publication receipts. No actual preservation operations ran in fixtures.
 
 ## NEXT_EXACT_ACTION
 
-Inspect current repository reality, read full V3 mission/progress/contract and reconcile
-any newer work. Complete one **bounded non-mutating explicit project inspection** block
-(current mission section 2, Explicit project identity, and section 3). Write tests first in disposable Git
-repositories for explicit path/root validation, symlink/ownership boundaries, bounded
-porcelain status, branch/HEAD/upstream, staged/unstaged/untracked/deleted/renamed paths,
-conflicts/in-progress Git operations, worktree/submodule detection and safe remote metadata.
-Preserve requested vs observed identity and UNKNOWN test-command/instruction knowledge.
-Do not execute project instructions/tests/hooks, traverse unboundedly, inspect credentials,
-write handoffs, stage/commit/push targets or enable Guardian automation in that block.
-Expose safe human/JSON inspection via a narrowly named CLI if coherent. Version/extend
-the provisional snapshot contract explicitly, validate/document/checkpoint/push, then stop.
+Verify current Git/source/test/progress reality. Implement one coherent **human + machine
+handoff persistence** block using the existing validated attempt and inspection models,
+explicit curated continuity input and an explicitly selected safe storage destination.
+Prove bounded atomic publication, writer exclusion appropriate to handoff writes,
+latest-attempt vs last-known-good retention, and fresh-process readback in disposable
+Linux targets. Preserve COMPLETE/PARTIAL/NOT_STARTED, failures/tests/unknowns and exact
+next action in both representations. Do not infer test commands or execute project
+instructions automatically. No target staging/commits/push, Guardian automation or V4 in
+that block. Define storage ownership/path/receipt semantics before writing fixtures;
+validate, document, checkpoint, publish/verify and stop at coherent handoff acceptance.
 
 ## LAST SAFE CHECKPOINT
 
-Starting published V2 checkpoint: `1e3a1c54217101f87c8eb45baad354f7daec834a`.
-Validated V3 foundation: `0edee399f2f4411a413956929f2be012e8b32e35`.
-Final recovery documentation checkpoint: HEAD after normal commit/publication; resolved
-hash in final report. No self-containing SHA. Preserve local checkpoint if publication fails.
+Entry published checkpoint: `4299df1039b3cf18d263b1024278471fce5ee16a`.
+Inspection checkpoint: HEAD after normal commit/publication; resolved hash in final
+report. No self-containing SHA. Preserve local checkpoint if publication fails.
 
 ## PUBLICATION STATE
 
-Foundation REMOTE_VERIFIED on 2026-09-21: normal forward push to the authorized
-chatgptopenaiagi/CREDID-GUARDIAN-CODEX main succeeded, then local HEAD, origin/main
-and live refs/heads/main all equaled `0edee399f2f4411a413956929f2be012e8b32e35`; tree clean.
-This is observed publication evidence, superseding the unsupported entry-time claim.
-This follow-up records that verified foundation; its own publication is verified after
-commit, with HEAD/tracking/live equality and resolved hash in the final session report.
-No target-project checkpoint/publication feature was exercised or implemented.
+Entry HEAD/tracking/live main equality verified. Inspection changes not yet published at
+this pre-commit record. Publish only validated CGC main to the authorized
+chatgptopenaiagi/CREDID-GUARDIAN-CODEX; verify actual local/tracking/live equality after
+push. Record observed publication in a follow-up if needed; never infer it from push exit.
 
 ## OPERATIONS / INTEGRITY
 
-Live quota reads: V3 0; V2 0; historical V1 1. Real external project preservation: 0.
-Synthetic end-to-end preservation operations: 0 (22 model tests are not operations).
-CGC development checkpoint/publication only. No dependency installs, persistent system
-changes, default cache creation, auth inspection or unrelated project writes. Tests use
-Linux /tmp for inherited permission-sensitive cases. No capacity observation invented.
+Live quota reads: this session 0, V3 0, V2 0, historical V1 1. Human supplied approximate
+capacity values are informational, not an independent Guardian observation/authority.
+Target live remote operations: 0. CGC Git fetch/ls-remote and authorized checkpoint pushes
+only; official Git reference pages read to verify porcelain/environment semantics.
+Synthetic /tmp/cgc-v3-* repositories and executable peers created and cleaned by tests.
+No dependency installs, persistent environment/system/security changes, default cache,
+authentication inspection or unrelated/valuable-project writes. No target preservation,
+no background process/service/monitor and no later version started.

@@ -44,7 +44,22 @@ def main(argv=None):
                                help='inclusive remaining-percent upper boundary')
             p.add_argument('--live', action='store_true', required=True,
                            help='explicitly initiate live quota reads (no AI turns)')
+    inspect_parser = sub.add_parser('inspect', help='bounded observation only; no preservation')
+    inspect_parser.add_argument('--project', required=True)
+    inspect_parser.add_argument('--json', action='store_true')
     args = parser.parse_args(argv)
+    if args.command == 'inspect':
+        from .inspection import inspect_project, render_json, render_human
+        def cancel_inspection(*_):
+            raise KeyboardInterrupt
+        old = {s: signal.signal(s, cancel_inspection) for s in (signal.SIGINT, signal.SIGTERM)}
+        try:
+            result = inspect_project(args.project, now=utcnow())
+        finally:
+            for sig, handler in old.items():
+                signal.signal(sig, handler)
+        print(render_json(result) if args.json else render_human(result))
+        return 0 if result['status'] == 'OBSERVED' else 1
     try:
         config = (PolicyConfig(args.amber_at, args.red_at, args.emergency_at)
                   if args.command != 'status' else None)

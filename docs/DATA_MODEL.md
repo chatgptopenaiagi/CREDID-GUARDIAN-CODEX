@@ -140,9 +140,10 @@ V3 remains NOT_STARTED and requires separate authorization.
 
 ## V3 current frontier
 
-V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
-are implemented/tested; project inspection, handoff writes, Git mutation and automation
-are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+V3 is authorized and PARTIAL. The pure preservation attempt contract and bounded,
+non-mutating explicit project inspection are implemented/tested. Handoff persistence,
+target Git mutation and automation are NOT_STARTED. The inspect CLI is observational;
+there is no preserve CLI yet. V1/V2 remain accepted with regression coverage.
 Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under the complete
 [V3 mission](V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
@@ -150,3 +151,8 @@ supersedes that boundary without authorizing unrelated project mutation or V4.
 
 V3 uses a separate `cgc-preservation-v3.0-provisional` record; see [contract](V3_CONTRACT.md).
 V2 caches do not acquire V3 fields. Typed receipts are not externally verified by the model.
+
+
+`cgc-inspection-v3.0-provisional` is a separate validated OBSERVED/REFUSED envelope with
+snapshot/digest or a fixed failure code. Root identity, Git state, scope limitations and
+unknown instruction/test knowledge remain explicit. See [inspection contract](V3_CONTRACT.md#bounded-project-inspection).

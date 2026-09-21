@@ -2,9 +2,10 @@
 
 ## V3 current frontier
 
-V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
-are implemented/tested; project inspection, handoff writes, Git mutation and automation
-are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+V3 is authorized and PARTIAL. The pure preservation attempt contract and bounded,
+non-mutating explicit project inspection are implemented/tested. Handoff persistence,
+target Git mutation and automation are NOT_STARTED. The inspect CLI is observational;
+there is no preserve CLI yet. V1/V2 remain accepted with regression coverage.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete
 [V3 mission](docs/V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
@@ -46,6 +47,19 @@ Status reads only the shared cache and reports UNKNOWN if none exists. The finit
 requires explicit `--live`, `--bucket` and `--max-reads` arguments. No service is installed.
 Read [V2 operation, safety limits and commands](docs/V2_OPERATIONS.md) before invoking it.
 See [V1 source discovery](docs/QUOTA_SOURCE_DISCOVERY.md) for historical protocol evidence.
+
+## V3 inspection only
+
+```bash
+PYTHONPATH=src python3 -B -m cgc inspect --project /absolute/project/root --json
+```
+
+Requires an explicitly selected ordinary Git root on Linux-native storage with safe
+ownership/modes. Outputs metadata only; does not write a handoff or preserve work.
+Exit 0 means OBSERVED, 1 means REFUSED (including operational failure/cancellation),
+2 means invalid CLI arguments. Gitfiles/linked-worktree targets and unsupported Git
+configuration are explicitly refused. Remote URLs and document contents are not exported.
+See [inspection contract and limits](docs/V3_CONTRACT.md#bounded-project-inspection).
 
 ## Initial policy
 

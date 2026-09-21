@@ -120,10 +120,20 @@ No required V2 acceptance tests remain pending; future scopes require new author
 
 ## V3 current frontier
 
-V3 is authorized and PARTIAL. The initial pure preservation attempt contract and lifecycle
-are implemented/tested; project inspection, handoff writes, Git mutation and automation
-are NOT_STARTED. There is no preserve CLI yet. V1/V2 remain accepted and unchanged.
+V3 is authorized and PARTIAL. The pure preservation attempt contract and bounded,
+non-mutating explicit project inspection are implemented/tested. Handoff persistence,
+target Git mutation and automation are NOT_STARTED. The inspect CLI is observational;
+there is no preserve CLI yet. V1/V2 remain accepted with regression coverage.
 Resume by present repository evidence and [V3 progress](../docs/V3_PROGRESS.md), under the complete
 [V3 mission](../docs/V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
 supersedes that boundary without authorizing unrelated project mutation or V4.
+
+
+## V3 bounded inspection
+
+29 new deterministic tests in test_inspection.py create disposable /tmp/cgc-v3-* targets.
+They verify Git states, explicit root/path/ownership/configuration boundaries, limits,
+fixed failures, representation integrity, unknown authority, CLI and signal behavior.
+Non-mutation assertions compare fixture file bytes and metadata including Git internals.
+Live remote/quota access is absent. See [current results](../docs/V3_PROGRESS.md).

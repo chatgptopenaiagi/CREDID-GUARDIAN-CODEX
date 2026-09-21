@@ -41,8 +41,8 @@ LOCAL_CHECKPOINT_ONLY when a local receipt survives. No silent downgrade.
 
 `project_request` and curated notes are operator input, not observed filesystem facts.
 Requested path is absolute/bounded and rejects parent traversal/control characters; this
-is lexical validation only. Root identity, symlinks, permissions and Git state remain
-unverified until the next inspection block. No automatic disk scanning occurs.
+is lexical validation only. The attempt model alone does not verify root identity, symlinks, permissions or Git
+state. The separate explicit inspection collector below supplies bounded local evidence.
 
 Evidence fields are exact and optional until supplied:
 
@@ -91,3 +91,104 @@ paths can be refused until the inspection model supplies safe structured/escaped
 `advance` validates/copies its input and never mutates it. A rejected update leaves the
 previous in-memory record usable. Atomic publication, latest-attempt/last-known-good
 storage, writer exclusion and fresh-process resume remain NOT_STARTED.
+
+
+## Bounded project inspection
+
+IMPLEMENTED and VERIFIED OFFLINE on Linux with Git 2.55.0. Module
+[inspection.py](../src/cgc/inspection.py), tests
+[test_inspection.py](../tests/test_inspection.py). Snapshot envelope is separately
+versioned `cgc-inspection-v3.0-provisional`; the attempt and V2 schemas are unchanged.
+Public functions: inspect_project(project, now=...), validate_inspection, render_json,
+render_human. CLI: `python -m cgc inspect --project /absolute/root [--json]`.
+
+Only an exact explicitly selected ordinary working-tree root is accepted. No ancestor
+repository search, path normalization through `..`, implicit cwd selection or target
+mutation. Relative paths, root `/`, redundant components, missing/non-Git/nested-directory
+targets are refused. Ancestors are opened descriptor-relatively without following links;
+root must be owned by the current UID and not group/world writable. Root-owned sticky
+ancestors such as /tmp are allowed. Target entries must be same-device, owned, safe-mode
+regular files/directories or worktree symlink leaves. Hardlinked files, special files,
+metadata symlinks and known credential directories (.codex/.ssh/.aws/.azure/.gnupg) are
+refused. Native Windows and mounts that do not enforce these modes are unsupported.
+
+The collector performs a bounded metadata-only preflight of this root including ignored
+entries; it never opens worktree file contents in Python. Git itself can hash tracked
+files and read local ignore/attribute rules to determine status. No file contents,
+patches, object bodies, config values, identities, URLs or raw diagnostics enter output.
+Worktree symlink destinations are neither read nor emitted. Nested repositories are
+reported as boundaries and not traversed. Main-repository linked-worktree presence is
+reported without opening other worktrees. A `.git` file target is refused as
+UNSUPPORTED_GITFILE without reading its destination (covers linked worktrees and external
+Git dirs). Submodules are identified from index gitlinks; their worktrees are explicitly
+NOT_INSPECTED and their status changes are suppressed, not claimed clean.
+
+The root snapshot contains:
+
+- requested and observed root, device/inode identities for root and Git directory;
+- caller-provided UTC observation time (CLI captures invocation time), LOCAL_OBSERVATION;
+- HEAD or null for unborn, branch or null for detached HEAD, local upstream and optional
+  ahead/behind counts; these use local tracking refs, never a live remote;
+- sorted staged/unstaged/untracked/deleted/renamed/conflicted paths; rename source paths;
+- paths with assume-unchanged/skip-worktree flags, whose contents Git may hide;
+- fixed merge/cherry-pick/revert/rebase/sequencer/bisect marker presence, not file contents;
+- remote names only, remote_state=NOT_QUERIED; no publication destination is authorized;
+- gitlink paths, nested-repository boundaries and linked-worktree presence;
+- presence of a fixed small set of instruction/handoff document candidates; contents
+  NOT_READ and test_command=UNKNOWN, not invented or executed.
+
+Git runs without a shell through fixed /usr/bin/git with an allowlisted environment,
+no inherited Git overrides/global/system configuration, no prompts/lazy fetch/replace
+objects/system attributes, and optional locks disabled. Only config parsing, rev-parse,
+ls-files and porcelain-v2 status are used. Repository config is first parsed explicitly
+with --no-includes from a no-follow descriptor outside repository discovery. Only basic
+core settings, SHA object format, user name/email, remote URL/fetch settings, branch
+remote/merge and submodule URL/active settings are accepted; their values are not exported.
+Every other key is refused, including includes, filters, fsmonitor, hooksPath, external
+attribute/exclude files and worktree redirection. Config is never changed and no mutation
+hook is bypassed. Alternates, grafts, promisor and shared-index layouts are refused.
+Unsupported configuration is a deliberate initial compatibility boundary, not permission
+to rewrite a target's settings. Git status preserves repository ignore rules; global
+ignore rules are excluded to avoid unrelated file reads.
+
+| Bound | Limit and failure behavior |
+|---|---|
+| Metadata walk | 10,000 entries, depth 32, relative paths at most 4,096 bytes |
+| Files examined by stat | 16 MiB per regular file, 64 MiB aggregate (includes Git metadata/ignored files) |
+| Repository config | 64 KiB input; includes never followed |
+| Git subprocess | 5 seconds per command, 256 KiB combined stdout/stderr; kill group and reap on failure/interruption |
+| Whole inspection | 20-second cooperative deadline across scans/commands; no retry |
+| Snapshot | 256 KiB serialized JSON; exact field allowlists; bounded lists |
+
+Bounds fail closed without a truncated snapshot. They limit work, not hard CPU/RSS or
+realtime kernel behavior: blocked filesystem syscalls and process reaping can exceed wall
+budgets. Compressed Git objects can expand internally; no memory sandbox is claimed.
+POSIX read access can update atime; file bytes, index, refs, HEAD, config and working-tree
+state are not intentionally changed. Non-mutation tests compare all fixture file bytes,
+modes, sizes and mtimes, including Git internals, before/after success and selected failures.
+
+Status/index observations and metadata fingerprints repeat before success. Detected
+change produces TARGET_CHANGED with no receipt. This is explicitly
+REPEATED_OBSERVATION_NOT_ATOMIC: no lock against other writers, no snapshot isolation,
+no defense against a hostile concurrent same-UID actor replacing config/paths between
+checks. Use owner-controlled quiescent targets; future mutation needs fresh prechecks
+and writer exclusion. The fingerprint excludes atime. Inspection is not a content backup,
+a complete security audit or a guarantee that a later mutation is safe.
+
+Both renderers validate the same envelope. JSON uses sorted keys and escaped text;
+human output is explicitly INSPECTION ONLY plus that JSON, so filenames cannot become
+report headings. An OBSERVED envelope carries a SHA256 digest of canonical snapshot JSON,
+compatible with the existing attempt's inspection_digest receipt. The digest proves
+representation integrity only, not authenticity, project preservation or fresh-process
+resume. REFUSED includes a fixed error_code, null snapshot and null receipt; includes
+unsupported targets, operational failures and CANCELLED. No raw path or stderr is echoed
+on failure. CLI SIGINT/SIGTERM during inspection yields cancellation and cleanup.
+SAFE_TO_RESUME remains UNKNOWN and automatic_mutation_authorized remains false always.
+A successful inspection alone never advances an attempt to PRESERVED.
+
+Recognizable credential-like metadata is refused, but arbitrary filenames/branch names
+can themselves contain private information. Do not automatically publish inspection
+output. No universal secret-detection guarantee. Tests use synthetic secrets only.
+
+Git protocol references: [porcelain status and optional-lock guidance](https://git-scm.com/docs/git-status),
+[Git environment controls](https://git-scm.com/docs/git). Live quota discovery was not repeated.

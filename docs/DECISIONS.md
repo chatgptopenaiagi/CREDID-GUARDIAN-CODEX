@@ -326,3 +326,28 @@ Removed obsolete mission-number references from the active next action and corre
 premature acceptance claim. No new runtime phase, target mutation or live quota read.
 Current tests and publication evidence are in V3_PROGRESS.md. The next implementation
 block remains bounded, non-mutating explicit project inspection in disposable repositories.
+
+
+## 2026-09-21 — Bounded non-mutating V3 inspection
+
+Resumed clean main with local/fetched/live refs equal to
+4299df1039b3cf18d263b1024278471fce5ee16a; source/tests agree with the recorded frontier.
+Completed the inspection unit, not another recovery block. A separate snapshot envelope
+keeps the existing attempt and V2 schemas intact. Only explicit exact roots are accepted;
+Gitfile targets and unreviewed configuration are refused. This narrower initial boundary
+avoids following external Git dirs, includes, filters or fsmonitor commands. No target
+configuration is rewritten for compatibility. Runtime remains standard-library-only.
+
+Use bounded descriptor-relative metadata traversal, isolated fixed Git read commands,
+optional locks disabled, and repeated state/fingerprint checks. File content is not
+exported; Git can read/hash tracked content internally. Remote URLs are omitted entirely;
+local upstream counts never claim live remote truth. Instruction documents are candidates
+only and test commands remain UNKNOWN. Gitlinks and hidden index flags are visible while
+submodule worktrees remain NOT_INSPECTED. No atomic/hostile-concurrent-writer guarantee.
+
+Test-first import failed before the module existed; first 14, then 26, then 29 inspection
+tests passed. New tests cover observed-state non-mutation, special/unsafe boundaries,
+malicious config refusal, bounded peers and synchronized CLI SIGINT/SIGTERM. Exact full
+regression/publication results and next handoff-persistence scope are in V3_PROGRESS.md.
+No external valuable target, live quota read, automatic mutation, dependency or system
+setting change. Future adapters must not treat an inspection receipt as preservation.
