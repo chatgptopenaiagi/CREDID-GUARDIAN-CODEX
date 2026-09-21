@@ -153,15 +153,18 @@ validate, document, checkpoint, publish/verify and stop at coherent handoff acce
 ## LAST SAFE CHECKPOINT
 
 Entry published checkpoint: `4299df1039b3cf18d263b1024278471fce5ee16a`.
-Inspection checkpoint: HEAD after normal commit/publication; resolved hash in final
-report. No self-containing SHA. Preserve local checkpoint if publication fails.
+Validated inspection checkpoint: `e76b6a8a7603766c4661d8168088e1486abb6873`.
+Final publication-evidence documentation checkpoint: HEAD after normal commit/publication;
+resolved hash in final report. No self-containing SHA. Preserve local checkpoint if publication fails.
 
 ## PUBLICATION STATE
 
-Entry HEAD/tracking/live main equality verified. Inspection changes not yet published at
-this pre-commit record. Publish only validated CGC main to the authorized
-chatgptopenaiagi/CREDID-GUARDIAN-CODEX; verify actual local/tracking/live equality after
-push. Record observed publication in a follow-up if needed; never infer it from push exit.
+Inspection **REMOTE_VERIFIED** on 2026-09-21: normal forward push to the authorized
+chatgptopenaiagi/CREDID-GUARDIAN-CODEX main succeeded. Independently observed local HEAD,
+origin/main and live refs/heads/main all equal `e76b6a8a7603766c4661d8168088e1486abb6873`;
+working tree clean. This follow-up records that actual result. Its own HEAD is verified
+after commit/push and the resolved hash/equality are included in the final report.
+No target-project commit/push or preservation executor was exercised.
 
 ## OPERATIONS / INTEGRITY
 
