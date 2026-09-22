@@ -50,7 +50,7 @@ claim that future external-effect implementations already satisfy them.
 | 38 | No secret material was intentionally committed. | COMPLETE | Development publication scan; no secret input used. Not universal proof. |
 | 39 | Documentation is complete. | PARTIAL | Mission/contract/progress preserved; later implementation docs pending. |
 | 40 | Canonical deterministic test command passes. | COMPLETE | 222 tests pass (153 V1/V2 + 22 attempt + 29 inspection + 18 handoff); exact output in progress. |
-| 41 | Git publication of CGC V3 itself is verified. | PARTIAL | Prior inspection publication verified; current handoff checkpoint publication is a final gate, recorded after push. See progress. |
+| 41 | Git publication of CGC V3 itself is verified. | COMPLETE | Handoff `7d1ca1e3335b13e6e2a5eba8d821d2e25b887400` pushed; local/tracking/live main equality and clean tree verified on 2026-09-22. Follow-up HEAD verification reported after publication. See progress. |
 | 42 | The final V3 checkpoint is resumable. | PARTIAL | Development handoff and runtime fresh-process continuity readback exist; complete V3 safe-resume workflow pending. |
 | 43 | V4 or cloud work has not begun without authorization. | COMPLETE | No V4/cloud/GUI/ARX implementation. |
 

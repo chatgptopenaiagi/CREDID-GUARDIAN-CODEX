@@ -11,7 +11,7 @@ is not implemented. THE GUARDIAN OBSERVES. CODEX PRESERVES.
 ## CURRENT SESSION BLOCK
 
 2026-09-22, third continuation: recovered interrupted handoff work, completed and validated
-this same block, and prepared its forward publication. Entry main/local HEAD/origin/main/
+this same block, and verified its forward publication. Entry main/local HEAD/origin/main/
 live remote main all equaled `a33fd3f0930ad65b23e502da9ff64d59eb98e282`. Working tree held
 modified V3_MISSION.md and __main__.py plus untracked handoff.py and test_handoff.py.
 The old progress record described handoff as NOT_STARTED; surviving code was newer.
@@ -188,14 +188,19 @@ resume generator as an incidental extension. STOP after this session's verified 
 ## LAST SAFE CHECKPOINT
 
 Entry published checkpoint: `a33fd3f0930ad65b23e502da9ff64d59eb98e282`.
-Handoff implementation checkpoint: **HEAD after normal commit/publication**; resolved SHA and
-local/tracking/live equality reported after operations. No invented self-containing hash.
+Handoff implementation checkpoint: `7d1ca1e3335b13e6e2a5eba8d821d2e25b887400`.
+Final publication-evidence documentation checkpoint: **HEAD after normal commit/publication**;
+its resolved SHA and local/tracking/live equality are reported after operations.
+No invented self-containing hash.
 
 ## PUBLICATION STATE
 
-Entry main/local/tracking/live equality verified. Current block publication is PENDING until
-normal commit/push and independent live-ref comparison complete. A subsequent evidence entry
-records the actual result. Preserve local checkpoint if remote publication fails.
+Handoff implementation **REMOTE_VERIFIED** on 2026-09-22. Normal forward push to
+chatgptopenaiagi/CREDID-GUARDIAN-CODEX main succeeded. Independent comparison found local HEAD,
+origin/main and live refs/heads/main all equal `7d1ca1e3335b13e6e2a5eba8d821d2e25b887400`;
+working tree clean. This follow-up records that observed result. Its own HEAD is checked after
+normal commit/push and the resolved equality belongs in the final report. No target-project
+Git preservation was exercised. Preserve local checkpoint if this follow-up's publication fails.
 
 ## OPERATIONS / INTEGRITY
 
@@ -204,3 +209,7 @@ crossing. Target live remote operations 0. CGC-only live ref checks and authoriz
 publication; exact publication results follow. Temporary /tmp fixtures/processes cleaned by tests.
 No dependency installation, authentication access, default cache creation, persistent environment/
 system/security changes, services, unrelated project mutation or background monitoring.
+
+Publication evidence follow-up changes documentation only (progress and acceptance row 41).
+Implementation and test files match the verified implementation checkpoint. Whitespace and
+changed-document checks run before its normal forward commit; no redundant regression required.
