@@ -167,16 +167,19 @@ as an incidental extension. This session ends after verified CGC checkpoint publ
 ## LAST SAFE CHECKPOINT
 
 Entry and prior published handoff checkpoint: `d0c320fb9e4b722f3bfcaca10094c8a71a58c3c6`.
-Current local-checkpoint implementation: **HEAD after normal commit/publication**. Its exact
-resolved hash is reported after Git operations; no self-containing hash is fabricated.
+Local-checkpoint implementation: `eb66ff297c9aac81ae2845bde5a9e24122f775eb`.
+Final publication-evidence documentation checkpoint: **HEAD after normal commit/publication**.
+Its resolved hash is reported after Git operations; no self-containing hash is fabricated.
 
 ## PUBLICATION STATE
 
-Entry checkpoint REMOTE_VERIFIED by independent local/tracking/live comparison. Current block
-validation succeeded; normal forward commit/push to chatgptopenaiagi/CREDID-GUARDIAN-CODEX
-main follows. This document does not preclaim that future operation succeeded. Final report
-must give actual HEAD = origin/main = live refs/heads/main evidence and clean working tree.
-If publication fails, retain this local checkpoint and report LOCAL_CHECKPOINT_ONLY.
+Implementation checkpoint **REMOTE_VERIFIED** on 2026-09-22. Normal forward push to
+chatgptopenaiagi/CREDID-GUARDIAN-CODEX main succeeded. Independent comparison found local HEAD,
+origin/main and live refs/heads/main all equal `eb66ff297c9aac81ae2845bde5a9e24122f775eb`;
+working tree clean. This documentation follow-up records that observed result. Its own HEAD
+is checked after normal commit/push; resolved equality belongs in the final report.
+No target-project network publication was exercised. If this follow-up cannot be published,
+retain its local checkpoint and report LOCAL_CHECKPOINT_ONLY.
 
 ## OPERATIONS / INTEGRITY
 
@@ -188,3 +191,7 @@ fixtures/processes cleaned by tests. No installations, persistent environment/sy
 changes, authentication inspection, default cache creation, services or background monitoring.
 No unrelated repository writes. Inherited V2 read-only HHS integrity check found clean main
 at unchanged `280b7090edf51aadf694db04d6d5f6bceff289a2`; no HHS file was opened or modified.
+
+Publication-evidence follow-up modifies only V3 progress and acceptance row 41. Runtime/tests
+match the 245-test implementation checkpoint; no redundant regression rerun. Changed-doc link
+and whitespace checks pass before the normal forward documentation commit.
