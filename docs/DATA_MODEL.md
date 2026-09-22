@@ -142,9 +142,11 @@ V3 remains NOT_STARTED and requires separate authorization.
 
 V3 is authorized and PARTIAL. The pure attempt contract, bounded non-mutating project
 inspection, and external human/machine handoff persistence are IMPLEMENTED and VERIFIED
-OFFLINE. Handoff state is continuity evidence, not project preservation or mutation
-authority. Target Git mutation and automation are NOT_STARTED. The inspect and
-handoff-status CLIs are observational; there is no preserve CLI. V1/V2 remain accepted.
+OFFLINE. A deliberate manual local-checkpoint Python adapter is also IMPLEMENTED and
+VERIFIED OFFLINE in disposable Linux Git fixtures. Handoff state grants no mutation
+authority. Target publication, full preservation/resume and automation remain pending.
+The inspect and handoff-status CLIs are observational; there is no preserve CLI.
+V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under the complete
 [V3 mission](V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
@@ -163,3 +165,11 @@ unknown instruction/test knowledge remain explicit. See [inspection contract](V3
 last_known_good and previous_known_good. Both renderers reconstruct this validated state;
 notes.next_exact_action is a bounded machine field, not an executable command. Known-good
 means saved continuity, not preserved Git state. See [handoff contract](V3_CONTRACT.md#durable-handoff-persistence).
+
+
+The V3 manual local-checkpoint adapter now separates current caller approval from saved
+continuity, verifies an explicit selected tree and normal single-parent commit, and retains
+truthful failure state without rollback. The Guardian does not invoke it. Its narrow POSIX,
+hook, staging, content and concurrency boundaries are specified in the
+[local checkpoint contract](V3_CONTRACT.md#deliberate-manual-local-checkpoint).
+Target publication, full resume reconciliation and automatic policy integration remain future.

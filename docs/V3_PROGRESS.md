@@ -2,214 +2,189 @@
 
 ## OVERALL STATUS
 
-**PARTIAL.** V3 remains active under the complete [V3 mission](V3_MISSION.md), including
-its Agent Fabric / EXACTLY 100 ARCHITECTURAL KEYPOINTS directive. V1/V2 remain accepted.
-The current **human + machine handoff persistence block is COMPLETE, VERIFIED OFFLINE**
-within the [contract](V3_CONTRACT.md#durable-handoff-persistence). Full project preservation
-is not implemented. THE GUARDIAN OBSERVES. CODEX PRESERVES.
+**PARTIAL.** The deliberate manual local-checkpoint block is **COMPLETE / VERIFIED
+OFFLINE within its restricted contract**. Attempt, bounded inspection and external human/
+machine handoff remain accepted. Full project preservation, publication and verified safe
+resume are not complete. Authority comes from current user/project policy, never saved
+continuity or quota alone. [Complete mission](V3_MISSION.md), including all 100 architectural
+keypoints, remains authoritative. V1/V2 remain accepted.
+
+THE GUARDIAN OBSERVES. CODEX PRESERVES. PRESERVE BEFORE EXPANDING.
 
 ## CURRENT SESSION BLOCK
 
-2026-09-22, third continuation: recovered interrupted handoff work, completed and validated
-this same block, and verified its forward publication. Entry main/local HEAD/origin/main/
-live remote main all equaled `a33fd3f0930ad65b23e502da9ff64d59eb98e282`. Working tree held
-modified V3_MISSION.md and __main__.py plus untracked handoff.py and test_handoff.py.
-The old progress record described handoff as NOT_STARTED; surviving code was newer.
-Preserved that implementation, all eleven initial tests, CLI dispatch and full user mission
-addition. No reset/restart or existing V1/V2/attempt/inspection source rewrite.
+2026-09-22, deliberate local checkpoint continuation. Before modifications, verified root,
+clean main, recent implementation/docs commits and fetched/live publication. Local HEAD =
+origin/main = live refs/heads/main = `d0c320fb9e4b722f3bfcaca10094c8a71a58c3c6`.
+This confirms the prior handoff publication checkpoint; no recovery discrepancy existed.
+Read complete V3 mission/progress, README, AGENTS, decisions, inherited V2 mission and
+required architecture/security/policy/acceptance records. The current user's scoped
+continuation authorizes the recorded local-checkpoint candidate; no new confirmation needed.
 
-Read the complete active mission, all 100 keypoints, required project records and inherited
-V2 mission/progress. Historical expected failure reproduced: 11 focused tests, 10 passed,
-one failure in 0.524s. The data round-trip succeeded; the human renderer hid lowercase note
-keys inside JSON instead of exposing the required uppercase continuity labels. Fixed labels
-and deterministic rendering of equivalent mappings without changing the attempt schema.
+Completed only that coherent block: current explicit authority, deliberate staging/content
+policy, fresh prechecks, project writer exclusion, normal local commit verification and
+truthful handoff/failure behavior. All mutation fixtures are disposable Linux repositories.
+No target publication or next architectural phase was begun.
 
 ## COMPLETE
 
-- External HandoffStore with explicit project/store paths, private no-follow storage,
-  nonblocking process-lifetime writer flock and atomic canonical handoff.json replacement.
-- Versioned validated CONTINUITY_ONLY envelope, monotonic generation/time, latest attempt,
-  last-known-good and previous-known-good, inspection/record/project/digest bindings.
-- Deterministic JSON and human views from one validated state; required continuity notes,
-  test failure state, publication receipts/unknowns and NEXT_EXACT_ACTION survive readback.
-- Explicit failure recording preserves good slots; post-replace uncertainty retains the
-  preceding good record. Corrupt/unsupported state is never silently migrated/overwritten.
-- Distinct unsupported-schema errors, bounded input/output, fixed non-echoing errors,
-  recognizable-secret rejection, project symlink-alias refusal before storage creation.
-- Read-only handoff-status CLI with explicit --store-dir / --project; fresh-process human
-  and JSON reconstruction including a failed latest attempt. Missing store is not created.
-- Eighteen handoff tests including eight synchronized seeded/unseeded SIGKILL cases across
-  four write stages, cross-process exclusion/release/restart and target non-mutation.
-- Small Agent Fabric architecture cross-reference: stable language-neutral continuity state,
-  information separate from authority, transport separate from persistence. No runtime fabric.
+- New `cgc.checkpoint.checkpoint` Python adapter: exact project, expected existing HEAD and
+  branch, current `policy_reviewed=True`, reviewed file SHA256 mapping and MANUAL attempt.
+  Caller approval is an attestation, not a cryptographic capability or persisted grant.
+- Literal explicit file staging with 64-path/1 MiB-file/4 MiB-total bounds, no-follow regular
+  text reads, sensitive/generated path and recognizable-content refusal. Whole staged index
+  must equal original index plus approved blobs/modes. Unselected/ignored work stays in place.
+- Refusal of existing staged/intent-to-add work, operation/conflict/hidden-index/complex
+  layouts, executable hooks requiring separate policy, attribute transformations and foreign
+  locks. No hook bypass, implicit identity, arbitrary shell, config rewrite or rollback.
+- Persistent private project-level flock coordinates CGC peers across handoff-store choices;
+  fresh identity/HEAD/branch/config/index/content checks surround Git mutation.
+- Durable CHECKPOINTING handoff precedes staging. Normal commit verified by new HEAD, exact
+  tree/index, unchanged branch and exactly one expected parent. Final local receipt persists
+  with curated project test failures and NEXT_EXACT_ACTION; no false safe-resume claim.
+- Failures preserve staged work, objects, commits and prior handoff evidence. Post-commit
+  uncertainty is explicit; failed final handoff cannot erase the returned verified receipt.
+- Twenty-three tests including four synchronized SIGKILL stages, cross-process lock exclusion,
+  restart release, real Git identity failure, injected faults and fresh-process handoff reads.
 
 ## PARTIAL
 
-Full V3 preservation remains PARTIAL. Known-good handoff means valid saved continuity, not
-verified target preservation. Stored records/receipts are operator-curated or adapter-reported;
-outer SAFE_TO_RESUME remains UNKNOWN and automatic_mutation_authorized remains false.
-Fresh-process readback is complete; present Git/test reconciliation and verified safe resume
-are not. Current test commands/results are bounded inert curated notes, not executed commands
-or a structured result-count adapter. [Acceptance](V3_ACCEPTANCE.md) keeps these gaps visible.
+Full V3 preservation remains PARTIAL. Local checkpoint evidence is real adapter observation;
+project tests remain caller-curated and are not executed. A final saved attempt deliberately
+ends PARTIAL, outer SAFE_TO_RESUME UNKNOWN. Full Git/test reconciliation and safe-to-close
+proof are not implemented. See [exact contract](V3_CONTRACT.md#deliberate-manual-local-checkpoint)
+and [acceptance matrix](V3_ACCEPTANCE.md). Selection may preserve only part of dirty work.
 
 ## NOT_STARTED
 
-Preservation executor/CLI, project test execution, deliberate staging, target local commits,
-target push/remote verification, target-project mutation locking/idempotency, Guardian authority
-integration and automatic preservation. Agent Gateway, Capability Model runtime, Control Plane,
-Data Plane, Router/Event Bus, networking/tunnels, CWM/HHS/ARX integration, local/cloud AI
-orchestration, master orchestrator, resume prompt generation, GUI/mobile/V4 are NOT_STARTED
-and NOT_AUTHORIZED in this block. Existing finite V2 observation daemon is unchanged.
+Target push/remote verification, preserve CLI, project test runner, full fresh-process
+reconciliation, Guardian authority integration and automatic preservation. Dedicated executor
+SIGINT/SIGTERM adapters and in-command Git crash acceptance remain pending. Agent Gateway,
+Capability Model runtime, Control/Data Planes, Router/Event Bus, transport/tunnels, CWM/HHS/ARX
+integration, local/cloud AI orchestration, master orchestrator, resume generator, GUI/mobile
+and V4 remain NOT_STARTED; none was authorized as an extension of this block.
 
 ## TESTS PASSED
 
-Initial focused reproduction: 11 tests in 0.524s, 10 passed, one failure, zero errors/skips.
-Expanded run: 18 tests in 2.553s, 17 passed, one test assertion error (expected ValueError
-instead of HandoffError), zero failures/skips. Corrected that new assertion. Intermediate
-18/69-test runs passed; final tests additionally check fresh human/failure/schema CLI results.
+Baseline canonical suite: **222 passed in 20.210s**.
+First focused discovery: **44 passed in 2.972s**, consisting of 15 new tests plus 29 imported
+inspection tests accidentally recollected. Changed helper import to avoid duplicate discovery;
+no existing test changed. Expanded focused runs: **20 passed in 2.814s**, **20 in 2.721s**,
+then **23 in 2.871s**. No observed runtime assertion failure during this block.
 
-The first complete regression also passed 222 tests in 19.042s. Final security review then
-added project/service-account-prefixed synthetic API-key fixtures to the existing test; a
-single-test reproduction failed (1 test in 0.009s, one failure). Expanded the narrow recognizable
-pattern and reran focused, V3 and full regression successfully. No real credential was used.
+Final canonical full regression after the final content-read safety adjustment:
 
-Final focused command:
-`TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -p test_handoff.py -q`
+```bash
+TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -q
+```
 
 ```text
-Ran 18 tests in 3.278s
+Ran 245 tests in 22.042s
 OK
 ```
 
-Final V3 command:
-`TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_preservation test_inspection test_handoff -q`
+**245 passed; zero failures, errors or skips.** Composition: 153 V1/V2 + 22 attempt +
+29 inspection + 18 handoff + 23 checkpoint. All prior 222 tests and existing runtime files
+are unchanged. All permission-sensitive fixtures use Linux-native /tmp; no live sensor.
 
-```text
-Ran 69 tests in 5.526s
-OK
-```
-
-Canonical full regression:
-`TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -q`
-
-```text
-Ran 222 tests in 19.259s
-OK
-```
-
-Final runs: respectively 18/69/222 passed; **zero failures, errors or skips**.
-All prior 204 tests unchanged. Linux /tmp used for POSIX-sensitive fixtures. No live sensor.
-Publication gates: 24 Python files parse, three JSON files parse, 131 local Markdown targets
-resolve; all 48 repository files screened. Two credential-URL matches are deliberate synthetic
-fixtures in tests/test_handoff.py and tests/test_inspection.py, reviewed without real credentials.
-No other recognizable pattern findings; not universal proof of secret absence. Exactly 100
-numbered architectural keypoints verified. CLI help succeeds, whitespace checks pass, origin
-identity is the authorized CGC repository. Final source/docs/diff reviewed; no unrelated files.
+Publication checks: 26 Python files parse, three JSON files parse, 138 local Markdown file
+links resolve after the final progress rewrite. All 50 tracked/new CGC files screened.
+Only two recognizable credential-URL findings: previously reviewed deliberate synthetic
+fixtures in test_handoff.py and test_inspection.py. No real credentials used or displayed;
+pattern screening is not proof of universal absence. Final documentation/link/whitespace,
+CLI-help and diff checks passed; exact publication evidence follows Git operations. An initial
+keypoint-check assertion counted every numbered mission list, not just the architectural
+section. Corrected the checker scope: exactly keypoints 1 through 100 pass; mission unchanged.
 
 ## TESTS REMAINING
 
-No observed handoff-block failure remains. Future stages require target staging/secret and
-large-file policy tests, real execution receipts, local checkpoint/bare-remote publication,
-mutation-stage crashes, fresh Git/test reconciliation and canonical Guardian authority tests.
-No live quota read is needed to resume development.
+No observed failure remains for this scoped block. Future publication tests need local bare
+remotes, explicit remote identity/branch/forward-only policy, push failures, independent ref
+comparison and local-checkpoint-only outcomes. Later full acceptance needs actual project test
+receipts, in-command mutation interruptions, fresh-process Git/test reconciliation and canonical
+Guardian gating. No live quota read is needed for the next block.
 
 ## KNOWN FAILURES / LIMITATIONS
 
-No unresolved observed deterministic failures. Private native POSIX storage required; /mnt/c
-mode behavior is not weakened. No universal power-loss guarantee, hostile same-user tamper/
-path-race resistance, bind-mount alias detection, hard CPU/RSS/syscall deadlines or encrypted/
-authenticated handoff. SHA256 is representation integrity, not proof of claimed actions.
-Project paths are requested identity, not independently re-attested on readback. Missing
-projects permit historical reads; renames do not automatically rebind a store.
+No unresolved observed deterministic failures. Native POSIX permissions required; /mnt/c
+security is not weakened. Existing staged work is refused and preserved, including staging
+left by a failed attempt; caller reconciliation is required before another attempt. Unborn,
+detached, complex layouts and executable hooks/attributes are intentionally unsupported.
 
-Failed input is not automatically recorded. Call record_failure explicitly when storage is
-healthy; a failed disk write/process death cannot promise durable latest-failure metadata.
-Canonical state then remains old or new according to the replacement boundary. After-replace
-fsync/readback failure is PUBLICATION_UNCERTAIN; prior good slot remains in the new state.
-SIGKILL may leave private temporary siblings, ignored rather than deleted; repeated crashes
-can accumulate disk usage. No handoff-write SIGINT/SIGTERM adapter is claimed. Pattern scanning
-cannot prove arbitrary curated notes are secret-free; users must supply authorized context.
+The lock coordinates CGC only. Owner-controlled quiescent targets required; no hostile
+same-user/path-race or noncooperating-writer isolation, hard CPU/RSS/syscall deadline or
+universal power-loss guarantee. SIGKILL during a Git child cannot promise child cleanup.
+Crash boundaries tested around completed Git commands, not inside every Git transaction.
+
+After commit-attempt failure/death, HEAD may have advanced without a verified receipt. Do
+not retry blindly: inspect Git and durable CHECKPOINTING/latest-failure state. Failed storage
+cannot guarantee a durable failure marker. Final receipt-write failure may leave a verified
+commit only in Git and the returned result; retain/reconcile that checkpoint. Persistent lock
+inode is never deleted. Common secret scanning cannot prove arbitrary text/history safe.
 
 ## IMPORTANT DISCOVERIES / ARCHITECTURE
 
-The historical focused failure was human presentation, not a lost state/determinism failure.
-A new mapping-order test proved both views now deterministic. Code review found schema errors
-were collapsed into corruption and project symlink aliases could evade lexical storage overlap;
-fixed both and added regression evidence. Also closed the reproduced prefixed API-key
-screening gap with synthetic fixtures. Existing private Cache locking/I/O substrate reused
-without changing V2. Two retained slots allow post-replace uncertainty to preserve older evidence.
+Intent-to-add can look unstaged in porcelain; explicitly refuse it so unselected index state
+cannot enter a checkpoint. Compare the entire index, not merely selected diff names. Content
+digests and exact Git blob identities bind screened bytes without exporting their contents.
+Do not read an existing file when the selection only authorized its deletion-as-absent.
 
-All 100 keypoints were read as constraints, not feature authorization. Durable continuity now
-supports future fresh-process consumers and bounded resume generation independent of transport.
-A future generator must reconcile Git/tests, mission/version boundaries, preservation/publication
-state and last-known-good before using NEXT_EXACT_ACTION. Information is not authorization.
-Future Control Plane decides scoped capabilities; Data Plane transports authorized data; events
-report facts; private context stays local and cloud context requires authorization. Those layers
-are architecture only. See [architecture](ARCHITECTURE.md#agent-fabric-relationship).
-
-## NON-MUTATION / SECRET SAFETY EVIDENCE
-
-Bound inspection + handoff fixture compares every regular target file's SHA256, mode, size and
-mtime including Git metadata before/after success and rejected candidates; unchanged. Storage
-overlap and project/storage alias tests refuse before creating target children. No target
-staging/commit/push or project instruction execution is implemented. Synthetic secret-note
-fixtures are rejected without echo/write; fixed allowlists and size/schema checks fail closed.
-No private source content collected. Real credential stores and unrelated repositories untouched.
+Reuse inspection's restricted fixed-Git transport, private-file checks, attempt transitions
+and HandoffStore. No V2 schema changes. Add a small manual adapter rather than a speculative
+capability framework. Control Plane authorization, transport/Data Plane and factual events
+remain architecture only. Private context stays local; cloud export requires separate policy.
+Information is not authority, and a local Git receipt is not remote preservation/safe resume.
 
 ## FILES CREATED / MODIFIED
 
-Recovered/created: src/cgc/handoff.py, tests/test_handoff.py.
-Modified: src/cgc/__main__.py; README.md; AGENTS.md; docs/V3_CONTRACT.md;
-docs/V3_PROGRESS.md; docs/V3_ACCEPTANCE.md; docs/ARCHITECTURE.md; docs/DATA_MODEL.md;
-docs/PRESERVATION_POLICY.md; docs/SECURITY_MODEL.md; docs/ROADMAP.md; docs/DECISIONS.md;
-tests/README.md. The pre-existing user addition to docs/V3_MISSION.md is preserved unchanged.
-V1/V2 runtime (except additive CLI dispatch), all prior tests, attempt/inspection code and V2
-records remain unchanged. No dependencies added.
+Created: `src/cgc/checkpoint.py`, `tests/test_checkpoint.py`.
+Modified: `README.md`, `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/DATA_MODEL.md`,
+`docs/PRESERVATION_POLICY.md`, `docs/SECURITY_MODEL.md`, `docs/ROADMAP.md`,
+`docs/DECISIONS.md`, `docs/V3_CONTRACT.md`, `docs/V3_ACCEPTANCE.md`,
+`docs/V3_PROGRESS.md`, `tests/README.md`.
+Existing runtime, all prior tests, complete V3 mission and inherited V2 records unchanged.
+No dependency added.
 
 ## DO_NOT_REPEAT
 
-Do not redo accepted foundation/inspection/handoff blocks absent demonstrated defects. Do not
-repeat live quota reads, scan credentials/unrelated projects, weaken POSIX permissions, infer
-mutation authority from a saved record, blindly stage, force-push or implement Agent Fabric/V4.
-Do not treat handoff.json, successful CLI exit, synthetic receipts or a saved next action as
-proof of current Git/test reality, safe-to-close status or permission to act.
+Do not redo accepted V1/V2 experiments or V3 blocks absent demonstrated defects. No repeated
+live quota reads, authentication access, automatic retries/rollback, blind staging, force push,
+security weakening or unrelated project mutation. Never treat stored approval text, a handoff,
+a Git process exit, a synthetic record or NEXT_EXACT_ACTION as current execution authority.
+Do not infer that LOCAL_CHECKPOINT means all dirty files, project tests or safe resume verified.
 
 ## NEXT_EXACT_ACTION
 
-Start a new scoped session by reconciling Git/source/tests/mission/progress and publication.
-The next V3 implementation candidate is **deliberate local checkpointing in disposable Linux
-Git fixtures**: define explicit current target authority, staging/secret/large-file policy,
-fresh prechecks, target writer exclusion and checkpoint receipts; then prove forward-only
-local commits and truthful failures against handoff continuity. No target mutation is authorized
-by this record alone; the current directive ends at handoff publication. Obtain the next scoped
-user directive before implementing that block. Do not start target push, automation, Fabric or
-resume generator as an incidental extension. STOP after this session's verified checkpoint.
+In the next scoped session, first reconcile actual Git/source/tests/mission/progress and
+publication. The next coherent V3 candidate is **explicit target publication and independent
+remote verification in disposable Linux repositories with local bare remotes**. Define
+separate current publication authority, approved remote identity/branch and forward-only
+prechecks; build on the local checkpoint receipt and project lock; prove matching local,
+tracking and live remote refs, truthful push failure and retained local-checkpoint-only state.
+Do not introduce a live target remote, Guardian automation, Fabric, resume generator or V4
+as an incidental extension. This session ends after verified CGC checkpoint publication.
 
 ## LAST SAFE CHECKPOINT
 
-Entry published checkpoint: `a33fd3f0930ad65b23e502da9ff64d59eb98e282`.
-Handoff implementation checkpoint: `7d1ca1e3335b13e6e2a5eba8d821d2e25b887400`.
-Final publication-evidence documentation checkpoint: **HEAD after normal commit/publication**;
-its resolved SHA and local/tracking/live equality are reported after operations.
-No invented self-containing hash.
+Entry and prior published handoff checkpoint: `d0c320fb9e4b722f3bfcaca10094c8a71a58c3c6`.
+Current local-checkpoint implementation: **HEAD after normal commit/publication**. Its exact
+resolved hash is reported after Git operations; no self-containing hash is fabricated.
 
 ## PUBLICATION STATE
 
-Handoff implementation **REMOTE_VERIFIED** on 2026-09-22. Normal forward push to
-chatgptopenaiagi/CREDID-GUARDIAN-CODEX main succeeded. Independent comparison found local HEAD,
-origin/main and live refs/heads/main all equal `7d1ca1e3335b13e6e2a5eba8d821d2e25b887400`;
-working tree clean. This follow-up records that observed result. Its own HEAD is checked after
-normal commit/push and the resolved equality belongs in the final report. No target-project
-Git preservation was exercised. Preserve local checkpoint if this follow-up's publication fails.
+Entry checkpoint REMOTE_VERIFIED by independent local/tracking/live comparison. Current block
+validation succeeded; normal forward commit/push to chatgptopenaiagi/CREDID-GUARDIAN-CODEX
+main follows. This document does not preclaim that future operation succeeded. Final report
+must give actual HEAD = origin/main = live refs/heads/main evidence and clean working tree.
+If publication fails, retain this local checkpoint and report LOCAL_CHECKPOINT_ONLY.
 
 ## OPERATIONS / INTEGRITY
 
-Session live quota reads 0; V3 0; V2 0; historical V1 1. No quota monitoring or observed threshold
-crossing. Target live remote operations 0. CGC-only live ref checks and authorized forward Git
-publication; exact publication results follow. Temporary /tmp fixtures/processes cleaned by tests.
-No dependency installation, authentication access, default cache creation, persistent environment/
-system/security changes, services, unrelated project mutation or background monitoring.
-
-Publication evidence follow-up changes documentation only (progress and acceptance row 41).
-Implementation and test files match the verified implementation checkpoint. Whitespace and
-changed-document checks run before its normal forward commit; no redundant regression required.
+Session live quota reads **0**; V3 **0**; V2 **0**; historical V1 **1**. No reliable available
+capacity indicator or quota threshold crossing observed. Target network/publication operations
+**0**; local staging/commits exercised only in disposable Linux fixtures. CGC-only network
+operations are fetch/ref checks and authorized normal forward publication. Temporary /tmp
+fixtures/processes cleaned by tests. No installations, persistent environment/system/security
+changes, authentication inspection, default cache creation, services or background monitoring.
+No unrelated repository writes. Inherited V2 read-only HHS integrity check found clean main
+at unchanged `280b7090edf51aadf694db04d6d5f6bceff289a2`; no HHS file was opened or modified.

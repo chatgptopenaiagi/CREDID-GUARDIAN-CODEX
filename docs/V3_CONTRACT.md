@@ -289,3 +289,90 @@ end-to-end safe resume. SIGINT/SIGTERM handoff-write-specific adapters are not i
 Future consumers must reconcile current Git/test/mission reality before using historical
 NEXT_EXACT_ACTION. Information does not grant capabilities. See
 [Agent Fabric architecture relationship](ARCHITECTURE.md#agent-fabric-relationship).
+
+## Deliberate manual local checkpoint
+
+IMPLEMENTED / VERIFIED OFFLINE: [checkpoint.py](../src/cgc/checkpoint.py),
+[test_checkpoint.py](../tests/test_checkpoint.py). Public Python `checkpoint` is a
+bounded manual adapter, not an automatic Guardian action or a preserve CLI. It creates
+normal local commits only. No target network operation or project test execution exists.
+
+The current trusted caller must provide the exact project, expected existing HEAD and
+branch, `policy_reviewed=True`, and a reviewed mapping of exact relative file paths to
+SHA256 content digests (`None` means an approved deletion). This is a current caller
+attestation of user/project-policy authority, not a cryptographically enforced capability
+or a value to deserialize as authority from a handoff. A digest binds reviewed bytes; it
+does not prove coherence, secrecy or test success. The caller must establish those facts
+and supply an honest MANUAL, LOCAL_CHECKPOINT attempt at DOCUMENTING with no receipts.
+The adapter supplies actual selected paths as files_changed, retains curated test status,
+known failures and NEXT_EXACT_ACTION, and adds inspection/local-commit evidence itself.
+
+Initial compatibility deliberately requires an ordinary existing branch with an existing
+commit, the inspector's restricted configuration/layout, no operations/conflicts, hidden
+index flags, nested repositories, submodules or linked worktrees. Any existing staging,
+including intent-to-add, is refused without replacing the user's index. All local
+.gitattributes and .git/info/attributes are refused to exclude content transformations.
+Executable project hooks are refused for a separately reviewed policy; they are neither
+run nor silently disabled. Hook sample files are inert. User identity comes from approved
+repository-local config; global/system config is excluded, and no identity is invented.
+
+Selection is literal (no wildcard/pathspec expansion), at most 64 paths of 2048 characters.
+Only selected files are opened for content screening, descriptor-relatively without links.
+They must be owned, safe-mode, singly linked regular UTF-8 text files, at most 1 MiB each
+and 4 MiB total. Common credential paths/names, generated directories, model/archive/database
+extensions, binary content, recognizable credentials and obvious credential assignments are
+refused. No contents, patches or raw Git diagnostics are returned. Scanning cannot prove
+universal secrecy, and existing history is not content-audited. Unselected and ignored work
+is preserved in place; unselected dirty work is not claimed checkpointed. Global ignore
+configuration remains excluded by the inspection contract; project .gitignore is honored.
+Deletions and renames are explicit selected paths, not automatic discovery/staging decisions.
+
+A persistent private `.git/cgc-checkpoint.lock` inode, never unlinked, holds nonblocking
+flock throughout fresh inspection, handoff, staging, commit and receipt publication. Lock
+creation is itself an authorized metadata write and may survive a later precheck refusal.
+It coordinates CGC writers even when they choose different handoff stores. Kernel process
+exit releases it. Git's own foreign lock files are refused, not removed. Noncooperating
+Git/editor processes and hostile same-user races are not excluded; use quiescent targets.
+The adapter rechecks root/Git identity, HEAD/branch, configuration, content and index at
+meaningful boundaries but does not claim an atomic filesystem transaction.
+
+Before staging, a validated CHECKPOINTING handoff is saved under the external store's lock.
+The adapter then runs only explicit `git add -- <selected paths>`, `write-tree` and a normal
+`commit` with a fixed message. It compares the entire staged index to the original index
+plus exactly the approved blobs/modes, then verifies the new HEAD, exactly one expected
+parent, branch, tree and index. No reset, clean, restore, stash, rebase, branch creation,
+history rewrite, force push or rollback exists. Repeated requests with stale HEAD or no
+selected changes refuse rather than manufacture empty commits.
+
+The returned outcome is REFUSED, PARTIAL or LOCAL_CHECKPOINT, with fixed error_code,
+head_before, tree, local_commit, staging_attempted, commit_attempted and handoff_saved.
+`local_commit` is populated only after verification. `publication_status=NOT_REQUESTED`
+and `safe_to_resume=UNKNOWN` always. Successful receipt storage ends the attempt PARTIAL:
+local Git evidence exists, but full fresh-process reconciliation and safe resume do not.
+`handoff_saved` indicates the most recent record publication attempted by this call succeeded;
+a true value on failure can refer to the pre-staging CHECKPOINTING record, not a final receipt.
+Read durable latest_attempt and good slots to distinguish them.
+
+Any failed mutation leaves staged files, objects and commits intact. No automatic retry or
+index rollback can discard user work. When possible, an explicit latest failure is recorded
+without erasing prior good continuity. If a commit exits unsuccessfully/times out or the
+process dies after updating HEAD, a commit may exist without a returned verified receipt:
+commit_attempted plus missing local_commit requires fresh Git reconciliation, never a blind
+retry. A verified local receipt survives in the return value if the final handoff write
+fails; older durable handoffs remain. Crash-before-recording cannot record its own failure.
+
+Uses existing bounded fixed-Git transport (5 seconds/256 KiB per command, isolated environment,
+no shell) and inspection bounds. The mutation sequence has a 60-second cooperative deadline;
+individual full inspections retain their own 20-second bound. These are not hard aggregate
+wall-time, CPU/RSS, syscall or power-loss guarantees. SIGKILL of CGC during a running Git
+child cannot guarantee descendant cleanup. Four synchronized SIGKILL boundaries before/after
+staging and commit prove old/new HEAD, preserved work/index and restart lock release; they
+do not prove interruption inside Git's ref transaction or every mutation syscall. Dedicated
+SIGINT/SIGTERM executor adapters and broader crash acceptance remain future work.
+
+Test coverage also includes exact tree/parent and fresh-process handoff readback, failed
+project test notes, subset/ignored preservation, literal names, additions/deletions/renames,
+current authority/stale HEAD refusal, pre-staged and intent-to-add preservation, secret/binary/
+size limits, hooks/config/attributes/operation refusal, path aliases/foreign locks, content
+and index changes, real missing-identity Git failure, injected post-commit uncertainty,
+post-commit handoff failure, corrupt-store refusal and cross-process exclusion.

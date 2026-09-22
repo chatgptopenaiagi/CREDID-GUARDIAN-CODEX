@@ -143,3 +143,11 @@ Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under t
 [V3 mission](V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
 supersedes that boundary without authorizing unrelated project mutation or V4.
+
+
+The V3 manual local-checkpoint adapter now separates current caller approval from saved
+continuity, verifies an explicit selected tree and normal single-parent commit, and retains
+truthful failure state without rollback. The Guardian does not invoke it. Its narrow POSIX,
+hook, staging, content and concurrency boundaries are specified in the
+[local checkpoint contract](V3_CONTRACT.md#deliberate-manual-local-checkpoint).
+Target publication, full resume reconciliation and automatic policy integration remain future.

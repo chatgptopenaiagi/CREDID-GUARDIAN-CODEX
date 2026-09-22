@@ -148,3 +148,9 @@ Eight seeded/unseeded process-death cases cover four publication stages. See
 [contract](../docs/V3_CONTRACT.md#durable-handoff-persistence) for limits and
 [progress](../docs/V3_PROGRESS.md) for exact final focused/V3/full results (18/69/222 passes).
 No target checkpoint/push, live quota read or Agent Fabric runtime is tested or implemented.
+
+
+V3 local checkpoint acceptance: `test_checkpoint.py` exercises only disposable Linux Git
+fixtures, explicit manual authority/selection, exact trees/parents, handoff retention,
+non-destructive failures and synchronized process-death boundaries. No target network or
+live quota source. See [checkpoint contract](../docs/V3_CONTRACT.md#deliberate-manual-local-checkpoint).

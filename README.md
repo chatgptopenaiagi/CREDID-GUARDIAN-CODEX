@@ -4,9 +4,11 @@
 
 V3 is authorized and PARTIAL. The pure attempt contract, bounded non-mutating project
 inspection, and external human/machine handoff persistence are IMPLEMENTED and VERIFIED
-OFFLINE. Handoff state is continuity evidence, not project preservation or mutation
-authority. Target Git mutation and automation are NOT_STARTED. The inspect and
-handoff-status CLIs are observational; there is no preserve CLI. V1/V2 remain accepted.
+OFFLINE. A deliberate manual local-checkpoint Python adapter is also IMPLEMENTED and
+VERIFIED OFFLINE in disposable Linux Git fixtures. Handoff state grants no mutation
+authority. Target publication, full preservation/resume and automation remain pending.
+The inspect and handoff-status CLIs are observational; there is no preserve CLI.
+V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete
 [V3 mission](docs/V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
@@ -75,6 +77,11 @@ it does not mean safe to close or resume. Exit 1 means unavailable/refused; 2 me
 CLI arguments. Python `HandoffStore.publish` / `record_failure` under `writer()` provide
 bounded writes; there is no write/preserve CLI. See the [handoff contract](docs/V3_CONTRACT.md#durable-handoff-persistence).
 
+The manual local-checkpoint Python adapter requires current project-policy approval,
+expected HEAD/branch and explicitly reviewed file digests. It has been exercised only in
+disposable Linux repositories. See [local checkpoint contract](docs/V3_CONTRACT.md#deliberate-manual-local-checkpoint).
+No target push, test runner, preserve CLI or automatic preservation is implemented.
+
 ## Initial policy
 
 These are CGC defaults, not claims about Codex limits or available quota fields. Evaluate the most constrained usable remaining percentage across any number of applicable windows.
@@ -131,8 +138,8 @@ CGC reports policy; it does not autonomously edit, commit, push or otherwise mod
 
 V2 is verified offline on POSIX, with private temporary caches and injected sensors.
 No live daemon run, native Windows transport, supported polling cadence or preservation
-hook is claimed. Unknown/partial coverage cannot establish global all-clear. CGC never
-executes preservation actions. See the [V2 handoff](docs/V2_OPERATIONS.md#handoff).
+hook is claimed. Unknown/partial coverage cannot establish global all-clear. The V2 Guardian never executes preservation actions; the V3 manual adapter requires
+current explicit target authority. See the [V2 handoff](docs/V2_OPERATIONS.md#handoff).
 
 Product name: **CREDID GUARDIAN CODEX**. Acronym: **CGC**. GitHub identifier: `CREDID-GUARDIAN-CODEX` (a space-free repository identifier only). Licensed under [Apache-2.0](LICENSE).
 

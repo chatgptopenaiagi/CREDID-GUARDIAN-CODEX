@@ -371,3 +371,30 @@ limits and unsupported guarantees. Eighteen focused tests and all 222 regression
 results, failures during development and next authorized boundary are in V3_PROGRESS.md.
 No live quota read, target Git mutation, dependency or system change. Publish this coherent
 CGC block forward, independently verify refs, record results and stop.
+
+## 2026-09-22 — Deliberate manual local checkpoint block
+
+Resumed clean main with local/fetched/live equality at
+`d0c320fb9e4b722f3bfcaca10094c8a71a58c3c6`. Complete V3 mission/100 keypoints and inherited
+V2 specification reviewed. Current user authorization permits the recorded next block.
+Baseline 222 tests pass in 20.210s; no V1/V2 experiments or live quota reads repeated.
+
+Implemented a separate manual Python adapter, retaining all existing runtime and schemas.
+Current policy approval plus expected HEAD/branch and reviewed file digests are required;
+saved handoffs and Guardian events cannot grant this authority. Initial compatibility
+refuses existing staging, intent-to-add, hooks requiring execution, attributes, complex
+layouts, sensitive/generated paths, binary and oversized content. This is deliberately
+narrower than general Git. No security/configuration rewrite or hook bypass for compatibility.
+
+A project-level persistent flock spans fresh prechecks, external handoff, literal staging,
+normal commit and independent tree/parent verification. Full staged-index comparison detects
+unselected changes. Failures retain index/objects/commits without rollback and preserve
+handoff history; commit-attempt uncertainty requires reconciliation. Safe resume remains
+UNKNOWN, target publication unrequested, project tests caller-curated. No speculative Fabric
+runtime or new capability framework; scoped caller attestation is not a cryptographic grant.
+
+Twenty-three focused tests include exact local commits, failure retention, four synchronized
+SIGKILL boundaries and fresh-process handoff readback. First focused discovery also collected
+29 imported inspection tests (44 total passed); changed helper import to avoid duplicate
+collection. No runtime test failure occurred. Full results, changed files, limitations and
+next block are in V3_PROGRESS.md. Preserve this coherent block before expansion.
