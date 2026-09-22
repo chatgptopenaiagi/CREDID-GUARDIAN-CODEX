@@ -47,7 +47,27 @@ def main(argv=None):
     inspect_parser = sub.add_parser('inspect', help='bounded observation only; no preservation')
     inspect_parser.add_argument('--project', required=True)
     inspect_parser.add_argument('--json', action='store_true')
+    handoff_parser = sub.add_parser('handoff-status', help='read external continuity storage only')
+    handoff_parser.add_argument('--store-dir', required=True)
+    handoff_parser.add_argument('--project', required=True)
+    handoff_parser.add_argument('--json', action='store_true')
     args = parser.parse_args(argv)
+    if args.command == 'handoff-status':
+        from .handoff import HandoffStore, HandoffError, render_json, render_human
+        error_code = 'HANDOFF_UNAVAILABLE'
+        try:
+            with HandoffStore(args.store_dir, project=args.project) as store:
+                state = store.read()
+            if state is not None:
+                print(render_json(state) if args.json else render_human(state))
+                return 0
+        except HandoffError as error:
+            error_code = str(error)
+        except (StateError, OSError, ValueError):
+            pass
+        print(json.dumps({'scope': 'CONTINUITY_ONLY', 'status': 'UNAVAILABLE',
+                          'error_code': error_code, 'safe_to_resume': 'UNKNOWN'}))
+        return 1
     if args.command == 'inspect':
         from .inspection import inspect_project, render_json, render_human
         def cancel_inspection(*_):

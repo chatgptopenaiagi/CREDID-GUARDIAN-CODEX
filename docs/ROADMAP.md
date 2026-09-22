@@ -56,3 +56,13 @@ after SIGKILL of CGC are not guaranteed. Default-target metadata preflight and f
 Final V2 offline acceptance: [evidence matrix](V2_ACCEPTANCE.md).
 153 deterministic tests pass. Zero V2 live reads; optional live verification skipped.
 V3 remains NOT_STARTED and requires separate authorization.
+
+
+## Active V3 and future architecture
+
+The historical version boundaries above are superseded by the authorized
+[V3 mission](V3_MISSION.md). V3 is PARTIAL: attempt, inspection and external handoff
+persistence are implemented/tested; target checkpoint/publication and automation remain
+NOT_STARTED. The [Agent Fabric relationship](ARCHITECTURE.md#agent-fabric-relationship) is
+ARCHITECTED/FUTURE, not runtime authorization. No gateway, control/data plane, event bus,
+resume generator, AI orchestration, GUI or V4 implementation has begun.

@@ -89,8 +89,9 @@ remote URL or project file is accepted automatically here. Dangerous/unrepresent
 paths can be refused until the inspection model supplies safe structured/escaped handling.
 
 `advance` validates/copies its input and never mutates it. A rejected update leaves the
-previous in-memory record usable. Atomic publication, latest-attempt/last-known-good
-storage, writer exclusion and fresh-process resume remain NOT_STARTED.
+previous in-memory record usable. The separate handoff store below now supplies atomic continuity publication, retained
+known-good state, writer exclusion and fresh-process readback. It does not verify project
+preservation or authorize resume.
 
 
 ## Bounded project inspection
@@ -192,3 +193,99 @@ output. No universal secret-detection guarantee. Tests use synthetic secrets onl
 
 Git protocol references: [porcelain status and optional-lock guidance](https://git-scm.com/docs/git-status),
 [Git environment controls](https://git-scm.com/docs/git). Live quota discovery was not repeated.
+
+
+## Durable handoff persistence
+
+IMPLEMENTED and VERIFIED OFFLINE on Linux-native storage. Implementation:
+[handoff.py](../src/cgc/handoff.py); evidence: [handoff tests](../tests/test_handoff.py).
+Schema `cgc-handoff-v3.0-provisional` is separate from unchanged attempt, inspection and
+V2 schemas. Public API: HandoffStore, validate_state, render_json, render_human.
+No transport, agent identity protocol, project command runner or preservation executor.
+
+One explicitly selected private external directory holds `handoff.json` and a persistent
+`writer.lock` inode. The directory binds to one exact absolute requested project path.
+Storage cannot be the project, its descendant or ancestor, or contain .git/.codex/.ssh/
+.aws/.azure/.gnupg components. Project symlink components and storage symlink components
+are refused before creation; missing project paths permit historical recovery. Project
+checks open directory metadata only. No source content or credential store is collected.
+This is a lexical identity plus no-follow path contract, not project identity attestation:
+renames, bind-mount aliases and hostile same-user path replacement are not reconciled.
+Use an owner-controlled dedicated external store and quiescent paths; mounts must not alias
+storage into the project. Native Windows and filesystems without private POSIX modes are
+unsupported. Parent directories must already exist; only the final store is created.
+
+The validated canonical state includes:
+
+- schema_version, CONTINUITY_ONLY scope, project_request and monotonic generation;
+- latest_attempt: PUBLISHED/FAILED, caller-supplied canonical UTC time, fixed failure code,
+  and successful slot digest or null;
+- last_known_good and previous_known_good: at most two complete validated slots with
+  generation, publication time, OPERATOR_CURATED basis, attempt record, optional bound
+  inspection and SHA256 digest of canonical slot content;
+- outer safe_to_resume=UNKNOWN and automatic_mutation_authorized=false, always.
+
+Known-good means a valid saved continuity record, **not** a verified preserved project.
+A stored attempt may accurately report failed tests, incomplete work or adapter-reported
+receipts. Those claims remain historical/curated, never upgraded to independently verified
+facts. Inspection must be OBSERVED, match the exact project and attempt inspection digest,
+and not postdate publication. Missing inspection is explicit; an attempt that claims its
+digest must include that inspection. Event/publication times and generations are validated.
+Digests provide representation integrity, not authentication or external action proof.
+
+Both representations derive from validate_state. Machine JSON uses sorted keys, ASCII
+escaping, compact separators and one canonical disk newline. Human output includes schema,
+quoted continuity fields (including COMPLETE/PARTIAL/NOT_STARTED/NEXT_EXACT_ACTION), the
+reported attempt and inspection, with explicit outer UNKNOWN status. It is rendered on
+read, not maintained as a second independent file that could disagree with machine state.
+Equivalent mapping insertion orders produce identical human and machine output. Rendering
+adds no timestamps/random IDs. Publication time and generation are intentionally state;
+repeated publish calls create new generations rather than being idempotent.
+
+Writes require the inherited nonblocking POSIX flock. Validate candidate, serialize,
+write a private exclusive temporary sibling, flush/fsync file, atomic replace, fsync
+store directory, then validate readback. Readers need no writer lock. Before replacement,
+a failed write leaves canonical bytes untouched. After replacement, a reported failure is
+HANDOFF_PUBLICATION_UNCERTAIN: the new complete state may be visible and contains the
+previous known-good slot. Inspect durable state before deciding what to do next.
+
+`record_failure(code, now=...)` explicitly publishes a bounded failed latest attempt while
+retaining both good slots. Codes: INPUT_REJECTED, INSPECTION_FAILED, WRITE_FAILED,
+VERIFICATION_FAILED, CANCELLED. It can also record failure with no prior good state.
+Rejected candidates are not automatically persisted. If storage itself fails or the
+process dies, latest_attempt may remain the prior durable attempt: no mechanism can promise
+a durable failure receipt on failed storage. Corrupt or unsupported canonical state is
+refused without overwrite/migration. Unsupported schema has a distinct fixed error code;
+malformed state is CORRUPT_HANDOFF. Size and project mismatch also have distinct read errors.
+The status CLI exposes safe codes; missing/unopenable storage is HANDOFF_UNAVAILABLE,
+while lexical/project alias rejection is UNSAFE_HANDOFF_PATH.
+
+Bounds: paths at most 2048 code points; inherited record strings at most 2048, note lists
+and events at most 64, attempt and inspection at most 256 KiB each; two retained slots;
+generation 1..2^53-1; canonical file/read/write and human output at most 2 MiB. Read uses
+limit+1, strict duplicate-key decoding and canonical-byte comparison. Excess fails closed;
+no truncation. No arbitrary nested payload is accepted. These are data bounds, not hard
+CPU/RSS or filesystem syscall deadlines. Repeated process deaths can leave private temporary
+siblings; they are ignored and never automatically deleted. Disk accumulation is not bounded
+across arbitrary crashes. Ordinary completed/failed writes clean their temporary file.
+
+Recognizable GitHub/OpenAI token forms, private-key headers and credential-bearing HTTP(S)
+URLs are refused with fixed non-echoing errors. Exact field allowlists reject arbitrary
+credential fields. Curated text can still contain unrecognized secrets: this is defense in
+depth, not a universal detector or permission to export data to cloud consumers. No private
+source content, credentials or hidden reasoning should be supplied as continuity notes.
+
+Eighteen tests cover round-trip/modes; mapping-order determinism; explicit failure retention
+and recovery; pre/post-replace injected failures; exclusion/release; unsafe paths/files;
+malformed/duplicate/schema/size refusal; digest/project binding; recognizable secret refusal;
+fresh-process human/JSON readback (including failed latest attempt); field/list/record/output
+bounds; failed first attempt/time ordering; project alias refusal; bound inspection and full
+fixture file-byte/mode/size/mtime non-mutation; and synchronized SIGKILL at before-write,
+partial-write, before-replace and after-replace, each with/without existing state. Competing
+process writers are refused and restart can acquire the lock after death. This proves tested
+process-crash visibility, not universal power-loss durability, hostile tamper resistance or
+end-to-end safe resume. SIGINT/SIGTERM handoff-write-specific adapters are not implemented.
+
+Future consumers must reconcile current Git/test/mission reality before using historical
+NEXT_EXACT_ACTION. Information does not grant capabilities. See
+[Agent Fabric architecture relationship](ARCHITECTURE.md#agent-fabric-relationship).

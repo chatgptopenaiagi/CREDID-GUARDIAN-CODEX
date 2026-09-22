@@ -104,10 +104,11 @@ V3 remains NOT_STARTED and requires separate authorization.
 
 ## V3 current frontier
 
-V3 is authorized and PARTIAL. The pure preservation attempt contract and bounded,
-non-mutating explicit project inspection are implemented/tested. Handoff persistence,
-target Git mutation and automation are NOT_STARTED. The inspect CLI is observational;
-there is no preserve CLI yet. V1/V2 remain accepted with regression coverage.
+V3 is authorized and PARTIAL. The pure attempt contract, bounded non-mutating project
+inspection, and external human/machine handoff persistence are IMPLEMENTED and VERIFIED
+OFFLINE. Handoff state is continuity evidence, not project preservation or mutation
+authority. Target Git mutation and automation are NOT_STARTED. The inspect and
+handoff-status CLIs are observational; there is no preserve CLI. V1/V2 remain accepted.
 Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under the complete
 [V3 mission](V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
@@ -118,3 +119,38 @@ The V3 inspector is an explicit, bounded local evidence collector alongside the 
 attempt model. It produces a separately versioned snapshot and inspection_digest receipt;
 it does not run the preservation lifecycle or write a canonical handoff. The inspect CLI
 returns before entering V2 cache/sensor code. See [contract](V3_CONTRACT.md#bounded-project-inspection).
+
+
+## Agent Fabric relationship
+
+ARCHITECTED / FUTURE, NOT_STARTED as runtime. The complete
+[100-keypoint directive](V3_MISSION.md#exactly-100-architectural-keypoints) is authoritative;
+this cross-reference locates current handoff work within it without replacing its requirements.
+
+| Boundary | Current implementation / future responsibility |
+|---|---|
+| Guardian Core | V1/V2 canonical observation/policy remains the single sensor; observation grants no mutation authority. |
+| Durable continuity | V3 validated attempt + inspection + external versioned handoff; independent of model vendor, transport and UI. |
+| Agent Gateway / Router | FUTURE common validated, versioned protocol family rather than pairwise CGC/CWM/HHS/ARX connectors; CGC need not become a server. |
+| Capability Model / Policy Engine | FUTURE explicit scoped, auditable, revocable grants; identity is distinct from authorization. Inspect/read capabilities separate from write/checkpoint/publish. |
+| Control Plane | FUTURE decides who may do what, to which project, under which policy. No handoff field confers a grant. |
+| Data Plane | FUTURE carries authorized prompts, responses, tool results and events; replaceable transport carries state rather than defining it. |
+| Event Model | FUTURE factual events such as tests.completed or preservation.failed; receipt triggers policy review, never implicit mutation permission. |
+| Local AI boundary | FUTURE local engines may consume explicitly authorized continuity; private context stays local when cloud processing is unnecessary. |
+| Cloud AI / secure transport | FUTURE minimized authorized context via authenticated encrypted transport and validated envelopes; no remote shell or blanket host control. |
+| Orchestration | FUTURE orchestration remains subject to policy, scoped capabilities and CGC refusal; no root authority by coordination alone. |
+
+Current handoff persistence creates durable machine-readable continuity for humans and fresh
+processes. Future compatible agents/resume generators can read the same language-neutral JSON:
+NEXT_EXACT_ACTION + Git/test evidence + preservation/publication state + mission boundaries +
+last-known-good + resume status. A future generator must reconcile present evidence first;
+it cannot treat historical notes, synthetic receipts or conversational claims as authority.
+Structured checkpoint/test receipts can evolve through deliberate schema revisions. Stored
+commands are inert text. No resume generator, gateway, capability runtime, control/data plane,
+event bus, networking, tunnel, local/cloud AI integration or orchestrator is implemented here.
+
+The future preservation/resume lifecycle remains DETECT → INSPECT → UNDERSTAND → PRESERVE →
+VERIFY → RESUME, with independent test/checkpoint/handoff/publication evidence. Transport may
+move a handoff later; policy decides access and action. The beginner-facing goal remains
+Choose project → Start Codex Safely → Preserve → verified Safe to Close, then Resume Project;
+current handoff-status intentionally cannot claim that full workflow or SAFE TO CLOSE.

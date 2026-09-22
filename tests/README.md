@@ -137,3 +137,14 @@ They verify Git states, explicit root/path/ownership/configuration boundaries, l
 fixed failures, representation integrity, unknown authority, CLI and signal behavior.
 Non-mutation assertions compare fixture file bytes and metadata including Git internals.
 Live remote/quota access is absent. See [current results](../docs/V3_PROGRESS.md).
+
+
+## V3 handoff persistence
+
+`test_handoff.py` adds 18 Linux /tmp tests for the external continuity store: deterministic
+human/JSON round-trip, fresh-process CLI readback, failure retention, bounded/schema/secret
+refusal, inspection binding, non-mutation and synchronized killed-writer atomicity/exclusion.
+Eight seeded/unseeded process-death cases cover four publication stages. See
+[contract](../docs/V3_CONTRACT.md#durable-handoff-persistence) for limits and
+[progress](../docs/V3_PROGRESS.md) for exact final focused/V3/full results (18/69/222 passes).
+No target checkpoint/push, live quota read or Agent Fabric runtime is tested or implemented.

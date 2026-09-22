@@ -2,10 +2,11 @@
 
 ## V3 current frontier
 
-V3 is authorized and PARTIAL. The pure preservation attempt contract and bounded,
-non-mutating explicit project inspection are implemented/tested. Handoff persistence,
-target Git mutation and automation are NOT_STARTED. The inspect CLI is observational;
-there is no preserve CLI yet. V1/V2 remain accepted with regression coverage.
+V3 is authorized and PARTIAL. The pure attempt contract, bounded non-mutating project
+inspection, and external human/machine handoff persistence are IMPLEMENTED and VERIFIED
+OFFLINE. Handoff state is continuity evidence, not project preservation or mutation
+authority. Target Git mutation and automation are NOT_STARTED. The inspect and
+handoff-status CLIs are observational; there is no preserve CLI. V1/V2 remain accepted.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete
 [V3 mission](docs/V3_MISSION.md) and current user instructions. Historical V2 notes
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
@@ -60,6 +61,19 @@ Exit 0 means OBSERVED, 1 means REFUSED (including operational failure/cancellati
 2 means invalid CLI arguments. Gitfiles/linked-worktree targets and unsupported Git
 configuration are explicitly refused. Remote URLs and document contents are not exported.
 See [inspection contract and limits](docs/V3_CONTRACT.md#bounded-project-inspection).
+
+## V3 durable handoff
+
+```bash
+PYTHONPATH=src python3 -B -m cgc handoff-status --store-dir /absolute/private/store --project /absolute/project/root --json
+```
+
+Reads an explicitly selected external store; never creates missing storage or runs a
+project command. Omit `--json` for the human view derived from the same validated state.
+Exit 0 means valid continuity state available, including a recorded failed latest attempt;
+it does not mean safe to close or resume. Exit 1 means unavailable/refused; 2 means invalid
+CLI arguments. Python `HandoffStore.publish` / `record_failure` under `writer()` provide
+bounded writes; there is no write/preserve CLI. See the [handoff contract](docs/V3_CONTRACT.md#durable-handoff-persistence).
 
 ## Initial policy
 

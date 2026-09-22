@@ -351,3 +351,23 @@ malicious config refusal, bounded peers and synchronized CLI SIGINT/SIGTERM. Exa
 regression/publication results and next handoff-persistence scope are in V3_PROGRESS.md.
 No external valuable target, live quota read, automatic mutation, dependency or system
 setting change. Future adapters must not treat an inspection receipt as preservation.
+
+
+## 2026-09-22 — Interrupted V3 handoff persistence completed
+
+Entry local/tracking/live main a33fd3f0930ad65b23e502da9ff64d59eb98e282; newer uncommitted
+handoff module/tests/CLI and expanded mission survived. Preserved them. Reproduced the one
+human-label assertion failure, fixed labels and mapping-order determinism, then added distinct
+unsupported-schema errors, project alias refusal and tested prefixed API-key screening.
+Reused private Cache/flock without V2 edits.
+Schema cgc-handoff-v3.0-provisional stores continuity separately from transport or authority.
+Two good slots preserve prior evidence through post-replace uncertainty; explicit failed-attempt
+publication never erases them. Readback never establishes project preservation or safe resume.
+
+The full Agent Fabric / 100-keypoint mission addition is retained verbatim. A small architecture
+cross-reference connects durable state to future capability-controlled consumers and resume
+prompts; no framework/network/runtime integration added. Handoff contracts document explicit
+limits and unsupported guarantees. Eighteen focused tests and all 222 regressions pass; exact
+results, failures during development and next authorized boundary are in V3_PROGRESS.md.
+No live quota read, target Git mutation, dependency or system change. Publish this coherent
+CGC block forward, independently verify refs, record results and stop.
