@@ -133,5 +133,8 @@ This contract-only session stops after verified publication; implementation requ
 ## LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting verified checkpoint: `1edbe5a009fba26a6879486687a3987de886b179`.
-Specification checkpoint: HEAD after normal commit/push and independent ref verification.
-Publication remains pending until observed. Never invent a self-containing commit hash.
+Specification commit: `09cb46fc8df4ba95034d6fe44d113498a52675e6` — REMOTE_VERIFIED.
+Normal forward push succeeded. Independent local HEAD, origin/main and live remote main all
+matched that SHA; working tree clean. This evidence-only follow-up records that observed equality
+and acceptance row 41. Its own HEAD must be pushed and independently verified; final report
+records the resolved SHA. No self-containing hash. No runtime/tests changed after validation.
