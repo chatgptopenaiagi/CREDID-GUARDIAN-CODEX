@@ -724,3 +724,62 @@ timings, every compression/delta variant, arbitrary Git versions/filesystems or 
 bounds. Existing owner-controlled/quiescent target assumptions remain. This closes the selected
 temporary-pack arrival boundary only; overall crash hardening remains PARTIAL. No runtime, helper,
 schema, signal/locking architecture, quota source, transport or V4 semantics changed.
+
+## Real active git add index replacement interruption
+
+VERIFIED OFFLINE with unchanged runtime: [staging tests](../tests/test_add_interruption.py),
+[test worker](../tests/helpers/add_peer.py) and [fixture C shim](../tests/helpers/add_gate.c).
+Git 2.55.0 on this Linux/glibc environment imports libc rename. A disposable probe confirmed
+that real git add writes the intended index to index.lock and renames it over index. The
+checkpoint adapter uses one literal `git add -- <reviewed paths>` for modifications, additions
+and deletions; it does not dispatch git rm or a command per selected file.
+
+The tests compile a small shared library with the installed C compiler into private /tmp.
+Only the fixture's actual add subprocess receives LD_PRELOAD and exact fixture path/stage
+variables. The shim matches only that index.lock → index rename, delegates to the real libc
+operation, and blocks on FIFO rendezvous immediately before it or after successful replacement.
+It fabricates neither index bytes, Git exit results nor a successful rename. The PID/group in
+the rendezvous must match the live Git add process. Source configuration, production subprocess
+environment and runtime policy remain unchanged. This is controlled syscall-boundary evidence,
+not acceptance of arbitrary production loader overrides or project hooks.
+
+| Active stage | Observed index and lock | After interruption |
+|---|---|---|
+| Before real rename | Old installed index byte-identical; valid complete intended entries in index.lock | Old index and complete lock bytes retained; later checkpoint refuses GIT_LOCK_PRESENT |
+| After successful real rename, before return to Git | New valid intended index installed; index.lock absent | New index bytes/entries retained; later checkpoint refuses EXISTING_STAGING |
+
+Each stage tests SIGINT/SIGTERM to CGC, Git add SIGKILL and command timeout. Two released
+controls allow real staging and checkpoint completion. Fixtures include one reviewed modification,
+one reviewed addition and one reviewed deletion, plus unrelated tracked modifications and
+untracked human work. Full index-entry comparison proves the intended selection and preservation
+of every unselected index entry. No partially installed subset was observed at these two gates;
+this is not proof of all earlier index serialization failures or all Git implementations.
+
+Interrupted returns have staging_attempted=true, commit_attempted=false, local_commit=null,
+outcome=PARTIAL, publication_status=NOT_REQUESTED and SAFE_TO_RESUME=UNKNOWN. SIGINT/SIGTERM
+return CANCELLED, timeout TIMEOUT and direct add death GIT_FAILED. Exactly one add and zero
+commit dispatches occur. HEAD remains old. All working files retain bytes/modes/sizes/mtimes,
+including unrelated tracked/untracked work; source config stays byte-identical. Deletion remains
+explicitly absent. There is no rollback, re-stage, reset, index/lock deletion or automatic retry.
+
+CGC's graceful cancellation kills the Git command group and reaps its direct child; that SIGKILL
+cannot execute Git's own lock cleanup. Before replacement, the retained Git lock is evidence,
+not a stale CGC lock to unlink. Both CGC writer locks release and can be reacquired; previous
+signal handlers restore. A contender with another handoff store receives WRITER_BUSY at both
+active gates, without staging or creating its store. Publication is not added as a duplicate
+contender test: this fixture's dirty source already makes it ineligible for publication.
+
+Previous good continuity survives beside CHECKPOINTING intent with selected paths, known
+failures and NEXT_EXACT_ACTION. Latest failure is CANCELLED or VERIFICATION_FAILED. Fresh-process
+handoff-status returns the exact durable state; fresh Git HEAD/status/index-entry reads distinguish
+old from new staging. The pending V3 record stores selected paths, NOT the caller's reviewed
+SHA256 digest mapping. Those digests remain current-call input; candidate/installed index blob
+IDs and retained work supply independent observable evidence. Do not claim durable review-digest
+reconstruction or infer new authority from an old handoff. Full resume remains unimplemented.
+
+LIMITATIONS: fixture-only Linux dynamic-loader/rename interception and installed cc are required;
+no native Windows, alternate libc/static Git or universal index-format claim. The helper uses a
+four-second timeout; production keeps five seconds. Index.lock may be closed by Git before rename;
+no open-descriptor ownership claim is made at this gate. Earlier partial writes/object creation,
+CGC-parent SIGKILL with surviving descendants, cross-source publication, arbitrary internal timing
+and power loss remain outside this proof. No runtime/schema/locking/signal redesign or V4 change.

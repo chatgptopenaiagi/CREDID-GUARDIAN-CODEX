@@ -197,3 +197,13 @@ temporary artifacts, source/remote refs and durable handoff. Child-death contend
 until group cleanup. A released control produces a valid pack/index and verified publication.
 No inherited tests or runtime changed; broader staging/abrupt-parent boundaries remain partial.
 See [pack interruption scope](../docs/V3_CONTRACT.md#active-local-bare-index-pack-interruption).
+
+V3 active staging: `test_add_interruption.py` adds ten tests at real git add's index.lock →
+index rename. A fixture-only C shim delegates the actual operation and gates before/after it;
+`helpers/add_peer.py` injects it only into the add child. The suite now requires an available
+`cc`, a Linux dynamic loader and dynamically linked Git supporting this observed rename path.
+The shim builds with -Wall/-Wextra/-Werror in /tmp; no binary is committed or installed.
+SIGINT/SIGTERM, timeout and child death preserve old index+lock or complete new index, unrelated
+work and handoff; released controls finish real checkpoints. No runtime/test dependency package
+is installed, no production loader setting changed and unsupported environments are not silently
+skipped. See [active staging contract](../docs/V3_CONTRACT.md#real-active-git-add-index-replacement-interruption).
