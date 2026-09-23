@@ -188,14 +188,21 @@ Reconcile newer repository evidence before acting.
 
 Starting verified checkpoint: `35e1e5f8c683d23d4a8a3d294a5e95f4ec215ed8`.
 Previous implementation: `cf804e34e45e6d3728185468f9746cac3c349f53`.
-Current acceptance implementation: **HEAD after normal commit/publication**; resolved hash and
-independent equality belong in final report/evidence follow-up. No self-containing SHA.
+Acceptance implementation: `dd02dd81cf92d5e4436f759b1cf55d17cdb7e08a`.
+Final evidence checkpoint: **HEAD after normal commit/publication**; its resolved hash and
+independent equality belong in the final report. No self-containing SHA.
 
 ## PUBLICATION STATE
 
-Entry local/tracking/live equality verified. Current block is validated and awaits normal
-forward commit/push with independent equality. No remote preservation claim for uncommitted work.
-Retain local work and report accurately if publication fails.
+Acceptance implementation **REMOTE_VERIFIED** on 2026-09-23. Normal forward push succeeded.
+Independent reads established local HEAD = origin/main = live remote main =
+`dd02dd81cf92d5e4436f759b1cf55d17cdb7e08a`; working tree clean.
+
+This documentation-only follow-up records that equality and acceptance row 41. Its own HEAD
+must be committed/pushed normally and independently verified for the final report. Runtime/tests
+remain unchanged from the 318-test result; no redundant regression. Final links and staged
+whitespace are checked. If publication fails, retain the local evidence commit and report
+LOCAL_CHECKPOINT_ONLY; never invent remote equality.
 
 ## OPERATIONS / INTEGRITY
 
