@@ -19,6 +19,16 @@ Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), un
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
 supersedes that boundary without authorizing unrelated project mutation or V4.
 
+## V4 future mission boundary
+
+[V4 mission](docs/V4_MISSION.md) is the authoritative future design for interoperability,
+portable state and agent connectivity: **ARCHITECTED / runtime NOT_STARTED**. Its separate
+documentation authorization does not start V4 implementation. V3 remains active and PARTIAL;
+resume from [V3 NEXT_EXACT_ACTION](docs/V3_PROGRESS.md#next_exact_action), not a V4 phase.
+No protocol runtime, capsule code, MCP server, plugin package, SDK, GUI/mobile client or
+remote gateway is authorized by the mission's existence. Preserve V3 semantics unchanged.
+Historical V4 prohibitions below concern runtime; this design record is explicitly authorized.
+
 
 The immutable product name is CREDID GUARDIAN CODEX. The immutable acronym is CGC. Never correct CREDID, reorder the name or introduce another acronym. CREDID-GUARDIAN-CODEX is only the GitHub-safe repository identifier.
 

@@ -173,3 +173,28 @@ object transfer, expected-tip ref update, independent verification and continuit
 No attempt/handoff/V2 schema change. A saved PUBLISHING intent grants no authority or proof
 of remote preservation. See the [publication contract](V3_CONTRACT.md#explicit-local-bare-publication-and-independent-verification).
 General push/network transport and Fabric runtime remain NOT_STARTED.
+
+## V4 interoperability boundary
+
+The [V4 mission](V4_MISSION.md) is the authoritative future interoperability design:
+**ARCHITECTED / runtime NOT_STARTED**. It supplements the Agent Fabric constraints above;
+V3 continues to own preservation, verification, interruption safety and resume semantics.
+Existing V1–V3 modules are not relabeled a completed V4 core/service.
+
+One canonical project-scoped evidence model serves many authorized consumers. A local
+service/MCP adapter exposes bounded views first; a thin plugin supplies workflow and
+translation. Skills instruct, MCP carries structured data/controlled capabilities, and
+optional trusted hooks notify lifecycle stages. None grants mutation or publication authority.
+CGC core remains the state authority for its evidence, while fresh external observations
+establish present Git/process reality. Clients must retain that distinction and uncertainty.
+
+The language-neutral protocol feeds both live views and explicit inert `.cgcpack` exports.
+An archive is historical evidence, not a live sensor, source-code backup by implication,
+executable package or authorization grant. SDKs are separate artifacts. Platform adapters
+and capability profiles constrain desktop/server versus mobile/web access; remote access
+requires a later optional authenticated gateway. Offline local CGC remains independent.
+
+Transport stays replaceable; generic routing/orchestration remains a separate future Fabric
+concern, not a reason to grow CGC into an unrestricted host controller. See the mission's
+version compatibility, capsule import, authority, privacy and evidence-based acceptance gates.
+No V4 runtime or full Fabric implementation is authorized by this architecture record.

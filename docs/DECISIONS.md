@@ -446,3 +446,52 @@ observed and explicitly reverified without republishing through the existing ada
 Broader transfer/commit crash and abrupt-parent descendant safety remain PARTIAL, explicitly
 separate from this completed subset. No telemetry, fresh-resume engine, network transport,
 automation or Agent Fabric runtime. Exact verification and next action: V3_PROGRESS.md.
+
+## 2026-09-23 — V4 future mission, architecture only
+
+Verified clean main at `fd1dbcabf10a748e0160f78f9311ae948a9a8260`, independently equal to
+origin/main and live remote main. The human explicitly authorized a future mission record,
+roadmap reconciliation, boundaries and acceptance planning, not V4 runtime implementation.
+
+Created [V4 mission](V4_MISSION.md): **CGC V4 — INTEROPERABILITY, PORTABLE STATE & AGENT
+CONNECTIVITY**. V3 remains active/PARTIAL and owns preservation/resume semantics. V4 consumes
+stable V3 evidence rather than redefining it. Existing V3 mission, contract, progress and
+acceptance records are retained unchanged, including all 100 architectural constraints.
+
+The former V4 Desktop Guardian roadmap entry is retained as historical context and reframed
+as a V4 Guardian surface. The future sequence is V3 completion, state protocol, inert capsule,
+local read-only service/MCP, thin plugin, separate SDK/portable-core work, Guardian surfaces,
+then optional remote gateway. Every V4 component is ARCHITECTED / runtime NOT_STARTED.
+No generic Fabric runtime or V5 expansion follows from this decision.
+
+Key boundaries: live observations versus archival evidence; integrity versus authenticity;
+identity/capability versus current authorization; plugin translation versus core semantics;
+mobile request approval versus host execution. Capsules carry inert data, never executable
+reports or reusable grants. Unknown/stale evidence cannot become safe resume on import.
+Optional remote access requires scoped authenticated encrypted transport, replay protection
+and revocation; local operation remains independent. Privacy excludes human surveillance.
+
+Official OpenAI plugin architecture/packaging documentation was consulted for the future
+integration boundary; dated references are in the mission. No plugin scaffold or installation,
+account/quota read, credential access, service or system change occurred. Included capacity
+remains UNKNOWN; no threshold crossing is asserted. No unrelated project was inspected/modified.
+
+Created docs/V4_MISSION.md; modified README.md, AGENTS.md, docs/ROADMAP.md,
+docs/ARCHITECTURE.md and this journal. Runtime, tests and schemas are unchanged. Validation
+for this documentation-only block checks exact changed paths/diff, local Markdown files and
+anchors, document references, V3 byte preservation, mission coverage/status and whitespace.
+No runtime tests are rerun: the prior 302-test result is historical evidence, not a new run.
+
+Validation passed: exact six-file documentation scope; all other 54 tracked files byte-identical;
+172 local Markdown file/anchor links resolve; all 100 V3 keypoints unchanged; seven future V4
+phases and 18 acceptance cases present; new mission code fences balanced. Changed-document
+secret-pattern screening found no matches (not proof of universal absence). Exact document
+diff and status reviewed; whitespace passed. No validation failures or unresolved broken links.
+
+DO_NOT_START_YET: V4 runtime/protocol/capsule/MCP/plugin/SDK/client/gateway/orchestration.
+DO_NOT_REPEAT: accepted V3 implementation or live quota discovery without new authorization.
+NEXT_EXACT_ACTION remains [V3's recorded frontier](V3_PROGRESS.md#next_exact_action): audit
+and test active local-bare index-pack interruption after temporary pack arrival using real
+Git fixtures. This task does not start that block. Preserve this documentation normally,
+verify local/tracking/live refs and clean tree, then STOP. Checkpoint self-reference is HEAD
+after publication; the final report records its resolved SHA and observed push result.

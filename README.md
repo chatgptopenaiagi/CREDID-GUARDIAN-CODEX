@@ -19,6 +19,15 @@ Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), un
 that V3 was not authorized describe the earlier boundary; this explicit V3 mission
 supersedes that boundary without authorizing unrelated project mutation or V4.
 
+## V4 future design
+
+[CGC V4 — INTEROPERABILITY, PORTABLE STATE & AGENT CONNECTIVITY](docs/V4_MISSION.md)
+is **ARCHITECTED / runtime NOT_STARTED**. V1 observes, V2 understands, V3 preserves and
+V4 connects: one verified CGC state, many authorized consumers. The future design covers
+inert portable capsules, language-neutral state, local MCP, a thin plugin and optional
+Guardian surfaces/gateway. It grants no implementation authority. V3 remains active and
+PARTIAL; its [next exact action](docs/V3_PROGRESS.md#next_exact_action) is unchanged.
+
 
 CREDID GUARDIAN CODEX (CGC) is a concept-first, local usage-awareness, quota-observation and intelligent project-preservation architecture for Codex workflows.
 

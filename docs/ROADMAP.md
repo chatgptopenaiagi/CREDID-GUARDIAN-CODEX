@@ -26,7 +26,7 @@ Roadmap entries describe future missions, not authorization to execute them.
 | CGC V1 — QUOTA OBSERVATION | Discover and verify the safest supported local Codex usage source | Official/supportable source evidence, minimum privilege, field semantics and failure boundaries; explicitly record unavailable/unknown if no safe source exists |
 | CGC V2 — GUARDIAN DAEMON | Reliable normalized cached usage state | Deterministic multi-window policy tests, atomic cache/failure/staleness tests, finite reads and a documented polling policy |
 | CGC V3 — CODEX PRESERVATION INTEGRATION | RED/EMERGENCY policy reporting and directives | Verified supported integration point, authorization isolation, idempotence and no autonomous external-repository mutation |
-| CGC V4 — DESKTOP GUARDIAN | Always-on-top meter / tray visualization | Shared-state consumer, visible uncertainty/age and no competing sensor |
+| CGC V4 — INTEROPERABILITY, PORTABLE STATE & AGENT CONNECTIVITY | Language-neutral state, inert capsules, local service/plugin and authorized consumers; ARCHITECTED / runtime NOT_STARTED | Versioned semantics, integrity, authority isolation and per-platform evidence; see [V4 mission](V4_MISSION.md) |
 | CGC V5 — ADVANCED PRESERVATION INTELLIGENCE | Repository-aware preservation plans | Explicit project authorization, truthful resumability, bounded work and separate reasoning/execution authority |
 
 ## Current boundary
@@ -67,3 +67,27 @@ explicit local-bare publication/verification is verified offline; general push t
 full safe resume and automation remain NOT_STARTED. The [Agent Fabric relationship](ARCHITECTURE.md#agent-fabric-relationship) is
 ARCHITECTED/FUTURE, not runtime authorization. No gateway, control/data plane, event bus,
 resume generator, AI orchestration, GUI or V4 implementation has begun.
+
+## V4 roadmap reconciliation — 2026-09-23
+
+The former **CGC V4 — DESKTOP GUARDIAN** entry proposed an always-on-top meter / tray
+visualization. That history is retained here deliberately: Desktop Guardian becomes a
+**V4 GUARDIAN SURFACE** within the broader [V4 mission](V4_MISSION.md), not a discarded
+requirement. Its shared-state consumer, visible age/uncertainty and no-competing-sensor
+acceptance remain. The existing V5 entry is historical future planning, not authority to
+move unfinished V3 preservation/resume work to V5.
+
+V1 = OBSERVE; V2 = UNDERSTAND; V3 = PRESERVE; V4 = CONNECT. V3 remains active and PARTIAL.
+Complete V3 preservation/resume acceptance before implementing V4. Future dependency order:
+
+1. V4.0 State Protocol and human representation.
+2. V4.1 Inert `.cgcpack` export/import and integrity.
+3. V4.2 Bounded local service / MCP, read-only first.
+4. V4.3 Thin Codex/agent plugin with skill/MCP and optional trusted lifecycle hooks.
+5. V4.4 Separately distributed SDKs and evidence-justified portable-core work.
+6. V4.5 Desktop/web/mobile Guardian surfaces; remote console execution awaits the gateway.
+7. V4.6 Optional authenticated remote enterprise/multi-device gateway.
+
+Every V4 component is **ARCHITECTED / NOT_STARTED**, requiring a separately scoped task.
+No runtime, package, listener, schema implementation or client is created by this roadmap.
+The immediate [V3 NEXT_EXACT_ACTION](V3_PROGRESS.md#next_exact_action) remains authoritative.
