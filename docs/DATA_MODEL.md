@@ -203,3 +203,22 @@ and one next action plus a resolution plan. Every concrete leaf must have a sema
 dependency/coherence mapping before implementation. No runtime schema/version is added here.
 Existing handoff/attempt/inspection/reconciliation and V2 schema bytes remain unchanged.
 Risk acceptance is a separate future decision, never an evidence-state upgrade.
+
+
+## Implemented pure verifier projection
+
+`cgc-safe-resume-v3.0-provisional`, policy `cgc-verifier-v3.0`, is a separate strict projection.
+[safe_resume.py](../src/cgc/safe_resume.py) declares its concrete schema; the independent
+[leaf ledger](../src/cgc/verifier_registry.py) registers all 206 leaves (144 semantic inputs,
+50 derived fields, 12 inert metadata leaves). Array-element paths denote concrete bounded
+schema members, not permission to accept arbitrary subtrees. No existing schema changes.
+
+Input carries the validated reconciliation basis, exact requested project/identity/evidence digest,
+one action/level and explicit test policy. In-memory provenance is derived from the trusted capture
+bridge; an imported label/hash cannot establish it. Derived facts retain historical/current HEAD,
+UNKNOWN cause, claim-local freshness and relationships with both values. P1–P12 proof rows,
+blockers/resolution plan, decision and single typed next action are recomputed on validation.
+All outputs keep both mutation flags false; compound PARTIAL and accepted-risk ingestion are absent.
+Import of a previously trusted YES without its binding is rejected as an asserted result; reverify
+its underlying reconciliation as imported evidence to obtain UNKNOWN instead. There is no automatic
+migration, publication of a receipt, authority transfer or portable authentication token.

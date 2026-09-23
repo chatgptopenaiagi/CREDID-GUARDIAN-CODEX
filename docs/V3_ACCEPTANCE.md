@@ -37,8 +37,8 @@ claim that future external-effect implementations already satisfy them.
 | 25 | Crash/interruption tests pass. | PARTIAL | Prior boundaries/ref transactions plus real active loose-object arrival SIGINT/SIGTERM, fetch-child death and timeout pass. Real commit pre/post-hook SIGINT/SIGTERM, timeout and command-group death also pass. Real active index-pack temporary arrival SIGINT/SIGTERM, timeout, fetch death and receiver death pass; retained fragments never imply publication. Real add before/after index rename signals, timeout and child death pass; old index/retained lock or complete new staging survives. Parent SIGKILL at both add gates preserves intent; fresh authorized calls refuse without mutation even after lock disappearance. Earlier writes, other internal timings and general orphan recovery remain outside this proof. |
 | 26 | Atomic canonical preservation state works. | PARTIAL | Atomic canonical handoff tested with live readers and killed writers; target preservation transaction pending. |
 | 27 | Repeated invocation is safe/idempotent where applicable. | PARTIAL | Already-equal remote verified without re-publication; stale tracking can advance safely. Missing/moved refs refuse; no blind retries or rollback. |
-| 28 | SAFE_TO_RESUME semantics are evidence-based. | PARTIAL | Outer handoff UNKNOWN/false never upgrades curated attempt receipts. Separate action-scoped verifier specified in [V3_SAFE_TO_RESUME.md](V3_SAFE_TO_RESUME.md); twenty-four future cases A–X, runtime/end-to-end verification pending. |
-| 29 | Resume from a fresh CGC process works. | PARTIAL | Fresh process reconstructs validated human/JSON handoff including latest failure; Read-only reconciliation engine and first-engine cases A–R implemented; safe-resume verification/execution remain pending. |
+| 28 | SAFE_TO_RESUME semantics are evidence-based. | PARTIAL | Outer handoff UNKNOWN/false never upgrades curated attempt receipts. Separate pure verifier implements captured READ_ONLY_ANALYSIS/HANDOFF_ONLY YES; see [A–X accounting](V3_SAFE_TO_RESUME.md#13-minimal-verifier-implementation). Broader safe resume/execution remains pending. |
+| 29 | Resume from a fresh CGC process works. | PARTIAL | Fresh process reconstructs validated human/JSON handoff including latest failure; Read-only reconciliation engine and first-engine cases A–R implemented; captured-analysis verification implemented; broader safe resume/execution remains pending. |
 | 30 | Manual preservation is independent from live quota availability. | PARTIAL | Explicit MANUAL local-checkpoint adapter independent of quota; full preservation/resume workflow pending. |
 | 31 | Synthetic Guardian policy integration works. | NOT_STARTED | Required future implementation and deterministic acceptance tests. |
 | 32 | UNKNOWN Guardian state cannot authorize automatic mutation. | PARTIAL | All automatic triggers denied in Phase A; Guardian integration pending. |
@@ -49,8 +49,8 @@ claim that future external-effect implementations already satisfy them.
 | 37 | No V1/V2 semantics were weakened. | COMPLETE | Inherited runtime/tests and V2 records unchanged. |
 | 38 | No secret material was intentionally committed. | COMPLETE | Development publication scan; no secret input used. Not universal proof. |
 | 39 | Documentation is complete. | PARTIAL | Mission/contract/progress preserved; later implementation docs pending. |
-| 40 | Canonical deterministic test command passes. | COMPLETE | 356 tests pass (320 inherited unchanged + 36 reconciliation tests); exact focused/integration/V3/full commands and results are in V3_PROGRESS. |
-| 41 | Git publication of CGC V3 itself is verified. | COMPLETE | External verifier contract ff912974b3a9ffa383d5f107e0c5542d6561dfec pushed normally; local/tracking/live main equality and clean tree independently verified. Evidence-only follow-up uses HEAD; final report records its resolved SHA and verification. Runtime remains unchanged from the accepted 356-test checkpoint; verifier implementation pending. |
+| 40 | Canonical deterministic test command passes. | COMPLETE | 389 tests pass (356 inherited unchanged + 33 verifier tests); exact focused/integration/V3/full results are in V3_PROGRESS. |
+| 41 | Git publication of CGC V3 itself is verified. | COMPLETE | External verifier contract ff912974b3a9ffa383d5f107e0c5542d6561dfec pushed normally; local/tracking/live main equality and clean tree independently verified. Evidence-only follow-up uses HEAD; final report records its resolved SHA and verification. Historical contract publication retained; current verifier publication verification is recorded in V3_PROGRESS after observation. |
 | 42 | The final V3 checkpoint is resumable. | PARTIAL | Development handoff and runtime fresh-process continuity readback exist; complete V3 safe-resume workflow pending. |
 | 43 | V4 or cloud work has not begun without authorization. | COMPLETE | No V4/cloud/GUI/ARX implementation. |
 
@@ -72,11 +72,12 @@ Read-only non-mutation, deterministic classification, missing review/test eviden
 compatibility, local-first remote scope and UNKNOWN safety are mandatory acceptance; exact current results and limits are in progress.
 
 
-## External verifier contract acceptance boundary
+## External verifier acceptance boundary
 
-[Verifier contract](V3_SAFE_TO_RESUME.md): audit/specification COMPLETE; implementation
-NOT_STARTED. Twenty-four future cases A–X include scoped perfect-looking YES, missing proofs,
-authority separation, state-change invalidation, inert text and discriminating tamper checks.
-No new runtime acceptance is claimed. The reconciler and 356-test historical regression are
-unchanged. Quiescence for repository mutation remains UNKNOWN; current evidence can support
-only the contract's narrow captured-analysis YES before new proof producers are accepted.
+[Contract revision 1](V3_SAFE_TO_RESUME.md): minimal pure captured-analysis verifier IMPLEMENTED.
+A real trusted collector call can support scoped YES while the reconciler stays UNKNOWN/false/false.
+Strict validation recomputes proof; 206-leaf registry and discriminating tamper tests account for
+concrete semantic fields. Initial A–X coverage distinguishes production proof from synthetic
+composition and missing future producers. K broader saved-scope proof remains PARTIAL; S risk and
+V compound aggregation NOT_STARTED. Execution, recovery and V4 remain NOT_STARTED.
+Exact focused/integration/regression/static results and publication evidence are in V3_PROGRESS.

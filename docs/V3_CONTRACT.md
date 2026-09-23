@@ -845,4 +845,6 @@ It does not change the implemented attempt calculation or the outer UNKNOWN/fals
 P12 authority is a separate mandatory execution gate; evidence YES cannot grant it. Captured
 read-only analysis can have narrower proof obligations than repository mutation. Quiescence,
 contextual review and complete test receipts remain missing dependencies for broader claims.
-Contract SPECIFIED; verifier, evidence producers and recovery runtime NOT_STARTED.
+Contract revision 1 is implemented for the minimal captured-analysis verifier; see
+[implementation and limits](V3_SAFE_TO_RESUME.md#13-minimal-verifier-implementation). New evidence
+producers, recovery and execution remain NOT_STARTED. Reconciler and handoff schemas are unchanged.

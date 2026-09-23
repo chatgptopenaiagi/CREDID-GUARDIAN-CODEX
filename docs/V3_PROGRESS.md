@@ -2,12 +2,141 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 remains active.** Minimal pure external captured-analysis verifier IMPLEMENTED.
+READ_ONLY_ANALYSIS / HANDOFF_ONLY can return a real scoped YES. This grants no repository action,
+mutation authority or process-quiescence claim. The accepted reconciler remains UNKNOWN/false/false.
+V4 remains ARCHITECTED / runtime NOT_STARTED. Recovery and mutation execution are NOT_STARTED.
+
+## VERIFIED STARTING CHECKPOINT
+
+Required pwd/status/diff/whitespace/history and independent refs were observed before edits.
+Clean main: local HEAD = origin/main = live remote main =
+`f2c8ed53591086595d67bdbc03b6116338a60ae3`.
+Contract implementation record: `ff912974b3a9ffa383d5f107e0c5542d6561dfec`.
+No newer work was discarded. Current weekly/five-hour included capacity UNKNOWN;
+capacity preservation activated NO. No account/credential/quota investigation.
+
+## CURRENT SESSION BLOCK
+
+IMPLEMENT + TEST + VALIDATE + PRESERVE the minimal pure external verifier, against
+[V3 verifier contract revision 1](V3_SAFE_TO_RESUME.md). Projection
+`cgc-safe-resume-v3.0-provisional`; policy `cgc-verifier-v3.0`.
+
+## COMPLETE
+
+- Pure deterministic `verify`, strict parsing/recomputation and exact machine/human result.
+  Fixed false mutation flags; no I/O, clock, environment, randomness or caller-object mutation.
+- Explicit unchanged-collector capture bridge: immutable current-call provenance, no added
+  observation domain or evidence producer. Imported serialization alone cannot authenticate itself.
+- P1–P12 with separate authority plane, required evidence composition and profile-controlled N/A.
+  Actual clean/dirty captured-analysis YES; removal of required evidence degrades it.
+- Historical/current relationships retained with UNKNOWN cause, claim-local freshness, legacy
+  PASS/UNKNOWN applicability, incomplete intent, and typed evidence-only resolution actions.
+- Independent 206-leaf registry: 144 semantic inputs, 50 derived fields, 12 inert metadata leaves.
+  Inherited index digests remain derived from index entries. All semantic leaves covered by
+  coherent variants or failure shapes; unsupported version constants have no valid alternate.
+- Full semantic tamper comparison, changed-leaf non-influence explanations, pivotal proof removal,
+  forged derived rejection, metadata inertness and under/over-coupling discrimination.
+- Initial A–X scope accounted for in [implementation conformance](V3_SAFE_TO_RESUME.md#13-minimal-verifier-implementation).
+  Real Git fixture readback/capture integration; no accepted crash fixture redesigned.
+
+## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+
+V3 overall PARTIAL. Positive production quiescence, contextual review/event, fully bound test
+receipts and complete designated saved-scope/adapter-policy evidence remain missing. Remote equality
+can satisfy P7 while wider K remains PARTIAL (P5/P11 UNKNOWN). B/H/Q positive future-proof composition
+is synthetic, not a production producer. S accepted-risk ingestion and V compound PARTIAL are
+NOT_STARTED. No executor, recovery, automatic retry, authority acquisition, CLI, telemetry or V4.
+
+The in-memory seal is a trusted Python-caller boundary, not security against hostile same-user
+code accessing private members. Capture provenance is not portable authentication. Captured window
+is not current execution-time freshness. Any new action requires its own authority and boundary
+revalidation. Large relationship rendering refuses within bounds rather than truncating evidence.
+No hard CPU/RSS, power-loss or universal writer guarantee. No unrelated repository was touched.
+
+## DECISION GATES
+
+Minimal pure verifier accepted for its first scope: **YES** for the declared initial scope.
+Real READ_ONLY_ANALYSIS / HANDOFF_ONLY YES: **YES**, never permission to touch the repository.
+Primary mutation blocker: **positive finite quiescence/writer coverage**. No new producer began.
+
+## VALIDATION
+
+Focused: `TMPDIR=/tmp PYTHONPATH=src:tests python -B -m unittest test_safe_resume -q`:
+**33 passed in 4.462s**.
+Integration: same environment, `python -B -m unittest test_safe_resume test_reconciliation -q`:
+**69 passed in 7.886s**.
+Relevant V3: same environment, `python -B -m unittest test_preservation test_inspection test_handoff
+ test_checkpoint test_publication test_reconciliation test_safe_resume -q`:
+**186 passed in 23.460s**.
+Full: `TMPDIR=/tmp PYTHONPATH=src python -B -m unittest discover -s tests -q`:
+**389 passed in 110.110s**, zero failures/errors/skips. Inherited C fixtures compiled with
+`-Wall -Wextra -Werror` under the existing suite.
+Static/documentation review PASS: exact 14-file scope; 60 pre-existing tracked files byte-identical,
+including all existing runtime/tests/helpers/JSON, reconciliation contract and V3/V4 missions.
+All 46 Python files parse by AST, all three JSON files parse, 239 local Markdown links/anchors
+resolve, fences balance, and all 100 V3 keypoints remain intact. Exact diff/status and whitespace
+reviewed. Changed-file pattern screening has no matches; this is not universal secret proof.
+
+Earlier development verification: 32 focused in 4.406s and registry refinement 32 in 5.017s;
+68 integration in 8.345s; 185 relevant V3 in 22.569s; 388 full in 111.196s. All passed.
+Final review then found a missing-tracking-evidence bug in the new verifier draft: incomplete remote
+comparison could give NO. Corrected to UNKNOWN unless a known comparison positively differs, and
+added the 33rd verifier test. Refined resolution priority so known lock-policy violations precede
+unresolved quiescence, without confusing unavailable higher-level preservation proof with unreadable
+handoff. Focused and broader validation repeated because proof logic changed, not a trivial edit.
+
+One initial focused test-harness error (nullable parent absent from concrete-leaf registry lookup)
+was corrected. No runtime defect in accepted reconciliation was found. Final focused runs have
+zero failures/errors/skips. Full regression covers unchanged inherited crash/C helper acceptance;
+no additional crash experiment was introduced. No dependency, service or system configuration change.
+Only disposable Linux /tmp fixtures and temporary validation logs were used. The first commit
+attempt was refused because this environment lacked a Git author identity. Subsequent commit
+commands reuse the exact name/no-reply email in the last three published commits through command-only
+`git -c` options; no global or local configuration is changed. A staged EOF whitespace finding
+was corrected before committing; final whitespace checks pass.
+
+## FILES CHANGED
+
+Created src/cgc/safe_resume.py, src/cgc/verification_capture.py, src/cgc/verifier_registry.py,
+tests/test_safe_resume.py and tests/helpers/verifier_tamper.py. Modified AGENTS.md, README.md,
+docs/DATA_MODEL.md, docs/DECISIONS.md, docs/V3_ACCEPTANCE.md, docs/V3_CONTRACT.md,
+docs/V3_PROGRESS.md, docs/V3_SAFE_TO_RESUME.md and tests/README.md.
+Existing runtime, handoff/reconciliation schemas, tests/helpers and V3/V4 missions preserved.
+
+## DO_NOT_REPEAT
+
+Do not repeat accepted crash, reconciliation A–R or captured-analysis verifier acceptance without
+defect evidence. Do not turn a narrow YES into quiescence, authority, remote preservation or
+permission for fresh reads. Do not infer review from digests, current PASS from legacy notes,
+causality from changed HEAD, or trust from JSON/hash labels. Do not implement risk ingestion,
+compound scopes, recovery, new producers or V4 in this block.
+
+## NEXT_EXACT_ACTION
+
+**Audit and specify a bounded positive quiescence evidence producer with explicit finite
+writer/descendant coverage, against V3_SAFE_TO_RESUME.md section 6, before implementing it.**
+Begin from actual present Git/progress evidence. No process scan, supervisor, lock cleanup or
+new producer is authorized by this next-action record. Do not begin the next block this session.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Starting checkpoint `f2c8ed53591086595d67bdbc03b6116338a60ae3` was independently verified.
+This implementation record uses HEAD as its self-reference after commit. Publication verification
+and resolved commit hashes will be recorded only after observation. No publication claim yet.
+
+## Historical accepted verifier contract evidence
+
+Historical records below are not current session claims or the current next action.
+
+### Historical verifier contract — OVERALL STATUS
+
 **PARTIAL; V3 remains active.** The minimal bounded read-only reconciler and prior accepted
 inspection/handoff/checkpoint/publication/interruption blocks remain intact. The external
 SAFE_TO_RESUME verifier **contract is COMPLETE / SPECIFIED**; verifier runtime is NOT_STARTED.
 V4 remains ARCHITECTED / runtime NOT_STARTED. No recovery or external YES is implemented.
 
-## VERIFIED STARTING CHECKPOINT
+### Historical verifier contract — VERIFIED STARTING CHECKPOINT
 
 Before editing, required root/status/diff/whitespace/history observations passed. Clean main;
 local HEAD = origin/main = independently queried live remote main =
@@ -16,14 +145,14 @@ Reconciler implementation: `0ee3ab2a78e1cb3f2ad88075a4908c6a88bb8d80`.
 Authoritative V3/V4 records, current evidence runtime and relevant acceptance tests were audited.
 No newer work was discarded and no accepted experiment repeated.
 
-## CURRENT SESSION BLOCK
+### Historical verifier contract — CURRENT SESSION BLOCK
 
 AUDIT + SPECIFY + VALIDATE the external verifier contract. Documentation only.
 Authoritative result: [V3_SAFE_TO_RESUME.md](V3_SAFE_TO_RESUME.md), revision 1.
 Current weekly/five-hour capacity UNKNOWN; 87% planning report remains historical.
 Capacity preservation activated: NO. No quota/account/credential inspection.
 
-## COMPLETE
+### Historical verifier contract — COMPLETE
 
 - Separate collector/reconciler/verifier/authority/executor responsibilities; unchanged reconciler
   UNKNOWN/false/false; exact action/project/level/window proof, not universal safety.
@@ -38,7 +167,7 @@ Capacity preservation activated: NO. No quota/account/credential inspection.
 - Current evidence can support captured READ_ONLY_ANALYSIS/HANDOFF_ONLY proof under trusted-call
   provenance. This is a feasibility conclusion; no working verifier emits YES today.
 
-## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+### Historical verifier contract — PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
 
 V3 overall PARTIAL. Positive live-writer quiescence is unproven; repeated reads and absent locks
 cannot supply it. Review hashes alone lack event/context; legacy test PASS lacks full binding.
@@ -47,7 +176,7 @@ coverage. Initial verifier is single-action; compound PARTIAL and accepted-risk 
 Verifier implementation, new review/test/quiescence producers, recovery, automation and V4 NOT_STARTED.
 No runtime defect requiring a change established. No universal power-loss/hostile-writer guarantee.
 
-## DECISION GATES
+### Historical verifier contract — DECISION GATES
 
 Contract precise enough for minimal implementation: **YES**.
 Current evidence sufficient for any scoped YES: **YES**, only the specified captured-analysis
@@ -55,7 +184,7 @@ scope, not mutation or a current emitted external result. Primary mutation block
 Persisted review is a later optimization; structured test receipts are a later policy-dependent
 proof source. Neither is needed before the minimal verifier can evaluate the accepted proof graph.
 
-## VALIDATION
+### Historical verifier contract — VALIDATION
 
 Validation PASS: exact nine-file documentation scope; 60 other tracked files byte-identical,
 including runtime, schemas, tests/helpers and V3/V4 missions. All 41 Python files parse by AST;
@@ -69,13 +198,13 @@ NOT_REQUIRED: documentation-only changes; historical **356 tests passed in 106.9
 failures/errors/skips, retained below without claiming a new run. No C fixture was rebuilt.
 No prototype, daemon, service, dependency, system configuration or unrelated repository change.
 
-## FILES CHANGED
+### Historical verifier contract — FILES CHANGED
 
 Created docs/V3_SAFE_TO_RESUME.md. Modified AGENTS.md, README.md, docs/DATA_MODEL.md,
 docs/DECISIONS.md, docs/V3_ACCEPTANCE.md, docs/V3_CONTRACT.md, docs/V3_RECONCILIATION.md,
 and this progress record. No mission/runtime/test/helper/schema file changed.
 
-## DO_NOT_REPEAT
+### Historical verifier contract — DO_NOT_REPEAT
 
 Do not repeat accepted crash/reconciliation A–R blocks or quota discovery without defect evidence.
 Do not reinterpret current review CURRENT as contextual approval, validation as authenticity,
@@ -83,14 +212,14 @@ read-only-analysis YES as permission to touch Git, or accepted risk as knowledge
 race reports. No rollback, repair, tests, publication or authority acquisition occurs in verification.
 Do not implement V4, compound workflows, risk ingestion or new proof producers in this contract block.
 
-## NEXT_EXACT_ACTION
+### Historical verifier contract — NEXT_EXACT_ACTION
 
 **Implement the minimal pure external SAFE_TO_RESUME verifier against V3_SAFE_TO_RESUME.md,
 starting with single-action READ_ONLY_ANALYSIS / HANDOFF_ONLY proof, the strict semantic leaf
 registry and discriminating tamper tests.** Keep broader unsupported proof UNKNOWN and all mutation
 permission false. Reconcile present repository reality first. No implementation starts this session.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical verifier contract — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting verified checkpoint: `3b0e439f5a6f4769957899e4b6416986bafc69d3`.
 Contract checkpoint: `ff912974b3a9ffa383d5f107e0c5542d6561dfec`. Normal push succeeded.

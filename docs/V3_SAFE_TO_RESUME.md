@@ -1,6 +1,8 @@
 # CGC V3 — external SAFE_TO_RESUME verifier contract
 
-Status: **SPECIFIED / implementation NOT_STARTED**. Contract revision: **V3 verifier contract 1**.
+Status: **minimal captured-analysis verifier IMPLEMENTED; broader proof remains PARTIAL**.
+Contract revision: **V3 verifier contract 1**. Original specification checkpoints below are historical;
+see [current implementation](#13-minimal-verifier-implementation).
 CREDID GUARDIAN CODEX (CGC). Subordinate to the [V3 mission](V3_MISSION.md),
 [reconciliation contract](V3_RECONCILIATION.md) and existing [adapter contracts](V3_CONTRACT.md).
 This document specifies proof evaluation; it adds no runtime, schema migration, CLI or recovery.
@@ -535,3 +537,102 @@ RECONCILED != SAFE_TO_RESUME. SAFE_TO_RESUME=YES != MUTATION_AUTHORIZED.
 MUTATION_AUTHORIZED != PRECONDITIONS_STILL_TRUE_AT_USE_TIME.
 UNKNOWN is not failure or permission. ACCEPTED_RISK is not knowledge.
 The product is verified continuity and human time returned.
+
+
+## 13. Minimal verifier implementation
+
+Revision 1 remains the normative contract above. Its original SPECIFIED/NOT_STARTED statements
+and decision gates describe the contract checkpoint; this section records the subsequent implementation.
+The initial Python API is IMPLEMENTED, with acceptance results in [progress](V3_PROGRESS.md).
+It emits a real scoped YES for READ_ONLY_ANALYSIS / HANDOFF_ONLY; V3 overall remains PARTIAL.
+
+### Interface and trust boundary
+
+- `verification_capture.capture(project, **reconcile_kwargs)` explicitly invokes the unchanged bounded
+  reconciler once and retains its exact canonical result in an immutable in-memory handle. It adds no
+  observation domain, process scan, permission, storage, writer lock or evidence producer. Its I/O is
+  explicit and is never called by the verifier. The capture can be obtained in a fresh process.
+- `safe_resume.request_for(projection, ...)` constructs an explicit versioned request from the supplied
+  data; callers must still choose/check the project and exact scope. It performs no collection.
+- `safe_resume.verify(projection, request, capture=handle)` is pure and leaves input unchanged.
+  `capture=None` means imported evidence, not trusted current provenance. Private test constructors
+  supply synthetic bindings only to test proof logic; they do not demonstrate a production producer.
+- `validate_result`, `render_json`, `parse_json` and `render_human` recompute the entire result. A trusted
+  result requires its exact original handle. A serialized claim of CURRENT_CAPTURE cannot authenticate
+  itself. The Python trusted-caller boundary is not protection against hostile same-user Python code
+  accessing private implementation members. No cryptographic authenticity or cross-device token is claimed.
+
+No CLI, daemon or implicit observation is added. The pure path reads no file, process, environment,
+clock or network and performs no Git operation. Module loading and the explicit collector bridge are
+outside pure evaluation. Current observation means the supplied captured window, not the time of
+verification; repeating verification cannot make it fresher or authorize a new repository read.
+
+### Proof behavior and limitations
+
+P1/P2/P4/P9/P10/P11 are required for captured analysis. P3/P5/P6/P7/P8/P12 are N/A at HANDOFF_ONLY.
+A pending intent is presented as incomplete, not resolved or completed. Legacy PASS is preserved with
+UNKNOWN applicability; that truthful accounting satisfies ACCOUNT_ONLY. Dirty-but-explained state is
+accepted. Missing trusted provenance or readback yields UNKNOWN. Positive identity/expected-state
+mismatch yields NO. Material contradiction yields UNKNOWN with both observations retained.
+
+Repository-touching profiles only evaluate supported failures/gaps, never positive mutation safety.
+An unresolved Git lock is a P2 policy violation; its presence does not prove a live owner, so P3
+remains UNKNOWN. A missing contextual review cannot be replaced by matching bytes. A current local-bare
+comparison can satisfy P7, but the first collector lacks full designated saved-scope/adapter-policy
+coverage for P5/P11. Consequently production LOCAL_CHECKPOINT/REMOTE_VERIFIED YES is not claimed.
+A fully supplied future proof is exercised only in isolated composition tests, never accepted as a
+caller-controlled SATISFIED input. Repair remains unsupported. Both mutation flags are always false.
+
+No runtime schema extension to handoff or reconciliation. No persisted review/test receipt producer.
+No accepted-risk ingestion or compound PARTIAL. No execution-boundary checker; expected evidence
+mismatch is detected by this pure verifier, but actual future execution must perform its own checks.
+The request and embedded basis retain exact project/window/digest bindings; future-action requirements
+are inert, not executable capabilities. Human rendering includes the complete validated JSON and
+explicitly denies repository-action authority, avoiding omitted blockers or narrative causality.
+
+### Registry and discrimination acceptance
+
+The independent 206-leaf ledger is checked against concrete schema enumeration; adding a field without
+classification fails acceptance. Derived values are recomputed rather than trusted. The reusable test
+harness compares every semantic output group (facts, P1–P12 and downstream aggregation), rejecting
+influence outside declared groups. It gives changed-leaf/unchanged-claim explanations from the closed
+vocabulary. SAME_PROOF_CLASS explains stable equal-state changes without pretending a new index
+necessarily changes captured-analysis safety; remove-one-proof witnesses separately prove pivotal
+inputs actually affect proof. Mere input copying does not count as a derived-claim change.
+
+All semantic leaves have valid mutation or bounded failure-shape coverage; supported version constants
+have no alternate valid value and their alternatives are rejected. Coherence-preserving mutations
+rebuild fixture integrity/provenance explicitly. Coherence-breaking tests retain stale derived claims
+and are rejected. A correctly reported observation race remains valid UNKNOWN evidence. Arrays in
+inherited evidence preserve collector order as part of exact capture identity; mappings are canonical
+and proof/plan ordering is deterministic. The initial schema has no unordered supplementary set input.
+
+Bounds remain those in section 9: zero pure I/O, 12 obligations, one action, 64-entry bounded derived
+lists/references, strings 2,048 characters, depth 32, 512 KiB verifier input/output and inherited
+256 KiB reconciliation bound. Inherited semantic-index lists retain the existing 10,000-entry limit
+subject to byte bounds. Oversized relationship rendering refuses rather than truncating evidence.
+The tests exercise large valid index evidence and byte/depth/list overflow; no hard CPU/RSS guarantee.
+
+### A–X implementation accounting
+
+| Cases | Initial status and evidence |
+|---|---|
+| A, P | COMPLETE: real collector/capture/proof chain, scoped analysis YES, no action authority |
+| B | COMPLETE composition acceptance with synthetic live-writer violation; live-process evidence ingestion/producer NOT_STARTED |
+| C, D, E | COMPLETE for current lock refusal and unresolved quiescence/review gaps |
+| F | COMPLETE digest-only UNKNOWN; contextual positive review producer NOT_STARTED |
+| G, I | COMPLETE historical PASS/UNKNOWN and known stale HEAD-bound test evidence; no automatic tests |
+| H, Q | COMPLETE synthetic evidence/authority composition only; production positive proof producers NOT_STARTED |
+| J | COMPLETE missing required remote UNKNOWN |
+| K | PARTIAL wider profile: current P7 equality proven; saved-scope P5/P11 stays UNKNOWN, no production remote-level YES |
+| L | COMPLETE current remote mismatch refusal and retained conflicting observations |
+| M, N, O, R | COMPLETE contradiction, observation failure, identity mismatch, expected-evidence-change refusal; actual executor revalidation NOT_STARTED |
+| S | NOT_STARTED accepted-risk ingestion |
+| T, U | COMPLETE strict rejection, coherent acceptance, semantic enumeration and dependency audit |
+| V | NOT_STARTED compound PARTIAL aggregation |
+| W, X | COMPLETE inert adversarial text and imported-provenance UNKNOWN |
+
+Primary next dependency is positive bounded quiescence evidence. Specify the finite writer-coverage
+model and its acceptance before adding a producer; repeated reads, lock absence or a supplied boolean
+cannot satisfy it. Contextual review and structured test receipts remain subsequent action-dependent
+gaps. Do not begin these, recovery, authority/execution or V4 in this verifier block.

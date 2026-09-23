@@ -561,3 +561,18 @@ with current-evidence analysis proof and honest wider UNKNOWN results, not a new
 recovery executor or V4. Twenty-four future cases A–X and benchmark planning are specified only.
 Current validation/publication evidence is recorded in V3_PROGRESS. No live quota read, installs,
 services, credential access or unrelated project changes.
+
+
+## 2026-09-24 — Minimal pure verifier and current-call provenance
+
+Implement the separate provisional verifier for captured READ_ONLY_ANALYSIS/HANDOFF_ONLY. Preserve
+reconciler UNKNOWN/false/false and all existing schemas. Bind trusted provenance to an explicit
+unchanged collector call via a private immutable in-memory capture; imported JSON/hashes alone remain
+UNKNOWN. This is an owner-controlled Python trust boundary, not authentication against hostile code.
+A capture is evidence, never permission. Pure verification does no I/O and no authority inheritance.
+
+Keep unsupported mutation proof UNKNOWN, retained-lock policy NO distinct from unknown process
+liveness, and saved-scope proof UNKNOWN even when remote equality is known. Synthetic composition
+fixtures cannot substitute for production evidence. Choose bounded quiescence coverage specification
+as the next dependency, before optional durable review optimization or test-receipt production.
+See [implementation accounting](V3_SAFE_TO_RESUME.md#13-minimal-verifier-implementation).

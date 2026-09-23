@@ -226,3 +226,14 @@ review, legacy/stale tests, current digest comparison/deletion/limits, local-bar
 races, strict projection replay, fixed safety fields and independent Python-process readback.
 Shared command/deadline and cumulative review-byte limits are tested. Full trusted test-receipt
 reuse and external YES are not claimed. See [implementation scope](../docs/V3_RECONCILIATION.md#14-first-engine-implementation-and-conformance).
+
+
+## Minimal pure external verifier
+
+`test_safe_resume.py` tests the real capture/reconciler integration and pure proof/validation;
+`helpers/verifier_tamper.py` supplies reusable full-projection dependency discrimination.
+Run `TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_safe_resume -q`.
+The leaf-enumeration guard rejects missing registry entries. Coherent test-only provenance variants
+are explicitly synthetic, never evidence that a new producer exists. Mutation flags remain false;
+imported evidence stays UNKNOWN. See [A–X accounting](../docs/V3_SAFE_TO_RESUME.md#13-minimal-verifier-implementation)
+and [exact current results](../docs/V3_PROGRESS.md). No accepted crash fixture was redesigned.
