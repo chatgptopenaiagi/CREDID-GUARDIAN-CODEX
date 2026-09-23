@@ -93,8 +93,10 @@ permission false. Reconcile present repository reality first. No implementation 
 ## LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting verified checkpoint: `3b0e439f5a6f4769957899e4b6416986bafc69d3`.
-This contract block awaits normal commit/push and independent three-ref verification.
-Self-reference is HEAD; resolved publication hashes belong in the observed final report.
+Contract checkpoint: `ff912974b3a9ffa383d5f107e0c5542d6561dfec`. Normal push succeeded.
+Independent local HEAD, origin/main and live remote main all matched that hash; working tree clean.
+This documentation-only evidence follow-up uses HEAD as its self-reference; its resolved hash
+and final independent three-ref verification belong in the final report. No runtime tests rerun.
 
 ## Historical accepted reconciliation implementation evidence
 
