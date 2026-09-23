@@ -190,3 +190,7 @@ after SIGKILL of CGC are not guaranteed. Default-target metadata preflight and f
 Final V2 offline acceptance: [evidence matrix](docs/V2_ACCEPTANCE.md).
 153 deterministic tests pass. Zero V2 live reads; optional live verification skipped.
 V3 remains NOT_STARTED and requires separate authorization.
+
+## V3 quiescence design boundary
+
+The [bounded quiescence contract](docs/V3_QUIESCENCE.md) is SPECIFICATION COMPLETE; producer runtime NOT_STARTED. Current shared WSL writer coverage remains UNKNOWN. A future closed writer domain must prove descendant containment and filesystem exclusivity separately; no new mutation authority or V4 runtime exists.

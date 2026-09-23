@@ -79,3 +79,7 @@ after SIGKILL of CGC are not guaranteed. Default-target metadata preflight and f
 Final V2 offline acceptance: [evidence matrix](docs/V2_ACCEPTANCE.md).
 153 deterministic tests pass. Zero V2 live reads; optional live verification skipped.
 V3 remains NOT_STARTED and requires separate authorization.
+
+## Quiescence frontier
+
+Follow [V3 progress](docs/V3_PROGRESS.md) and the [quiescence contract](docs/V3_QUIESCENCE.md). Specification is complete; producer runtime NOT_STARTED. Current P3 remains UNKNOWN. Next is bounded descendant-containment/admission feasibility, not production implementation, process scanning, process killing or lock deletion. Linux process coverage alone does not close Windows-side access to /mnt/c.

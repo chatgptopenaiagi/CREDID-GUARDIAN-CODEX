@@ -848,3 +848,7 @@ contextual review and complete test receipts remain missing dependencies for bro
 Contract revision 1 is implemented for the minimal captured-analysis verifier; see
 [implementation and limits](V3_SAFE_TO_RESUME.md#13-minimal-verifier-implementation). New evidence
 producers, recovery and execution remain NOT_STARTED. Reconciler and handoff schemas are unchanged.
+
+## Bounded positive quiescence producer design
+
+The subordinate [quiescence contract](V3_QUIESCENCE.md) specifies finite writer coverage, process identity, host/filesystem closure, observation bounds and future acceptance. SPECIFICATION COMPLETE; runtime/schema NOT_STARTED. Existing adapter and verifier behavior is unchanged. No production-positive P3 profile is accepted; current shared-host coverage stays UNKNOWN.

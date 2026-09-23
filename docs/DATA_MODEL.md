@@ -222,3 +222,7 @@ All outputs keep both mutation flags false; compound PARTIAL and accepted-risk i
 Import of a previously trusted YES without its binding is rejected as an asserted result; reverify
 its underlying reconciliation as imported evidence to obtain UNKNOWN instead. There is no automatic
 migration, publication of a receipt, authority transfer or portable authentication token.
+
+## Future quiescence evidence domain
+
+[Quiescence contract section 8](V3_QUIESCENCE.md#8-conceptual-receipt-and-strict-derivation) defines a conceptual separate receipt, not a schema migration. Every future leaf requires strict type/bound/semantic dependency admission before implementation. Current handoff/reconciliation/verifier schemas remain unchanged. A serialized trust label or process ID cannot supply current producer provenance.

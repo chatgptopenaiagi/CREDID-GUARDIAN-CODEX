@@ -576,3 +576,7 @@ liveness, and saved-scope proof UNKNOWN even when remote equality is known. Synt
 fixtures cannot substitute for production evidence. Choose bounded quiescence coverage specification
 as the next dependency, before optional durable review optimization or test-receipt production.
 See [implementation accounting](V3_SAFE_TO_RESUME.md#13-minimal-verifier-implementation).
+
+## 2026-09-24 — Finite quiescence coverage before a producer
+
+Specify [V3 quiescence contract](V3_QUIESCENCE.md) without runtime changes. Select no current production-positive profile: WSL /mnt/c coverage is open to writers outside Linux observation. A conditional exclusive Linux checkpoint profile needs separate filesystem closure and nonescaping descendant containment. Cooperative registration and empty gates alone are insufficient. Next validate bounded launch-bound containment/admission feasibility in disposable fixtures; keep external-writer closure explicitly unresolved. No existing crash coverage is repeated, no prototype needed, and no supervisor, recovery or V4 is authorized.

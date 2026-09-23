@@ -81,3 +81,7 @@ concrete semantic fields. Initial A–X coverage distinguishes production proof 
 composition and missing future producers. K broader saved-scope proof remains PARTIAL; S risk and
 V compound aggregation NOT_STARTED. Execution, recovery and V4 remain NOT_STARTED.
 Exact focused/integration/regression/static results and publication evidence are in V3_PROGRESS.
+
+## Quiescence contract acceptance
+
+[V3 quiescence contract](V3_QUIESCENCE.md) revision 1 is specified. Its 24 A–X future cases are NOT_STARTED runtime acceptance; they do not add to the historical 389 passing tests. Documentation validation and current decision gates are in [progress](V3_PROGRESS.md). No producer, process containment or filesystem exclusivity is claimed implemented.

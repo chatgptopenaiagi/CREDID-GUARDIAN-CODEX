@@ -2,12 +2,91 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 remains active.** Bounded positive quiescence contract SPECIFICATION COMPLETE;
+producer runtime NOT_STARTED. Accepted pure verifier still supports captured
+READ_ONLY_ANALYSIS / HANDOFF_ONLY YES only, with mutation flags false. Reconciler unchanged.
+V4 remains ARCHITECTED / runtime NOT_STARTED.
+
+## VERIFIED STARTING CHECKPOINT
+
+Before edits, requested pwd/status/diff/whitespace/history and independent ref checks established
+clean main: HEAD = origin/main = live remote main =
+`61993cddeff2b4c8afc7526b9c87648684841a02`.
+Verifier implementation: `993f347acc2cc2db2f233db4adbd8f6dd15d1855`.
+Capacity: human planning context 80% weekly; live weekly/five-hour UNKNOWN. No account reads.
+Capacity preservation activated NO; no reliable governing value at or below 20% was received.
+
+## CURRENT SESSION BLOCK
+
+AUDIT + SPECIFY + VALIDATE [V3 quiescence contract revision 1](V3_QUIESCENCE.md), subordinate
+to unchanged verifier section 6. No producer/prototype, runtime, schema or test changes.
+
+## COMPLETE
+
+- Finite action-scoped writer coverage, closed/open-world distinction and separate process
+  containment versus filesystem exclusivity requirements.
+- Stable instance/handle identity, PID reuse, descendant escape, reparenting and admission rules.
+- WSL/Windows/container limits, lifecycle provenance, claim-local freshness and invalidation.
+- Read-only observation boundary, zero commands/network/signals, explicit time/byte/process bounds.
+- Strict conceptual receipt, future leaf/dependency registry, full-projection tamper discipline
+  and 24 future acceptance cases A–X, all specified rather than runtime-accepted.
+
+## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+
+Positive production P3 feasibility PARTIAL. Current shared /mnt/c topology has no accepted
+external-writer closure; Linux-only process evidence cannot establish Windows writer absence.
+No production-positive profile accepted. Conditional exclusive Linux checkpoint candidate needs
+both validated filesystem closure and launch-bound nonescaping descendant coverage.
+Current P3 remains UNKNOWN. Existing adapter flocks and process groups do not supply those proofs.
+No claim that an actual Windows writer is active. No cgroup availability experiment was run.
+Producer, coordination layer, schema, execution/recovery, new evidence producers and V4 NOT_STARTED.
+
+## VALIDATION
+
+Documentation-only validation PASS: eight changed/new files; 46 Python AST parses; 3 JSON
+parses; 266 local Markdown links/anchors; balanced fences; all 100 V3 keypoints; 24 future
+quiescence cases; 67 other tracked files byte-preserved. Pattern screening found no matched
+credential patterns (not universal secret proof). Exact diff and whitespace reviewed. Runtime/tests/helpers/schemas and V3/V4 missions remain byte-identical to starting
+checkpoint. Full regression NOT_REQUIRED: no executable/test/schema change or discovered runtime
+defect. Inherited result remains 389 passed, zero failures/errors/skips; not rerun this session.
+Platform-only observations: Linux 6.18.33.2-microsoft-standard-WSL2, project filesystem v9fs.
+No installs, services, configuration changes, credentials, process scan or unrelated repo access.
+
+## DECISION GATES
+
+Contract complete: YES. Current production-positive target: NONE (option D).
+Finite honest production proof feasibility: PARTIAL, conditional model specified but required
+primitives/environment closure unaccepted. Current project P3: UNKNOWN. No runtime promotion.
+
+## DO_NOT_REPEAT
+
+Accepted interruption, parent-death, reconciliation and pure verifier experiments. Do not treat
+registry/gate emptiness, absent locks/PIDs, stable Git state or Linux-native paths as complete
+writer coverage. Do not add runtime, signals, repair, lock deletion or V4 in this block.
+
+## NEXT_EXACT_ACTION
+
+VALIDATE LAUNCH-BOUND DESCENDANT CONTAINMENT AND CLOSED ADMISSION FEASIBILITY IN DISPOSABLE
+LINUX-NATIVE FIXTURES UNDER V3_QUIESCENCE, BEFORE ANY PRODUCTION PRODUCER. Report unavailable
+capabilities without installing/bypassing them. This does not discharge filesystem exclusivity
+and must not emit real-project positive P3. Do not begin this experiment in the current block.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Last independently verified starting checkpoint: `61993cddeff2b4c8afc7526b9c87648684841a02`.
+Specification commit uses HEAD as its self-reference; resolved publication evidence follows only
+after normal push and independent local/origin/live verification.
+
+## Historical accepted pure verifier evidence
+
+### Historical pure verifier — OVERALL STATUS
+
 **PARTIAL; V3 remains active.** Minimal pure external captured-analysis verifier IMPLEMENTED.
 READ_ONLY_ANALYSIS / HANDOFF_ONLY can return a real scoped YES. This grants no repository action,
 mutation authority or process-quiescence claim. The accepted reconciler remains UNKNOWN/false/false.
 V4 remains ARCHITECTED / runtime NOT_STARTED. Recovery and mutation execution are NOT_STARTED.
 
-## VERIFIED STARTING CHECKPOINT
+### Historical pure verifier — VERIFIED STARTING CHECKPOINT
 
 Required pwd/status/diff/whitespace/history and independent refs were observed before edits.
 Clean main: local HEAD = origin/main = live remote main =
@@ -16,13 +95,13 @@ Contract implementation record: `ff912974b3a9ffa383d5f107e0c5542d6561dfec`.
 No newer work was discarded. Current weekly/five-hour included capacity UNKNOWN;
 capacity preservation activated NO. No account/credential/quota investigation.
 
-## CURRENT SESSION BLOCK
+### Historical pure verifier — CURRENT SESSION BLOCK
 
 IMPLEMENT + TEST + VALIDATE + PRESERVE the minimal pure external verifier, against
 [V3 verifier contract revision 1](V3_SAFE_TO_RESUME.md). Projection
 `cgc-safe-resume-v3.0-provisional`; policy `cgc-verifier-v3.0`.
 
-## COMPLETE
+### Historical pure verifier — COMPLETE
 
 - Pure deterministic `verify`, strict parsing/recomputation and exact machine/human result.
   Fixed false mutation flags; no I/O, clock, environment, randomness or caller-object mutation.
@@ -40,7 +119,7 @@ IMPLEMENT + TEST + VALIDATE + PRESERVE the minimal pure external verifier, again
 - Initial A–X scope accounted for in [implementation conformance](V3_SAFE_TO_RESUME.md#13-minimal-verifier-implementation).
   Real Git fixture readback/capture integration; no accepted crash fixture redesigned.
 
-## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+### Historical pure verifier — PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
 
 V3 overall PARTIAL. Positive production quiescence, contextual review/event, fully bound test
 receipts and complete designated saved-scope/adapter-policy evidence remain missing. Remote equality
@@ -54,13 +133,13 @@ is not current execution-time freshness. Any new action requires its own authori
 revalidation. Large relationship rendering refuses within bounds rather than truncating evidence.
 No hard CPU/RSS, power-loss or universal writer guarantee. No unrelated repository was touched.
 
-## DECISION GATES
+### Historical pure verifier — DECISION GATES
 
 Minimal pure verifier accepted for its first scope: **YES** for the declared initial scope.
 Real READ_ONLY_ANALYSIS / HANDOFF_ONLY YES: **YES**, never permission to touch the repository.
 Primary mutation blocker: **positive finite quiescence/writer coverage**. No new producer began.
 
-## VALIDATION
+### Historical pure verifier — VALIDATION
 
 Focused: `TMPDIR=/tmp PYTHONPATH=src:tests python -B -m unittest test_safe_resume -q`:
 **33 passed in 4.462s**.
@@ -96,7 +175,7 @@ commands reuse the exact name/no-reply email in the last three published commits
 `git -c` options; no global or local configuration is changed. A staged EOF whitespace finding
 was corrected before committing; final whitespace checks pass.
 
-## FILES CHANGED
+### Historical pure verifier — FILES CHANGED
 
 Created src/cgc/safe_resume.py, src/cgc/verification_capture.py, src/cgc/verifier_registry.py,
 tests/test_safe_resume.py and tests/helpers/verifier_tamper.py. Modified AGENTS.md, README.md,
@@ -104,7 +183,7 @@ docs/DATA_MODEL.md, docs/DECISIONS.md, docs/V3_ACCEPTANCE.md, docs/V3_CONTRACT.m
 docs/V3_PROGRESS.md, docs/V3_SAFE_TO_RESUME.md and tests/README.md.
 Existing runtime, handoff/reconciliation schemas, tests/helpers and V3/V4 missions preserved.
 
-## DO_NOT_REPEAT
+### Historical pure verifier — DO_NOT_REPEAT
 
 Do not repeat accepted crash, reconciliation A–R or captured-analysis verifier acceptance without
 defect evidence. Do not turn a narrow YES into quiescence, authority, remote preservation or
@@ -112,14 +191,14 @@ permission for fresh reads. Do not infer review from digests, current PASS from 
 causality from changed HEAD, or trust from JSON/hash labels. Do not implement risk ingestion,
 compound scopes, recovery, new producers or V4 in this block.
 
-## NEXT_EXACT_ACTION
+### Historical pure verifier — NEXT_EXACT_ACTION
 
 **Audit and specify a bounded positive quiescence evidence producer with explicit finite
 writer/descendant coverage, against V3_SAFE_TO_RESUME.md section 6, before implementing it.**
 Begin from actual present Git/progress evidence. No process scan, supervisor, lock cleanup or
 new producer is authorized by this next-action record. Do not begin the next block this session.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical pure verifier — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting checkpoint `f2c8ed53591086595d67bdbc03b6116338a60ae3` was independently verified.
 Implementation commit `993f347acc2cc2db2f233db4adbd8f6dd15d1855` pushed normally to origin/main.
