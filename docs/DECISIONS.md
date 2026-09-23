@@ -628,3 +628,33 @@ delegation/IPC policy and any required environment changes. Do not provision tha
 block or assume an operator's absence declaration proves it. Filesystem exclusivity and real-project
 P3 remain UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED; V4 runtime NOT_STARTED.
 Validation and publication accounting are in progress; this checkpoint self-reference is HEAD.
+
+## 2026-09-24 — Owner-approved protected Linux broker boundary design
+
+Clean Windows main independently matched tracking/live main at
+`23f953b1870870500c04e0a60e41fed007680374`. The current owner explicitly approves
+SEPARATE_LINUX_CONTROLLER_IDENTITY_DESIGN and CONTROLLED_ENVIRONMENT_CHANGE_PLANNING.
+This removes the earlier design-decision blocker without authorizing provisioning or runtime.
+
+Decision C: **CONDITIONAL BOUNDARY SPECIFIED; ONE OR MORE CAPABILITIES REQUIRE PROOF.**
+[Section 14](V3_QUIESCENCE.md#14-owner-approved-protected-broker-boundary-design--2026-09-24)
+selects ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER as a future disposable candidate. Root B retains
+raw cgroup authority; distinct nonroot C/W identities receive bounded request/data rights only.
+C's private channel must authenticate its live launch instance per message, not merely UID or
+socket possession. Controller-UID peers remain adversaries; nondumpable bootstrap integrity is
+mandatory. Root/system-manager compromise is outside the stated TCB, not silently solved.
+
+Read-only Windows-originated Fedora discovery found systemd 259 running, root-owned cgroup
+controls, ptrace_scope=0 and suid_dumpable=2. No privileged launch or acceptance experiment ran.
+Installed manager authorization, bootstrap race closure, exact descriptor/syscall/helper policy,
+seal/death handling and minimal broker privilege remain R1–R6 proof gates. Dedicated identities,
+protected files, one transient root unit and possibly narrow manager policy are proposed with
+classification/rollback; no persistent changes performed. Same-UID A–J witnesses remain intact.
+
+Next: exact lab manifest and fixed bootstrap/broker/controller design resolving R1–R5 before
+scoped R6 falsification execution. Do not request the broad design approval again. Do not start
+production, provision silently, or treat conditional design as accepted closure. Containment
+PARTIAL; tested admission OPEN; filesystem exclusivity and P3 UNKNOWN.
+PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED; V4 runtime NOT_STARTED.
+Only the three evidence documents changed. Validation/publication accounting is in V3 progress;
+checkpoint self-reference HEAD, with resolved SHA and post-push verification in the final report.

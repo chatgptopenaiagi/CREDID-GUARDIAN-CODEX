@@ -2,6 +2,93 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 active.** Owner-approved controller-boundary design COMPLETE as a conditional
+specification. Decision C: **CONDITIONAL BOUNDARY SPECIFIED; ONE OR MORE CAPABILITIES REQUIRE PROOF.**
+Selected candidate ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER is not implemented or accepted.
+Tested containment PARTIAL; tested same-UID admission OPEN. Filesystem exclusivity and P3 UNKNOWN.
+**PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.** V4 ARCHITECTED / runtime NOT_STARTED.
+Captured READ_ONLY_ANALYSIS / HANDOFF_ONLY verifier unchanged.
+
+## VERIFIED STARTING CHECKPOINT
+
+Clean Windows main independently verified: HEAD = origin/main = live main =
+`23f953b1870870500c04e0a60e41fed007680374`.
+Windows Codex remains sole worker at C:\Codex-Projects\CREDID-GUARDIAN-CODEX.
+FedoraLinux-44 is subordinate read-only discovery through wsl.exe; no Linux Codex agent.
+
+## OWNER DECISION / CURRENT BLOCK
+
+OWNER_DECISION = APPROVED.
+SEPARATE_LINUX_CONTROLLER_IDENTITY_DESIGN = APPROVED.
+CONTROLLED_ENVIRONMENT_CHANGE_PLANNING = APPROVED.
+Current explicit owner instruction removes the earlier design-decision blocker; it does not
+approve privileged provisioning or production. See the complete
+[boundary specification](V3_QUIESCENCE.md#14-owner-approved-protected-broker-boundary-design--2026-09-24).
+
+## COMPLETE / PARTIAL / NOT_STARTED
+
+Complete: explicit trust/component/action tables; controller-instance authorization; raw cgroup
+ownership; manager/descriptor/namespace policies; gated launch and sealed epoch; environment-change
+classification/rollback; six proof gates R1–R6 and future adversarial falsification design.
+Read-only observations: systemd 259 running, kernel 6.18.33.2-microsoft-standard-WSL2,
+root-owned system cgroup controls, ptrace_scope=0 and suid_dumpable=2. These do not prove closure.
+
+Conditional: one root-owned one-shot broker, separate unprivileged C/W identities, private
+per-message process-bound controller channel; no controller-owned raw migration interface.
+Same-UID controller peers remain adversaries. Bootstrap injection, installed manager policy,
+exact FD/syscall/helper restrictions, privileged launch and continuity require proof.
+
+Not started: candidate implementation/acceptance, identities/provisioning, containment rerun,
+production producer, mutation gate, recovery, full safe resume/automation and V4 runtime.
+Prior section 13 decision D remains valid for its earlier unprivileged scope; A–J preserved.
+
+## FILES CHANGED
+
+Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md and docs/DECISIONS.md.
+Historical evidence preserved. No runtime, verifier, schema, test or mission changes.
+
+## VALIDATION
+
+PASS: 46 Python AST parses, 3 JSON parses, 272 local Markdown links/anchors and balanced fences.
+All 72 untouched tracked files match pre-edit SHA256 bytes and canonical starting Git content,
+including runtime/verifier/tests/schema/helpers and both missions. All 100 V3 keypoints retained.
+Historical quiescence/decisions remain exact prefixes; prior progress retained under historical
+headings. Three-document scope, no untracked artifacts, R1–R6 present; whitespace and recognizable
+credential-pattern checks passed. Exact unstaged/staged diff review is the publication gate.
+
+## TESTS EXECUTED / NOT EXECUTED
+
+Documentation/static checks only; bounded read-only Fedora capability discovery is not acceptance.
+No new containment, hostile worker, A–J, crash/verifier or historical full regression run.
+No executable defect or source change warrants the full suite.
+
+## OPERATIONS / ENVIRONMENT
+
+No privileged command, account/unit/cgroup/namespace/fixture creation, package/configuration change,
+credential inspection, quota read or unrelated repository mutation. WSL invocation can start
+Fedora and ordinary system bookkeeping; no zero-host-write claim. Proposed future root-owned
+files, two dedicated identities, transient unit and conditional narrow manager policy are listed
+with rollback and security impact in section 14; none was executed.
+
+## NEXT_EXACT_ACTION
+
+PREPARE AND REVIEW THE EXACT DISPOSABLE-LAB MANIFEST AND MINIMAL FIXED BROKER/CONTROLLER/BOOTSTRAP
+DESIGN FOR R1–R5, RESOLVING CONCRETE IDENTITY ALLOCATION, PRIVILEGED LAUNCH, MANAGER POLICY AND THE
+SAME-UID BOOTSTRAP RACE BEFORE REQUESTING SCOPED EXECUTION OF THE R6 FALSIFICATION EXPERIMENT.
+Owner design/change-planning approval already exists; do not ask for it again. Resolve exact
+execution scope before privileged changes. No production producer or filesystem proof follows.
+Stop after this coherent design block.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Starting checkpoint: `23f953b1870870500c04e0a60e41fed007680374`.
+This documentation checkpoint uses HEAD as self-reference; resolved SHA, normal push result,
+independent three-ref equality and clean final tree belong in the post-publication report.
+
+## Historical accepted authority-separation audit
+
+### Historical authority audit — OVERALL STATUS
+
 **PARTIAL; V3 remains active.** Authority-separation audit COMPLETE.
 Decision D: **CLOSURE UNAVAILABLE UNDER CURRENT UNPRIVILEGED SCOPE**, limited to the evidenced,
 authorized environment; no universal Linux impossibility is claimed. No minimal operational
@@ -10,7 +97,7 @@ Filesystem exclusivity and real-project P3 UNKNOWN.
 **PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.** V4 ARCHITECTED / runtime NOT_STARTED.
 Accepted captured READ_ONLY_ANALYSIS / HANDOFF_ONLY verifier remains unchanged.
 
-## VERIFIED STARTING CHECKPOINT
+### Historical authority audit — VERIFIED STARTING CHECKPOINT
 
 Windows-native root/status/diffs/whitespace/history and independent remote checks established
 clean main: HEAD = origin/main = live main =
@@ -20,14 +107,14 @@ PRIMARY_REPOSITORY_PATH = C:\Codex-Projects\CREDID-GUARDIAN-CODEX.
 FEDORA_CODEX_AGENT = NONE. FEDORA_ROLE = SUBORDINATE_EXECUTION_OR_INSPECTION_ENVIRONMENT.
 No Fedora invocation was necessary in this audit. No sub-agent or second repository controller.
 
-## CURRENT SESSION BLOCK
+### Historical authority audit — CURRENT SESSION BLOCK
 
 Audit/threat model/profile feasibility only:
 [quiescence section 13](V3_QUIESCENCE.md#13-controller-and-worker-authority-separation-audit--2026-09-24).
 Reviewed inherited contracts and historical observations, checked Linux/systemd primary sources,
 and specified requirements without re-running A–J or changing any runtime behavior.
 
-## COMPLETE / IMPORTANT DISCOVERIES
+### Historical authority audit — COMPLETE / IMPORTANT DISCOVERIES
 
 - A–H comparison distinguishes authority, self/descendant egress, both worker-UID and
   controller-UID peer ingress, alternate interfaces, continuity and actual availability.
@@ -41,7 +128,7 @@ and specified requirements without re-running A–J or changing any runtime beha
   Positive detection of a forbidden move invalidates closure rather than proving containment.
 - Decision D and precise external prerequisite before profile selection/new experimentation.
 
-## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+### Historical authority audit — PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
 
 Existing launch identity and descendant membership evidence remains valid within its historical
 scope. Containment PARTIAL; admission OPEN. Stronger composed protections UNKNOWN; no claim that
@@ -53,12 +140,12 @@ No contradiction requiring V3/V4 mission or producer-contract revision was found
 Production producer, schema, coordination/admission runtime, supervisor, mutation gate, recovery,
 automatic orphan cleanup, full safe resume, automation and V4 runtime remain NOT_STARTED.
 
-## FILES CHANGED
+### Historical authority audit — FILES CHANGED
 
 Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md and docs/DECISIONS.md.
 Historical contract/experiment records retained. No source/schema/test/helper/mission edits.
 
-## VALIDATION
+### Historical authority audit — VALIDATION
 
 PASS: 46 Python AST parses; 3 JSON parses; 270 local Markdown links/anchors; balanced fences;
 all 100 V3 keypoints; all eight candidate rows and fourteen admission obligations present.
@@ -69,13 +156,13 @@ retained under historical headings. Exact three-document scope; no untracked tem
 Whitespace checks and changed-document recognizable credential-pattern checks passed (not proof
 of universal secret absence). Exact unstaged/staged diff reviewed before publication.
 
-## TESTS EXECUTED / NOT EXECUTED
+### Historical authority audit — TESTS EXECUTED / NOT EXECUTED
 
 Documentation/static validation only. No Fedora capability probe or containment experiment.
 No crash, parent-death, reconciliation, verifier or full regression rerun; no executable change
 or discovered runtime defect warrants it. Historical 389-pass result is not a new test run.
 
-## OPERATIONS / INTEGRITY
+### Historical authority audit — OPERATIONS / INTEGRITY
 
 Only Windows repository documentation/Git operations and public primary-documentation reads.
 No Linux side effects, fixtures, process scan, package installation, persistent user/configuration
@@ -83,13 +170,13 @@ change, enabled service, credential access, quota read or unrelated repository a
 freedesktop rendered manual URLs failed; project documentation/source provided the cited evidence.
 No unsafe fallback or unsupported claim about installed systemd API authorization.
 
-## DO_NOT_REPEAT
+### Historical authority audit — DO_NOT_REPEAT
 
 Do not repeat A–J or accepted crash/verifier tests merely to seek closure. Do not narrow away
 controller-UID peers, promote namespace creation/UID labels/path denial into isolation proof,
 or implement a producer solely to report UNKNOWN. No automatic provisioning or V4 work.
 
-## NEXT_EXACT_ACTION
+### Historical authority audit — NEXT_EXACT_ACTION
 
 OBTAIN AN EXPLICIT OWNER DECISION AND EVIDENCE FOR AN INDEPENDENTLY ENFORCED LINUX
 CONTROLLER-CONTROL-PLANE BOUNDARY THAT EXCLUDES UNTRUSTED CONTROLLER-UID PEERS, INCLUDING
@@ -99,7 +186,7 @@ If unavailable or declined, retain CLOSURE UNAVAILABLE UNDER CURRENT SCOPE. No c
 permission to install, create users, change services/WSL/security settings or start runtime.
 Filesystem exclusivity remains a separate gate. Stop after this audit checkpoint.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical authority audit — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting checkpoint independently verified: `6902579cbcde6aa3aa91b0aa75385404da7c5499`.
 Current coherent documentation checkpoint uses HEAD as self-reference. Resolved SHA, normal push

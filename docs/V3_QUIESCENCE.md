@@ -726,3 +726,297 @@ Audit COMPLETE; process containment PARTIAL; tested admission OPEN; filesystem e
 real-project P3 UNKNOWN. **PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.** V4 runtime NOT_STARTED.
 PROCESS_CONTAINMENT != FILESYSTEM_EXCLUSIVITY; LINUX_PROCESS_QUIESCENCE != FILESYSTEM_WRITER_QUIESCENCE.
 No source/schema/test/mission change, quota read, Fedora side effect or production behavior change.
+
+## 14. Owner-approved protected broker boundary design — 2026-09-24
+
+**Decision C: CONDITIONAL BOUNDARY SPECIFIED; ONE OR MORE CAPABILITIES REQUIRE PROOF.**
+Selected design candidate: **ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER**, disposable Linux lab only.
+This is a specification, not implemented containment, an accepted producer profile or production
+authorization. Section 13's D remains correct for its earlier unprivileged scope. The owner has
+now approved designing the independent boundary and planning its minimum environment changes:
+
+```text
+OWNER_DECISION = APPROVED
+SEPARATE_LINUX_CONTROLLER_IDENTITY_DESIGN = APPROVED
+CONTROLLED_ENVIRONMENT_CHANGE_PLANNING = APPROVED
+```
+
+Provenance: current explicit owner instruction, after independently verifying clean Windows main
+at `23f953b1870870500c04e0a60e41fed007680374` against tracking and live remote. These durable labels
+record that instruction; loading them later grants no action authority. Design approval does not
+authorize privileged provisioning, production runtime or V4. Windows Codex remains sole project
+worker; the Linux controller below is an experimental process, never another repository agent.
+
+### Bounded read-only discovery
+
+OBSERVED_FACT through Windows-originated `wsl.exe -d FedoraLinux-44 -- ...`, without elevation:
+
+- Kernel 6.18.33.2-microsoft-standard-WSL2; systemd 259.8-1.fc44, system manager reported running;
+  Python 3.14.7; python3, systemd-run and setpriv were present. No privileged manager method ran.
+- Caller UID/GID 1000, supplementary groups 10/1000, initial-namespace identity UID/GID maps,
+  membership `/init.scope`. Effective/permitted/inheritable/ambient capability masks zero;
+  bounding mask nonzero. NoNewPrivs=0, Seccomp=0 in the discovery Python process. These values
+  do not attest proposed workers, nor authorize privileged launch.
+- `/sys/fs/cgroup` and `system.slice` were root-owned; their cgroup.procs files root:root 0644.
+  This establishes particular metadata, not a complete ACL/alias/control-policy audit.
+- `kernel.yama.ptrace_scope=0`; `fs.suid_dumpable=2`. Do not assume a globally restrictive
+  same-UID ptrace policy. Neither value was changed.
+- Reads of `/sys/fs/selinux/enforce` and `/sys/kernel/security/lsm` returned ENOENT. Active LSM
+  protection is UNKNOWN, not proved absent by missing interfaces or present by +SELINUX build
+  flags. This candidate does not depend on enabling SELinux or changing WSL/kernel settings.
+- Current namespace links were readable (user 4026531837, PID 4026532221, mount 4026532218,
+  cgroup 4026531835, IPC 4026532206, network 4026531833). They are invocation-local context;
+  no old namespace/handle continuity is inferred from integer equality.
+
+No account database, authentication files, sudo credentials, polkit configuration, process list
+or environment dump was collected. No user, unit, cgroup, temporary file or namespace was created
+by the discovery. WSL invocation may start Fedora and ordinary manager bookkeeping; no zero-host-
+write claim. Earlier A–J and all accepted crash/verifier tests were not repeated.
+
+### Selection and trust allocation
+
+DERIVATION: keeping raw migration rights with root-owned enforcement, while granting a single
+unprivileged controller only a narrow process-bound request channel, addresses the controller-UID
+peer hole without claiming a UID uniquely identifies a process. A dedicated UID alone cannot do
+that. The broker is required for this candidate; it is not claimed necessary for every Linux design.
+
+Rejected as sufficient alone: user-manager delegation; a dedicated controller owning cgroup files;
+PID/user namespaces; a root-running generic controller. A system service with only a dedicated
+unprivileged UID still needs exclusive request authorization. An LSM process-domain solution may
+be viable, but enforcement/configuration is unevidenced and would add policy dependencies here.
+DynamicUser could avoid permanent account entries, but ID lifetime/reuse, cross-unit FD transfer
+and worker launch coordination need a separate proof. It is not silently substituted into this
+first design. This is a minimum selected mechanism set, not a proof of globally minimal setup cost.
+
+| Component | Identity | Trust | Authority | Control interfaces | Inherited rights | Failure mode | Proof source |
+|---|---|---|---|---|---|---|---|
+| Windows Codex | Existing Windows operator | Sole repository worker | Documentation/Git and authorized lab orchestration only | wsl.exe, Git | No Linux root right inferred | Stop/reconcile repository evidence | Current owner scope and Git gate |
+| System manager / authorized administrator | Linux UID/GID 0 | TCB | Establish exact transient root-owned lab unit and policy | System manager only | No worker delegation | Restart/policy change invalidates epoch | Installed manager observed; launch/policy acceptance pending |
+| One-shot broker B | UID/GID 0; fixed reviewed image | Small privileged TCB | Own one subtree, launch fixed bootstrap, attach only own unreaped gated children, seal, observe, remove owned empty objects | Root-owned FDs; private controller channel | Never forwards raw control FDs | Death/protocol error -> UNKNOWN; no automatic restart | Specification plus future acceptance |
+| Controller C | Dedicated nonroot UID_C/GID_C | Trusted fixed program | Request bounded operations on this broker's own domain | One inherited private connected socket | No raw cgroup/manager FD; no capabilities | Death/exec/injection gap invalidates epoch | Retained launch pidfd and per-message credentials, pending |
+| Worker W | Dedicated nonroot UID_W/GID_W, different from C | Untrusted fixture | Execute reviewed bounded workload and fork within domain | Fixture data and narrow data-only gates | No controller channel or control FD | Forbidden transition contradicts closure | Credential/FD/syscall preflight and future negative tests |
+| Descendants | W credentials/restrictions | Untrusted | In-domain fork/approved exec only | Same data-only interface set | Restrictions inherited | Lost coverage -> UNKNOWN | Future inheritance tests |
+| Outside C/W/other-UID peers | No relevant administrative capabilities/grants | Untrusted | Unrelated execution; no raw control or authenticated broker operation | May attempt visible paths and public manager APIs | No valid C process identity | Denial of service may invalidate; cannot inherit authority | Future peer/IPC tests and policy evidence |
+
+UID_C/GID_C and UID_W/GID_W are required distinct concrete values in the later manifest, not
+numbers invented now. Resolve collision-free identities before provisioning; record exact values
+and allocation provenance. Propose two dedicated locked, non-login lab accounts with no home,
+supplementary groups, sudo/polkit grants, user-manager session or lingering. New account entries
+are a reversible persistent change, not needed or created in this design block. Account exclusivity
+is hygiene, not proof: an adversarial peer with UID_C is explicitly tested and remains in scope.
+
+For C/W: real/effective/saved/fs IDs must agree with their manifest identity; supplementary groups
+empty; effective/permitted/inheritable/ambient/bounding capabilities empty after bootstrap;
+no_new_privs set. Keep C in the initial user namespace: a peer cannot gain capabilities over C
+merely by becoming root in a child user namespace. W must not regain B/C credentials or escape
+via helper/manager authority. B needs bootstrap credential transitions, cgroup access and owned
+child observation; exact minimal retained capability/syscall set is proof gate R3, not a guessed
+production hardening claim. Root administrative compromise remains outside the established TCB
+model. An untrusted root-equivalent peer would invalidate that assumption; the design does not
+solve it by calling it a nonroot controller peer. No generic root agent is authorized.
+
+### Controller-UID peers and manager mediation
+
+C does not own writable cgroup controls. Its authority is a broker channel tied to its retained
+launch instance, not its UID. Propose a connected socketpair with message boundaries and kernel
+per-message credentials; retain C unreaped for the channel lifetime and close/retire the channel
+before reaping. Validate PID namespace, credential triple, exact bound PID/handle liveness, epoch,
+monotonic request sequence and a fixed operation grammar. Never reopen a PID to restore authority.
+Reject ancillary FDs from requests and truncated/missing credentials. SO_PEERCRED captured at
+socketpair creation alone is insufficient to identify a subsequently forked child sender.
+
+C must be nondumpable before any peer-injectable interval or authority release, with root-owned
+immutable executable/configuration, no untrusted loader/PATH inputs, no post-seal exec and no
+operation that reenables dumpability. Same-UID signals may still kill/stop it: availability is
+not promised; B invalidates on terminal/timeout/channel failure. A stolen/duplicated endpoint
+alone must not authenticate a different sender; attempted ptrace/proc-FD/pidfd_getfd access is
+also part of acceptance. Socket credentials cannot prevent an already injected C from issuing
+requests, so bootstrap integrity is a hard prerequisite, not optional defense in depth.
+
+System-manager policy must deny C, W and all in-scope untrusted peers mutation of the lab and
+indirect launch/attachment/delegation on its behalf, through every applicable unit/manager route.
+No interactive authorization fallback or inherited bus socket. A user manager has no delegation
+into this root-owned system subtree; its unrelated scopes cannot supply a writable common ancestor.
+Unit name, same UID, a polkit action name or a successful read is not authorization proof. Exact
+installed v259 methods, policy ordering, peer credentials and default permissions require R2.
+Manager/admin configuration is trusted but must remain fixed throughout the epoch; no unnoticed
+restart/reload/policy replacement is accepted. General control by another authorized administrator
+invalidates the lab epoch; it cannot preserve an old positive receipt.
+
+### Cgroup control and action boundary
+
+One transient system-owned lab unit would delegate only to B/root, never to C/W. B uses private
+control/worker children under that unit; only its worker child is the accepted process domain.
+No threaded topology or worker-created subgroups. All files/directories remain root-owned with
+no write ACL/group grant to C/W/peers. Do not modify global cgroup settings or unrelated siblings.
+Reading public kernel metadata is harmless to authority; the profile does not require secrecy.
+
+| Interface | Read | Write / move / delegate / topology authority |
+|---|---|---|
+| domain cgroup.procs | B; kernel-permitted observer reads allowed | B attaches only its own gated launch, before seal; no write/delegation to C/W/peers |
+| cgroup.threads | B; ordinary permitted reads | No profile thread migration; no C/W/peer write; unsupported threaded layout refuses |
+| cgroup.subtree_control / cgroup.type | B audits | Fixed supported domain layout; no in-epoch changes; C/W/peers denied |
+| parent and control child | B/manager as appropriate | Manager owns unit boundary; B owns its private children, never permits worker escape into control child |
+| siblings outside lab | Only bounded required metadata | No broker operation targets these; C/W/peer cannot obtain lab admission through them |
+| delegated descendants | None in initial profile | No further delegation, topology creation or worker ownership |
+
+In the table below 'B-only' means C can request a fixed operation, but only B performs it after
+instance/state validation. 'TCB' is separately administered infrastructure, not worker authority.
+
+| Action | Controller C | Worker | Descendant | Outside peer | System manager / B |
+|---|---|---|---|---|---|
+| Create domain | B-only, once before seal | Denied | Denied | Denied | Exact owned domain |
+| Enter domain | B-only for prebound root | Bootstrap attach; then fork inheritance | Inherited birth only | Denied | No arbitrary PID attachment |
+| Leave domain | No request operation | Denied | Denied | Cannot move workers | No live-worker egress operation |
+| Move another process | No arbitrary PID API | Denied | Denied | Denied for lab | Only owned unreaped gated root before seal |
+| Delegate child | Denied | Denied | Denied | Denied | Fixed setup only; no further delegation |
+| Change topology | Denied after setup | Denied | Denied | Denied | Setup only; later change invalidates |
+| Request manager operation | No privileged manager operation | Denied mutation | Denied mutation | Denied lab mutation | TCB launch/control with bound policy |
+| Open control FD | Read-only observation if explicitly supplied | No writable FD | No writable FD | No writable FD | B owns writable FDs |
+| Inherit control FD | Only bound broker socket, no raw FD | Denied | Denied | Denied | B bootstrap privately, close before untrusted release |
+| Destroy domain | B-only after positive empty/terminal evidence | Denied | Denied | Denied | Exact owned empty objects only |
+
+### Descriptor and namespace policy
+
+Use an allowlist, not a filename denylist. B retains cgroup/ancestor directory FDs, root manager
+connections, controller/worker pidfds and its endpoint. C receives only data output, a bootstrap
+gate and its dedicated connected broker endpoint. W receives only explicit fixture data FDs and
+data-only gate pipes, with no capability-bearing ancillary transfer. No cgroup, namespace, manager,
+broker or unrelated pidfd crosses W's launch. Close all other FDs in the trusted child before
+untrusted code; CLOEXEC at creation is additional protection, not a substitute for fork closure.
+No writable control FD is made safe merely by later mount hiding. A deliberately injected FD
+must cause pre-release refusal; if released, the profile is already violated even if one write fails.
+
+| Namespace | Purpose / proof sought | Not provided / initial choice |
+|---|---|---|
+| User | None needed for selected credential separation | Keep initial mapping; deny worker creation/entry initially; no mapped-root shortcut |
+| PID | None needed for launch pidfds/accounting | No new PID namespace; hiding PIDs would not remove raw/deputy authority |
+| Cgroup | Optional later defense; not needed if raw write authority is denied | No new namespace initially; aliases must be safe by authorization, not concealment |
+| Mount | Isolate minimal worker fixture view and hide manager/helper endpoints | Required for bounded helper surface if chosen at R4; root-only private nonpropagating setup; no filesystem-exclusivity claim |
+| IPC | Not required if the fixed worker interface/syscall profile excludes offload | No automatic addition; SysV IPC/helper paths must be denied or explicitly covered |
+| Network | Not required if networking/new sockets are denied and inherited channels exhausted | No new namespace initially; filesystem socket hiding alone does not cover abstract UNIX sockets |
+
+The initial worker is purpose-built fixed fixture code, not arbitrary shell/Python/project code.
+An explicit Linux syscall/FD plan must allow its required fork/wait/data I/O and approved exec
+without granting new socket connections, namespace changes, credential changes or uncontrolled
+helper offload. seccomp/no_new_privs is a candidate enforcement mechanism, not a tested filter;
+R4 requires an exact syscall/architecture policy. Unexpected syscalls refuse, never broadening
+the policy automatically. Controller likewise remains fixed, non-execing after authentication.
+No generic test runner or Git execution is part of this lab.
+
+### Launch sequence, races and sealed epoch
+
+1. Authorized root launch validates an exact protected manifest/image, identities, policy and
+   domain parent; creates one transient lab unit and B. No public broker listener, arbitrary
+   argv/path/UID selection or shell. Root launch mechanism itself is R1, not assumed authorized.
+2. B creates root-owned domain/control objects and retains their identities/handles. It launches
+   trusted C bootstrap as its own child and acquires a pidfd without another reaper. C code and
+   policy cannot be changed by UID_C. Drop supplementary groups and all credential/capability
+   paths as specified; establish dumpability protection before accepting any control request.
+3. Bootstrap race gate R3 must prove no interval permits a same-UID peer to inject into C between
+   credential changes and nondumpability. Current suid_dumpable=2 is an observation, not this
+   proof; credential changes/exec can reset the attribute. Refuse on a policy/configuration
+   mismatch. Do not solve the race by silently treating UID_C peers as trusted.
+4. B establishes the private instance-bound channel, accepts only the fixed readiness sequence
+   and binds C to this epoch. Neither a caller-supplied PID nor channel possession alone suffices.
+   No C fork/exec or transfer of authority is allowed after this binding.
+5. B forks its own trusted, gated W bootstrap; retains an unreaped-child pidfd before migration.
+   Only trusted bootstrap code executes before attachment. Bind it to the worker cgroup before
+   workload release; close forbidden FDs, establish fixed credentials/restrictions and verify
+   the configured boundary. A launch failure means no positive profile or blind retry.
+6. ADMISSION_OPEN ends at B's serialized SEAL transition after validation and all prebound root
+   admissions. B records ordered epoch start and irrevocably disables create/attach/delegate/
+   topology mutations for that epoch. Pending requests are drained/refused by sequence before
+   acknowledging seal. There is no UNSEAL/rebind operation; a new experiment requires a new domain.
+7. Release the pre-admitted W root through its data gate. Descendant fork is the kernel-inherited
+   admission path inside the domain, never external-root admission. Seal is not quiescence:
+   workers may now be active; any previous empty observation is invalidated. A later quiescence
+   capture still requires the separate contract's stable closed interval and filesystem proof.
+8. End the valid epoch on explicit retirement, identity/policy/topology change, authority-changing
+   exec, control-channel violation, controller/broker death, timeout or manager continuity loss.
+   Detectable queued operations cannot revive a retired epoch. Observation/detection latency is
+   not a lease for stale proof; every eventual consumer must independently check continuity.
+
+Remaining races are explicit: credential/dumpability bootstrap; PID reaping/reuse; descriptor
+leakage across fork/exec; manager-policy replacement; queued requests at seal; death between a
+liveness check and dispatch; cgroup replacement/removal; ID reuse during teardown. B must serialize
+state/requests, retain launch/domain identity and refuse uncertainty. Membership changes are
+impossible through the protocol after seal, regardless of a concurrent controller death. Before
+seal, any uncertain setup is invalid rather than an accepted partial epoch. No atomic whole-host
+snapshot, crash-safe broker or zero-latency observer is claimed.
+
+Approved fixed W exec must preserve restrictions/FD policy; identity preservation alone is not
+authority preservation. Authority-changing or unreviewed exec invalidates coverage. Reparenting
+does not confer B/C rights. Controller death revokes request authority; it does not terminate W
+or transfer the channel to another UID_C process. No auto-restart/recovery. Teardown needs owned
+terminal evidence and empty subtree under valid cleanup provenance; otherwise retain artifacts
+for separately authorized review. No arbitrary kill, recursive host cleanup or Git-lock deletion.
+
+### Minimum proposed changes and rollback
+
+Nothing in this table was executed. Every later change needs a concrete manifest with exact names,
+paths, IDs, pre-state digests and owner-scoped execution approval. Existing suitable resources may
+be reused only after equivalent evidence; do not overwrite or delete an existing identity/policy.
+
+| Change / classification | Purpose, scope and privilege | Persistence / rollback | Security impact; proof enabled / not enabled |
+|---|---|---|---|
+| Two dedicated C/W UID/GID assignments: NEW_IDENTITY_REQUIRED; REVERSIBLE_PERSISTENT_CHANGE if new accounts | Root provisions only manifest-named non-login identities, empty groups/no grants; concrete numbers collision-checked | Account entries persist; retire only after every owned process/FD/IPC/artifact is resolved, never immediate numeric reuse; remove only newly created accounts | Removes default interactive/wheel identity exposure; does not distinguish a C peer by itself |
+| Protected lab files: TEMPORARY_CHANGE | Root-owned private Linux-native lab directory, reviewed B/C/bootstrap/fixture and manifest; no real project mounted | Remove only exact owned paths after safe teardown; retain failure evidence privately if needed | Prevents image/config substitution; does not prove runtime correctness |
+| One foreground transient system unit: TEMPORARY_CHANGE; NEW_SERVICE_REQUIRED for this lab instance only | Authorized system manager launches root B, delegates only its subtree to root; no enablement/install/autorestart | Unit disappears after controlled completion; inspect descendants before stop/removal; no blind systemctl stop that kills unknown survivors | Provides managed root-owned parent; not caller authorization or automatic closure |
+| Exact manager mutation-denial policy if existing policy cannot prove it: PRIVILEGED_CONFIGURATION_CHANGE; REVERSIBLE_PERSISTENT_CHANGE | Narrow C/W/in-scope peer denial for lab and privileged proxy routes; verify installed policy precedence; no broad allow rule | Record original state; remove only new rule or restore exact owned edit after no active epoch; policy drift invalidates all epochs | Blocks manager bypass; not a claim that all helpers are covered |
+| Private mount/bootstrap FD/syscall/credential restrictions: TEMPORARY_CHANGE | B sets restrictions only in owned future lab children; no global sysctl/mount change | Die with owned processes; restore no global settings; cleanup only owned mount/domain objects | Closes specified direct/deputy paths; exact filter and launch race still require proof |
+| Existing kernel/systemd/Python tooling: NO_CHANGE_REQUIRED for design | Read-only evidence sufficient to plan, not execute | Nothing to roll back | No package, WSL, Windows policy or kernel change proposed |
+
+No persistent broker daemon, installed listener, sudo grant, new global delegation or production
+service is proposed. Root-owned file access and B's credential-transition privilege increase risk;
+keep B's operation grammar closed: CREATE_OWN_DOMAIN, ATTACH_OWN_GATED_CHILD, SEAL, QUERY, and
+REMOVE_OWN_EMPTY_DOMAIN. Launch is a fixed bootstrap operation specified by root-reviewed manifest,
+not arbitrary shell execution. Query is bounded and redacted. No raw PID attach, arbitrary path,
+user management, Git, network, arbitrary filesystem write, arbitrary kill or policy-edit RPC.
+The administrator provisions; B cannot provision accounts or manager rules. Exact implementation
+review must demonstrate these restrictions before a privileged experimental run is approved.
+
+### Outstanding proof gates and next falsification block
+
+| Gate | Required evidence before accepting the boundary |
+|---|---|
+| R1 | Exact authorized root launch, protected manifest and concrete noncolliding C/W identities; current root access is NOT_VERIFIED and was not exercised |
+| R2 | Installed system-manager method/policy authorization, no C/W/controller-peer bypass, fixed unit/delegation lifetime; no assumption from upstream docs alone |
+| R3 | Bootstrap integrity with current dumpability rules, nondumpable C, launch pidfds, per-message sender binding, minimal B privilege; no injectable same-UID interval |
+| R4 | Exact worker/controller descriptor and syscall/helper policy, namespace necessity, aliases and capability transitions; purpose-built fixture only |
+| R5 | Seal serialization, queued-request rejection, death/restart invalidation and cleanup/UID-reuse discipline |
+| R6 | Bounded independent negative-test observations for every required CA1–CA14 dependency, including raw and deputy interfaces |
+
+Future experiment design (NOT_EXECUTED): one domain, one B/C pair, one W root and one descendant,
+plus bounded adversarial peers with UID_W and UID_C (not dismissed because accounts are dedicated).
+Challenge self/descendant egress and peer ingress through procs/threads/ancestor/sibling aliases;
+attempt a retained raw-FD launch and require refusal before release; separately test direct write
+semantics without promoting that deliberately violated setup. Try duplicate channel access,
+wrong-sender messages, ptrace/proc-FD access and manager attachment/transient-unit requests without
+interactive approval. Exercise approved versus authority-changing exec, fork inheritance, stale
+requests across seal, C death and B/manager continuity loss. Same-UID signals may cause UNKNOWN,
+never transferred authority. Any accepted forbidden migration or broker request falsifies the
+profile; failure to collect trustworthy evidence also prevents acceptance. Normal-path success
+alone is insufficient. Bound fixtures and recovery/retention plan before launch; no A–J rerun.
+
+Primary references consulted: [Linux UNIX credentials](https://man7.org/linux/man-pages/man7/unix.7.html)
+for per-message versus connection-time credentials; [dumpability](https://man7.org/linux/man-pages/man2/PR_SET_DUMPABLE.2const.html)
+and [ptrace access checks](https://man7.org/linux/man-pages/man2/ptrace.2.html) for the injection gate;
+[cgroup delegation](https://docs.kernel.org/admin-guide/cgroup-v2.html#delegation-containment),
+[systemd delegation](https://systemd.io/CGROUP_DELEGATION/),
+[v259 manager API](https://raw.githubusercontent.com/systemd/systemd/v259/man/org.freedesktop.systemd1.xml)
+and [v259 execution policy](https://raw.githubusercontent.com/systemd/systemd/v259/man/systemd.exec.xml).
+[No-new-privileges](https://man7.org/linux/man-pages/man2/PR_SET_NO_NEW_PRIVS.2const.html) and
+[seccomp](https://man7.org/linux/man-pages/man2/seccomp.2.html) inform future restrictions. These
+document mechanism semantics, not completed Fedora proof or current operational permission.
+
+NEXT_EXACT_ACTION: **prepare and review the exact disposable-lab manifest and minimal fixed
+broker/controller/bootstrap design for R1–R5, resolving concrete identity allocation, privileged
+launch, manager policy and the same-UID bootstrap race before requesting scoped execution of the
+R6 falsification experiment.** Owner design/change-planning approval is already recorded; do not
+ask for it again. Actual privileged changes and the experiment require their exact bounded scope,
+not a repeat of the broad authority audit. No implementation of a production producer follows.
+
+Current process containment PARTIAL; previous same-UID admission OPEN; candidate boundary unproven.
+Filesystem exclusivity UNKNOWN; real-project P3 UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.
+V4 runtime NOT_STARTED. PROCESS_CONTAINMENT != FILESYSTEM_EXCLUSIVITY. Stop after this design block.
