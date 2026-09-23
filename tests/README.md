@@ -179,3 +179,12 @@ and handoffs, fresh-process readback, no retry, current-authority refusal, and s
 while a dead fetch's descendants hold pipes. A fixture subreaper collects killed grandchildren;
 CGC only promises direct-child reaping. Large-pack/index-pack and abrupt-parent death remain unproven.
 See [transfer contract](../docs/V3_CONTRACT.md#active-local-bare-object-transfer-interruption).
+
+
+V3 real active commit: `test_commit_interruption.py` adds ten tests using fixture-only
+pre/post-commit hooks from `helpers/commit_peer.py`. Git stays alive inside the command;
+SIGINT/SIGTERM, timeout and abrupt command-group death cover old HEAD versus accepted HEAD.
+Released controls prove real commits complete. Index/worktree/previous continuity, fresh-process
+readback, active contender refusal and stale-repeat refusal are checked. Production still refuses
+hooks; the subprocess hook override and worker subreaper are test-only. No runtime edits.
+See [commit interruption scope](../docs/V3_CONTRACT.md#real-active-local-commit-interruption).

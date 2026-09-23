@@ -611,3 +611,59 @@ mutating after its flock releases. In-command add/commit interruption and differ
 sharing one remote also remain outside this block. The test-only wrapper and subreaper must not
 be mistaken for production security controls. Existing quiescent-path/configuration, authority,
 size and native-Windows restrictions remain. No runtime, schema, quota source or API changed.
+
+
+## Real active local commit interruption
+
+VERIFIED OFFLINE with unchanged runtime: [commit interruption tests](../tests/test_commit_interruption.py)
+and [fixture-only commit peer](../tests/helpers/commit_peer.py). Ten tests exercise a real
+`git commit` process while it waits inside pre-commit or post-commit execution. Eight interrupted
+cases cover SIGINT/SIGTERM to the caller, timeout, and SIGKILL of the Git command process group
+at each stage. Two released controls complete normally and return verified local receipts.
+
+Synchronization uses private hooks outside the target, supplied only to the fixture commit's
+subprocess via a per-command core.hooksPath override. The target config and hooks are untouched.
+The helper rendezvous identifies the hook PID, its Git parent and their process group; tests
+independently verify that the real Git parent is still alive with `commit` in its command line.
+Git performs the real commit; no `_run` result, HEAD update, index or receipt is fabricated.
+This fixture-only command override does NOT authorize production hooks or relax their refusal.
+No arbitrary project hook executes in production. These are controlled in-command hook stages,
+not proof of interruption inside every hookless Git object/index/ref mutation syscall.
+
+| Observable stage | Fresh Git evidence after interruption | Adapter conclusion |
+|---|---|---|
+| pre-commit active | HEAD remains the old commit; reviewed bytes remain staged; unrelated untracked work survives | commit_attempted=true, local_commit=null, outcome=PARTIAL, SAFE_TO_RESUME=UNKNOWN |
+| post-commit active, process not completed | HEAD is a new valid single-parent commit with the intended tree; selected change is committed; unrelated untracked work survives | Same truthful uncertainty; no retroactive success receipt, rollback or publication |
+
+Both states report CANCELLED for SIGINT/SIGTERM, TIMEOUT at the fixture's four-second command
+bound, or GIT_FAILED after abrupt command-group death. Production retains its five-second bound.
+The command runs only once. The existing runner kills the group as needed and reaps the direct
+Git child; the hook is terminated. A disposable worker subreaper collects orphaned fixture hooks
+without killing survivors before assertions. It is test hygiene, not runtime descendant reaping.
+The prior SIGINT/SIGTERM handlers restore and both CGC writer locks release.
+
+Index bytes observed at the hook remain byte-identical after interruption, and index entries
+match the exact reviewed staged tree. Before acceptance they also match the pre-dispatch staged
+index. Selected and untracked working files retain bytes/mode/mtime, and target configuration
+bytes are unchanged. This Git version has no index.lock at the pre-commit rendezvous; the first
+test run incorrectly expected one and was corrected to observed reality. No production lock
+removal was added. A subsequent explicit request refuses EXISTING_STAGING before acceptance,
+or TARGET_CHANGED with the old expected HEAD after acceptance. Neither creates a duplicate
+commit, deletes work, changes the index or overwrites the interrupted handoff.
+
+A second checkpoint with a freshly observed expected HEAD and a different store receives
+WRITER_BUSY during either active commit stage; it neither stages nor creates another store.
+This proves the actual in-command interval, including after HEAD advances. Stale-HEAD refusal
+alone is not used as evidence of writer exclusion. Existing shared publication locking is unchanged.
+
+The previous good slot survives beside CHECKPOINTING intent with no local_commit receipt.
+Latest failure records CANCELLED for signals, otherwise VERIFICATION_FAILED. Fresh-process
+handoff-status returns exactly the saved state; fresh Git HEAD/status/parent/tree reads expose
+whether the commit exists. These observations do not rewrite the old return value, grant
+mutation authority, implement full resume or imply SAFE_TO_RESUME. Publication stays NOT_REQUESTED.
+
+LIMITATIONS / PARTIAL: hookless commit mutation syscalls, active staging/index replacement,
+CGC-parent SIGKILL, power loss, arbitrary filesystem/Git versions and different-source concurrency
+remain outside this subset. No SIGKILL handler or guaranteed abrupt-parent descendant cleanup.
+The two observable hook stages bracket acceptance but do not cover every intermediate instruction.
+No runtime/schema/authority, networking, automatic recovery or telemetry change.
