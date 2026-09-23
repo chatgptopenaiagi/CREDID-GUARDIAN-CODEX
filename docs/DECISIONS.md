@@ -580,3 +580,27 @@ See [implementation accounting](V3_SAFE_TO_RESUME.md#13-minimal-verifier-impleme
 ## 2026-09-24 — Finite quiescence coverage before a producer
 
 Specify [V3 quiescence contract](V3_QUIESCENCE.md) without runtime changes. Select no current production-positive profile: WSL /mnt/c coverage is open to writers outside Linux observation. A conditional exclusive Linux checkpoint profile needs separate filesystem closure and nonescaping descendant containment. Cooperative registration and empty gates alone are insufficient. Next validate bounded launch-bound containment/admission feasibility in disposable fixtures; keep external-writer closure explicitly unresolved. No existing crash coverage is repeated, no prototype needed, and no supervisor, recovery or V4 is authorized.
+
+## 2026-09-24 — Launch-bound Linux feasibility under Windows control
+
+Verified clean Windows main at `9f5f11681e552fcc8e6aa978cf90dbe1def6b9b7` against
+tracking and live remote. One Windows controller used FedoraLinux-44 WSL2 for disposable
+Linux-native experiments only. [Quiescence section 12](V3_QUIESCENCE.md#12-windows-controlled-fedora-containment-feasibility--2026-09-24)
+records environment, bounded fixture protocol, A–J observations, negative witnesses and cleanup.
+
+Available pidfds and an existing delegated user cgroup support launch identity and membership
+accounting through fork, exec, parent exit, reparenting and detachment. They do not establish
+closed containment: a worker migrated out and stayed live while domain populated became zero;
+another owned process migrated in afterward. A round trip defeats endpoint-only non-escape
+inference. Containment PARTIAL; admission OPEN for this same-UID profile. Stronger composed
+namespace/control-access profiles remain UNKNOWN. No false UNAVAILABLE claim for cgroups or
+basic user/PID namespaces, and no promotion of namespace creation into isolation acceptance.
+
+The next dependency is a narrowly audited worker/controller authority-separation profile,
+before further containment acceptance, not a production producer. Real-project P3 UNKNOWN;
+filesystem exclusivity unproven; production quiescence producer NOT_STARTED. Runtime, schemas,
+tests, V3/V4 missions and verifier behavior unchanged. No prior crash/verifier test repeated,
+package/configuration change or unrelated process/repository mutation. Temporary raw fixture
+files later disappeared for an unknown reason; preserve curated command observations without
+claiming retained replay artifacts or harness file deletion. Publication self-reference: HEAD;
+resolved SHA and independent post-push three-ref verification belong in the final report.

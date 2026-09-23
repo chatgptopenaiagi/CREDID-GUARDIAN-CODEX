@@ -2,12 +2,128 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 remains active.** Launch-bound Linux feasibility block COMPLETE within its
+experimental scope: containment PARTIAL; same-UID cgroup admission OPEN. Current real-project
+P3 UNKNOWN. Quiescence specification remains complete; **PRODUCTION QUIESCENCE PRODUCER =
+NOT_STARTED**. Accepted captured READ_ONLY_ANALYSIS / HANDOFF_ONLY verifier unchanged.
+V4 remains ARCHITECTED / runtime NOT_STARTED.
+
+## VERIFIED STARTING CHECKPOINT
+
+Native Windows root C:\Codex-Projects\CREDID-GUARDIAN-CODEX; clean main. Required status,
+unstaged/staged diffs, whitespace, history and independent remote observations established
+HEAD = origin/main = live main = `9f5f11681e552fcc8e6aa978cf90dbe1def6b9b7`.
+One Windows controller only; no interactive Linux Codex or delegated agent. No quota reads.
+
+## CURRENT SESSION BLOCK
+
+Bounded capability inspection plus disposable Linux-native A–J experiments through
+`wsl.exe -d FedoraLinux-44 -- ...`. Detailed classified observations, candidate comparison,
+side effects and limits: [quiescence evidence](V3_QUIESCENCE.md#12-windows-controlled-fedora-containment-feasibility--2026-09-24).
+No production source, tests, helpers, schema or mission changes.
+
+## COMPLETE / IMPORTANT DISCOVERIES
+
+- Available: pidfds, /proc start/boot/namespace identity, existing unprivileged cgroup-v2
+  delegation through foreground transient user scopes, basic user/PID namespace creation.
+- Root bound to retained pidfd before workload release. Fork, multi-generation descendants,
+  exec, surviving/reparented children, double-fork/setsid and late fork observed.
+- Negative witnesses: same-UID worker escaped to a fixture sibling; empty original cgroup
+  coexisted with its live pidfd. Independent owned root entered after empty observation.
+  Round-trip migration was invisible to endpoint-only membership comparison.
+- Five main workers and two supplementary identity-probe children reaped. Both child cgroups
+  explicitly removed; temporary scope units later inactive/not-found. Exact /tmp fixture
+  later absent; disappearance cause UNKNOWN, no unverified deletion/reboot claim.
+- Candidate-level distinction preserved: kernel set membership and stable instance observation
+  work; worker/controller admission-authority separation is still missing.
+
+## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+
+Containment PARTIAL; tested cgroup admission OPEN. Stronger namespace/control-access composition
+UNKNOWN. Direct /init.scope control unavailable to UID 1000, but user delegation is available.
+A registry, pidfd, process group or populated=0 alone does not close the launch universe.
+Real PID reuse NOT_EXECUTED; identity model and real retained-handle lifecycle exercised instead.
+Namespace creation is not isolation acceptance. No full lifecycle journal, controller-crash
+coverage, threaded-domain or arbitrary offloaded-work proof. No filesystem exclusivity or
+Windows writer closure. Current real-project P3 unchanged UNKNOWN; no production-positive profile.
+
+Producer, production coordination/admission layer, schema, mutation gate, recovery, automatic
+orphan cleanup, full safe resume, automation and V4 runtime remain NOT_STARTED.
+No defect in repository executable code was discovered. No existing test was modified.
+
+## TESTS EXECUTED / NOT EXECUTED
+
+Main purpose-built bounded A–J fixture: one execution, exit 0, all assertions passed, five
+worker exits 0. Supplementary retained-pidfd identity probe: exit 0; old terminal handle ESRCH
+for signal 0 while a different child remained live. Two namespace creation probes: exit 0.
+Foreground transient scope admission probe: exit 0. These are experiments, not additions to
+the repository test count. The subsequent fixture stat failed because its path was absent;
+that limitation is recorded rather than relabeled a successful harness file cleanup.
+
+Prior crash/reconciliation/verifier experiments and full 389-test regression NOT_EXECUTED:
+documentation only, no discovered executable defect. Historical 389-pass evidence remains
+historical. Real same-integer PID reuse, stronger namespace restriction, filesystem closure,
+Windows process scanning and live quota investigation NOT_EXECUTED.
+
+## FILES CHANGED
+
+Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md and docs/DECISIONS.md.
+The existing evidence chain is extended; historical results below are retained.
+No disposable executable/log or unrelated Windows artifact belongs in Git.
+
+## VALIDATION
+
+PASS: 46 Python AST parses; 3 JSON parses; 268 local Markdown links/anchors; balanced fences;
+all 100 V3 architectural keypoints. Exact three-document change scope, no untracked artifacts,
+and git diff --check passed. All 72 other tracked files match starting Git content with CRLF/LF
+normalized, including runtime/tests/helpers/schema and V3/V4 missions. A first comparison against
+Git's generated checkout bytes failed at .gitignore due to checkout line-ending representation;
+the corrected canonical-byte comparison passed. No source change or test failure was found.
+Changed-document recognizable credential-pattern checks passed (not universal secret proof).
+Exact changed-file diff reviewed before publication. No full regression rerun was warranted.
+
+## OPERATIONS / INTEGRITY
+
+Fedora initially stopped; WSL invocation started it normally. Existing user manager and two
+short-lived scope objects used; no package install, enabled service, persistent configuration,
+security-control change, unrelated process kill/repository access, credential inspection or
+quota read. Temporary objects and exact cleanup observations are recorded in section 12.
+Raw Linux temporary files are no longer retained; curated command observations are durable.
+No production CGC process supervisor or cleanup promise results from fixture-only subreaping.
+
+## DO_NOT_REPEAT
+
+Do not rerun accepted crash/verifier blocks or A–J merely to seek a positive outcome.
+Do not infer quiescence from absent PIDs/locks, empty cgroup, stable snapshots or a registry.
+No filesystem-exclusivity claim from Linux-native location, and no authority from evidence.
+No installation, persistent environment change, production producer or V4 follows automatically.
+
+## NEXT_EXACT_ACTION
+
+SPECIFY AND AUDIT THE SMALLEST DISPOSABLE PROFILE THAT SEPARATES WORKER CGROUP
+MIGRATION/ADMISSION AUTHORITY FROM ITS CONTROLLER, INCLUDING NAMESPACE/ALTERNATE-INTERFACE
+AND SAME-UID INGRESS THREATS, BEFORE ANOTHER CONTAINMENT EXPERIMENT OR PRODUCTION PRODUCER.
+Use the observed escapes as requirements. If no profile can be justified under existing
+unprivileged capabilities, record closure unavailable under that scope. Filesystem exclusivity
+remains an independent unproven gate. Do not begin this next block in this session.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Starting checkpoint independently verified at `9f5f11681e552fcc8e6aa978cf90dbe1def6b9b7`.
+This documentation checkpoint uses HEAD for self-reference. Normal commit/push and independent
+post-publication local/tracking/live equality plus final clean status are required; resolved SHA
+and actual outcome belong in the final report. No publication is inferred before those checks.
+
+## Historical accepted quiescence contract evidence
+
+### Historical quiescence contract — OVERALL STATUS
+
 **PARTIAL; V3 remains active.** Bounded positive quiescence contract SPECIFICATION COMPLETE;
 producer runtime NOT_STARTED. Accepted pure verifier still supports captured
 READ_ONLY_ANALYSIS / HANDOFF_ONLY YES only, with mutation flags false. Reconciler unchanged.
 V4 remains ARCHITECTED / runtime NOT_STARTED.
 
-## VERIFIED STARTING CHECKPOINT
+### Historical quiescence contract — VERIFIED STARTING CHECKPOINT
 
 Before edits, requested pwd/status/diff/whitespace/history and independent ref checks established
 clean main: HEAD = origin/main = live remote main =
@@ -16,12 +132,12 @@ Verifier implementation: `993f347acc2cc2db2f233db4adbd8f6dd15d1855`.
 Capacity: human planning context 80% weekly; live weekly/five-hour UNKNOWN. No account reads.
 Capacity preservation activated NO; no reliable governing value at or below 20% was received.
 
-## CURRENT SESSION BLOCK
+### Historical quiescence contract — CURRENT SESSION BLOCK
 
 AUDIT + SPECIFY + VALIDATE [V3 quiescence contract revision 1](V3_QUIESCENCE.md), subordinate
 to unchanged verifier section 6. No producer/prototype, runtime, schema or test changes.
 
-## COMPLETE
+### Historical quiescence contract — COMPLETE
 
 - Finite action-scoped writer coverage, closed/open-world distinction and separate process
   containment versus filesystem exclusivity requirements.
@@ -31,7 +147,7 @@ to unchanged verifier section 6. No producer/prototype, runtime, schema or test 
 - Strict conceptual receipt, future leaf/dependency registry, full-projection tamper discipline
   and 24 future acceptance cases A–X, all specified rather than runtime-accepted.
 
-## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+### Historical quiescence contract — PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
 
 Positive production P3 feasibility PARTIAL. Current shared /mnt/c topology has no accepted
 external-writer closure; Linux-only process evidence cannot establish Windows writer absence.
@@ -41,7 +157,7 @@ Current P3 remains UNKNOWN. Existing adapter flocks and process groups do not su
 No claim that an actual Windows writer is active. No cgroup availability experiment was run.
 Producer, coordination layer, schema, execution/recovery, new evidence producers and V4 NOT_STARTED.
 
-## VALIDATION
+### Historical quiescence contract — VALIDATION
 
 Documentation-only validation PASS: eight changed/new files; 46 Python AST parses; 3 JSON
 parses; 266 local Markdown links/anchors; balanced fences; all 100 V3 keypoints; 24 future
@@ -52,32 +168,33 @@ defect. Inherited result remains 389 passed, zero failures/errors/skips; not rer
 Platform-only observations: Linux 6.18.33.2-microsoft-standard-WSL2, project filesystem v9fs.
 No installs, services, configuration changes, credentials, process scan or unrelated repo access.
 
-## DECISION GATES
+### Historical quiescence contract — DECISION GATES
 
 Contract complete: YES. Current production-positive target: NONE (option D).
 Finite honest production proof feasibility: PARTIAL, conditional model specified but required
 primitives/environment closure unaccepted. Current project P3: UNKNOWN. No runtime promotion.
 
-## DO_NOT_REPEAT
+### Historical quiescence contract — DO_NOT_REPEAT
 
 Accepted interruption, parent-death, reconciliation and pure verifier experiments. Do not treat
 registry/gate emptiness, absent locks/PIDs, stable Git state or Linux-native paths as complete
 writer coverage. Do not add runtime, signals, repair, lock deletion or V4 in this block.
 
-## NEXT_EXACT_ACTION
+### Historical quiescence contract — NEXT_EXACT_ACTION
 
 VALIDATE LAUNCH-BOUND DESCENDANT CONTAINMENT AND CLOSED ADMISSION FEASIBILITY IN DISPOSABLE
 LINUX-NATIVE FIXTURES UNDER V3_QUIESCENCE, BEFORE ANY PRODUCTION PRODUCER. Report unavailable
 capabilities without installing/bypassing them. This does not discharge filesystem exclusivity
 and must not emit real-project positive P3. Do not begin this experiment in the current block.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical quiescence contract — LAST SAFE CHECKPOINT / PUBLICATION
 
 Last independently verified starting checkpoint: `61993cddeff2b4c8afc7526b9c87648684841a02`.
 Specification commit `e9cfc04bc4dc5f9dd967b9cfd37ee9b070fc3cdb` pushed normally. Independent
 HEAD, origin/main and live remote main checks all returned that exact hash; working tree clean.
 This documentation-only evidence follow-up uses HEAD as its self-reference. Its resolved hash
 and final independent ref equality are reported after publication. No further engineering began.
+
 
 ## Historical accepted pure verifier evidence
 

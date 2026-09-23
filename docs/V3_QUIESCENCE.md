@@ -355,3 +355,159 @@ same inputs plus CGC reconciliation/verifier evidence. Later measure wrong actio
 commands/tests, recovery time, tokens, human interventions, unsafe recovery and CGC overhead before
 aggressive V4 runtime expansion. No results claimed. INTERNAL RIGOR MUST NOT BECOME EXTERNAL
 COGNITIVE LOAD. THE PRODUCT IS HUMAN TIME RETURNED.
+
+## 12. Windows-controlled Fedora containment feasibility — 2026-09-24
+
+This is experimental evidence, not producer acceptance or a change to contract revision 1.
+Starting clean Windows main: HEAD = origin/main = independently queried live main =
+`9f5f11681e552fcc8e6aa978cf90dbe1def6b9b7`. One native Windows controller used
+`wsl.exe -d FedoraLinux-44 -- ...`; no second Codex agent ran. No project runtime was imported.
+
+**DERIVATION: containment PARTIAL; admission OPEN for the tested same-UID cgroup profile.**
+The stronger claim that this profile prevents descendant escape is CONTRADICTED by a real
+migration. Stronger namespace/privilege-separated combinations remain UNKNOWN, not impossible.
+Real-project P3 remains UNKNOWN. **PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.**
+
+### Environment and available capability evidence
+
+OBSERVED_FACT from bounded commands, without installation/configuration changes:
+
+- Windows WSL 2.7.14.0; FedoraLinux-44 is a WSL2 distribution. It was initially Stopped;
+  the first Linux command started it. Windows version reported by WSL: 10.0.19045.7725.
+- Kernel `6.18.33.2-microsoft-standard-WSL2`, x86_64; Python 3.14.7; UID/GID 1000.
+  `/proc` stat field 22, PID namespace links and kernel boot identity were readable.
+  Python `os.pidfd_open` and `signal.pidfd_send_signal` worked; polling a live self handle
+  was not readable. No command-line/environment/credential collection or machine scan.
+- `/tmp` reported tmpfs, not /mnt/c. The fixture was
+  `/tmp/cgc-v3-quiescence-2wwpj3ua/experiment.py`, with private gate/JSON files beside it.
+- cgroup2 mounted rw with nsdelegate. Root controllers: cpuset, cpu, io, memory, hugetlb,
+  pids, rdma. Initial WSL command membership was root-owned `/init.scope`; its cgroup.procs
+  was not writable by this user (UNAVAILABLE_CAPABILITY for direct unprivileged control there).
+- Existing systemd user manager was active, reported degraded, with Delegate=yes at
+  `/user.slice/user-1000.slice/user@1000.service`. Its directory and cgroup.procs were
+  UID-1000-owned/writable; available/enabled subtree controllers were cpu, memory, pids.
+  Degraded manager cause was not investigated; it did not prevent the tested transient scopes.
+- `unshare` 2.41.5: both `--user --map-root-user true` and
+  `--user --map-root-user --pid --fork true` exited 0. This proves namespace creation only;
+  namespace escape denial, admission isolation and namespace-based empty proof NOT_EXECUTED.
+  No mount/namespace policy, sysctl, controller setting or persistent service was changed.
+
+An unprivileged `systemd-run --user --scope --quiet --unit=cgc-v3-quiescence-probe
+-p Delegate=yes /usr/bin/cat /proc/self/cgroup` succeeded. The experiment used the same
+foreground transient-scope mechanism with unit `cgc-v3-quiescence-experiment` and
+`/usr/bin/python3 -B /tmp/cgc-v3-quiescence-2wwpj3ua/experiment.py`. These were temporary
+scope objects in the existing manager, not installed/enabled services or a production supervisor.
+Inside its own scope the harness created only two child cgroups, `domain` and `escape`;
+`cgroup.type` was domain. It never migrated unrelated processes or wrote existing controller knobs.
+
+### Fixture protocol and observed cases
+
+One execution, exit 0. The controller was PID 570; it became a fixture-only subreaper for
+cleanup/accounting. A forked direct root waited in a bounded trusted bootstrap gate. With
+SIGCHLD default and no competing reaper, the parent retained a pidfd before release, recorded
+start identity, moved only that child into domain, checked membership and released the workload.
+This binds launch to the intended unreaped child; it is not atomic clone-into-cgroup support or
+containment of arbitrary code running before the gate. Later named descendants stayed gated
+while handles were acquired and start identities compared. These fixture rendezvous are an
+oracle, not a production registry or proof of discovering every uncooperative short-lived child.
+
+Each gate had a 12-second timeout, each worker a 20-second self-exit alarm, terminal waits five
+seconds, and failure cleanup a 22-second owned-child drain. Normal cleanup released gates,
+reaped only owned/adopted fixture children and removed the two empty cgroups. No kill was needed.
+These are experimental bounds, not the future read-only producer's budget or signal behavior.
+
+All rows below are OBSERVED_FACT, except the explicitly labeled model derivation in I.
+Event names identify the captured command-output records; IDs are historical namespace-local
+integers, never reusable handles. Boot identity was `4586e164-9a4c-4a05-9840-b06f8d53e63d`,
+PID namespace `pid:[4026532219]`; start values are kernel ticks, not wall-clock timestamps.
+
+| Case / output event | Traceable observation | Limit / implication |
+|---|---|---|
+| Root / launch-bound | Root 574, start 1242; retained live pidfd before gate release; start unchanged after admission | Stable current-launch handle, not portable identity after restart |
+| A / A-direct | Root 574 and child 575 (start 1243) in domain; child PPID/PGID 574 | Direct child membership observed |
+| B / B-F-J-multigeneration-detach | Child called setsid; grandchild 576 (start 1244), PPID 575; domain members 574/575/576 | Full three-generation fixture captured; no universal ancestry crawler |
+| C / C-root-terminal-descendants-live | Root pidfd terminal; child and grandchild handles live; populated 1 | PARENT_DEATH != DESCENDANT_DEATH |
+| D / D-exec | Grandchild exec into installed Python: PID 576, start 1244 and cgroup unchanged; retained pidfd still live | Process identity survives this exec; permitted executable policy is separate |
+| E / E-reparent | Grandchild PPID became subreaper 570 after child exit; membership retained | Reparenting did not remove cgroup membership; old parent traversal loses ancestry |
+| F / B-F-J-multigeneration-detach | Fork, setsid, second fork, original parents exit; grandchild PGID/SID 575, outside original group 574 | Detachment escapes original group/session, but alone did not escape cgroup |
+| G / G-new-descendant | After observation began, grandchild forked late child 577 (start 1248); members changed [576] to [576,577] | Fork inherited membership; enumeration is not a complete lifecycle journal |
+| H / H-empty-with-live-escape | After migration and late-child exit: domain populated 0, escape populated 1, grandchild pidfd live | Positive current cgroup emptiness is not empty launch-descendant universe |
+| I / I-identity-model | Retained handles all terminal after reap; same integer with changed start or boot rejected by tuple comparison | DERIVATION: distinct model instances. Real integer PID reuse NOT_EXECUTED; no PID exhaustion |
+| J / J-cgroup-escape | Grandchild wrote its own PID to fixture sibling escape/cgroup.procs; domain lost 576, escape contained 576, handle live | Escape succeeded and was detected for this known, gated instance; prevention contradicted |
+| J / J-roundtrip | Grandchild migrated domain -> escape -> domain between endpoint samples while late child remained in domain | Fixture reports expose excursion; endpoint membership/populated checks cannot prove continuous non-escape |
+| Admission / admission-bypass | Independent owned root 578 began outside domain, then self-migrated in after populated 0; populated became 1 | Same-UID ingress bypasses a coordinator-only launch registry/gate |
+| Final / H-final-empty, cleanup | Both groups populated 0; 574/575/576/577/578 reaped with exit 0; all retained handles terminal; groups removed | Entire scripted finite fixture completed; no filesystem-writer or production closure proof |
+
+A separate two-child handle probe exited 0: old child 550 was reaped; its retained pidfd was
+readable and signal-0 probe returned ESRCH while new child 551's handle remained live and its
+signal-0 probe succeeded. Both owned children were released/reaped. OBSERVED_FACT: old terminal
+handle did not become the new live instance. Real same-integer reuse still NOT_EXECUTED.
+Diagnostic start/boot/namespace/epoch tuples corroborate handles; tick granularity alone is not
+an unconditional identity guarantee. No serialized descriptor integer is a restart capability.
+
+### Candidate assessment and closed admission
+
+The following capability judgments are DERIVATION from the observations above and the contract.
+No accepted closed profile is established by this block.
+
+| Candidate | Observes / tracks | Contains / prevents escape | Detects escape / proves empty |
+|---|---|---|---|
+| PPID traversal / registry | Sampled known relationships | No; reparenting breaks original ancestry | No complete escape detection or positive empty-domain proof |
+| PGID / session | Current group membership | No; tested setsid detachment succeeds | Known change detectable; empty original group is insufficient |
+| Start/boot/namespace tuple | Diagnostic instance correlation | No descendant containment | Different tuple rejects identity reuse; absence is not terminal proof |
+| Retained launch pidfd | Bound instance lifecycle across tested exec/exit | Holds identity, not descendants | Terminal instance proof; cannot discover escaped/unregistered descendants |
+| Delegated cgroup v2 | Kernel membership; fork/exec/reparenting accounting | Membership domain exists, but worker migration authority defeats confinement | Known migration detected; populated proves current subtree empty, not closed launch universe |
+| Fixture subreaper | Adopts/reaps these orphan descendants | No admission or migration enforcement | Cleanup/lifecycle evidence only; not a CGC runtime promise |
+| User/PID namespace | Creation available | Stronger composed restriction UNKNOWN here | Namespace-domain acceptance NOT_EXECUTED |
+
+The kernel documents inherited fork membership and recursive live-process populated semantics;
+pidfds provide instance lifetime observation subject to acquisition/reaping conditions. These
+explain the scoped observations; neither primitive alone establishes the missing policy boundary.
+Sources consulted: [kernel cgroup v2](https://docs.kernel.org/admin-guide/cgroup-v2.html),
+[Linux pidfd_open](https://man7.org/linux/man-pages/man2/pidfd_open.2.html),
+[Linux PID namespaces](https://man7.org/linux/man-pages/man7/pid_namespaces.7.html).
+
+CLOSED_ADMISSION would require an enforced boundary, established before untrusted workload
+execution, which denies unauthorized ingress and egress throughout a bound epoch, or supplies
+complete trusted violation evidence. Fork inheritance must persist through detach/exec/reparent;
+controller continuity and shutdown must be accounted for. Holding a Python gate or closing a
+registration list cannot stop a same-UID process that can write migration interfaces. Enlarging
+the domain to the entire user manager would include unrelated processes and still lack the
+required launch-bound admission proof; that experiment was not performed.
+
+Missing proof is **enforced separation of worker migration/admission authority from the trusted
+controller**, not absence of pidfds, cgroup v2 or basic unprivileged namespaces. No inaccessible
+kernel primitive was installed or bypassed. HYPOTHESIS: a carefully constrained namespace and
+control-access profile may supply that separation without persistent configuration. This is not
+accepted V3 truth; alternate access paths, same-UID peers, delegated IPC and controller death
+need explicit analysis/acceptance. The current environment supports useful primitives, but
+sufficient composed closure remains UNKNOWN. Continuous escape detection is also UNKNOWN for
+unregistered/uncooperative descendants; the round-trip witness defeats endpoint-only inference.
+
+### Side effects, cleanup, limits and next dependency
+
+OBSERVED_FACT: the harness removed both cgroups and reaped its five workers normally. Both
+temporary scope units later reported LoadState=not-found / ActiveState=inactive. The exact fixture
+directory was already absent at the subsequent filesystem check (stat reported missing), so no
+recursive deletion was issued. The reason for that disappearance is UNKNOWN; it is not evidence
+that the harness deleted its files or that a kernel reboot occurred. A later boot-ID read matched
+the experiment. Raw temporary files are not retained; the bounded command-output evidence above
+is the durable curated record. No experimental script/log entered Git. Transient scope/WSL startup
+may cause ordinary manager bookkeeping; no zero-host-write claim is made.
+
+No packages, persistent settings, enabled services, Windows policy, WSL configuration, Git
+configuration, unrelated processes/repos, credentials, quota reads or production modules changed.
+No prior crash/verifier regression was repeated. Namespace restriction combinations, clone3 atomic
+admission, threaded domains, hostile same-UID races, controller crash, offloaded/asynchronous work,
+Windows writers and filesystem exclusivity were NOT_EXECUTED or remain UNKNOWN. The actual
+repository is Windows-accessible by this controller; Linux-native fixture placement does not
+prove exclusive access even to that fixture. PROCESS_CONTAINMENT != FILESYSTEM_EXCLUSIVITY.
+LINUX_PROCESS_QUIESCENCE != FILESYSTEM_WRITER_QUIESCENCE. Nothing here changes real-project P3.
+
+NEXT_EXACT_ACTION: **specify and audit the smallest disposable profile that separates worker
+cgroup migration/admission authority from its controller, including namespace/alternate-interface
+and same-UID ingress threats, before another containment experiment or production producer.**
+Use these negative witnesses as requirements; do not repeat A–J merely to obtain a green result.
+If no profile can be justified under existing unprivileged capabilities, record closure unavailable
+under that scope. Filesystem exclusivity remains a separate unproven gate. No production runtime,
+environment reconfiguration, recovery or V4 implementation is authorized by this next-action record.
