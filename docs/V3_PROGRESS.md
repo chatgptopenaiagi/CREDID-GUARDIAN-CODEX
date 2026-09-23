@@ -182,14 +182,22 @@ Do not expand into automatic recovery, general network transport, full resume or
 ## LAST SAFE CHECKPOINT
 
 Starting verified checkpoint: `4ef724adfb06485ec069bbaffd32803a62b794ca`.
-Current acceptance implementation checkpoint: **HEAD after normal commit/publication**.
-Its resolved hash and actual publication result are recorded in the final report/evidence
-follow-up. No self-containing hash is invented. Earlier detailed evidence remains in Git history.
+Acceptance implementation checkpoint: `586bd6bb1d627de39eadf19e2858876f12924af8`.
+Final evidence checkpoint: **HEAD after normal commit/publication**; its resolved hash and
+independent publication result belong in the final report. No self-containing hash is invented.
+Earlier detailed evidence remains in Git history.
 
 ## PUBLICATION STATE
 
-Entry local/tracking/live equality verified. Current block publication awaits final validation,
-normal forward commit/push and independent ref equality. No remote claim for uncommitted work.
+Acceptance implementation **REMOTE_VERIFIED** on 2026-09-23. Normal forward push to the
+approved CGC origin/main succeeded. Independent live query confirmed local HEAD = origin/main
+= live refs/heads/main = `586bd6bb1d627de39eadf19e2858876f12924af8`; working tree clean.
+
+This documentation-only follow-up records that observed result and acceptance row 41. Its
+own HEAD is committed/pushed normally and independently verified for the final report.
+Runtime/tests remain unchanged from the 292-test verification; no redundant regression.
+Final document links and staged whitespace checked. If evidence publication fails, retain
+the local commit and report LOCAL_CHECKPOINT_ONLY rather than inventing remote equality.
 
 ## OPERATIONS / INTEGRITY
 
