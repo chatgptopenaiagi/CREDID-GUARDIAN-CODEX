@@ -74,8 +74,10 @@ and must not emit real-project positive P3. Do not begin this experiment in the 
 ## LAST SAFE CHECKPOINT / PUBLICATION
 
 Last independently verified starting checkpoint: `61993cddeff2b4c8afc7526b9c87648684841a02`.
-Specification commit uses HEAD as its self-reference; resolved publication evidence follows only
-after normal push and independent local/origin/live verification.
+Specification commit `e9cfc04bc4dc5f9dd967b9cfd37ee9b070fc3cdb` pushed normally. Independent
+HEAD, origin/main and live remote main checks all returned that exact hash; working tree clean.
+This documentation-only evidence follow-up uses HEAD as its self-reference. Its resolved hash
+and final independent ref equality are reported after publication. No further engineering began.
 
 ## Historical accepted pure verifier evidence
 
