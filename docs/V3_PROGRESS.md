@@ -185,14 +185,22 @@ Other staging/parent-death boundaries remain documented, not silently promoted t
 ## LAST SAFE CHECKPOINT
 
 Starting verified checkpoint: `7e44417341daab653c5e2c9009552fa240944875`.
-Current acceptance implementation checkpoint: **HEAD after normal commit/publication**;
-resolved hash and independent publication evidence belong in the final report/evidence follow-up.
-No self-containing hash. Prior detailed acceptance evidence remains in Git history.
+Acceptance implementation checkpoint: `1bc957dffb8ffd034289dea1415b92c5fbdcad83`.
+Final evidence checkpoint: **HEAD after normal commit/publication**; its resolved hash and
+independent publication result belong in the final report. No self-containing hash.
+Prior detailed acceptance evidence remains in Git history.
 
 ## PUBLICATION STATE
 
-Entry local/tracking/live equality verified. Current block awaits final validation, normal forward
-commit/push and independent ref equality. No remote preservation claim for uncommitted work.
+Acceptance implementation **REMOTE_VERIFIED** on 2026-09-23. Normal forward push to the
+approved CGC origin/main succeeded. Independent live query confirmed local HEAD = origin/main
+= live refs/heads/main = `1bc957dffb8ffd034289dea1415b92c5fbdcad83`; working tree clean.
+
+This documentation-only follow-up records that observed equality and acceptance row 41.
+Its own HEAD is committed/pushed normally and independently verified for the final report.
+Runtime/tests remain unchanged from the 302-test verification; no redundant regression.
+Final document links and staged whitespace checked. If evidence publication fails, retain
+the local evidence commit and report LOCAL_CHECKPOINT_ONLY; never invent remote equality.
 
 ## OPERATIONS / INTEGRITY
 
