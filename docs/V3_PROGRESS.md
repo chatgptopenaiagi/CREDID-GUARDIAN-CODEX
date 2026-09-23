@@ -2,6 +2,90 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 active.** R1–R5 lab-contract design/review block complete; executable handoff PARTIAL.
+Decision B: **R1R5 MANIFEST PARTIAL; SPECIFIC CAPABILITY EVIDENCE STILL REQUIRED.**
+Candidate ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER remains conditional, not accepted.
+Containment PARTIAL; historical same-UID admission OPEN; filesystem exclusivity and P3 UNKNOWN.
+**PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.** V4 runtime NOT_STARTED.
+
+## VERIFIED STARTING CHECKPOINT
+
+Clean Windows main independently matched HEAD, origin/main and live main at
+`5c9b6254a0e96731e45152e0dde9fffd3879be75`.
+Windows Codex remained sole worker; Fedora only read-only discovery via wsl.exe.
+No secondary agent. Owner design/change-planning approval remains in force, not provisioning approval.
+
+## CURRENT BLOCK / COMPLETE
+
+[Section 15](V3_QUIESCENCE.md#15-disposable-lab-manifest-and-r1r5-review--2026-09-24)
+records exact symbolic objects/allocation rules, fixed launch vector and proposed typed unit
+properties, five-operation grammar and canonical packet format, live-instance binding,
+bootstrap C0–C8, descriptor allowlist, syscall categories, interface ledger, seal/death/cleanup
+states, six future change rows, R1–R5 acceptance matrix and T1–T14 adversarial manifest.
+No new production schema. Initial profile narrowed to one native image with no C/W exec after
+bootstrap, no new namespaces, no socket listener and no separate controller unit.
+
+Read-only observations: installed system Manager exposes required method signatures; three
+PolicyKit actions advertise auth_admin/auth_admin_keep defaults. These are not effective-policy
+acceptance. suid_dumpable=2 and ptrace_scope=0 reconfirmed. Conditional no-exec bootstrap argument
+is recorded; no claim of race acceptance from endpoint values. No privileged observation ran.
+
+## PARTIAL / BLOCKERS
+
+M1: exact authorized root executor, protected launch environment and collision-free IDs.
+M2: installed effective manager/deputy policy, including local/cached grants and aliases.
+M3: reviewed native image/build and uninterrupted credential/dumpability sequence.
+M4: compiled per-role filters/decoder and bounded peer/resource behavior.
+M5: installed unit survivor and manager continuity behavior.
+All block R6 execution readiness; missing evidence is not an engineering default.
+Candidate code, provisioning, R6, production producer and V4 remain NOT_STARTED.
+
+## FILES CHANGED
+
+Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md and docs/DECISIONS.md.
+Historical evidence retained; runtime/verifier/tests/schema/helpers/missions unchanged.
+
+## VALIDATION
+
+PASS: 46 Python AST parses, 3 JSON parses, 274 local Markdown links/anchors and balanced fences.
+All 72 untouched tracked files match pre-edit SHA256 bytes and canonical HEAD content; source,
+tests, schemas/helpers and V3/V4 missions preserved. All 100 V3 keypoints retained. Exact three-
+document scope, no untracked artifacts, historical prefixes/prior progress preserved; 14 attack
+rows, 6 change rows and 5 R1–R5 rows checked. Whitespace and recognizable credential-pattern
+checks passed. Exact working/staged diff review remains the publication gate.
+
+## TESTS EXECUTED / NOT EXECUTED
+
+Documentation/static checks and bounded read-only discovery only. No containment, hostile
+worker, crash/verifier or historical regression rerun. T1–T14 are NOT_EXECUTED designs.
+
+## OPERATIONS / LIMITATIONS
+
+No root command, users, installed image, units, cgroups, namespaces, policy change, package,
+configuration change or temporary fixture created. No credential/account dump or quota read.
+WSL/D-Bus can cause ordinary activation/bookkeeping; no zero-host-write claim.
+Rendered systemd manual fetches returned 403; upstream v259 source was available.
+No current filesystem exclusivity or production-positive mutation claim.
+
+## NEXT_EXACT_ACTION
+
+RESOLVE M1–M5 WITH A CONCRETE IDENTITY/LAUNCH PREFLIGHT PLAN, INSTALLED EFFECTIVE MANAGER-POLICY
+REVIEW AND REVIEWABLE NATIVE BOOTSTRAP/FILTER/PROTOCOL ARTIFACT SPECIFICATION; VALIDATE THE
+NO-EXEC CREDENTIAL SEQUENCE AND UNIT SURVIVOR BEHAVIOR BEFORE REQUESTING SCOPED R6 EXECUTION.
+If evidence requires a privileged observation, list its exact read-only scope for approval;
+do not execute it under design authorization. Do not repeat broad owner design approval.
+No provisioning, production producer or V4 follows this checkpoint. Stop after this block.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Starting checkpoint `5c9b6254a0e96731e45152e0dde9fffd3879be75`; this checkpoint self-reference HEAD.
+Resolved hash, normal push, independent three-ref equality and clean tree are reported after
+publication. No self-containing hash or premature publication claim.
+
+## Historical accepted protected broker design
+
+### Historical broker design — OVERALL STATUS
+
 **PARTIAL; V3 active.** Owner-approved controller-boundary design COMPLETE as a conditional
 specification. Decision C: **CONDITIONAL BOUNDARY SPECIFIED; ONE OR MORE CAPABILITIES REQUIRE PROOF.**
 Selected candidate ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER is not implemented or accepted.
@@ -9,14 +93,14 @@ Tested containment PARTIAL; tested same-UID admission OPEN. Filesystem exclusivi
 **PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.** V4 ARCHITECTED / runtime NOT_STARTED.
 Captured READ_ONLY_ANALYSIS / HANDOFF_ONLY verifier unchanged.
 
-## VERIFIED STARTING CHECKPOINT
+### Historical broker design — VERIFIED STARTING CHECKPOINT
 
 Clean Windows main independently verified: HEAD = origin/main = live main =
 `23f953b1870870500c04e0a60e41fed007680374`.
 Windows Codex remains sole worker at C:\Codex-Projects\CREDID-GUARDIAN-CODEX.
 FedoraLinux-44 is subordinate read-only discovery through wsl.exe; no Linux Codex agent.
 
-## OWNER DECISION / CURRENT BLOCK
+### Historical broker design — OWNER DECISION / CURRENT BLOCK
 
 OWNER_DECISION = APPROVED.
 SEPARATE_LINUX_CONTROLLER_IDENTITY_DESIGN = APPROVED.
@@ -25,7 +109,7 @@ Current explicit owner instruction removes the earlier design-decision blocker; 
 approve privileged provisioning or production. See the complete
 [boundary specification](V3_QUIESCENCE.md#14-owner-approved-protected-broker-boundary-design--2026-09-24).
 
-## COMPLETE / PARTIAL / NOT_STARTED
+### Historical broker design — COMPLETE / PARTIAL / NOT_STARTED
 
 Complete: explicit trust/component/action tables; controller-instance authorization; raw cgroup
 ownership; manager/descriptor/namespace policies; gated launch and sealed epoch; environment-change
@@ -42,12 +126,12 @@ Not started: candidate implementation/acceptance, identities/provisioning, conta
 production producer, mutation gate, recovery, full safe resume/automation and V4 runtime.
 Prior section 13 decision D remains valid for its earlier unprivileged scope; A–J preserved.
 
-## FILES CHANGED
+### Historical broker design — FILES CHANGED
 
 Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md and docs/DECISIONS.md.
 Historical evidence preserved. No runtime, verifier, schema, test or mission changes.
 
-## VALIDATION
+### Historical broker design — VALIDATION
 
 PASS: 46 Python AST parses, 3 JSON parses, 272 local Markdown links/anchors and balanced fences.
 All 72 untouched tracked files match pre-edit SHA256 bytes and canonical starting Git content,
@@ -56,13 +140,13 @@ Historical quiescence/decisions remain exact prefixes; prior progress retained u
 headings. Three-document scope, no untracked artifacts, R1–R6 present; whitespace and recognizable
 credential-pattern checks passed. Exact unstaged/staged diff review is the publication gate.
 
-## TESTS EXECUTED / NOT EXECUTED
+### Historical broker design — TESTS EXECUTED / NOT EXECUTED
 
 Documentation/static checks only; bounded read-only Fedora capability discovery is not acceptance.
 No new containment, hostile worker, A–J, crash/verifier or historical full regression run.
 No executable defect or source change warrants the full suite.
 
-## OPERATIONS / ENVIRONMENT
+### Historical broker design — OPERATIONS / ENVIRONMENT
 
 No privileged command, account/unit/cgroup/namespace/fixture creation, package/configuration change,
 credential inspection, quota read or unrelated repository mutation. WSL invocation can start
@@ -70,7 +154,7 @@ Fedora and ordinary system bookkeeping; no zero-host-write claim. Proposed futur
 files, two dedicated identities, transient unit and conditional narrow manager policy are listed
 with rollback and security impact in section 14; none was executed.
 
-## NEXT_EXACT_ACTION
+### Historical broker design — NEXT_EXACT_ACTION
 
 PREPARE AND REVIEW THE EXACT DISPOSABLE-LAB MANIFEST AND MINIMAL FIXED BROKER/CONTROLLER/BOOTSTRAP
 DESIGN FOR R1–R5, RESOLVING CONCRETE IDENTITY ALLOCATION, PRIVILEGED LAUNCH, MANAGER POLICY AND THE
@@ -79,7 +163,7 @@ Owner design/change-planning approval already exists; do not ask for it again. R
 execution scope before privileged changes. No production producer or filesystem proof follows.
 Stop after this coherent design block.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical broker design — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting checkpoint: `23f953b1870870500c04e0a60e41fed007680374`.
 This documentation checkpoint uses HEAD as self-reference; resolved SHA, normal push result,

@@ -658,3 +658,29 @@ PARTIAL; tested admission OPEN; filesystem exclusivity and P3 UNKNOWN.
 PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED; V4 runtime NOT_STARTED.
 Only the three evidence documents changed. Validation/publication accounting is in V3 progress;
 checkpoint self-reference HEAD, with resolved SHA and post-push verification in the final report.
+
+## 2026-09-24 — Fixed lab manifest remains blocked on specific R1–R5 evidence
+
+Clean Windows main independently matched tracking/live main at
+`5c9b6254a0e96731e45152e0dde9fffd3879be75`. Sole Windows worker completed the
+[section 15 lab contract](V3_QUIESCENCE.md#15-disposable-lab-manifest-and-r1r5-review--2026-09-24).
+Decision B: **R1R5 MANIFEST PARTIAL; SPECIFIC CAPABILITY EVIDENCE STILL REQUIRED.**
+
+Symbolic allocation is deterministic and collision-refusing; no numeric UID was invented/reserved.
+One fixed native image forks trusted C/W bootstraps without post-drop exec. No extra namespaces,
+controller service or socket listener. Root broker owns raw cgroup controls; channel requests
+bind per-message credentials to retained launch identity, generations and sequence. Five fixed
+operations, exact packet rules, bootstrap/FD/state tables and T1–T14 make future refusal and
+falsification explicit. Historical same-UID negative witnesses and section 14 conditional status
+are preserved. No closed-domain acceptance or minimal-privilege implementation is claimed.
+
+Read-only installed system-manager introspection and advertised PolicyKit defaults succeeded.
+Defaults do not establish effective authorization. suid_dumpable=2 supports a conditional no-exec
+race argument, not experimental acceptance. M1–M5 identify allocation/launch, effective policy,
+image/bootstrap integrity, compiled restrictions and manager survivor/continuity proof gaps.
+Do not request R6 execution until these are resolved; do not fill missing facts while executing.
+
+No privileged changes, R6 or production code/schema/test/mission edits. Only three evidence
+documents changed. Containment PARTIAL; historical admission OPEN; filesystem exclusivity and
+real-project P3 UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED; V4 runtime NOT_STARTED.
+Next exact action and validation/publication accounting are in V3 progress; checkpoint uses HEAD.

@@ -1020,3 +1020,450 @@ not a repeat of the broad authority audit. No implementation of a production pro
 Current process containment PARTIAL; previous same-UID admission OPEN; candidate boundary unproven.
 Filesystem exclusivity UNKNOWN; real-project P3 UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.
 V4 runtime NOT_STARTED. PROCESS_CONTAINMENT != FILESYSTEM_EXCLUSIVITY. Stop after this design block.
+
+## 15. Disposable lab manifest and R1–R5 review — 2026-09-24
+
+**Decision B: R1R5 MANIFEST PARTIAL; SPECIFIC CAPABILITY EVIDENCE STILL REQUIRED.**
+This section narrows section 14 into a reviewable future lab contract, not a runnable approval.
+All MUST/denied entries below are DESIGN requirements, not observations of enforcement.
+No provisioning, image implementation, privileged launch or R6 execution occurred. Owner design
+and environment-change planning approval remains recorded. No repeat approval for design is needed.
+
+Starting clean Windows main independently matched tracking/live main at
+`5c9b6254a0e96731e45152e0dde9fffd3879be75`. Windows Codex remains sole project worker.
+Fedora discovery originated only through wsl.exe; no second agent or repository controller.
+
+### Evidence and explicit blockers
+
+OBSERVED_FACT: a bounded unprivileged Python subprocess probe read suid_dumpable=2 and
+ptrace_scope=0 again. System-bus Manager introspection exited 0 and exposed StartTransientUnit
+(signature ssa(sv)a(sa(sv))), AttachProcessesToUnit (ssau), SetUnitProperties (sba(sv)), GetUnit,
+GetUnitByPIDFD, Subscribe, StopUnit, Reload and Reexecute. No mutating method was called.
+pkaction returned implicit any/inactive=auth_admin and active=auth_admin_keep for manage-units,
+manage-unit-files and reload-daemon. This reports advertised defaults, not effective caller
+authorization: custom rules, cached authorizations and alternate privileged deputies remain UNKNOWN.
+No authentication challenge was requested. Ordinary D-Bus/WSL activation/bookkeeping is possible.
+
+| Blocker | Exact missing evidence / resolution gate |
+|---|---|
+| M1 | Root launch executor and explicit future execution scope; collision-free account allocation with NSS, service/session and namespace review; no root route tried |
+| M2 | Installed effective system-manager/polkit/deputy policy, including attachment and unit-object aliases; defaults and introspection are insufficient |
+| M3 | Reviewed native image/build identity and uninterrupted credential/dumpability transition; current-value observations do not prove invariant stability |
+| M4 | Compiled per-role seccomp/FD policy and exact ABI behavior, bounded peer harness and resource limits; no executable artifact exists yet |
+| M5 | Installed unit death/cleanup behavior and manager continuity evidence, including reexec that can preserve PID; no restart test performed |
+
+R6 is blocked until these have explicit evidence or a reviewed, scoped prerequisite test.
+Do not improvise missing values during execution. Unsupported prerequisites refuse before launch.
+
+### Exact symbolic manifest
+
+Manifest revision `CGC_LAB_R1R5_1`; inert design, no production schema. Expressions below are
+deterministic substitutions, never shell expansion. Reject unknown fields, duplicate keys,
+symlinks, existing objects and unresolved required values. One invocation runs exactly one T case.
+
+| Field | Exact value or resolution rule |
+|---|---|
+| LAB_ID | `cgcq-` plus 32 lowercase hexadecimal characters from fresh 128-bit OS randomness; exclusive creation must also succeed |
+| BROKER_ID / CONTROLLER_ID / WORKER_ID | B / C / W |
+| UID_B / GID_B | 0 / 0 in initial Linux user namespace; empty supplementary groups |
+| C account / W account | `cgcqc_` / `cgcqw_` plus first 12 hex characters of LAB_ID suffix; collision refuses this LAB_ID |
+| UID_C / GID_C | Same unused numeric value selected by allocation rule below; no reservation claimed now |
+| UID_W / GID_W | Next distinct unused value under the same rule |
+| BROKER_UNIT | `LAB_ID.service`, system manager, system.slice |
+| CONTROLLER_UNIT | NONE: C is B's child in the same unit; no user manager or second service |
+| CGROUP_PARENT | `/sys/fs/cgroup/system.slice/LAB_ID.service`; prepend `/sys/fs/cgroup` to manager ControlGroup and require exact equality |
+| WORKER_DOMAIN / CGROUP_DOMAIN | `workers` / `CGROUP_PARENT/workers` |
+| Control / adversary children | `CGROUP_PARENT/control` and `CGROUP_PARENT/peers`; peers are outside the accepted workers domain |
+| LAB_ROOT | `/run/cgc-quiescence/LAB_ID`; Linux-native, root-owned 0700, all ancestors verified |
+| MANIFEST_PATH | `LAB_ROOT/manifest.json`, root:root 0600, at most 64 KiB |
+| Executable | `LAB_ROOT/bin/cgc-lab`, root:root 0500, single reviewed static native x86-64 ELF, no interpreter/dynamic loader/file capabilities/set-ID bits |
+| STATE_DIRECTORY | `LAB_ROOT/state`, root:root 0700; only events.jsonl, observations.jsonl and cleanup.json, each root:root 0600 and at most 1 MiB |
+| BROKER_SOCKET / CONTROLLER_CHANNEL | B endpoint / C endpoint of one unnamed AF_UNIX SOCK_SEQPACKET socketpair; no bind/listen/path/abstract socket |
+| OBSERVATION_EPOCH | Bound tuple below; generated in memory, no receipt reanimation |
+| Test selector / bounds | One enum T1–T14; at most 16 lab tasks, 64 FDs per process, 10 seconds per protocol phase, 120 seconds overall |
+| Build/policy bindings | Exact SHA256 of image, manifest bytes and reviewed filter description; unit properties and policy evidence digest; all UNRESOLVED until review |
+
+Numeric allocation: future administrator supplies a reviewed permitted allocation interval from
+local account policy; absent interval BLOCKS. Under an exclusive provisioning transaction select
+the lowest two IDs unused as UID or GID in complete configured NSS, local/subordinate mappings,
+active process credentials and allocated lab reservations. Repeat collision checks at creation;
+no fallback to a guessed conventional number. Incomplete NSS enumeration blocks. Accounts must
+be locked, non-login, no home, no supplementary groups, grants, user-manager sessions or lingering.
+Review only relevant metadata; never collect password/authentication material.
+
+Before launch, bounded privileged preflight checks all real/effective/saved/fs IDs for these two
+values, active sessions and service use, plus subordinate mappings. Record counts and identities
+only for matching lab IDs. Existing unrelated use aborts; never take ownership of it. Preserve an
+allocation ledger until cleanup is independently established. Concurrent administrator allocation
+is a trusted-control-plane assumption requiring an exclusive provisioning window. One-time absence
+is not lasting isolation: deliberately introduced UID_C/UID_W peers remain adversaries. Unexpected
+later use invalidates the epoch, never permits killing the new process.
+
+### R1 launch and minimal trusted image
+
+Future requester: human-authorized Windows operator. Executor: separately authenticated Linux
+administrator UID 0 over a specifically approved WSL invocation; current WSL root capability is
+NOT_VERIFIED. There is no sudo grant, unprivileged launch RPC or controller-supplied command string.
+
+The administrator uses the system Manager StartTransientUnit with mode `fail`, empty auxiliary
+units, exact BROKER_UNIT and one ExecStart vector:
+`[LAB_ROOT/bin/cgc-lab, "--manifest", MANIFEST_PATH]`. No other arguments or executable are accepted.
+No shell or PATH search. Root provisions and verifies image/manifest before this request; B checks
+the same bytes/ownership from no-follow handles before use. Bind device/inode/mount identity,
+digest and manager InvocationID; path or hash alone grants no authority. Root control-plane
+immutability during the run is an explicit TCB assumption; arbitrary hostile root is out of scope.
+
+Proposed typed unit properties: Type=exec, User=0, Group=0, SupplementaryGroups empty,
+Slice=system.slice, Delegate=yes to root only, Restart=no, ExitType=cgroup, KillMode=process,
+SendSIGKILL=no, SendSIGHUP=no, WatchdogUSec=0, RuntimeMaxUSec=infinity, LimitCORE=0,
+LimitNOFILE=64, TasksMax=16, UMask=0077; no ExecStop/ExecStopPost, socket activation,
+FileDescriptorStore, PAMName, EnvironmentFile or automatic cleanup hook. Installed acceptance of
+these properties and TasksMax controller availability is M5/M4, not assumed. No unit stop while
+survivors exist. KillMode=process deliberately avoids automatic descendant cleanup in this lab;
+it is not a general service recommendation. OOM or host shutdown always invalidates evidence.
+
+Launch environment: empty application environment except LANG=C and LC_ALL=C; no HOME, PATH,
+loader variables or manager-exported application settings. A fixed root bootstrap clears extras
+before any C/W branch; manager identity is captured separately. Exact environment filtering by
+the approved launcher/unit is M1, not a promise that systemd supplies no implicit variables.
+cwd=/; umask=0077. Image and manifest directories must not be writable by C/W or their groups.
+
+Use one reviewed native image: B forks fixed in-image C/W branches without post-drop exec.
+No generic plugin, Python interpreter, shell, dlopen, user-selected function or script. C/W
+real/effective/saved/fs UID/GID become their exact IDs, groups empty, all capability sets including
+bounding/ambient empty, no_new_privs=1. Proposed B bootstrap capability bound is SETUID, SETGID,
+SETPCAP and SYS_PTRACE only; root ownership supplies cgroup DAC access. SYS_PTRACE is solely for
+owned-child proc/FD verification, not a ptrace/injection RPC. No SYS_ADMIN, DAC_OVERRIDE or KILL.
+Whether these suffice with installed LSM/proc policy is M3; do not add capabilities automatically.
+After all children/gates are verified, B drops SETUID/SETGID/SETPCAP; after seal B retains at most
+SYS_PTRACE for bounded observation. B itself remains root TCB with a fixed syscall/operation set;
+this proposal does not claim an implemented sandbox against a compromised root broker.
+
+### R2 manager authorization contract
+
+| Operation/interface | Expected authorized caller | Expected denied caller | Evidence and lifetime |
+|---|---|---|---|
+| StartTransientUnit exact lab unit | Approved administrator only, once | B/C/W/descendants and untrusted outside peers | Exact property readback, installed authorization review; no interactive fallback |
+| GetUnit, GetUnitByPIDFD, Properties.Get, Subscribe | Administrator observer/B where needed | No secrecy requirement for metadata | Bind manager bus owner, unit InvocationID, ControlGroup and B instance; reads confer no mutation right |
+| AttachProcessesToUnit / service AttachProcesses | NONE for lab workflow | C/W/peers and B protocol | Existing method observed; effective denial must be proved; B uses owned cgroup FDs instead |
+| SetUnitProperties, unit Start/Stop/Restart, bind-mount/mount-image routes | Admin setup or empty-unit final retirement only | C/W/peers | manage-units policy plus installed method/deputy audit |
+| Unit-file changes, environment changes, Reload/Reexecute | No in-epoch authorized operation | All lab principals/untrusted peers | manage-unit-files, set-environment, reload-daemon and aliases reviewed; any actual change invalidates |
+
+System manager owns parent and unit lifecycle. B owns fixed child topology and C/W lifecycle;
+the user manager has no role/delegation here. No runtime policy editing by B. Advertised auth_admin
+defaults are not a deny proof, particularly with active-session cached grants. If existing effective
+policy cannot prove denial, M2 requires a separately reviewed deny rule for the dedicated identities
+covering all systemd mutation actions, not just one unit name. Exact rule location/order/content
+cannot safely be invented without inspecting applicable rules. That rule is conditional future
+configuration, not installed. All other in-scope peers must lack equivalent administrative/deputy
+grants; an untrusted root-equivalent principal invalidates the TCB assumption.
+
+Policy lifetime starts before bootstrap and extends through cleanup. Snapshot plus endpoint
+comparison cannot prove continuous non-change: accept only a controlled administrator window
+with no concurrent policy mutation, monitored manager continuity, and no evidence loss.
+Unobservable continuity is UNKNOWN. Manager restart/reexec/reload requires a new lab generation.
+
+### R3 bootstrap state machine and race analysis
+
+B is single-threaded and sets PR_SET_CHILD_SUBREAPER before any lab fork for owned descendant
+adoption/reaping; this is fixture accounting, not escape prevention. Failed adoption/accounting
+invalidates cleanup evidence. SIGCHLD is not ignored, no SA_NOCLDWAIT and no other child reaper. B retains
+each child unreaped until its channel is retired. Fork then pidfd_open of that owned child can
+bind a live/zombie instance under those conditions; failure refuses, not a PID-number fallback.
+No controller or worker code runs from writable storage.
+
+| State / transition | Required action | Atomicity / race treatment |
+|---|---|---|
+| C0 CREATED | Trusted fork branch inherited root credentials; B root image already nondumpable | Fork kernel event, no user-code atomicity across following calls |
+| C1 INSTANCE_BOUND | B retains pidfd, boot/start identity, namespace, unit and generation; child waits on private gate | Parent/child handshake; early exit retained as zombie, never accepted |
+| C2 PROTECTED | Child PR_SET_DUMPABLE(0), core limit 0; no exec thereafter | Individual prctl is a syscall, not an atomic bootstrap transaction |
+| C3 FDS_CLOSED | Child closes B manager/cgroup/log/other endpoint FDs and all non-allowlisted descriptors | Sequential close/remap; root trusted bootstrap only, no peer authority released |
+| C4 CREDENTIALS_DROPPED | setgroups(empty), drop bounding/ambient sets while privileged, setresgid, setresuid, clear remaining caps, set no_new_privs | Credential-changing calls can reset dumpability; require invariant below at each step |
+| C5 VERIFIED | Immediately set dumpable 0 again; verify all IDs/groups/caps, initial namespaces and FD inventory | B inspection plus fixed bootstrap self-check; any gap/failed inspection aborts |
+| C6 CHANNEL_BOUND | Install C filter; send fixed READY with kernel credentials and nonce; B validates exact instance | No reliance on SO_PEERCRED's socketpair creator; no authority before validation |
+| C7 POLICY_SEALED | B verifies domain/control layout, C liveness and policy; serializes seal after W preflight | Multiple observations are not atomic; missing protected-window evidence blocks |
+| C8 RELEASE_ALLOWED | Only B sends W release byte after SEAL acknowledgement | Already admitted root only; no post-seal attach; C never gets W gate write end |
+
+DERIVATION / CONDITIONAL race argument: until final UID transition, a capability-free UID_C peer
+does not match root credentials. At credential transitions the observed suid_dumpable=2 would
+reset dumpability to a value other than 1; documented ptrace access checks reject such a target
+without CAP_SYS_PTRACE in its user namespace. An explicit dumpable=0 follows, and no C exec can
+reset it later. This removes the assumed need for a new global ptrace sysctl, **if** the reviewed
+sequence, kernel behavior, lack of prior tracer and stable sysctl/TCB window are established.
+A prior tracer, suid_dumpable=1, unexpected credential path, executable replacement, syscall failure
+or post-drop exec blocks release. Values read before/after are not proof against privileged
+mid-transition changes. R3 remains unaccepted; no same-UID racing experiment ran.
+
+W follows the same trusted no-exec bootstrap, additionally gated until membership and filter
+verification. Reparenting confers no rights. C is not permitted to fork, exec, change credentials,
+reenable dumpability or receive FDs after READY. Same-UID signals can deny service; they do not
+authenticate a replacement C. No availability guarantee or automatic orphan killer is added.
+
+### Live-instance/channel binding and fixed grammar
+
+B creates socketpair(AF_UNIX, SOCK_SEQPACKET|SOCK_CLOEXEC, 0), enables SO_PASSCRED before READY,
+and never binds/listens. No filesystem socket ownership or abstract namespace authentication.
+Each privileged request requires exactly one SCM_CREDENTIALS matching C's fixed real UID/GID
+and PID in B's PID namespace, retained unreaped pidfd nonterminal, expected namespace/unit,
+no executable transition, current generation/state and next sequence. B and C have no capability
+to be lent to a peer; a forged/stolen endpoint must still fail sender checks. A root forger is TCB
+compromise, not solved by SCM_CREDENTIALS. SO_PEERCRED is diagnostic only.
+
+Protocol v1: one packet at most 1024 bytes, UTF-8 JSON containing exactly the seven tuple keys
+listed below, uppercase as written. Canonical encoding sorts keys lexically, uses no whitespace,
+BOM, escapes or trailing newline. Values are ASCII strings except REQUEST_SEQUENCE, an unsigned
+decimal JSON integer (no leading zero, sign, exponent or fraction). Reject duplicate keys before
+canonical comparison, nesting, nulls and any extra field. No paths, argv, raw PIDs or numeric FDs.
+Generation/DOMAIN_ID values are 32 lowercase hex characters; LAB_ID follows its manifest rule;
+SEAL_EPOCH is the string "0" before seal, otherwise 32 lowercase hex characters. DOMAIN_ID is
+an opaque random identifier mapped to retained kernel handles in B, never a serialized FD.
+READY is a distinct fixed bootstrap packet with exactly NONCE (32 lowercase hex characters),
+TYPE ("READY") and VERSION (integer 1), same canonical rules; accepted once before normal requests.
+Replies echo the full validated tuple with exactly RESULT (OK or INVALIDATED); a SEAL OK reply
+uses the newly allocated epoch. No arbitrary error text. Decoder/filter implementation proof is M4.
+Tuple fields: LAB_ID, BROKER_GENERATION (fresh 128 bits), CONTROLLER_GENERATION (fresh 128 bits),
+DOMAIN_ID (B-owned handle identity plus fresh generation), SEAL_EPOCH (0 before seal, fresh
+128 bits at seal), REQUEST_SEQUENCE (unsigned 64-bit starting 1), OP (five enums).
+C inherits the immutable initial tuple from B's pre-fork memory; B allocates DOMAIN_ID as an
+empty launch slot before CREATE, then binds it to kernel handles without changing that ID.
+C contributes a fresh 128-bit READY nonce; B binds it to its launch generation. Nonces and
+serialized start times are correlation, not authentication. Sequence wrap refuses.
+
+recvmsg must detect MSG_TRUNC/MSG_CTRUNC; reject unknown ancillary types, duplicate credentials,
+SCM_RIGHTS and extra fields. Close all unexpectedly received FDs before invalidation to avoid
+leaks. No FDs in replies. Every request revalidates sender and lifecycle; no connection-level
+authorization cache. Any wrong generation/sender/malformed privileged packet retires the channel
+and invalidates proof. No retry, reconnect, inherited session or replay after restart.
+
+| OP | Input / caller | Preconditions | Effect / postcondition | Failure / audit |
+|---|---|---|---|---|
+| CREATE_OWN_DOMAIN | Tuple only; bound C | BOOTSTRAPPING, no domain yet; protected parent verified | B creates exact workers child using parent FD, records identity; one creation | Any preexisting object or partial error INVALIDATED; owned-object ledger before/after |
+| ATTACH_OWN_GATED_CHILD | Tuple only; bound C | OPEN_FOR_CONTROLLED_ADMISSION; fixed W launch slot, own unreaped child, gate closed | B writes only its bound W PID to exact domain cgroup.procs; checks membership/handle | No arbitrary PID accepted; lost identity/mismatch INVALIDATED; launch and readback evidence |
+| SEAL | Tuple only; bound C | All R1–R5 preconditions, W gate closed; one root bound | Serialized irreversible state change; retire epoch 0 and allocate seal epoch; no topology/attach afterward | Queued epoch-0 packet invalidates if received later; log sequence barrier and ACK |
+| QUERY | Tuple only; bound C | Valid current state/generation | B bounded read of owned handles/events; no migration | Lost continuity INVALIDATED; log observations separately from derivations |
+| REMOVE_OWN_EMPTY_DOMAIN | Tuple only; bound C | TEARDOWN, W subtree proven empty, owned launch/descendant accounting terminal | Remove exact empty workers child; verify disappearance of retained object, never recursive removal | EBUSY/identity mismatch retains artifacts; no kill/retry sweep |
+
+CREATE follows B's setup of its own control/peers children and relocation of B into control;
+C inherits control membership, which B verifies. Gated W starts there, then B attaches it to
+workers. Test peers are attached to peers before credential drop. No resource controller is
+enabled by B; manager-provided TasksMax availability is checked separately. C/W no delegation.
+B enters TEARDOWN internally only after the fixed test completes and all W/peer launch evidence
+is terminal with empty domains, or after separately authorized invalidated-state review.
+Final C exit and empty peers removal are fixed B shutdown housekeeping after protocol retirement,
+not extra RPCs. B cannot remove its own occupied control cgroup: the administrator removes that
+exact child only after B is terminal and the child is independently observed empty.
+After C death, no new controller may use REMOVE: cleanup becomes a separately approved admin task.
+ARBITRARY_EXEC, ARBITRARY_ATTACH_PID, ARBITRARY_KILL, ARBITRARY_CGROUP_PATH, ARBITRARY_FILE_WRITE,
+USER_MANAGEMENT, POLICY_EDIT, GIT_OPERATION, NETWORK_PROXY and SHELL are forbidden grammar.
+
+### R4 descriptor and syscall policy
+
+| Release FD / class | C | W and descendants | B / bootstrap treatment |
+|---|---|---|---|
+| 0 | Read-only /dev/null | Read-only /dev/null | Open as root, verify device, no tty |
+| 1 / 2 | Data-only output pipes to B | Data-only output pipes to B | B reads bounded framed bytes; never interprets output as operations |
+| 3 | C endpoint of private broker socket | W read end of release pipe; EOF is abort, one fixed byte permits run | Never give W a write end or C endpoint; close W FD 3 after release |
+| 4 and above | NONE | NONE | B retains own cgroup/dir/pidfd/bus/log handles, never crosses release |
+| cgroup/dir/proc/namespace/pidfd | NEVER | NEVER | Child closes before entering C/W logic |
+| manager/D-Bus/broker-B socket | NEVER | NEVER | B-only; all socketpair opposite ends closed in children |
+| memfd/shm/received SCM_RIGHTS | NONE | NONE | No pass-through, no hidden loader descriptor |
+| unused pipe ends / other child FDs | NONE | NONE | Close before each child leaves root bootstrap; all newly created B FDs CLOEXEC |
+
+B cannot close every authority FD before fork because it needs them; root bootstrap necessarily
+inherits some briefly and must close them before credential handoff/untrusted code. Each later
+fork re-audits inherited ends. W descendants inherit only 0–2 after release. CLOEXEC supplements,
+but does not replace, this closure. No subsequent exec in this minimal profile. B verifies FD
+inventory before release; a supplied raw FD makes setup invalid even if later writes would fail.
+
+Minimal initial profile uses preloaded native code and no pathname access after release. This
+narrows section 14's optional approved exec: **all post-bootstrap C/W exec is denied**. It does not
+claim arbitrary project workloads are covered. Direct migration attempts by W first encounter
+syscall/FD denial; separate unrestricted UID peers must also challenge underlying DAC/manager
+authorization, so syscall denial is never presented as proof of the latter.
+
+| Category | C | W/descendants | Reason / unresolved detail |
+|---|---|---|---|
+| read/write/close, poll/ppoll, clock_gettime, exit/exit_group, necessary signal return | MUST_ALLOW on fixed descriptors/arguments | MUST_ALLOW on fixed descriptors/arguments | Exact native ABI/filter compile and signal behavior M4 |
+| fork / wait4 | MUST_DENY fork; no children | MUST_ALLOW native fork and wait4 only | No clone flags; task ceiling independently enforced; descendants same filter |
+| clone/clone3/vfork | MUST_DENY | MUST_DENY | No namespace/thread variants; libc fallback must not widen filter |
+| setuid/setgid/setres*/setfs*/setgroups, capset, privilege-changing prctl | MUST_DENY after bootstrap | MUST_DENY after bootstrap | no_new_privs and empty caps additionally required |
+| unshare/setns/mount/pivot_root/chroot | MUST_DENY | MUST_DENY | Namespace aliases cannot be newly created |
+| ptrace/process_vm_*/pidfd_getfd | MUST_DENY | MUST_DENY | Outside UID_C peers independently challenge C nondumpability |
+| open/openat/openat2/creat, handle-based opens | MUST_DENY | MUST_DENY | No pathname authority; inherited FD audit remains necessary |
+| socket/connect/bind/listen/accept/socketpair | MUST_DENY | MUST_DENY | No new manager/helper/abstract socket route |
+| sendmsg/recvmsg | MUST_ALLOW only FD 3, fixed protocol | MUST_DENY | Seccomp cannot inspect ancillary buffers; B validates C messages |
+| execve/execveat | MUST_DENY | MUST_DENY | T11 is expected refusal, not successful safe exec evidence |
+| dup*/fcntl FD duplication, ioctl, memfd_create, shm*, keyctl/add_key/request_key, bpf, io_uring*, perf_event_open, userfaultfd | MUST_DENY | MUST_DENY | Eliminate unreviewed FD/async/helper paths |
+| Memory allocation/runtime startup syscalls | UNKNOWN_PENDING_EXPERIMENT | UNKNOWN_PENDING_EXPERIMENT | Prefer preallocation; exact compiled image may require bounded additions before approval |
+| Any unlisted syscall or ABI (including x32/compat) | MUST_DENY | MUST_DENY | Default EPERM; reject wrong architecture; never auto-allow after failure |
+
+NOT_RELEVANT applies only to a proven absent image dependency; no helper class is dismissed just
+because the fixture does not normally use it. B has a distinct reviewed syscall set for bootstrap,
+cgroup operations and observation; its compiled policy is also M4. Seccomp is not a pathname
+authorization engine and cannot alone prove manager policy, root TCB integrity or filesystem
+exclusivity. No cooperative self-report substitutes for installed filter evidence.
+
+| Namespace | Choice | R1–R5 purpose / limit |
+|---|---|---|
+| USER | NOT_NEEDED; initial mapping required | Credential/DAC separation; no nested mapped-root path |
+| PID | NOT_NEEDED | Retained launch handles; same PID view for credential checks |
+| MOUNT | NOT_NEEDED for this no-open/no-exec profile | Avoid mount privilege; outside peers still attack existing aliases |
+| CGROUP | NOT_NEEDED | Authorization, not hidden topology, supplies proposed boundary |
+| IPC | NOT_NEEDED | SysV/shared-memory/helper syscalls denied |
+| NETWORK | NOT_NEEDED | No new sockets; inherited endpoints exhausted by allowlist |
+| UTS | NOT_NEEDED | Hostname isolation proves no relevant authority property |
+
+### Control-interface ledger
+
+All entries are future R6 obligations. Denial errno may be EPERM/EACCES or a precisely recorded
+manager authorization error; an unexplained failure/timeout is UNKNOWN, not accepted denial.
+
+| Path class | Authorized actor | Denied actor / expected failure | Evidence required |
+|---|---|---|---|
+| cgroup.procs / cgroup.threads | B own pre-seal procs attach only | W/descendants/peers denied; no threads moves | Syscall result, source/destination identity and membership |
+| Ancestors / siblings / delegated children | Manager or B exact setup only | No lab migration or new delegation by peers | Ownership/ACL/common-ancestor checks plus independent peer attempts |
+| Manager IPC / transient-unit APIs / unit-object aliases | Admin exact launch only | C/W/peers no mutation/deputy launch | Installed policy and method result, no prompt/cached grant acceptance |
+| Broker socket / controller socket | Same unnamed pair, bound C only | Wrong sender/generation invalidates | Per-message credentials, retained instance, state transition |
+| Retained raw FD / proc-fd aliases | B only | Pre-release leak refuses; peer acquisition denied | FD inventory, ptrace/proc access result, no release after leak |
+| Namespace aliases / existing bind mounts | Admin TCB only | Alias cannot grant C/W/peers write authority | Same object permission evidence; W namespace calls denied |
+| Descriptor transfer | No operational receiver except C credential channel | SCM_RIGHTS rejected/closed; W recvmsg denied | Ancillary flags/FD cleanup and unchanged membership |
+| Helper/deputy | No worker-accessible control deputy | No manager/session/sudo/helper bypass | Exact installed routes review M2/M4; absent evidence blocks |
+
+### R5 states, generations and death
+
+Legal success path:
+UNINITIALIZED -> PROVISIONED -> BOOTSTRAPPING -> OPEN_FOR_CONTROLLED_ADMISSION ->
+SEALING -> SEALED -> QUIESCENCE_OBSERVATION -> TEARDOWN -> CLOSED.
+SEALED -> TEARDOWN is permitted without any quiescence claim. Observation begins only after
+release and verified worker-domain empty transition within intact authority/continuity.
+Any nonterminal state -> INVALIDATED. INVALIDATED -> TEARDOWN needs independently established
+cleanup authority/provenance, never renewed proof. No backward edge, unseal, same-generation
+restart, second create/attach or CLOSED reuse. Invalid setup can reach teardown without release.
+
+One B event loop owns request dispatch and state. SEAL is the local linearization point;
+all earlier accepted mutations complete and verify before it. C waits for each ACK, never pipelines.
+Epoch-0 queued packets cannot execute after seal. SEAL reply binds the new epoch; subsequent
+sequence remains increasing. Post-seal CREATE/ATTACH, duplicate sequence, old generation or
+topology mismatch rejects and invalidates rather than returning a harmless success.
+Sealing changes protocol authority, not kernel permissions by magic: the R2–R4 boundary must
+already exclude alternate writers. An empty label or file cannot certify that exclusion.
+
+| Event | Exact consequence / required evidence |
+|---|---|
+| C terminal pidfd, channel EOF/error, timeout | B marks INVALIDATED, closes request channel, never reopens admission; W may continue; no automatic freeze/kill |
+| B death | All proof invalid; C must cease requests on EOF/timeout; domain/C/W can survive; manager is not a replacement B |
+| Manager bus-owner loss, Reloading, reexec/restart, policy change or missed observation interval | Invalidate regardless of same PID, unit name or boot ID; no silent rebind; continuity coverage itself M5 |
+| WSL shutdown/restart or boot-ID change | Retire all generations/FD numbers; stored receipts historical only; WSL restart can share kernel boot identity, so boot ID equality alone never restores authority |
+| Worker unexpected exit, syscall denial, budget exhaustion | Record exact result; invalidation where required evidence is lost; never infer whole-domain empty from root death |
+| Domain removal/recreation or changed mount/inode binding | Invalidate; identical pathname cannot restore domain identity |
+
+No post-death queue may revive authority. Death between liveness check and dispatch is an explicit
+race: before seal it leaves invalid setup; after seal no membership mutation is legal at all.
+No zero-latency death detector or atomic whole-host proof is claimed. Every consumer must validate
+current continuity rather than trust a historical SEALED label.
+
+Cleanup order: retire proof and requests; verify lab ledger/handles/credentials; wait boundedly
+for the fixed cooperative fixture to terminate; record unresolved survivors; verify empty owned
+worker/peer domains plus terminal launch accounting; remove exact empty children; C exits after
+channel retirement; B closes handles and exits; administrator confirms unit subtree empty before
+StopUnit/collection. Only then remove exact new policy/files and retire new accounts/reservations.
+No recursive cgroup deletion, generic lock deletion, borrowed PID kill, or immediate UID reuse.
+Timeout leaves a retained FAILED/UNKNOWN lab requiring separately scoped survivor handling.
+After B death a fresh admin review must reconstruct provenance; logs alone cannot authorize
+cleanup. No automatic account/file deletion on unit failure. Log retention is bounded and private.
+
+### Future environment changes
+
+Nothing below was executed; root already exists, so no broker account or socket service is needed.
+
+| CHANGE_ID | Object / change | Privilege / persistence | Purpose / proof enabled | Rollback | Risk | Required for R6 |
+|---|---|---|---|---|---|---|
+| LAB-C1 | Dedicated C UID/GID, locked non-login account | Root; NEW_IDENTITY_REQUIRED, reversible persistent | Distinct credential class | Retire only new account after complete provenance/termination | Reuse, grants, concurrent allocation | Yes, or proven equivalent reserved identity |
+| LAB-C2 | Dedicated W UID/GID, same restrictions | Root; NEW_IDENTITY_REQUIRED, reversible persistent | Worker/descendant credentials | Same conservative retirement | Unrelated UID reuse | Yes |
+| LAB-C3 | LAB_ROOT/bin and exact manifest/image | Root; temporary Linux-native files | Immutable fixed launch binding | Remove only manifest-owned files after teardown | Root code/build integrity | Yes |
+| LAB-C4 | One transient BROKER_UNIT and three child cgroups | System manager/root; temporary NEW_SERVICE_REQUIRED | Root-owned control plane, owned domain and peers | Empty-only retirement; never enable/install | Privileged bootstrap and surviving children | Yes |
+| LAB-C5 | Exact deny rule only if existing effective policy insufficient | Root; conditional privileged persistent configuration | Exclude manager deputy bypass | Restore only attributable rule after epochs retired | Policy precedence/collateral denial | Conditional, M2 unresolved |
+| LAB-C6 | STATE_DIRECTORY, pipes, unnamed pair, private handles | B/root; temporary | Bound evidence and request channel | Close endpoints, bounded private log retention, exact file removal | FD leakage, stale generation | Yes |
+
+No LAB-C7 socket path/ownership rule is needed: there is no listener. No namespace, global
+sysctl, WSL configuration, package installation or persistent broker daemon is proposed.
+Compiled image availability is M3/M4; lack of a toolchain cannot authorize installing one.
+
+### R1–R5 acceptance matrix
+
+'Yes' in SPECIFIED means the required behavior is defined; it does not mean executable acceptance.
+
+| Gate | SPECIFIED | SUPPORTED_BY_DOCUMENTATION | CURRENT_ENVIRONMENT_EVIDENCE | REQUIRES_ENVIRONMENT_CHANGE | REQUIRES_R6_TEST | BLOCKED |
+|---|---|---|---|---|---|---|
+| R1 identity + launch | Symbolic contract/allocation; numeric/build fields unresolved | Manager launch / pidfd semantics | Existing system manager; root route not tried | C1–C4/C6 | Yes | M1, M3 |
+| R2 manager policy | Required actors/method classes/lifetime | v259 API security model | Methods and advertised defaults only | C5 conditional | Yes, T7/T8 and aliases | M2 |
+| R3 bootstrap integrity | Ordered no-exec state machine and conditional race argument | dumpability/ptrace/credentials/pidfd | suid_dumpable=2, ptrace_scope=0; sequence untested | C1–C4 | Yes, hostile UID_C race | M3 |
+| R4 restrictions/interfaces | FD allowlist and syscall categories; compiled filters absent | seccomp/no_new_privs/UNIX credentials | Installed support from earlier discovery, not filters | C3/C6 | Yes | M4 |
+| R5 sealing/lifecycle | Legal transitions, generations, death/cleanup | systemd lifetime and pidfd semantics | Manager methods only; no death/continuity tests | C4/C6 | Yes, T10/T12/T13 | M5 |
+
+### R6 pre-authorization test manifest — NOT_EXECUTED
+
+One fresh LAB_ID/generation per T case, serialized cases, at most B+C+W+one W descendant+two
+bounded peer processes plus administrative observer; ceiling 16 includes any helper. No interactive
+authentication, package install, generic hostile shell or unrestricted workload. Under the exact
+admin-reviewed test manifest, B's root bootstrap creates the predeclared peers in peers child,
+then drops each to UID_C/UID_W; peers retain no
+root rights. They are intentionally less syscall-restricted where needed to challenge external
+authorization, and are never counted as contained workers. Exact peer code/filter is M4.
+
+Common evidence E: actor launch pidfd/credentials, exact target object, attempted syscall or
+method/result, membership before/after, B protocol state/sequence, terminal handles and owned
+cleanup ledger. Endpoint sampling alone cannot rule out transient escape; prevention-policy
+evidence and explicit syscall outcome are both required. Common cleanup K: fixed actor exits,
+bounded waits, conservative cleanup order above; unresolved survivor retains lab and blocks next
+case. Every unexpected allowed forbidden action falsifies its claim, even if later restored.
+
+| Test | Setup / actor / exact action | Expected denial or invalidation | Evidence / cleanup / falsification |
+|---|---|---|---|
+| T1 | Sealed W attempts open/write of sibling control cgroup.procs for self PID | open denied by W filter; no FD to bypass | E/K; successful migration falsifies egress; syscall refusal alone not DAC proof |
+| T2 | W forks one child; child repeats T1 | Same inherited denial | E/K plus child credentials/filter; changed membership falsifies inheritance |
+| T3 | External UID_W peer opens workers/procs and threads, attempts self-attach | DAC/delegation denial, no admission | E/K; any ingress falsifies independent peer exclusion |
+| T4 | External UID_C peer repeats T3; attempts C ptrace/proc-FD acquisition during bootstrap and after READY | Denied or C death/UNKNOWN; never authority transfer | E/K; injected C or writable control access falsifies boundary |
+| T5 | Trusted test setup inserts one writable sibling control FD into W bootstrap inventory | Refusal BEFORE W release | E/K and gate still closed; release with FD falsifies launch contract, regardless of write result |
+| T6 | External peers address same cgroup via existing mount aliases and proc-fd paths; W attempts unshare/setns | Alias no extra authority; W calls denied | E/K; inaccessible alias NOT_EXECUTED rather than assumed covered; alias migration falsifies |
+| T7 | External peers call AttachProcessesToUnit and service AttachProcesses for own PID into workers | Authorization denied without prompt | E/K plus exact D-Bus result; attach success falsifies R2 |
+| T8 | External peers request a transient unit executing the fixed lab image or SetUnitProperties on lab | Denied; no new unit/process | E/K plus unit absence, not just client error; accepted mutation falsifies R2 |
+| T9 | Deliberately supplied duplicate C endpoint to UID_C peer sends valid-looking tuple | Per-message wrong PID rejects and invalidates | E/K; peer operation accepted falsifies instance authentication |
+| T10 | C test branch queues epoch-0 attach behind SEAL, then duplicate/current malformed sequence | Never executes post-seal; INVALIDATED | E/K, ordering and membership; any late effect falsifies serialization |
+| T11 | W attempts execve/execveat of fixed reviewed test target, including authority-changing form if safely available | EPERM by filter, no exec; no new authority | E/K; actual post-release exec falsifies this no-exec profile; no set-ID file provisioning implicit |
+| T12 | Fixed C test branch exits after seal while W remains alive | B INVALIDATED; admission stays sealed; W survival allowed | E/K, terminal C handle; replacement authority/positive proof falsifies death semantics |
+| T13 | Fixed B test branch exits after seal | All proof invalid; no restart; C/W may survive | Independent admin E/K; no manager auto-kill assumption; resumed generation falsifies |
+| T14 | C test branch sends SCM_RIGHTS on channel; W attempts recvmsg/descriptor transfer | B closes received FDs, invalidates; W denied | E/K plus FD inventory; usable transferred authority/accepted request falsifies |
+
+T4 must exercise the credential-transition window; testing only settled nondumpability does not
+close M3. Test-only branches are fixed image/manifest enums, never new operational RPCs. Deliberate
+leaks in T5/T9 are adversarial setups, not accepted profile states. Installed manager/WSL restart
+is NOT authorized even by this test table; continuity-loss injection can test refusal logic, but
+actual restart semantics remain UNKNOWN until separately scoped. No R6 execution approval is
+requested now while M1–M5 remain unresolved.
+
+### Sources, disposition and next exact action
+
+Primary mechanism references: [dumpability](https://man7.org/linux/man-pages/man2/PR_SET_DUMPABLE.2const.html),
+[ptrace access checks](https://man7.org/linux/man-pages/man2/ptrace.2.html),
+[pidfd acquisition](https://man7.org/linux/man-pages/man2/pidfd_open.2.html),
+[UNIX credentials](https://man7.org/linux/man-pages/man7/unix.7.html),
+[seccomp](https://man7.org/linux/man-pages/man2/seccomp.2.html),
+[no_new_privs](https://www.kernel.org/doc/html/latest/userspace-api/no_new_privs.html),
+[v259 manager API](https://raw.githubusercontent.com/systemd/systemd/v259/man/org.freedesktop.systemd1.xml),
+[v259 service lifetime](https://raw.githubusercontent.com/systemd/systemd/v259/man/systemd.service.xml)
+and [v259 kill policy](https://raw.githubusercontent.com/systemd/systemd/v259/man/systemd.kill.xml).
+Rendered systemd manual fetches returned 403; upstream v259 source was available. These references
+support mechanism reasoning, never installed-policy acceptance or proof of a new executable.
+
+Design review complete for this block; manifest PARTIAL as executable handoff. Do not resolve
+missing image/policy/identity fields by engineer invention. NEXT_EXACT_ACTION: **resolve M1–M5
+with a concrete identity/launch preflight plan, installed effective manager-policy review and
+reviewable native bootstrap/filter/protocol artifact specification; validate the no-exec
+credential sequence and unit survivor behavior before requesting scoped R6 execution.**
+If a necessary observation needs privilege, list its exact read-only scope for approval rather
+than executing it under this design authorization. No production or broad provisioning follows.
+
+Historical containment PARTIAL and same-UID admission OPEN unchanged. Filesystem exclusivity
+UNKNOWN; real-project P3 UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED; V4 runtime
+NOT_STARTED. DESIGN_COMPLETE != PROOF_COMPLETE. BROKER_DEATH != DOMAIN_TEARDOWN.
