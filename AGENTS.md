@@ -18,7 +18,11 @@ Real active git add interruption before/after index replacement is verified offl
 a fixture-only loader shim. Abrupt parent death at these gates and fresh-invocation refusal
 are verified offline; broader crash safety and full resume remain PARTIAL. No orphan cleanup
 is promised by production CGC.
-The inspect and handoff-status CLIs are observational; there is no preserve CLI.
+The [fresh-process reconciliation contract](docs/V3_RECONCILIATION.md) is SPECIFIED;
+its read-only engine and acceptance cases are NOT_STARTED. A new mutation after uncertain
+interruption needs fresh review when durable review digests are missing; old intent grants
+neither new authority nor safe-resume promotion.
+The inspect and handoff-status CLIs are observational; there is no preserve or reconcile CLI.
 V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete
 [V3 mission](docs/V3_MISSION.md) and current user instructions. Historical V2 notes

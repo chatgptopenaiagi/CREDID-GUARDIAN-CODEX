@@ -495,3 +495,26 @@ and test active local-bare index-pack interruption after temporary pack arrival 
 Git fixtures. This task does not start that block. Preserve this documentation normally,
 verify local/tracking/live refs and clean tree, then STOP. Checkpoint self-reference is HEAD
 after publication; the final report records its resolved SHA and observed push result.
+
+
+## 2026-09-23 — Read-only fresh-process reconciliation contract
+
+Verified clean local/tracking/live main at 1edbe5a009fba26a6879486687a3987de886b179.
+The [new V3 specification](V3_RECONCILIATION.md) separates a substantial future reconciliation
+contract from already implemented adapter contracts; no runtime/schema/test change is needed.
+Eleven accepted interruption scenarios inform eighteen future acceptance cases, not new crash tests.
+
+Choose fresh current review/digests after uncertain interruption rather than adding persistence
+now. Saved paths cannot reconstruct reviewed bytes; persisting historical digests may later reduce
+repeat review but needs separately versioned evidence/privacy acceptance and never grants authority.
+Legacy test notes lack tested-state/environment bindings; unchanged HEAD cannot upgrade them.
+
+Precedence is claim-scoped: current direct observation controls current reality without erasing
+historical receipt/intent. Unsigned schema/digest validation is not authentication. In particular,
+inner pure-attempt YES cannot upgrade the outer handoff's UNKNOWN. Existing publish verification
+fetches and updates tracking, so read-only reconciliation must not reuse it as an observation call.
+
+The minimal future engine is local-first, bounded, deterministic and read-only; all results retain
+UNKNOWN safety and false mutation permission. Full external safety verification and execution remain
+separate. Contract ready for that minimal implementation: YES. V3 PARTIAL; V4 parked. This session
+only audits/specifies/validates/publishes documentation, then stops. Current evidence is in V3_PROGRESS.

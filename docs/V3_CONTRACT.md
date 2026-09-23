@@ -825,3 +825,13 @@ crash safety remains PARTIAL: other commands/timings, cross-source writers, host
 races, alternate Git/filesystems and power loss are not universally proven. Full fresh-process
 reconciliation is the next separate block; no automatic retry, repair, rollback, orphan reaper,
 lock deletion, safe-resume engine or V4 runtime is introduced.
+
+
+## Fresh-process reconciliation specification
+
+The [V3 reconciliation contract](V3_RECONCILIATION.md) is the authoritative specification
+for evidence precedence/freshness, interrupted-intent interpretation, review/test gaps,
+read-only collection, bounded output and future acceptance. It is SPECIFIED, not implemented.
+Existing attempt/inspection/handoff schemas and adapter semantics remain unchanged. Its initial
+engine must keep outer SAFE_TO_RESUME UNKNOWN and mutation permission false. No historical
+receipt, inner YES, saved path or digest grants present authority. Full safe resume stays PARTIAL.

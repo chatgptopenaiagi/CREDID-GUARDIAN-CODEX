@@ -2,168 +2,136 @@
 
 ## OVERALL STATUS
 
-**PARTIAL.** V3 remains the active preservation mission. Inspection, durable handoff, manual
-checkpoint, local-bare publication/verification and scoped ref/transfer/commit/pack/staging
-interruption acceptance remain accepted. **Abrupt CGC-parent death at both active staging
-rename gates, including fresh-invocation refusal, is COMPLETE / VERIFIED OFFLINE.**
-Broader crash guarantees and full safe resume remain PARTIAL. V4 remains ARCHITECTED /
-runtime NOT_STARTED, byte-unchanged. All 100 [V3 mission](V3_MISSION.md) keypoints remain intact.
+**PARTIAL. V3 remains active.** Accepted inspection, durable handoff, manual checkpoint,
+local-bare publication/verification and scoped interruption/parent-death evidence remain intact.
+The **fresh-process reconciliation contract is SPECIFIED / AUDITED / documentation-validated**.
+The reconciliation engine, its future acceptance cases and external safe-resume verifier are
+NOT_STARTED. V4 remains ARCHITECTED / runtime NOT_STARTED and byte-identical.
+All 100 [V3 mission](V3_MISSION.md) keypoints remain unchanged.
 
-## STARTING VERIFIED CHECKPOINT
+## VERIFIED STARTING CHECKPOINT
 
-Clean main; empty diff/stat/whitespace; recent history reconciled. Independent local HEAD,
-origin/main and live remote main all equalled `294ac10677af0990281cf655aa0e8c414306653d`.
-Previous staging implementation: `dd02dd81cf92d5e4436f759b1cf55d17cdb7e08a`.
-Authoritative documents and runtime/prior fixture evidence reconciled with that accepted state.
-No accepted block repeated as new work, no V4 commit reverted, no unrelated repository touched.
-Historical detailed staging evidence remains in the starting checkpoint and contract.
+Present root, status, diff/stat/whitespace and 14-entry history were checked before editing.
+Clean main; independent HEAD = origin/main = live remote main =
+`1edbe5a009fba26a6879486687a3987de886b179`.
+Last parent-death implementation: `f57fe1df85c84fea08d51410dcd6ffbc6497cc41`.
+No newer work required preservation/reconciliation; no reset or accepted-work duplication.
 
 ## CAPACITY
 
-Current weekly and five-hour capacity **UNKNOWN**. Historical human planning value 92% weekly
-is not current observation; purchased credits do not determine included capacity. No quota read,
-account scrape or credential access. Capacity preservation activated: **NO**.
+Current weekly and five-hour capacity UNKNOWN. Human planning value 87% weekly is historical,
+not a current observation. No quota/account/credential access, percentage estimate or purchased
+credit inference. Capacity preservation threshold activated: NO.
 
-## CURRENT COHERENT BLOCK / COMPLETE
+## THIS COHERENT BLOCK
 
-Only abrupt CGC-parent death with a real active mutation child and fresh refusal was selected.
-Two new tests reuse unchanged add_peer.py/add_gate.c. Installed Git's real index.lock → index
-rename is gated before and after the actual rename in disposable Linux /tmp repositories.
-No mocked Git result, new production abstraction or runtime defect was needed.
+Only audit, specification and validation of evidence-based fresh-process reconciliation.
+No prototype was necessary. [V3_RECONCILIATION.md](V3_RECONCILIATION.md) separates this substantial
+future contract from the existing 800+ line implemented-adapter contract, which links to it.
+The data model and decision record explain compatibility and the chosen review approach.
 
-- Before death: real CGC PID is Git's PPID; Git PID equals its process-group/session IDs and
-  differs from the parent's group. Both CGC source and handoff-store flocks reject contenders.
-- Parent receives actual SIGKILL, is waited/reaped with exit -9 and disappears from /proc.
-  Git survives in its original session/group, blocked at the FIFO. Its observed new PPID is
-  the explicitly configured fixture subreaper. General host reparenting is not assumed.
-- Both CGC flocks can now be reacquired while Git remains active. Persistent CGC lock files
-  are not deleted. These domains are distinct from Git's index lock, process and durable intent.
-- Before rename: old installed index bytes/entries survive; complete candidate index.lock
-  exists. After rename: complete new index is installed and index.lock absent with Git alive.
-  Selected modification/addition/deletion and unrelated index entry are inspected. No partial
-  installed subset is observed at these gates; not a universal atomicity/power-loss guarantee.
-- Independent fresh Python checkpoint invocations refuse CURRENT_AUTHORITY_REQUIRED without
-  current approval. With current review/authority they refuse GIT_LOCK_PRESENT before rename
-  or EXISTING_STAGING afterward. No add/commit/ref-update/push/reset/restore/clean/gc/prune
-  command is dispatched. No child killing, re-stage, automatic retry or repair is performed.
-- Pending handoff stays byte-identical, previous_known_good survives, CHECKPOINTING and
-  selected paths remain. latest_attempt stays PUBLISHED/error null: continuity persistence,
-  not operation completion. No dead-parent CANCELLED/TIMEOUT/GIT_FAILED receipt is invented.
-  Current intent local_commit is null; publication NOT_REQUESTED; SAFE_TO_RESUME UNKNOWN.
-- Fresh handoff-status exactly reproduces saved state. HEAD stays unchanged. Index and retained
-  candidate bytes, worktree bytes/modes/sizes/mtimes and Git config remain unchanged across
-  refusals. Unrelated tracked modification and untracked human file survive.
-- After assertions ONLY, harness releases/reaps orphan Git. Real staging finishes successfully
-  without a parent checkpoint receipt; HEAD and handoff still unchanged. Fallback harness
-  cleanup kills/reaps disposable orphan; original subreaper setting is restored. This is test
-  hygiene, not production recovery. Prior successful controls remain unchanged.
+## COMPLETE
 
-## PARTIAL / LIMITATIONS
+- Audited current handoff/inspection/checkpoint/publication/signals/CLI and pure attempt semantics,
+  plus accepted handoff/checkpoint/publication/ref/transfer/commit/pack/add/parent-death evidence.
+  Reconciled AGENTS, README, V3 mission/progress/contract/acceptance, data model, preservation/
+  security policies, architecture, decisions, roadmap and V4 compatibility boundary.
+- Defined eight input domains: durable continuity, local Git, remote Git, checkpoint, publication,
+  tests, review and current authority. Evidence, identity, state and authority stay distinct.
+- Claim-scoped precedence and CURRENT/HISTORICAL/STALE/CONTRADICTED/UNKNOWN applicability preserve
+  both historical and fresh evidence. Observation time alone never refreshes authority or content.
+- Traced eleven interrupted/completed scenarios to inherited acceptance tests; specified eighteen
+  future cases A–R including failures, schema refusal, identity races and inner-YES non-promotion.
+- Selected fresh review/digests after uncertain interruption, without modifying strict schemas.
+  Historical digest persistence is a possible later optimization, never automatic authority.
+- Defined a deterministic read-only collector/classifier projection, explanation ordering, human
+  rendering from the same state, strict bounds, current-read scope and failure degradation.
+- Defined later action/level-specific YES proof obligations while requiring the initial engine
+  to emit UNKNOWN and false mutation permission unconditionally. Clean is not safe; dirty work
+  can be explained. Known failing tests are not automatically failed preservation.
+- Kept remote observation optional for local continuity; initial remote scope stays explicit
+  local-bare only. Existing publish() cannot be used as read-only verification because it fetches
+  objects and updates tracking. No current ref observation backfills a historical success receipt.
+- Declared contract ready for minimal implementation: YES. No implementation begun this session.
 
-Overall V3, general crash safety and full reconciliation remain PARTIAL. This proves two real
-staging windows on Linux/dynamically linked Git with fixture libc rename interception and cc.
-It does not establish universal orphan detection/cleanup, arbitrary later mutation timing,
-cross-source writers, hostile same-user concurrency, other platforms/index formats or power loss.
-No Git ref-lock or publication-parent-death window is newly claimed here. Runtime remains as-is.
+## IMPORTANT AUDIT FINDINGS
 
-SIGKILL cannot be caught, run finally/cleanup or persist a new failure from its victim. Process
-death proves neither success nor failure. Lock availability is not safety. Postmortem facts come
-from durable evidence plus fresh observation. The fixture subreaper changes only test-process
-adoption temporarily; CGC does not supervise or kill historical children on fresh invocation.
+1. Handoff slot/generation/digest validation is structural, not authentication of adapter claims.
+   Handoff latest_attempt=PUBLISHED may hold incomplete CHECKPOINTING/PUBLISHING intent.
+2. Inner pure-attempt YES cannot replace outer UNKNOWN. No current adapter proves full safe resume.
+3. Inspection digests include observed_at and metadata; they are not whole-project content hashes.
+   Same HEAD/status cannot bind dirty/untracked bytes, ignored inputs or test environment.
+4. Pending checkpoint intent has paths but not complete selected SHA256 mapping/intended tree.
+   A surviving commit's existence/parent/tree alone cannot authenticate original review or author.
+5. Runtime publication dispatch/update flags are not all durable fields. The JSON decision note
+   is inert context, not a versioned authority grant or instruction to contact a destination.
+6. Both existing writer helpers can create lock files; a strictly read-only reconciler must not
+   call them merely to probe safety. Available flock or absent Git lock never proves quiescence.
+7. Legacy test notes lack structured tested-state/environment binding. Historical reported PASS
+   is preserved, but present applicability remains UNKNOWN unless adequate evidence is supplied.
 
-Pending intent saves paths, not the caller's complete reviewed SHA256 mapping. Fresh approval
-and selected digests in the test are supplied anew, never reconstructed from durable intent.
-Historical intent is not current authority. Later evidence-based reconciliation must explicitly
-address that gap; no automatic safe-resume decision is added here.
+## PARTIAL / NOT_STARTED
 
-## NOT_STARTED
+V3 overall and broader crash safety remain PARTIAL under the existing scoped Linux guarantees.
+Full external SAFE_TO_RESUME verification, structured test receipts, persisted review extension,
+project test runner, authority integration, preserve/resume engine and automation remain pending.
+Minimal read-only reconciliation runtime and all eighteen new acceptance cases are NOT_STARTED.
+No automatic repair, retry, rollback, restage, orphan killing, lock deletion, tests or publication.
+Network transport, Agent Fabric and all V4 runtime remain NOT_STARTED. No other project touched.
 
-Full fresh-process reconciliation/resume engine, project test runner, Guardian automation,
-preserve CLI, general network publication, automatic repair/retry/rollback/orphan cleanup,
-Agent Fabric runtime. V4 protocol/capsule/MCP/plugin/SDK/Rust/desktop/web/mobile/gateway runtime
-remains NOT_STARTED. No unrelated project changes, dependency installation or telemetry.
+## VALIDATION
 
-## TESTS ACTUALLY RUN
+This is documentation only. Full/relevant/focused runtime regression was NOT REQUIRED and NOT RUN:
+all runtime, existing tests/helpers and schemas are byte-preserved against the starting checkpoint.
+Historical acceptance (not a new run): focused 2 in 2.152s; integration 62 in 44.641s;
+V3 167 in 87.139s; full 320 in 104.129s; zero failures/errors/skips. Exact commands remain
+in starting evidence checkpoint `1edbe5a009fba26a6879486687a3987de886b179`.
 
-Historical baseline: 318 tests, not rerun before development.
-Initial focused run: 2 passed in 2.314s. Final focused run after negative-command assertions:
+Validation PASS: 39 Python ASTs, three JSON files, 207 local Markdown file/anchor links,
+100 unchanged V3 keypoints, 11 scenario rows and 18 future acceptance cases A–R. Exact eight-file
+documentation scope verified; 58 other files byte-identical against the starting checkpoint,
+including runtime, schemas, tests/helpers and V3/V4 missions. All 66 tracked/new files screened;
+only two known unchanged synthetic credential-URL fixtures matched (test_handoff.py:153 and
+test_inspection.py:144). No real credential finding; pattern screening is not universal proof.
+Exact changes and semantic claims reviewed against runtime and existing acceptance. Whitespace
+and status checks passed. No validation failure or runtime defect found. Normal CGC publication
+is the only write outside documentation edits; no account reads or unrelated project changes.
+No runtime guarantee is claimed from document validation. No new live target/query experiments.
 
-```text
-TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_parent_death -q
-Ran 2 tests in 2.152s — OK
+## KNOWN LIMITATIONS
 
-TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_parent_death test_add_interruption test_checkpoint test_commit_interruption test_mutation_interruption -q
-Ran 62 tests in 44.641s — OK
-```
-
-Relevant V3:
-
-```text
-TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_preservation test_inspection test_handoff test_checkpoint test_publication test_mutation_interruption test_transfer_interruption test_commit_interruption test_pack_interruption test_add_interruption test_parent_death -q
-Ran 167 tests in 87.139s — OK
-```
-
-Full deterministic regression, once before publication:
-
-```text
-TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -q
-Ran 320 tests in 104.129s — OK
-```
-
-All runs passed: zero failures, errors or skips. No test/runtime changes after validation.
-Existing C fixture compilation passed -shared -fPIC -Wall -Wextra -Werror -ldl; all generated
-libraries are temporary /tmp artifacts, not installed or committed.
-
-Static/documentation checks passed: 39 Python ASTs, three JSON files, 180 local Markdown
-file/anchor links and exactly 100 preserved V3 keypoints. Exact seven-file scope reviewed;
-58 other files are byte-identical, including V3/V4 missions, runtime, schemas and inherited
-tests/helpers. All 65 tracked/new files pattern-screened; only the two known unchanged
-synthetic credential-URL fixtures matched (test_handoff.py:153, test_inspection.py:144).
-No real credential finding; this is not universal secret proof. Diff/status and whitespace
-review passed. CGC fetch/push destination independently checked against the authorized repo.
-No persistent system/environment changes, dependencies or services. Temporary test-only
-subreaper adoption restores the original setting; only disposable fixtures are released/reaped.
-No test/development failures observed. A post-commit validation helper initially compared the
-seven-file session scope against moving HEAD and rejected the two-file evidence follow-up;
-its scope comparison was corrected to the fixed starting SHA and passed. No product defect.
-No production runtime, inherited test/helper or schema edits.
-
-## FRONTIER ASSESSMENT
-
-**YES, within the selected practical pre-reconciliation acceptance scope.** The last recorded
-material gap now has real parent-death/refusal evidence, including the no-index.lock window.
-This does not promote broader crash safety to universal COMPLETE. Remaining platform/internal
-write/cross-source/power-loss limitations remain explicit; no endless timing-test ladder starts.
-The next separately authorized block is full evidence-based fresh-process reconciliation.
+No new engine exists. The design cannot authenticate unsigned handoff history, reconstruct missing
+review data, prove universal process quiescence, make historical tests reproducible or guarantee
+power-loss/hostile same-user safety. Limits are explicit evidence gaps, not inferred approval.
+Future collection must enforce the specified shared command/deadline budget; existing primitives
+alone do not implement that orchestration. First-engine UNKNOWN is intentional, not unfinished
+classification. External YES verification is a later separate acceptance gate.
 
 ## FILES CREATED / MODIFIED
 
-Created: tests/test_parent_death.py.
-Modified: README.md, AGENTS.md, docs/V3_PROGRESS.md, docs/V3_CONTRACT.md,
-docs/V3_ACCEPTANCE.md, tests/README.md.
-Runtime, inherited helpers/tests, V3/V4 missions, schemas and V1/V2 records unchanged.
+Created: docs/V3_RECONCILIATION.md.
+Modified: AGENTS.md, README.md, docs/V3_CONTRACT.md, docs/V3_ACCEPTANCE.md,
+docs/V3_PROGRESS.md, docs/DATA_MODEL.md, docs/DECISIONS.md.
+No runtime, schema, test/helper, V3/V4 mission, other project or persistent system changes.
 
 ## DO_NOT_REPEAT
 
-Do not redo accepted staging, commit, transfer, pack/ref or these parent-death windows without
-new defect evidence. Do not infer quiescence from flock/index.lock availability, reuse dead-parent
-authority, invent a failure/success receipt, delete evidence, retry, repair or kill old processes
-automatically. No live quota discovery, credential access, destructive Git commands or V4 runtime.
+Do not redo accepted crash/mutation blocks or live quota discovery. Do not reinterpret missing
+review/test fields, invent normal completion, promote embedded YES, fetch/update refs during
+read-only reconciliation, reconstruct authority from notes or begin V4. The review choice is
+settled for the minimal engine; no schema expansion is needed merely to return truthful UNKNOWN.
 
 ## NEXT_EXACT_ACTION
 
-After publication STOP. Next separately scoped V3 block: **audit and specify full evidence-based
-fresh-process reconciliation of durable intent against current Git/checkpoint/publication/test
-reality, beginning with interrupted attempts and missing durable review digests**. Determine the
-bounded reconciliation contract before implementation; retain UNKNOWN until evidence justifies
-otherwise. No automatic mutation, retry or V4. Reconcile present repository evidence first.
+**Implement the minimal bounded read-only fresh-process reconciliation engine against
+V3_RECONCILIATION.md, beginning with interrupted durable intent, current local Git and missing
+review/test bindings, with cases A–R as the acceptance plan.** Keep SAFE_TO_RESUME UNKNOWN,
+mutation permission false and remote access explicit/optional. Reconcile present repository
+truth first. Do not implement external YES promotion, full resume execution or V4 in that block.
+This contract-only session stops after verified publication; implementation requires its next task.
 
 ## LAST SAFE CHECKPOINT / PUBLICATION
 
-Starting verified checkpoint: `294ac10677af0990281cf655aa0e8c414306653d`.
-Acceptance implementation: `f57fe1df85c84fea08d51410dcd6ffbc6497cc41` — **REMOTE_VERIFIED**.
-Normal forward push succeeded. Independent local HEAD, origin/main and live remote main all
-equalled that SHA; working tree clean. This documentation-only follow-up records the observed
-publication and acceptance row 41. Its own HEAD must be pushed and independently verified;
-the final report carries its resolved SHA. No self-containing hash, no repeated runtime tests.
-If follow-up publication fails, retain the local evidence commit and report its actual status.
+Starting verified checkpoint: `1edbe5a009fba26a6879486687a3987de886b179`.
+Specification checkpoint: HEAD after normal commit/push and independent ref verification.
+Publication remains pending until observed. Never invent a self-containing commit hash.
