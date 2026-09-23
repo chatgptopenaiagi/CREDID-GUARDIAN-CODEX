@@ -50,7 +50,7 @@ claim that future external-effect implementations already satisfy them.
 | 38 | No secret material was intentionally committed. | COMPLETE | Development publication scan; no secret input used. Not universal proof. |
 | 39 | Documentation is complete. | PARTIAL | Mission/contract/progress preserved; later implementation docs pending. |
 | 40 | Canonical deterministic test command passes. | COMPLETE | 356 tests pass (320 inherited unchanged + 36 reconciliation tests); exact focused/integration/V3/full commands and results are in V3_PROGRESS. |
-| 41 | Git publication of CGC V3 itself is verified. | COMPLETE | Reconciliation specification 09cb46fc8df4ba95034d6fe44d113498a52675e6 pushed normally; local/tracking/live main equality and clean tree independently verified. Evidence follow-up HEAD checked after publication; final report carries its resolved SHA. No new runtime acceptance claimed. |
+| 41 | Git publication of CGC V3 itself is verified. | COMPLETE | Read-only reconciliation implementation 0ee3ab2a78e1cb3f2ad88075a4908c6a88bb8d80 pushed normally; local/tracking/live main equality and clean tree independently verified. Documentation-only evidence follow-up uses HEAD; final report records its resolved SHA and independent verification. Final regression: 356 tests passed; external safe-resume verification remains pending. |
 | 42 | The final V3 checkpoint is resumable. | PARTIAL | Development handoff and runtime fresh-process continuity readback exist; complete V3 safe-resume workflow pending. |
 | 43 | V4 or cloud work has not begun without authorization. | COMPLETE | No V4/cloud/GUI/ARX implementation. |
 

@@ -183,5 +183,9 @@ or V4 in this completed read-only-engine session.
 ## LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting verified checkpoint: `de0ffbc6fb52930c0e324eea7dc1c4bb2ff2bc60`.
-Implementation is pending normal commit/push and independent local/tracking/live verification.
-Commit self-reference is HEAD; the final report records its resolved SHA after verification.
+Implementation checkpoint: `0ee3ab2a78e1cb3f2ad88075a4908c6a88bb8d80`.
+Normal push succeeded. Independent local HEAD, origin/main and live remote main observations
+all matched that implementation checkpoint; the working tree was clean.
+This documentation-only evidence follow-up uses HEAD as its self-reference; its resolved SHA
+and final three-ref verification are reported after publication. No runtime or test change follows
+the final 356-test regression.
