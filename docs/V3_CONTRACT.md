@@ -831,7 +831,7 @@ lock deletion, safe-resume engine or V4 runtime is introduced.
 
 The [V3 reconciliation contract](V3_RECONCILIATION.md) is the authoritative specification
 for evidence precedence/freshness, interrupted-intent interpretation, review/test gaps,
-read-only collection, bounded output and future acceptance. It is SPECIFIED, not implemented.
+read-only collection, bounded output and future acceptance. Its minimal read-only engine is now implemented; see the implementation/conformance section.
 Existing attempt/inspection/handoff schemas and adapter semantics remain unchanged. Its initial
 engine must keep outer SAFE_TO_RESUME UNKNOWN and mutation permission false. No historical
 receipt, inner YES, saved path or digest grants present authority. Full safe resume stays PARTIAL.

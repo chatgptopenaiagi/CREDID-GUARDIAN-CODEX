@@ -216,3 +216,13 @@ only the fixture orphan for bounded reaping and restores its prior setting. Harn
 release after assertions proves staging can finish without a parent receipt; fallback cleanup
 kills/reaps the orphan. Production CGC does not acquire an orphan-reaper capability. Existing
 staging release controls remain unchanged. See the [parent-death contract](../docs/V3_CONTRACT.md#abrupt-cgc-parent-death-with-active-staging).
+
+V3 read-only reconciliation: `test_reconciliation.py` implements first-engine cases A–R with
+ordinary disposable Linux fixtures and pure evidence tests, without rerunning crash experiments
+as new acceptance. Source/store/remote file bytes, modes, sizes and mtimes remain unchanged;
+Git command recording excludes mutation, writer helpers are forbidden, and cleanup may target
+only newly created observation children. Tests cover pending intent, surviving commits, missing
+review, legacy/stale tests, current digest comparison/deletion/limits, local-bare ref observations,
+races, strict projection replay, fixed safety fields and independent Python-process readback.
+Shared command/deadline and cumulative review-byte limits are tested. Full trusted test-receipt
+reuse and external YES are not claimed. See [implementation scope](../docs/V3_RECONCILIATION.md#14-first-engine-implementation-and-conformance).

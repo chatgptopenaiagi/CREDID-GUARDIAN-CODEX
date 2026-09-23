@@ -518,3 +518,20 @@ The minimal future engine is local-first, bounded, deterministic and read-only; 
 UNKNOWN safety and false mutation permission. Full external safety verification and execution remain
 separate. Contract ready for that minimal implementation: YES. V3 PARTIAL; V4 parked. This session
 only audits/specifies/validates/publishes documentation, then stops. Current evidence is in V3_PROGRESS.
+
+## 2026-09-23 — Minimal read-only reconciliation engine
+
+Verified clean de0ffbc6fb52930c0e324eea7dc1c4bb2ff2bc60 against tracking/live main.
+Implemented the accepted contract through a separate collector/pure classifier and strict new
+projection, without changing existing schemas. No CLI is needed for the first Python API;
+independent process readback is tested directly. Historical intent/receipts remain attributed.
+All results retain UNKNOWN safety and false mutation flags. H's hypothetical complete trusted
+test binding stays deferred; legacy PASS never becomes current PASS from HEAD equality alone.
+
+Nested existing Git helpers need one shared command/deadline budget; a ContextVar scopes it
+without global monkeypatching or changing adapters outside reconciliation. The existing safe
+candidate reader gains an optional cumulative byte budget, used across both review reads.
+The accepted 4 MiB cap is preserved rather than doubled. Invalid/oversized projections refuse
+without truncating evidence or writing failure records. No recovery, writer probes, mutation,
+automatic tests, network transport, authority inheritance or V4 implementation was added.
+See V3_PROGRESS for validation, development corrections, publication and the next bounded scope.

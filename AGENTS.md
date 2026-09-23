@@ -18,8 +18,8 @@ Real active git add interruption before/after index replacement is verified offl
 a fixture-only loader shim. Abrupt parent death at these gates and fresh-invocation refusal
 are verified offline; broader crash safety and full resume remain PARTIAL. No orphan cleanup
 is promised by production CGC.
-The [fresh-process reconciliation contract](docs/V3_RECONCILIATION.md) is SPECIFIED;
-its read-only engine and acceptance cases are NOT_STARTED. A new mutation after uncertain
+The [fresh-process reconciliation engine](docs/V3_RECONCILIATION.md#14-first-engine-implementation-and-conformance)
+is implemented as a bounded read-only Python API with first-engine A–R acceptance. A new mutation after uncertain
 interruption needs fresh review when durable review digests are missing; old intent grants
 neither new authority nor safe-resume promotion.
 The inspect and handoff-status CLIs are observational; there is no preserve or reconcile CLI.

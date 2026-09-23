@@ -12,7 +12,7 @@ claim that future external-effect implementations already satisfy them.
 |---|---|---|---|
 | 1 | V1 tests remain passing. | COMPLETE | Inherited 32 V1 tests unchanged. |
 | 2 | V2 tests remain passing. | COMPLETE | All 153 inherited V1/V2 tests unchanged and passing. |
-| 3 | V3 preservation schema exists and is validated. | COMPLETE | Three explicit provisional validated schemas: attempt, inspection and durable handoff. Future evolution remains deliberate. |
+| 3 | V3 preservation schema exists and is validated. | COMPLETE | Four explicit provisional validated models: attempt, inspection, durable handoff and the separate read-only reconciliation projection. Future evolution remains deliberate. |
 | 4 | Explicit project targeting works. | COMPLETE | Explicit inspect --project required; exact root only. test_explicit_root_only_and_safe_failures and CLI tests. |
 | 5 | Project root validation works. | COMPLETE | Owned no-follow root, metadata and device/mode boundaries; unsafe/unsupported layouts refused. Scoped Linux contract, not universal Git-layout support. |
 | 6 | Non-mutating project snapshot works. | COMPLETE | Bounded local collector; clean/dirty/rename/conflict/upstream/index flags and repeated observation tests. Full fixture byte/metadata comparisons. |
@@ -38,7 +38,7 @@ claim that future external-effect implementations already satisfy them.
 | 26 | Atomic canonical preservation state works. | PARTIAL | Atomic canonical handoff tested with live readers and killed writers; target preservation transaction pending. |
 | 27 | Repeated invocation is safe/idempotent where applicable. | PARTIAL | Already-equal remote verified without re-publication; stale tracking can advance safely. Missing/moved refs refuse; no blind retries or rollback. |
 | 28 | SAFE_TO_RESUME semantics are evidence-based. | PARTIAL | Outer handoff UNKNOWN/false never upgrades curated attempt receipts. External proof obligations specified in V3_RECONCILIATION.md; end-to-end verification pending. |
-| 29 | Resume from a fresh CGC process works. | PARTIAL | Fresh process reconstructs validated human/JSON handoff including latest failure; Git/test reconciliation contract SPECIFIED in V3_RECONCILIATION.md; engine and safe resume execution pending. |
+| 29 | Resume from a fresh CGC process works. | PARTIAL | Fresh process reconstructs validated human/JSON handoff including latest failure; Read-only reconciliation engine and first-engine cases A–R implemented; safe-resume verification/execution remain pending. |
 | 30 | Manual preservation is independent from live quota availability. | PARTIAL | Explicit MANUAL local-checkpoint adapter independent of quota; full preservation/resume workflow pending. |
 | 31 | Synthetic Guardian policy integration works. | NOT_STARTED | Required future implementation and deterministic acceptance tests. |
 | 32 | UNKNOWN Guardian state cannot authorize automatic mutation. | PARTIAL | All automatic triggers denied in Phase A; Guardian integration pending. |
@@ -49,7 +49,7 @@ claim that future external-effect implementations already satisfy them.
 | 37 | No V1/V2 semantics were weakened. | COMPLETE | Inherited runtime/tests and V2 records unchanged. |
 | 38 | No secret material was intentionally committed. | COMPLETE | Development publication scan; no secret input used. Not universal proof. |
 | 39 | Documentation is complete. | PARTIAL | Mission/contract/progress preserved; later implementation docs pending. |
-| 40 | Canonical deterministic test command passes. | COMPLETE | 320 tests pass (318 inherited unchanged + two real parent-death tests); historical exact commands/output in checkpoint 1edbe5a; documentation-only reconciliation specification did not rerun them. |
+| 40 | Canonical deterministic test command passes. | COMPLETE | 356 tests pass (320 inherited unchanged + 36 reconciliation tests); exact focused/integration/V3/full commands and results are in V3_PROGRESS. |
 | 41 | Git publication of CGC V3 itself is verified. | COMPLETE | Reconciliation specification 09cb46fc8df4ba95034d6fe44d113498a52675e6 pushed normally; local/tracking/live main equality and clean tree independently verified. Evidence follow-up HEAD checked after publication; final report carries its resolved SHA. No new runtime acceptance claimed. |
 | 42 | The final V3 checkpoint is resumable. | PARTIAL | Development handoff and runtime fresh-process continuity readback exist; complete V3 safe-resume workflow pending. |
 | 43 | V4 or cloud work has not begun without authorization. | COMPLETE | No V4/cloud/GUI/ARX implementation. |
@@ -65,8 +65,8 @@ See [handoff scope and limitations](V3_CONTRACT.md#durable-handoff-persistence) 
 
 ## Reconciliation contract acceptance boundary
 
-[Reconciliation specification](V3_RECONCILIATION.md): audited design COMPLETE; engine and
-cases A–R (18 cases) NOT_STARTED. The 11-scenario matrix traces existing interruption evidence,
+[Reconciliation specification](V3_RECONCILIATION.md): audited design and minimal engine COMPLETE within the first-engine scope;
+cases A–R (18 cases) covered, with fully bound test-receipt reuse and external YES deferred. The 11-scenario matrix traces existing interruption evidence,
 not newly executed tests. No runtime acceptance row is promoted because a design was written.
 Read-only non-mutation, deterministic classification, missing review/test evidence, strict
-compatibility, local-first remote scope and UNKNOWN safety are mandatory future acceptance.
+compatibility, local-first remote scope and UNKNOWN safety are mandatory acceptance; exact current results and limits are in progress.

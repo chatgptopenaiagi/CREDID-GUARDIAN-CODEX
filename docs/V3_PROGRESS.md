@@ -2,139 +2,186 @@
 
 ## OVERALL STATUS
 
-**PARTIAL. V3 remains active.** Accepted inspection, durable handoff, manual checkpoint,
-local-bare publication/verification and scoped interruption/parent-death evidence remain intact.
-The **fresh-process reconciliation contract is SPECIFIED / AUDITED / documentation-validated**.
-The reconciliation engine, its future acceptance cases and external safe-resume verifier are
-NOT_STARTED. V4 remains ARCHITECTED / runtime NOT_STARTED and byte-identical.
-All 100 [V3 mission](V3_MISSION.md) keypoints remain unchanged.
+**PARTIAL. V3 remains active.** Prior inspection, durable handoff, checkpoint, local-bare
+publication/verification and scoped crash acceptance remain intact. The **minimal bounded
+read-only fresh-process reconciliation engine is IMPLEMENTED and accepted within its first-engine
+scope**. Full external safe resume, recovery execution and automation remain NOT_STARTED.
+V4 remains ARCHITECTED / runtime NOT_STARTED; V3/V4 missions and all 100 keypoints are unchanged.
 
 ## VERIFIED STARTING CHECKPOINT
 
-Present root, status, diff/stat/whitespace and 14-entry history were checked before editing.
-Clean main; independent HEAD = origin/main = live remote main =
-`1edbe5a009fba26a6879486687a3987de886b179`.
-Last parent-death implementation: `f57fe1df85c84fea08d51410dcd6ffbc6497cc41`.
-No newer work required preservation/reconciliation; no reset or accepted-work duplication.
+Before editing: root, clean status, empty diff/stat/whitespace, fourteen-entry history checked.
+Independent local HEAD = origin/main = live remote main =
+`de0ffbc6fb52930c0e324eea7dc1c4bb2ff2bc60`.
+Specification commit: `09cb46fc8df4ba95034d6fe44d113498a52675e6`.
+Read the complete accepted reconciliation contract; reconciled current authoritative records,
+existing evidence-model runtime and relevant A–R interruption fixtures. No accepted crash block
+was repeated as new work, no valid work reverted, no other repository touched.
 
 ## CAPACITY
 
-Current weekly and five-hour capacity UNKNOWN. Human planning value 87% weekly is historical,
-not a current observation. No quota/account/credential access, percentage estimate or purchased
-credit inference. Capacity preservation threshold activated: NO.
+Current weekly/five-hour capacity UNKNOWN. Human planning value 87% weekly remains historical.
+No quota/account/credential read or estimate. Capacity preservation activated: NO.
 
-## THIS COHERENT BLOCK
+## COMPLETE — THIS ONE BLOCK
 
-Only audit, specification and validation of evidence-based fresh-process reconciliation.
-No prototype was necessary. [V3_RECONCILIATION.md](V3_RECONCILIATION.md) separates this substantial
-future contract from the existing 800+ line implemented-adapter contract, which links to it.
-The data model and decision record explain compatibility and the chosen review approach.
+- New reconciliation.py separates bounded collect() from pure classify(); reconcile() composes
+  them. Explicit version cgc-reconciliation-v3.0-provisional, strict nested validation and replayed
+  derived output. render_json/render_human use exactly that validated model. Python API only;
+  no reconcile CLI, service, daemon, database or package dependency.
+- Pending intent is the primary fixture: historical paths/receipts/phase/test notes and both
+  continuity slots survive, with final handoff generation/digest compared. No create/writer/
+  migration/failure-publication calls. PUBLISHED remains a continuity-store status, not Git success.
+- Current local observation plus repeated semantic index (path/mode/stage/flag/OID), config and
+  metadata fingerprints, locks/operations, HEAD/branch and at most two relevant commit identities.
+  Surviving commit parent/tree comparison is explicitly against supplied expectations, never
+  inferred review or a backfilled local_commit receipt. No reflog/history crawl or process scanner.
+- Optional fresh review under existing candidate protections; raw SHA256 inputs checked against
+  safe file bytes, resulting Git blob/mode evidence compared twice. Deletion is explicit None.
+  Missing historical digests remain UNKNOWN. No file content export or authority inferred.
+- Legacy test PASS/FAIL retained separately from UNKNOWN current applicability. Optional attributed
+  current test reports can supply HEAD binding: mismatch proves STALE; equality cannot establish
+  dirty-input/environment applicability. Fully bound trusted test-receipt reuse remains future.
+- Optional explicit approved local-bare reads use ls-remote/direct ref/type and existing layout/
+  identity checks, never publish(), fetch or update-ref. Tracking remains untouched. No remote
+  query by default; failed optional observation preserves local facts and UNKNOWN remote scope.
+- Fixed output invariants: SAFE_TO_RESUME UNKNOWN; mutation_allowed=false;
+  automatic_mutation_authorized=false. Valid inner-attempt YES never upgrades them. Current
+  authority descriptions are inert; a requested future mutation requires fresh scoped authority.
+- Claim-scoped CURRENT/HISTORICAL/STALE/CONTRADICTED/UNKNOWN explanations retain both sides.
+  Ordered issues follow target → durable → pending/locks → Git conflict → review/tests → remote;
+  deterministic domain/subject tie-breaks and exactly one safe next action. No hidden I/O in classifier.
+- Shared 48-Git-command/60-second budget encompasses nested helpers, reset with ContextVar finally;
+  command five-second/output bounds unchanged. Mutation commands and mutating config forms refused
+  before spawn within this scope. Existing adapters outside it retain their behavior.
+- Candidate reader's optional shared budget limits both review reads together to 4 MiB accepted
+  content, not 8 MiB. More than 2 MiB distinct content may exhaust repeated review; truthful limit
+  refusal is intentional. Output >256 KiB or >64 issues refuses without truncated all-clear.
+- Negative tests snapshot source/store/remote files (bytes/modes/sizes/mtimes), prohibit writer
+  helpers and mutation dispatch, and restrict cleanup to PIDs spawned for current observations.
+  Independent Python process returns the same validated projection without changing fixtures.
 
-## COMPLETE
+## ACCEPTANCE A–R
 
-- Audited current handoff/inspection/checkpoint/publication/signals/CLI and pure attempt semantics,
-  plus accepted handoff/checkpoint/publication/ref/transfer/commit/pack/add/parent-death evidence.
-  Reconciled AGENTS, README, V3 mission/progress/contract/acceptance, data model, preservation/
-  security policies, architecture, decisions, roadmap and V4 compatibility boundary.
-- Defined eight input domains: durable continuity, local Git, remote Git, checkpoint, publication,
-  tests, review and current authority. Evidence, identity, state and authority stay distinct.
-- Claim-scoped precedence and CURRENT/HISTORICAL/STALE/CONTRADICTED/UNKNOWN applicability preserve
-  both historical and fresh evidence. Observation time alone never refreshes authority or content.
-- Traced eleven interrupted/completed scenarios to inherited acceptance tests; specified eighteen
-  future cases A–R including failures, schema refusal, identity races and inner-YES non-promotion.
-- Selected fresh review/digests after uncertain interruption, without modifying strict schemas.
-  Historical digest persistence is a possible later optimization, never automatic authority.
-- Defined a deterministic read-only collector/classifier projection, explanation ordering, human
-  rendering from the same state, strict bounds, current-read scope and failure degradation.
-- Defined later action/level-specific YES proof obligations while requiring the initial engine
-  to emit UNKNOWN and false mutation permission unconditionally. Clean is not safe; dirty work
-  can be explained. Known failing tests are not automatically failed preservation.
-- Kept remote observation optional for local continuity; initial remote scope stays explicit
-  local-bare only. Existing publish() cannot be used as read-only verification because it fetches
-  objects and updates tracking. No current ref observation backfills a historical success receipt.
-- Declared contract ready for minimal implementation: YES. No implementation begun this session.
+| Cases | Status / evidence |
+|---|---|
+| A / B | COMPLETE: old index+lock / complete staged index, pending intent, no mutation |
+| C / D | COMPLETE: surviving structural match without receipt / changed HEAD contradiction |
+| E / F / G | COMPLETE: old remote / equal remote with stale tracking / historical VERIFIED then moved ref |
+| H | COMPLETE for first-engine legacy PASS + UNKNOWN. Fully bound trusted receipt reuse NOT_STARTED, as allowed by contract section 8 |
+| I | COMPLETE: supplied historical HEAD mismatch -> STALE; same HEAD with dirty bytes still UNKNOWN |
+| J / K | COMPLETE: absent durable review / matching current review without authority |
+| L | COMPLETE: observation-only state with no required action still UNKNOWN safety |
+| M / N | COMPLETE: timeout/cancellation; absent/corrupt/unsupported handoff preserved |
+| O | COMPLETE: target identity mismatch, local race, handoff-generation race and malformed second evidence |
+| P / Q / R | COMPLETE: remote unavailable/default no query; valid embedded YES; config/path/size/budget refusal |
 
-## IMPORTANT AUDIT FINDINGS
+Additional checks: fresh process, pure deterministic rendering, unknown fields/version/enums,
+reference formats/bindings, list/string/output bounds, unsafe paths, symlink/hardlink refusal,
+review mismatch/deletion, shared byte/deadline/command budgets. These recreate observable states;
+they do not repeat synchronized crash fixtures or claim universal process-death coverage.
 
-1. Handoff slot/generation/digest validation is structural, not authentication of adapter claims.
-   Handoff latest_attempt=PUBLISHED may hold incomplete CHECKPOINTING/PUBLISHING intent.
-2. Inner pure-attempt YES cannot replace outer UNKNOWN. No current adapter proves full safe resume.
-3. Inspection digests include observed_at and metadata; they are not whole-project content hashes.
-   Same HEAD/status cannot bind dirty/untracked bytes, ignored inputs or test environment.
-4. Pending checkpoint intent has paths but not complete selected SHA256 mapping/intended tree.
-   A surviving commit's existence/parent/tree alone cannot authenticate original review or author.
-5. Runtime publication dispatch/update flags are not all durable fields. The JSON decision note
-   is inert context, not a versioned authority grant or instruction to contact a destination.
-6. Both existing writer helpers can create lock files; a strictly read-only reconciler must not
-   call them merely to probe safety. Available flock or absent Git lock never proves quiescence.
-7. Legacy test notes lack structured tested-state/environment binding. Historical reported PASS
-   is preserved, but present applicability remains UNKNOWN unless adequate evidence is supplied.
+## TESTS ACTUALLY RUN / DEVELOPMENT CORRECTIONS
 
-## PARTIAL / NOT_STARTED
+Historical baseline: 320 tests, not rerun before development.
+Initial focused run: 25 tests, two failures and one error. Corrected missing historical branch
+being treated as a mismatch, normalized handoff validation exceptions, and aligned the missing-store
+expectation with the existing UNSAFE_CACHE refusal. Subsequent focused runs passed:
+25 in 3.099s; 25 in 2.851s; 33 in 4.001s; 33 in 4.370s; 33 in 3.597s.
 
-V3 overall and broader crash safety remain PARTIAL under the existing scoped Linux guarantees.
-Full external SAFE_TO_RESUME verification, structured test receipts, persisted review extension,
-project test runner, authority integration, preserve/resume engine and automation remain pending.
-Minimal read-only reconciliation runtime and all eighteen new acceptance cases are NOT_STARTED.
-No automatic repair, retry, rollback, restage, orphan killing, lock deletion, tests or publication.
-Network transport, Agent Fabric and all V4 runtime remain NOT_STARTED. No other project touched.
+Integration before final shared review-byte refinement:
 
-## VALIDATION
+```text
+TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_reconciliation test_handoff test_inspection test_checkpoint test_publication -q
+Ran 128 tests in 20.732s — OK
+```
 
-This is documentation only. Full/relevant/focused runtime regression was NOT REQUIRED and NOT RUN:
-all runtime, existing tests/helpers and schemas are byte-preserved against the starting checkpoint.
-Historical acceptance (not a new run): focused 2 in 2.152s; integration 62 in 44.641s;
-V3 167 in 87.139s; full 320 in 104.129s; zero failures/errors/skips. Exact commands remain
-in starting evidence checkpoint `1edbe5a009fba26a6879486687a3987de886b179`.
+Focused reconciliation/checkpoint scope, including the shared-byte test:
 
-Validation PASS: 39 Python ASTs, three JSON files, 207 local Markdown file/anchor links,
-100 unchanged V3 keypoints, 11 scenario rows and 18 future acceptance cases A–R. Exact eight-file
-documentation scope verified; 58 other files byte-identical against the starting checkpoint,
-including runtime, schemas, tests/helpers and V3/V4 missions. All 66 tracked/new files screened;
-only two known unchanged synthetic credential-URL fixtures matched (test_handoff.py:153 and
-test_inspection.py:144). No real credential finding; pattern screening is not universal proof.
-Exact changes and semantic claims reviewed against runtime and existing acceptance. Whitespace
-and status checks passed. No validation failure or runtime defect found. Normal CGC publication
-is the only write outside documentation edits; no account reads or unrelated project changes.
-No runtime guarantee is claimed from document validation. No new live target/query experiments.
+```text
+TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_reconciliation test_checkpoint -q
+Ran 57 tests in 7.163s — OK
+```
 
-## KNOWN LIMITATIONS
+Relevant V3 suite covers all integration surfaces before the final projection-binding tightening:
 
-No new engine exists. The design cannot authenticate unsigned handoff history, reconstruct missing
-review data, prove universal process quiescence, make historical tests reproducible or guarantee
-power-loss/hostile same-user safety. Limits are explicit evidence gaps, not inferred approval.
-Future collection must enforce the specified shared command/deadline budget; existing primitives
-alone do not implement that orchestration. First-engine UNKNOWN is intentional, not unfinished
-classification. External YES verification is a later separate acceptance gate.
+```text
+TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_preservation test_inspection test_handoff test_checkpoint test_publication test_mutation_interruption test_transfer_interruption test_commit_interruption test_pack_interruption test_add_interruption test_parent_death test_reconciliation -q
+Ran 201 tests in 96.851s — OK
+```
+
+First full deterministic regression: 354 tests in 109.369s — OK. Final code review then found
+that externally supplied projection evidence needed cross-field validation of remote direct/live
+agreement and review-path coverage. Added those checks plus two tampering tests; this justified
+one repeated full regression after the final change rather than publishing the validator gap.
+
+Final focused reconciliation run:
+
+```text
+TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_reconciliation -q
+Ran 36 tests in 3.792s — OK
+```
+
+Final full deterministic regression:
+
+```text
+TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -q
+Ran 356 tests in 106.918s — OK
+```
+
+Zero failures, errors or skips. This includes all 203 current V3 tests after the final tightening;
+the earlier separate 201-test V3 run is not misrepresented as a post-change run. No runtime/test
+edits followed this final validation. Full suite ran twice only because final review found a
+material projection-validator defect after the first successful run.
+
+Static validation PASS: 41 Python ASTs, three JSON files, 208 local Markdown file/anchor links,
+100 V3 keypoints, 11 scenario rows and 18 A–R case definitions. Exact thirteen-file scope checked;
+55 other files byte-identical, including existing schemas, inherited tests/helpers, V3/V4 missions
+and unrelated runtime. All 68 tracked/new files pattern-screened; only the two known unchanged
+synthetic credential-URL fixtures matched (test_handoff.py:153, test_inspection.py:144). No real
+credential finding; pattern screening is not universal proof. Exact diff/status reviewed and
+whitespace checks pass. Inherited C fixture warnings-as-errors compilation passes in regression.
+No unresolved deterministic failures. No inherited tests were modified.
+
+## LIMITATIONS / PARTIAL / NOT_STARTED
+
+Overall V3 remains PARTIAL. Repeated observation is not an atomic snapshot or hostile same-user
+race defense. Process quiescence remains UNKNOWN; no historical children are killed. Read access
+can update atime. Filesystem calls, Git decompression and cleanup lack hard realtime/RSS guarantees.
+Bounds/config/layout restrictions remain deliberate, with Linux fixtures only. Projection validation
+proves consistency, not authenticity of caller-supplied evidence. Observation time is caller supplied.
+Malformed inputs and unrepresentable oversized results raise fixed validation/resource errors;
+no partial snapshot is promoted to valid evidence. Complete test-environment binding is absent.
+No external YES verifier, authority inheritance, automatic tests, rollback, retry, orphan repair,
+lock deletion, network publication, Guardian automation, preserve CLI, full resume engine, Agent
+Fabric or V4 runtime. Existing handoff/inspection/attempt schemas are unchanged.
 
 ## FILES CREATED / MODIFIED
 
-Created: docs/V3_RECONCILIATION.md.
-Modified: AGENTS.md, README.md, docs/V3_CONTRACT.md, docs/V3_ACCEPTANCE.md,
-docs/V3_PROGRESS.md, docs/DATA_MODEL.md, docs/DECISIONS.md.
-No runtime, schema, test/helper, V3/V4 mission, other project or persistent system changes.
+Created: src/cgc/reconciliation.py; tests/test_reconciliation.py.
+Modified: src/cgc/inspection.py (invocation-local observation budget), src/cgc/checkpoint.py
+(optional shared content-read budget); AGENTS.md, README.md, docs/DATA_MODEL.md, docs/DECISIONS.md,
+docs/V3_ACCEPTANCE.md, docs/V3_CONTRACT.md, docs/V3_RECONCILIATION.md, docs/V3_PROGRESS.md,
+tests/README.md. No handoff/publication/preservation/signals/CLI runtime or inherited tests changed.
+No dependencies, services, persistent environment/system changes or unrelated project changes.
 
 ## DO_NOT_REPEAT
 
-Do not redo accepted crash/mutation blocks or live quota discovery. Do not reinterpret missing
-review/test fields, invent normal completion, promote embedded YES, fetch/update refs during
-read-only reconciliation, reconstruct authority from notes or begin V4. The review choice is
-settled for the minimal engine; no schema expansion is needed merely to return truthful UNKNOWN.
+Do not redo accepted crash blocks, quota discovery or reconciliation A–R without defect evidence.
+Do not mistake model validation for authenticity, old PASS for current PASS, observed ref equality
+for a new publication receipt, matching digests for authority, or UNKNOWN for permission.
+No writer-lock probes, fetch/update-ref, automatic tests/repair, hidden schema migration or V4.
 
 ## NEXT_EXACT_ACTION
 
-**Implement the minimal bounded read-only fresh-process reconciliation engine against
-V3_RECONCILIATION.md, beginning with interrupted durable intent, current local Git and missing
-review/test bindings, with cases A–R as the acceptance plan.** Keep SAFE_TO_RESUME UNKNOWN,
-mutation permission false and remote access explicit/optional. Reconcile present repository
-truth first. Do not implement external YES promotion, full resume execution or V4 in that block.
-This contract-only session stops after verified publication; implementation requires its next task.
+**Audit and specify the external SAFE_TO_RESUME verifier against the implemented reconciliation
+projection, beginning with unresolved quiescence and tested-state/review evidence obligations.**
+Determine what additional evidence can actually discharge the proof before implementing YES.
+Reconcile current repository reality first. Do not start verifier implementation, recovery execution
+or V4 in this completed read-only-engine session.
 
 ## LAST SAFE CHECKPOINT / PUBLICATION
 
-Starting verified checkpoint: `1edbe5a009fba26a6879486687a3987de886b179`.
-Specification commit: `09cb46fc8df4ba95034d6fe44d113498a52675e6` — REMOTE_VERIFIED.
-Normal forward push succeeded. Independent local HEAD, origin/main and live remote main all
-matched that SHA; working tree clean. This evidence-only follow-up records that observed equality
-and acceptance row 41. Its own HEAD must be pushed and independently verified; final report
-records the resolved SHA. No self-containing hash. No runtime/tests changed after validation.
+Starting verified checkpoint: `de0ffbc6fb52930c0e324eea7dc1c4bb2ff2bc60`.
+Implementation is pending normal commit/push and independent local/tracking/live verification.
+Commit self-reference is HEAD; the final report records its resolved SHA after verification.

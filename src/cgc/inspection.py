@@ -3,6 +3,8 @@
 No target writes, project commands, network, content export or preservation authority.
 See docs/V3_CONTRACT.md for the deliberately restricted configuration/layout boundary.
 """
+from contextlib import contextmanager
+from contextvars import ContextVar
 import hashlib
 import json
 import os
@@ -25,6 +27,7 @@ MAX_CONFIG_BYTES = 64 * 1024
 TOTAL_SECONDS = 20
 COMMAND_SECONDS = 5
 GIT = '/usr/bin/git'
+_OBSERVATION_BUDGET = ContextVar('cgc_observation_budget', default=None)
 OPERATIONS = ('MERGE_HEAD', 'CHERRY_PICK_HEAD', 'REVERT_HEAD', 'rebase-merge',
               'rebase-apply', 'sequencer', 'BISECT_LOG')
 DOCUMENTS = ('AGENTS.md', 'README.md', 'PROGRESS.md', 'HANDOFF.md',
@@ -46,7 +49,25 @@ class InspectionError(ValueError):
         super().__init__(self.code)
 
 
+@contextmanager
+def observation_budget(*, seconds=60, commands=48):
+    """Invocation-local read-only budget; existing adapters outside it are unchanged."""
+    if _OBSERVATION_BUDGET.get() is not None:
+        raise InspectionError('RESOURCE_LIMIT')
+    if type(commands) is not int or not 1 <= commands <= 48 or not 0 < seconds <= 60:
+        raise InspectionError('RESOURCE_LIMIT')
+    budget = {'deadline': time.monotonic() + seconds, 'remaining': commands}
+    token = _OBSERVATION_BUDGET.set(budget)
+    try:
+        yield budget
+    finally:
+        _OBSERVATION_BUDGET.reset(token)
+
+
 def _check_time(deadline):
+    budget = _OBSERVATION_BUDGET.get()
+    if budget is not None:
+        deadline = min(deadline, budget['deadline'])
     if time.monotonic() >= deadline:
         raise InspectionError('TIMEOUT')
 
@@ -54,6 +75,21 @@ def _check_time(deadline):
 def _run(args, *, cwd, deadline, pass_fds=()):
     """Fixed Git executable, isolated environment, bounded combined pipes; no shell."""
     _check_time(deadline)
+    budget = _OBSERVATION_BUDGET.get()
+    if budget is not None:
+        # Only fixed read commands used by inspection/reconciliation. Reject before spawn.
+        i = 0
+        while i < len(args) and args[i] == '-c':
+            i += 2
+        if i >= len(args) or args[i] not in {'config', 'rev-parse', 'ls-files', 'status',
+                                            'rev-list', 'cat-file', 'for-each-ref', 'ls-remote'}:
+            raise InspectionError('UNSUPPORTED_CONFIG')
+        if args[i] == 'config' and ('--list' not in args or '--no-includes' not in args):
+            raise InspectionError('UNSUPPORTED_CONFIG')
+        if budget['remaining'] <= 0:
+            raise InspectionError('RESOURCE_LIMIT')
+        budget['remaining'] -= 1
+        deadline = min(deadline, budget['deadline'])
     end = min(deadline, time.monotonic() + COMMAND_SECONDS)
     proc = subprocess.Popen([GIT, '--no-optional-locks', *args], cwd=cwd, env=ENV,
                             stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,

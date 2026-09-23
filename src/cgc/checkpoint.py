@@ -103,7 +103,7 @@ def _writer(rootfd):
         os.close(gitfd)
 
 
-def _contents(rootfd, selected, algorithm, deadline):
+def _contents(rootfd, selected, algorithm, deadline, *, byte_budget=None):
     """Read only approved candidate files, no-follow; return exact Git blob identities."""
     blobs = {}
     total = 0
@@ -131,7 +131,14 @@ def _contents(rootfd, selected, algorithm, deadline):
                     _fail('UNSAFE_CANDIDATE')
                 if before.st_size > MAX_FILE_BYTES:
                     _fail('CONTENT_LIMIT')
-                data = stream.read(MAX_FILE_BYTES + 1)
+                limit = MAX_FILE_BYTES
+                if byte_budget is not None:
+                    limit = min(limit, byte_budget['remaining'])
+                data = stream.read(limit + 1)
+                if byte_budget is not None:
+                    if len(data) > byte_budget['remaining']:
+                        _fail('CONTENT_LIMIT')
+                    byte_budget['remaining'] -= len(data)
                 if ins._fingerprint(before) != ins._fingerprint(os.fstat(stream.fileno())):
                     _fail('CONTENT_CHANGED')
             total += len(data)

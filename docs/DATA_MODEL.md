@@ -184,11 +184,12 @@ of remote preservation. See the [publication contract](V3_CONTRACT.md#explicit-l
 General push/network transport and Fabric runtime remain NOT_STARTED.
 
 
-## V3 reconciliation projection — specified only
+## V3 reconciliation projection
 
-The [reconciliation contract](V3_RECONCILIATION.md) defines a future separate bounded projection
+The [reconciliation contract](V3_RECONCILIATION.md) defines a separate bounded projection
 of durable/current facts, provenance, freshness, contradictions and required observations.
 No existing schema is extended or migrated by that specification. In particular, current
 handoffs lack reviewed SHA256 mappings and structured tested-state/environment bindings;
 valid missing capabilities project to UNKNOWN, not false or permission. Current authority
-remains external to historical evidence. Runtime/projection validator remains NOT_STARTED.
+remains external to historical evidence. Projection cgc-reconciliation-v3.0-provisional and its strict pure validator are implemented;
+all results retain UNKNOWN safety and false mutation flags. Existing handoff schema is unchanged.

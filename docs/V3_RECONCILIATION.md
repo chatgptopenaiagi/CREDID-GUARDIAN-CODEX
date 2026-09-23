@@ -1,6 +1,6 @@
 # CGC V3 — evidence-based fresh-process reconciliation contract
 
-Status: **SPECIFIED / AUDITED; runtime and future acceptance tests NOT_STARTED.**
+Status: **First read-only engine IMPLEMENTED; scoped acceptance and limits are recorded below and in V3_PROGRESS.**
 This is the authoritative V3 reconciliation design, subordinate to the complete
 [V3 mission](V3_MISSION.md) and compatible with the implemented [V3 contract](V3_CONTRACT.md).
 It separates knowledge reconstruction from recovery execution. It does not change any existing
@@ -13,7 +13,7 @@ one explicitly selected external handoff. It does not inherit conversational kno
 historical authority. Its first implementation MUST be read-only, with SAFE_TO_RESUME=UNKNOWN,
 mutation_allowed=false and automatic_mutation_authorized=false for every result, including a
 fully explained project. These are capability boundaries, not assertions that every project is
-unsafe. No reconcile command/API is implemented by this document.
+unsafe. The original specification did not implement an API; section 14 records the separately authorized implementation. No reconcile CLI exists.
 
 The contract is ready for a minimal engine implementing the pipeline and acceptance cases below.
 A later verifier may address the YES proof obligations in section 9 under separate authorization;
@@ -325,7 +325,7 @@ requires new authority. U means SAFE_TO_RESUME=UNKNOWN and mutation_allowed=fals
 
 ## 11. Future acceptance cases
 
-**All cases below are SPECIFIED / NOT_STARTED as reconciliation-engine acceptance.** Existing
+**First-engine cases A–R are implemented; section 14 distinguishes accepted scope from future extensions.** Existing
 interruption tests establish the source scenarios only. Every case asserts zero mutation commands,
 no source/store/config/index/ref/artifact writes or deletion, no old-child kill, no automatic test
 execution, no receipt rewrite, deterministic classification and human/machine agreement.
@@ -394,6 +394,8 @@ not kernel access bookkeeping. No remote credentials/account discovery or unrela
 
 ## 13. Human view and implementation decision
 
+This section retains the original contract-only decision; section 14 records implementation.
+
 Human text derives from the same validated projection, quoting inert operator text and paths.
 Explain saved/unsaved work, known failures, uncertainty, what was observed versus reported, remote
 verification scope, missing permission and one next action. Do not require Git jargon to act safely.
@@ -419,4 +421,80 @@ choice is settled; current schemas remain strict; current safety remains UNKNOWN
 safe-resume promotion, persisted review/test extensions and action execution are separate future
 acceptance blocks. Next action: implement this minimal engine against cases A–R in disposable
 fixtures, beginning with interrupted intent/current local state and explicit missing evidence.
-Do not start that implementation in the contract-publication session.
+That contract-only session stopped before implementation; section 14 records the subsequent authorized block.
+
+## 14. First engine implementation and conformance
+
+The specification above is retained as the implementation contract. The first-engine API is
+implemented in [reconciliation.py](../src/cgc/reconciliation.py), with acceptance in
+[test_reconciliation.py](../tests/test_reconciliation.py). Full external safety verification,
+structured reusable test receipts, durable review extensions and all recovery remain NOT_STARTED.
+
+Python interface (no reconcile CLI added):
+
+```python
+from cgc.reconciliation import reconcile, render_json, render_human
+result = reconcile(project, store_dir=external_store, now=explicit_utc_timestamp)
+```
+
+`collect` performs bounded I/O; `classify` is pure; `reconcile` composes them. `validate_result`
+strictly validates nested evidence and recomputes every derived field; both renderers use it.
+Projection version: `cgc-reconciliation-v3.0-provisional`. The new projection does not migrate
+or modify any existing attempt/inspection/handoff schema. All three safety fields are fixed
+UNKNOWN/false/false, even if a valid saved pure attempt reports YES.
+
+The projection stores bounded `evidence`, sorted `issues`, claim-specific freshness, current
+review/test applicability, checkpoint structural relation, remote observation status, required
+observations/human actions and one next_exact_action. Evidence includes both local observations,
+both optional remote observations, historical summaries of both handoff slots and the final
+handoff generation/digest/error reference. Summaries retain phase, provenance, receipts, test
+notes, known failures and original next action without duplicating the entire handoff envelope.
+An inspection digest references the collected snapshot; it is not a portable content hash.
+Observation time is explicitly caller-supplied, as in existing inspection; first/last readings
+identify the bounded non-atomic observation window rather than inventing a trusted wall clock.
+
+Optional arguments:
+
+- `review`: current explicit path → SHA256 mapping (None means reviewed deletion), under existing
+  candidate restrictions. Matching bytes establishes current scoped content evidence, not approval.
+- `tests`: strict caller-attributed `{result, commands, results, bound_head}`. HEAD mismatch can
+  establish STALE applicability; HEAD match still cannot establish complete dirty/environment
+  applicability and remains UNKNOWN. Legacy saved test notes remain separately preserved.
+- `remote`: explicit `{path, identity: {device, inode}, ref, tracking_ref, expected_commit}` for
+  one approved local bare read scope. Defaults to no remote query. Source/store/remote cannot
+  overlap; protected paths and unsupported configs/layouts/symbolic refs are refused.
+- `expected_commit`: explicit caller-supplied `{parent, tree}` for structural comparison only.
+  Matching that relation never backfills a receipt or authenticates historical review.
+- `requested_operation`: OBSERVE (default), CHECKPOINT or PUBLISH, plus optional inert
+  `authority_description`. These describe the question, never permit mutation. Only a requested
+  future mutation produces a fresh-authority requirement; observation never demands write approval.
+
+Collection refuses required-local failures and detected races; optional remote failures retain
+local observations with remote UNKNOWN. Both sides of observed changes remain in evidence or
+issue references. Metadata includes safe config fingerprints and Git lock paths; no lock probe
+creates a file. No machine process scan; quiescence remains UNKNOWN. Artifact presence is a fact,
+not proof of an active owner. Own Git observation groups are bounded/cleaned by the existing runner.
+
+The shared invocation budget is a ContextVar in inspection: 48 commands, 60 cooperative seconds,
+existing five-second/256-KiB command limits, nested budget replacement refused, and reset in finally.
+It applies to nested inspection/config/remote helpers without global monkeypatching. Outside the
+scope, existing mutation adapters retain their behavior. The existing candidate reader accepts
+an optional shared byte budget; reconciliation uses it across BOTH review reads: at most 4 MiB
+accepted content total (plus the usual one-byte overflow probe, never hashed/exported). Therefore
+repeated review may exhaust the limit with more than 2 MiB of distinct content; it reports the
+limit, never silently expands the contract to 8 MiB. No installation or new dependency is needed.
+
+Malformed API/projection input raises fixed validation errors. A report that exceeds 256 KiB or
+64 issues raises ReconciliationError(RESOURCE_LIMIT), without truncated output or handoff writes.
+Observation failures otherwise remain fixed codes in a validated report. No raw subprocess
+stderr, file contents, remote configuration values or environment dump enter the projection.
+Pure classification/validation establishes consistency, not authenticity of externally supplied
+input evidence. Rendered operator text is JSON-quoted and remains inert.
+
+Cases A–R are covered for the first-engine scope (see named tests and progress). H's hypothetical
+fully bound independently trusted test-receipt reuse is NOT_STARTED: no accepted producer/input
+schema for complete environment/content binding exists. H's required legacy PASS/UNKNOWN behavior
+is accepted. I uses an explicitly supplied historical HEAD binding to establish a known mismatch;
+without a binding the engine cannot fabricate one. L returns no action when no relevant evidence
+obligation is present, but never upgrades safety. Q uses a structurally valid stored inner YES.
+No interruption test block is reimplemented; fixtures recreate its observable end states.
