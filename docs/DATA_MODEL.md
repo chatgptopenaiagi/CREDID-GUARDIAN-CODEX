@@ -144,7 +144,8 @@ V3 is authorized and PARTIAL. The pure attempt contract, bounded non-mutating pr
 inspection, and external human/machine handoff persistence are IMPLEMENTED and VERIFIED
 OFFLINE. A deliberate manual local-checkpoint Python adapter is also IMPLEMENTED and
 VERIFIED OFFLINE in disposable Linux Git fixtures. Handoff state grants no mutation
-authority. Target publication, full preservation/resume and automation remain pending.
+authority. Explicit local-bare publication and independent verification are also verified
+offline; general push/network transport, full safe resume and automation remain pending.
 The inspect and handoff-status CLIs are observational; there is no preserve CLI.
 V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under the complete
@@ -172,4 +173,12 @@ continuity, verifies an explicit selected tree and normal single-parent commit, 
 truthful failure state without rollback. The Guardian does not invoke it. Its narrow POSIX,
 hook, staging, content and concurrency boundaries are specified in the
 [local checkpoint contract](V3_CONTRACT.md#deliberate-manual-local-checkpoint).
-Target publication, full resume reconciliation and automatic policy integration remain future.
+Local-bare publication now has a separate manual adapter; general push/network transport,
+full resume reconciliation and automatic policy integration remain future.
+
+
+The manual local-bare publication adapter separates current destination/history approval,
+object transfer, expected-tip ref update, independent verification and continuity persistence.
+No attempt/handoff/V2 schema change. A saved PUBLISHING intent grants no authority or proof
+of remote preservation. See the [publication contract](V3_CONTRACT.md#explicit-local-bare-publication-and-independent-verification).
+General push/network transport and Fabric runtime remain NOT_STARTED.

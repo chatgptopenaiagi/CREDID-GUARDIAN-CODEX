@@ -137,7 +137,7 @@ V3 remains NOT_STARTED and requires separate authorization.
 V3 is authorized and PARTIAL. The pure attempt contract, bounded non-mutating project
 inspection, and external human/machine handoff persistence are IMPLEMENTED and VERIFIED
 OFFLINE. Handoff state is continuity evidence, not project preservation or mutation
-authority. Target Git mutation and automation are NOT_STARTED. The inspect and
+authority. Manual checkpoint and local-bare publication adapters now exist; automation is NOT_STARTED. The inspect and
 handoff-status CLIs are observational; there is no preserve CLI. V1/V2 remain accepted.
 Resume by present repository evidence and [V3 progress](V3_PROGRESS.md), under the complete
 [V3 mission](V3_MISSION.md) and current user instructions. Historical V2 notes
@@ -150,4 +150,6 @@ continuity, verifies an explicit selected tree and normal single-parent commit, 
 truthful failure state without rollback. The Guardian does not invoke it. Its narrow POSIX,
 hook, staging, content and concurrency boundaries are specified in the
 [local checkpoint contract](V3_CONTRACT.md#deliberate-manual-local-checkpoint).
-Target publication, full resume reconciliation and automatic policy integration remain future.
+Publication requires separate current approval of the destination and entire reachable
+history. The local-bare adapter never infers authority from quota or saved records. General
+push/network transport, full resume reconciliation and automatic policy remain future.

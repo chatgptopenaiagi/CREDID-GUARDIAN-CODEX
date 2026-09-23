@@ -398,3 +398,29 @@ SIGKILL boundaries and fresh-process handoff readback. First focused discovery a
 29 imported inspection tests (44 total passed); changed helper import to avoid duplicate
 collection. No runtime test failure occurred. Full results, changed files, limitations and
 next block are in V3_PROGRESS.md. Preserve this coherent block before expansion.
+
+## 2026-09-22 — Explicit local-bare publication and verification
+
+Verified clean entry 509544147571dd57bf0ef3ed98be9ab4208c59a4 against tracking/live main.
+Current user authorizes one publication block using disposable bare remotes. Historical
+less-than-50% capacity is not a live reading; /status is not callable. No quota read made.
+
+Implemented separate current destination/history approval, source/bare identity and expected-tip
+checks, restricted paths/config/hooks, shared checkpoint lock and independent verification.
+Keep existing handoff and attempt schemas unchanged. Save PUBLISHING intent before publication;
+failure retains pending local receipt and previous good state, without a second good-slot write
+that would evict the prior evidence. Remote VERIFIED remains separate from safe resume.
+
+Safety review refined ordinary push into a smaller local-bare primitive: transfer approved
+objects without refs, then forward-only compare-and-swap of the exact existing branch. A normal
+push can recreate a branch deleted after precheck; exact nonzero expected-old-tip publication
+refuses that race without a force option. Tracking reconciliation also uses explicit observed
+remote evidence and compare-and-swap, never an implicit potentially non-forward fetch mapping.
+General Git-push/network transport is NOT_STARTED; this is an intentional documented limit,
+not a claim of general remote readiness. All actual target operations remain disposable/local.
+
+Final implementation passes 48 checkpoint/publication integration, 117 V3 and 270 full tests,
+zero failures/errors/skips. No observed deterministic failure; deletion-race safety was found
+in review and covered in the final 25-test publication module. Current next block is active
+mutation/publication crash/concurrency hardening, not more transport, resume or automation.
+Full commands/times, exact scope, changed files and publication evidence are in V3_PROGRESS.md.

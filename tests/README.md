@@ -154,3 +154,9 @@ V3 local checkpoint acceptance: `test_checkpoint.py` exercises only disposable L
 fixtures, explicit manual authority/selection, exact trees/parents, handoff retention,
 non-destructive failures and synchronized process-death boundaries. No target network or
 live quota source. See [checkpoint contract](../docs/V3_CONTRACT.md#deliberate-manual-local-checkpoint).
+
+
+V3 publication: `test_publication.py` uses disposable local bare remotes only. It covers
+explicit authority, forward-only expected-tip publication, independent ref verification,
+refusals, retained continuity, race rejection and synchronized process death. No target
+network transport. See [contract](../docs/V3_CONTRACT.md#explicit-local-bare-publication-and-independent-verification).

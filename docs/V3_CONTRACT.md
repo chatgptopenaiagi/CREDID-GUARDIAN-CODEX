@@ -376,3 +376,110 @@ current authority/stale HEAD refusal, pre-staged and intent-to-add preservation,
 size limits, hooks/config/attributes/operation refusal, path aliases/foreign locks, content
 and index changes, real missing-identity Git failure, injected post-commit uncertainty,
 post-commit handoff failure, corrupt-store refusal and cross-process exclusion.
+
+## Explicit local bare publication and independent verification
+
+IMPLEMENTED / VERIFIED OFFLINE: [publication.py](../src/cgc/publication.py),
+[test_publication.py](../tests/test_publication.py). `publish` is a manual Python primitive
+for an explicitly approved, existing local bare repository and existing branch. It is not
+an HTTPS/SSH/Git-push adapter, publication CLI, autonomous consumer or full preservation
+workflow. General remote transport remains NOT_STARTED.
+
+The trusted current caller must supply exact source path and device/inode/Git-directory
+identity; expected checkpoint commit; current branch; approved remote name; exact absolute
+bare path and device/inode identity; expected existing remote commit; a fresh MANUAL /
+REMOTE_VERIFIED / DOCUMENTING attempt with no receipts; explicit `publication_reviewed=True`
+and `history_reviewed=True`. History approval covers all reachable content at expected_head
+for this destination, not merely a checkpoint's selected files. Approval is an in-process
+caller attestation, not a cryptographic grant or a field to load as authority from storage.
+Neither origin, credentials, configuration, a saved record nor a local commit grants it.
+
+The source must pass checkpoint inspection/policy, be clean (including staging/untracked work),
+match the approved identity/HEAD/branch and have exactly one configured URL for the approved
+remote, matching the approved path. A pushurl, if present, must match it too. Instructions,
+project tests and history-secret review remain caller responsibilities. Source hooks requiring
+execution, attributes, unsupported config/layouts, unsafe modes and operation/conflict states
+are refused. The pre-existing checkpoint lock coordinates both adapters for the same project.
+No authentication is used, protocols other than explicit local file access are disabled,
+and arbitrary remote URL/config/diagnostic text is never emitted.
+
+The bare target receives its own bounded no-follow metadata/config preflight. It must be owned,
+non-writable by others, actually bare, non-overlapping with source/store, and have the approved
+identity. Symlinks, hardlinks, alternate object stores, shallow/promisor/nested layouts, foreign
+locks, executable hooks and all unreviewed config keys are refused. Only basic bare core/object
+format config is accepted; includes are parsed without following them and rejected. Protected
+credential directories are refused. No hook or security setting is bypassed/rewritten.
+
+Only the same explicitly named source/remote branch is supported. The remote branch and the
+approved `refs/remotes/<name>/<branch>` tracking ref must already exist and be direct commit
+refs. Missing refs are not created. Branch spelling is deliberately restricted to bounded
+ASCII letters/digits/underscore/hyphen/slash. The exact remote tip must match expected_remote;
+the tracking tip must be an ancestor of that tip, which must be an ancestor of expected_head.
+Unknown/divergent/ahead relationships refuse rather than fetching to guess or repairing them.
+
+Publication method is **LOCAL_BARE_OBJECT_TRANSFER_REF_CAS**:
+
+1. Save a PUBLISHING intent with observed local commit, inspection, approved identities,
+   expected tips and exact destination/tracking refs in the external HandoffStore.
+2. Recheck source/remote configuration, identities and tips under the source writer lock.
+3. If remote already equals expected_head, skip publication and still verify independently.
+4. Otherwise fetch the approved history into the bare object store with no ref mapping,
+   tags, FETCH_HEAD write, recursion or automatic maintenance. No branch changes yet.
+5. Recheck safety, then update exactly the approved remote ref with `git update-ref --no-deref`
+   and the explicit nonzero expected old tip. The earlier ancestry check proves forward intent;
+   the atomic expected-tip comparison refuses a concurrent move or deletion. This cannot
+   silently recreate a deleted branch. No force option or history rewrite is used.
+6. In separate bounded Git processes, fetch without ref mapping into the source, read the
+   live remote with ls-remote and read the bare ref directly. Require the approved HEAD.
+7. Advance only the approved existing tracking ref by expected-old-tip comparison; read it
+   back, query the live remote again, and recheck source/remote identity/state. Require
+   local HEAD = tracking = live remote = directly observed bare ref = expected_head.
+8. Persist the actual equal-ref receipts, retaining curated tests/known failures/next action.
+   The attempt ends PARTIAL, with publication VERIFIED but SAFE_TO_RESUME never YES.
+
+Ordinary Git push was excluded from this first primitive after review identified that a
+branch deleted between precheck and push can be recreated. Atomic expected-tip publication
+avoids that gap without introducing a force-with-lease option. A general push adapter needs
+its own separately scoped safety contract. `push_attempted` in the existing attempt schema
+remains false because this primitive does not execute git push; equal observed receipts
+can still establish the existing model's VERIFIED publication state. No schema changes.
+
+Returned publication_status is NOT_ATTEMPTED initially, REFUSED on pre-dispatch error,
+ATTEMPTED while transferring/updating, PUBLICATION_UNCERTAIN on an incomplete attempted
+operation, PUBLISHED_UNVERIFIED after successful ref-update exit but before verification,
+or VERIFIED only after independent equality checks. Already-equal verification needs no
+publication attempt. Fixed fields also include publication_method, local_commit, remote_before,
+remote_commit, tracking_commit, publication_attempted, ref_update_succeeded, verification_method,
+error_code, preservation_outcome, handoff_saved and safe_to_resume=UNKNOWN.
+
+LOCAL_CHECKPOINT_ONLY means local evidence survives while remote preservation is unverified;
+it does not assert the remote was untouched. Transfer failure can leave harmless unreferenced
+objects; failed/accepted-but-interrupted ref updates can leave the old or new tip. Nothing is
+rolled back, deleted or retried. A ref-update process exit is never proof of remote equality.
+If remote verification succeeds but the final handoff write fails, returned publication remains
+VERIFIED with preservation_outcome PARTIAL and handoff_saved=false; retain and reconcile Git.
+
+Failure calls record_failure rather than publishing another good slot: the pending local
+receipt and prior good continuity both survive. Durable latest_failure has the existing generic
+VERIFICATION_FAILED code; detailed stage/error remains in the return value. After process death,
+the durable PUBLISHING record is intent, not proof that transfer/ref update occurred. Its
+push_attempted=false is literal (no git push), not proof no publication occurred. Fresh Git
+reconciliation is required. No successful remote receipt is fabricated from that pending state.
+
+Bounds reuse 10,000 entries/depth 32/16 MiB file/64 MiB metadata-scan size limits, 64 KiB config,
+5-second/256 KiB Git commands and a 60-second cooperative operation budget; full inspections
+retain their own bounds. Remote path is at most 512 characters, remote name 64 and branch 128.
+No hard aggregate wall-time, decompressed-object memory, power-loss, malicious same-user or
+filesystem-alias guarantee. Paths/configuration must remain owner-controlled and quiescent.
+Expected-tip CAS protects ref movement/deletion; it is not a filesystem snapshot or distributed
+transaction. Git may leave locks/objects after abrupt death; never automatically remove them.
+SIGKILL during an active child cannot guarantee descendant cleanup.
+
+Twenty-five tests cover checkpoint integration, fresh-process continuity, all equal refs,
+already-equal/stale-tracking reconciliation, missing approval/history review, wrong source/tip/
+branch/remote, dirty/staged/detached/operation states, aliases/protocols/modes/hooks/config,
+ahead/diverged/moved/deleted remote, real expected-tip rejection, ref-update/verification
+failures, after-accept uncertainty, failed final handoff, corruption, overlap, shared writer
+exclusion and three synchronized SIGKILL boundaries before ref update, after acceptance and
+before verification. No valuable repository or target network is used. In-command crash,
+SIGINT/SIGTERM cleanup and broader concurrency hardening remain the next acceptance block.

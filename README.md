@@ -6,7 +6,8 @@ V3 is authorized and PARTIAL. The pure attempt contract, bounded non-mutating pr
 inspection, and external human/machine handoff persistence are IMPLEMENTED and VERIFIED
 OFFLINE. A deliberate manual local-checkpoint Python adapter is also IMPLEMENTED and
 VERIFIED OFFLINE in disposable Linux Git fixtures. Handoff state grants no mutation
-authority. Target publication, full preservation/resume and automation remain pending.
+authority. Explicit local-bare publication and independent verification are also verified
+offline; general push/network transport, full safe resume and automation remain pending.
 The inspect and handoff-status CLIs are observational; there is no preserve CLI.
 V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete
@@ -80,7 +81,10 @@ bounded writes; there is no write/preserve CLI. See the [handoff contract](docs/
 The manual local-checkpoint Python adapter requires current project-policy approval,
 expected HEAD/branch and explicitly reviewed file digests. It has been exercised only in
 disposable Linux repositories. See [local checkpoint contract](docs/V3_CONTRACT.md#deliberate-manual-local-checkpoint).
-No target push, test runner, preserve CLI or automatic preservation is implemented.
+The manual publication adapter supports explicitly approved local bare remotes using
+forward-only expected-tip ref updates and independent verification. General target Git push,
+network transport, test runner, preserve CLI and automation remain unimplemented. See the
+[publication contract](docs/V3_CONTRACT.md#explicit-local-bare-publication-and-independent-verification).
 
 ## Initial policy
 
