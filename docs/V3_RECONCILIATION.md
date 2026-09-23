@@ -498,3 +498,19 @@ is accepted. I uses an explicitly supplied historical HEAD binding to establish 
 without a binding the engine cannot fabricate one. L returns no action when no relevant evidence
 obligation is present, but never upgrades safety. Q uses a structurally valid stored inner YES.
 No interruption test block is reimplemented; fixtures recreate its observable end states.
+
+
+## 15. External verifier contract boundary
+
+[V3_SAFE_TO_RESUME](V3_SAFE_TO_RESUME.md) now specifies the separate future verifier. Section 9
+remains the foundation: actual mutation needs fresh review, authority and state revalidation.
+The new contract explicitly separates P12 authority from evidence-plane aggregation; a future
+scoped YES never grants execution. Captured in-memory analysis needs no live-writer quiescence
+claim, whereas continuation that touches the repository still does. This is an explicit future
+proof-scope refinement, not a change to the accepted reconciler or preservation lifecycle.
+
+The reconciler continues to emit UNKNOWN/false/false for every result. Genuine repeated-observation
+races remain valid uncertainty reports; the verifier's tamper harness rejects false stability
+claims, not truthful race evidence. Full contextual review and trusted test/writer coverage cannot
+be inferred from this projection's current summaries. No runtime/schema change accompanies the
+verifier specification; its own acceptance cases and producers remain NOT_STARTED.

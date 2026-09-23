@@ -2,13 +2,114 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 remains active.** The minimal bounded read-only reconciler and prior accepted
+inspection/handoff/checkpoint/publication/interruption blocks remain intact. The external
+SAFE_TO_RESUME verifier **contract is COMPLETE / SPECIFIED**; verifier runtime is NOT_STARTED.
+V4 remains ARCHITECTED / runtime NOT_STARTED. No recovery or external YES is implemented.
+
+## VERIFIED STARTING CHECKPOINT
+
+Before editing, required root/status/diff/whitespace/history observations passed. Clean main;
+local HEAD = origin/main = independently queried live remote main =
+`3b0e439f5a6f4769957899e4b6416986bafc69d3`.
+Reconciler implementation: `0ee3ab2a78e1cb3f2ad88075a4908c6a88bb8d80`.
+Authoritative V3/V4 records, current evidence runtime and relevant acceptance tests were audited.
+No newer work was discarded and no accepted experiment repeated.
+
+## CURRENT SESSION BLOCK
+
+AUDIT + SPECIFY + VALIDATE the external verifier contract. Documentation only.
+Authoritative result: [V3_SAFE_TO_RESUME.md](V3_SAFE_TO_RESUME.md), revision 1.
+Current weekly/five-hour capacity UNKNOWN; 87% planning report remains historical.
+Capacity preservation activated: NO. No quota/account/credential inspection.
+
+## COMPLETE
+
+- Separate collector/reconciler/verifier/authority/executor responsibilities; unchanged reconciler
+  UNKNOWN/false/false; exact action/project/level/window proof, not universal safety.
+- YES/NO/UNKNOWN composition and explicitly separable compound PARTIAL; P1–P11 evidence,
+  P12 separate mandatory execution authority gate; explicit section-9 refinement documented.
+- Five UNKNOWN resolution classes; accepted risk is a separate future decision with no proof promotion.
+- Quiescence coverage requirements and present producer gap; contextual review/event versus bytes;
+  finite tested-state/environment receipt requirements and preservation-level proof.
+- Strict conceptual output, bounded resolution plan retaining one next action, use-time preconditions,
+  semantic field registry/coherence groups and full-projection discriminating tamper acceptance.
+- Twenty-four future cases A–X, perfect-looking proof-chain challenge and future controlled benchmark.
+- Current evidence can support captured READ_ONLY_ANALYSIS/HANDOFF_ONLY proof under trusted-call
+  provenance. This is a feasibility conclusion; no working verifier emits YES today.
+
+## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+
+V3 overall PARTIAL. Positive live-writer quiescence is unproven; repeated reads and absent locks
+cannot supply it. Review hashes alone lack event/context; legacy test PASS lacks full binding.
+Unsigned shape/digest validation is not authenticity. Current projection omits some adapter-policy
+coverage. Initial verifier is single-action; compound PARTIAL and accepted-risk ingestion are later.
+Verifier implementation, new review/test/quiescence producers, recovery, automation and V4 NOT_STARTED.
+No runtime defect requiring a change established. No universal power-loss/hostile-writer guarantee.
+
+## DECISION GATES
+
+Contract precise enough for minimal implementation: **YES**.
+Current evidence sufficient for any scoped YES: **YES**, only the specified captured-analysis
+scope, not mutation or a current emitted external result. Primary mutation blocker: **quiescence**.
+Persisted review is a later optimization; structured test receipts are a later policy-dependent
+proof source. Neither is needed before the minimal verifier can evaluate the accepted proof graph.
+
+## VALIDATION
+
+Validation PASS: exact nine-file documentation scope; 60 other tracked files byte-identical,
+including runtime, schemas, tests/helpers and V3/V4 missions. All 41 Python files parse by AST;
+all three JSON files parse; 229 local Markdown links/anchors resolve; code fences balance.
+All 100 mission keypoints, 24 future A–X cases and 12 obligations accounted for. The accepted
+reconciliation contract text is preserved verbatim with an explicit additive refinement.
+Changed-document pattern screening found no matches (not universal secret proof). Exact diff,
+status and whitespace reviewed. Proof composition, P12 separation, scope/N/A rules, race-validity
+and tamper/non-influence distinctions reviewed; no unresolved validation failures. Full regression
+NOT_REQUIRED: documentation-only changes; historical **356 tests passed in 106.918s**, zero
+failures/errors/skips, retained below without claiming a new run. No C fixture was rebuilt.
+No prototype, daemon, service, dependency, system configuration or unrelated repository change.
+
+## FILES CHANGED
+
+Created docs/V3_SAFE_TO_RESUME.md. Modified AGENTS.md, README.md, docs/DATA_MODEL.md,
+docs/DECISIONS.md, docs/V3_ACCEPTANCE.md, docs/V3_CONTRACT.md, docs/V3_RECONCILIATION.md,
+and this progress record. No mission/runtime/test/helper/schema file changed.
+
+## DO_NOT_REPEAT
+
+Do not repeat accepted crash/reconciliation A–R blocks or quota discovery without defect evidence.
+Do not reinterpret current review CURRENT as contextual approval, validation as authenticity,
+read-only-analysis YES as permission to touch Git, or accepted risk as knowledge. Preserve genuine
+race reports. No rollback, repair, tests, publication or authority acquisition occurs in verification.
+Do not implement V4, compound workflows, risk ingestion or new proof producers in this contract block.
+
+## NEXT_EXACT_ACTION
+
+**Implement the minimal pure external SAFE_TO_RESUME verifier against V3_SAFE_TO_RESUME.md,
+starting with single-action READ_ONLY_ANALYSIS / HANDOFF_ONLY proof, the strict semantic leaf
+registry and discriminating tamper tests.** Keep broader unsupported proof UNKNOWN and all mutation
+permission false. Reconcile present repository reality first. No implementation starts this session.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Starting verified checkpoint: `3b0e439f5a6f4769957899e4b6416986bafc69d3`.
+This contract block awaits normal commit/push and independent three-ref verification.
+Self-reference is HEAD; resolved publication hashes belong in the observed final report.
+
+## Historical accepted reconciliation implementation evidence
+
+The following is retained historical evidence from the preceding engine block, not current-session
+runtime testing or the current next action.
+
+### Historical engine — OVERALL STATUS
+
 **PARTIAL. V3 remains active.** Prior inspection, durable handoff, checkpoint, local-bare
 publication/verification and scoped crash acceptance remain intact. The **minimal bounded
 read-only fresh-process reconciliation engine is IMPLEMENTED and accepted within its first-engine
 scope**. Full external safe resume, recovery execution and automation remain NOT_STARTED.
 V4 remains ARCHITECTED / runtime NOT_STARTED; V3/V4 missions and all 100 keypoints are unchanged.
 
-## VERIFIED STARTING CHECKPOINT
+### Historical engine — VERIFIED STARTING CHECKPOINT
 
 Before editing: root, clean status, empty diff/stat/whitespace, fourteen-entry history checked.
 Independent local HEAD = origin/main = live remote main =
@@ -18,12 +119,12 @@ Read the complete accepted reconciliation contract; reconciled current authorita
 existing evidence-model runtime and relevant A–R interruption fixtures. No accepted crash block
 was repeated as new work, no valid work reverted, no other repository touched.
 
-## CAPACITY
+### Historical engine — CAPACITY
 
 Current weekly/five-hour capacity UNKNOWN. Human planning value 87% weekly remains historical.
 No quota/account/credential read or estimate. Capacity preservation activated: NO.
 
-## COMPLETE — THIS ONE BLOCK
+### Historical engine — COMPLETE — THIS ONE BLOCK
 
 - New reconciliation.py separates bounded collect() from pure classify(); reconcile() composes
   them. Explicit version cgc-reconciliation-v3.0-provisional, strict nested validation and replayed
@@ -61,7 +162,7 @@ No quota/account/credential read or estimate. Capacity preservation activated: N
   helpers and mutation dispatch, and restrict cleanup to PIDs spawned for current observations.
   Independent Python process returns the same validated projection without changing fixtures.
 
-## ACCEPTANCE A–R
+### Historical engine — ACCEPTANCE A–R
 
 | Cases | Status / evidence |
 |---|---|
@@ -81,7 +182,7 @@ reference formats/bindings, list/string/output bounds, unsafe paths, symlink/har
 review mismatch/deletion, shared byte/deadline/command budgets. These recreate observable states;
 they do not repeat synchronized crash fixtures or claim universal process-death coverage.
 
-## TESTS ACTUALLY RUN / DEVELOPMENT CORRECTIONS
+### Historical engine — TESTS ACTUALLY RUN / DEVELOPMENT CORRECTIONS
 
 Historical baseline: 320 tests, not rerun before development.
 Initial focused run: 25 tests, two failures and one error. Corrected missing historical branch
@@ -143,7 +244,7 @@ credential finding; pattern screening is not universal proof. Exact diff/status 
 whitespace checks pass. Inherited C fixture warnings-as-errors compilation passes in regression.
 No unresolved deterministic failures. No inherited tests were modified.
 
-## LIMITATIONS / PARTIAL / NOT_STARTED
+### Historical engine — LIMITATIONS / PARTIAL / NOT_STARTED
 
 Overall V3 remains PARTIAL. Repeated observation is not an atomic snapshot or hostile same-user
 race defense. Process quiescence remains UNKNOWN; no historical children are killed. Read access
@@ -156,7 +257,7 @@ No external YES verifier, authority inheritance, automatic tests, rollback, retr
 lock deletion, network publication, Guardian automation, preserve CLI, full resume engine, Agent
 Fabric or V4 runtime. Existing handoff/inspection/attempt schemas are unchanged.
 
-## FILES CREATED / MODIFIED
+### Historical engine — FILES CREATED / MODIFIED
 
 Created: src/cgc/reconciliation.py; tests/test_reconciliation.py.
 Modified: src/cgc/inspection.py (invocation-local observation budget), src/cgc/checkpoint.py
@@ -165,14 +266,14 @@ docs/V3_ACCEPTANCE.md, docs/V3_CONTRACT.md, docs/V3_RECONCILIATION.md, docs/V3_P
 tests/README.md. No handoff/publication/preservation/signals/CLI runtime or inherited tests changed.
 No dependencies, services, persistent environment/system changes or unrelated project changes.
 
-## DO_NOT_REPEAT
+### Historical engine — DO_NOT_REPEAT
 
 Do not redo accepted crash blocks, quota discovery or reconciliation A–R without defect evidence.
 Do not mistake model validation for authenticity, old PASS for current PASS, observed ref equality
 for a new publication receipt, matching digests for authority, or UNKNOWN for permission.
 No writer-lock probes, fetch/update-ref, automatic tests/repair, hidden schema migration or V4.
 
-## NEXT_EXACT_ACTION
+### Historical engine — NEXT_EXACT_ACTION
 
 **Audit and specify the external SAFE_TO_RESUME verifier against the implemented reconciliation
 projection, beginning with unresolved quiescence and tested-state/review evidence obligations.**
@@ -180,7 +281,7 @@ Determine what additional evidence can actually discharge the proof before imple
 Reconcile current repository reality first. Do not start verifier implementation, recovery execution
 or V4 in this completed read-only-engine session.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical engine — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting verified checkpoint: `de0ffbc6fb52930c0e324eea7dc1c4bb2ff2bc60`.
 Implementation checkpoint: `0ee3ab2a78e1cb3f2ad88075a4908c6a88bb8d80`.

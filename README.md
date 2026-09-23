@@ -22,6 +22,8 @@ The [fresh-process reconciliation engine](docs/V3_RECONCILIATION.md#14-first-eng
 is implemented as a bounded read-only Python API with first-engine A–R acceptance. A new mutation after uncertain
 interruption needs fresh review when durable review digests are missing; old intent grants
 neither new authority nor safe-resume promotion.
+The [external safe-resume verifier contract](docs/V3_SAFE_TO_RESUME.md) is SPECIFIED; verifier runtime
+is NOT_STARTED. It separates action-scoped proof from authority and keeps the reconciler unchanged.
 The inspect and handoff-status CLIs are observational; there is no preserve or reconcile CLI.
 V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete

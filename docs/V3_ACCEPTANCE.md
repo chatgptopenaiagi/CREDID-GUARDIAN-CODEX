@@ -37,7 +37,7 @@ claim that future external-effect implementations already satisfy them.
 | 25 | Crash/interruption tests pass. | PARTIAL | Prior boundaries/ref transactions plus real active loose-object arrival SIGINT/SIGTERM, fetch-child death and timeout pass. Real commit pre/post-hook SIGINT/SIGTERM, timeout and command-group death also pass. Real active index-pack temporary arrival SIGINT/SIGTERM, timeout, fetch death and receiver death pass; retained fragments never imply publication. Real add before/after index rename signals, timeout and child death pass; old index/retained lock or complete new staging survives. Parent SIGKILL at both add gates preserves intent; fresh authorized calls refuse without mutation even after lock disappearance. Earlier writes, other internal timings and general orphan recovery remain outside this proof. |
 | 26 | Atomic canonical preservation state works. | PARTIAL | Atomic canonical handoff tested with live readers and killed writers; target preservation transaction pending. |
 | 27 | Repeated invocation is safe/idempotent where applicable. | PARTIAL | Already-equal remote verified without re-publication; stale tracking can advance safely. Missing/moved refs refuse; no blind retries or rollback. |
-| 28 | SAFE_TO_RESUME semantics are evidence-based. | PARTIAL | Outer handoff UNKNOWN/false never upgrades curated attempt receipts. External proof obligations specified in V3_RECONCILIATION.md; end-to-end verification pending. |
+| 28 | SAFE_TO_RESUME semantics are evidence-based. | PARTIAL | Outer handoff UNKNOWN/false never upgrades curated attempt receipts. Separate action-scoped verifier specified in [V3_SAFE_TO_RESUME.md](V3_SAFE_TO_RESUME.md); twenty-four future cases A–X, runtime/end-to-end verification pending. |
 | 29 | Resume from a fresh CGC process works. | PARTIAL | Fresh process reconstructs validated human/JSON handoff including latest failure; Read-only reconciliation engine and first-engine cases A–R implemented; safe-resume verification/execution remain pending. |
 | 30 | Manual preservation is independent from live quota availability. | PARTIAL | Explicit MANUAL local-checkpoint adapter independent of quota; full preservation/resume workflow pending. |
 | 31 | Synthetic Guardian policy integration works. | NOT_STARTED | Required future implementation and deterministic acceptance tests. |
@@ -70,3 +70,13 @@ cases A–R (18 cases) covered, with fully bound test-receipt reuse and external
 not newly executed tests. No runtime acceptance row is promoted because a design was written.
 Read-only non-mutation, deterministic classification, missing review/test evidence, strict
 compatibility, local-first remote scope and UNKNOWN safety are mandatory acceptance; exact current results and limits are in progress.
+
+
+## External verifier contract acceptance boundary
+
+[Verifier contract](V3_SAFE_TO_RESUME.md): audit/specification COMPLETE; implementation
+NOT_STARTED. Twenty-four future cases A–X include scoped perfect-looking YES, missing proofs,
+authority separation, state-change invalidation, inert text and discriminating tamper checks.
+No new runtime acceptance is claimed. The reconciler and 356-test historical regression are
+unchanged. Quiescence for repository mutation remains UNKNOWN; current evidence can support
+only the contract's narrow captured-analysis YES before new proof producers are accepted.

@@ -535,3 +535,29 @@ The accepted 4 MiB cap is preserved rather than doubled. Invalid/oversized proje
 without truncating evidence or writing failure records. No recovery, writer probes, mutation,
 automatic tests, network transport, authority inheritance or V4 implementation was added.
 See V3_PROGRESS for validation, development corrections, publication and the next bounded scope.
+
+
+## 2026-09-24 — External safe-resume verifier contract
+
+Verified clean local/tracking/live main at 3b0e439f5a6f4769957899e4b6416986bafc69d3.
+Created [V3_SAFE_TO_RESUME](V3_SAFE_TO_RESUME.md), contract revision 1, with no runtime, schema
+or test changes. Quiescence is the principal blocker for resumed mutation; current matching
+digests and HEAD-bound test notes also lack contextual review/complete tested-state proof.
+
+Choose a separate pure verifier with action-scoped obligations. P12 authority is a mandatory
+execution gate outside evidence aggregation, explicitly refining the future reading of
+reconciliation section 9, without altering any existing implementation. Captured read-only
+analysis/HANDOFF_ONLY can be proven within current trusted-call coverage; that limited YES
+would make no live-repository quiescence or mutation claim. Missing required proof stays UNKNOWN.
+
+Retain risk acceptance only as separate future decision semantics, never UNKNOWN-to-YES.
+Preserve next_exact_action alongside an ordered resolution plan. Require a complete semantic
+leaf registry and both accepting and rejecting tamper tests; truthful races remain valid reports
+of uncertainty. Hash/shape coherence is not authenticity. Inert text never becomes instruction.
+
+Defer durable review persistence and structured test producers: neither is needed to implement
+the narrow first verifier, and neither solves quiescence. Next block is the minimal pure verifier
+with current-evidence analysis proof and honest wider UNKNOWN results, not a new supervisor,
+recovery executor or V4. Twenty-four future cases A–X and benchmark planning are specified only.
+Current validation/publication evidence is recorded in V3_PROGRESS. No live quota read, installs,
+services, credential access or unrelated project changes.

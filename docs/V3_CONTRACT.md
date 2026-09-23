@@ -835,3 +835,14 @@ read-only collection, bounded output and future acceptance. Its minimal read-onl
 Existing attempt/inspection/handoff schemas and adapter semantics remain unchanged. Its initial
 engine must keep outer SAFE_TO_RESUME UNKNOWN and mutation permission false. No historical
 receipt, inner YES, saved path or digest grants present authority. Full safe resume stays PARTIAL.
+
+
+## External safe-resume verifier specification
+
+The [verifier contract](V3_SAFE_TO_RESUME.md) specifies a separate pure, action/level-scoped
+proof layer: YES/PARTIAL/NO/UNKNOWN, explicit unknown resolution, authority and use-time checks.
+It does not change the implemented attempt calculation or the outer UNKNOWN/false invariants.
+P12 authority is a separate mandatory execution gate; evidence YES cannot grant it. Captured
+read-only analysis can have narrower proof obligations than repository mutation. Quiescence,
+contextual review and complete test receipts remain missing dependencies for broader claims.
+Contract SPECIFIED; verifier, evidence producers and recovery runtime NOT_STARTED.

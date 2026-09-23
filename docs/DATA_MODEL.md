@@ -193,3 +193,13 @@ handoffs lack reviewed SHA256 mappings and structured tested-state/environment b
 valid missing capabilities project to UNKNOWN, not false or permission. Current authority
 remains external to historical evidence. Projection cgc-reconciliation-v3.0-provisional and its strict pure validator are implemented;
 all results retain UNKNOWN safety and false mutation flags. Existing handoff schema is unchanged.
+
+
+## Future V3 verifier projection
+
+[Verifier contract revision 1](V3_SAFE_TO_RESUME.md) defines a future separate strict projection
+with action/level, P1–P12 proofs, UNKNOWN resolution, authority decision, use-time preconditions
+and one next action plus a resolution plan. Every concrete leaf must have a semantic class and
+dependency/coherence mapping before implementation. No runtime schema/version is added here.
+Existing handoff/attempt/inspection/reconciliation and V2 schema bytes remain unchanged.
+Risk acceptance is a separate future decision, never an evidence-state upgrade.
