@@ -203,15 +203,22 @@ full resume engine, Guardian automation, Fabric or V4. STOP this session after p
 ## LAST SAFE CHECKPOINT
 
 Entry published checkpoint: `509544147571dd57bf0ef3ed98be9ab4208c59a4`.
-Current implementation checkpoint: **HEAD after normal commit/publication**; resolved SHA
-belongs in the post-operation report. Do not invent a self-containing commit hash.
+Recovered implementation checkpoint: `0e1d62a9741b616f0e0a8e9a39b399eb48c885f7`.
+Final publication-evidence checkpoint: **HEAD after normal commit/publication**; its resolved
+SHA belongs in the final report. Do not invent a self-containing commit hash.
 
 ## PUBLICATION STATE
 
-Entry checkpoint independently REMOTE_VERIFIED. Current implementation validation succeeded;
-CGC's normal authorized forward commit/push and independent local/tracking/live comparison
-follow. This document does not preclaim those future operations. If publication fails,
-retain the coherent local checkpoint and report LOCAL_CHECKPOINT_ONLY.
+Recovered implementation **REMOTE_VERIFIED** on 2026-09-23. Normal forward push to
+chatgptopenaiagi/CREDID-GUARDIAN-CODEX main succeeded. A separate live remote query confirmed
+local HEAD = origin/main = live refs/heads/main =
+`0e1d62a9741b616f0e0a8e9a39b399eb48c885f7`; working tree clean.
+
+This small documentation follow-up records the observed result in progress and acceptance
+row 41. Its own HEAD is verified after normal commit/push and reported with the resolved SHA.
+If that publication fails, retain the local evidence commit and report LOCAL_CHECKPOINT_ONLY.
+Runtime/tests are unchanged from the 270-test recovery verification; no redundant regression.
+Final changed-document link and staged whitespace checks pass before publication.
 
 ## OPERATIONS / INTEGRITY
 
