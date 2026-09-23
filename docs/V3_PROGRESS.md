@@ -122,8 +122,12 @@ new producer is authorized by this next-action record. Do not begin the next blo
 ## LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting checkpoint `f2c8ed53591086595d67bdbc03b6116338a60ae3` was independently verified.
-This implementation record uses HEAD as its self-reference after commit. Publication verification
-and resolved commit hashes will be recorded only after observation. No publication claim yet.
+Implementation commit `993f347acc2cc2db2f233db4adbd8f6dd15d1855` pushed normally to origin/main.
+Independent local HEAD, origin/main and live remote main all equaled that commit after push;
+working tree was clean. This documentation-only evidence follow-up uses HEAD for self-reference;
+its resolved hash and final three-ref verification are reported after publication. No runtime,
+schema or test changes follow implementation publication. Last safe implementation checkpoint is
+`993f347acc2cc2db2f233db4adbd8f6dd15d1855`. No force push or history rewrite.
 
 ## Historical accepted verifier contract evidence
 
