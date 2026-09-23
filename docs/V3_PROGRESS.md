@@ -123,7 +123,10 @@ No real credential finding; this is not universal secret proof. Diff/status and 
 review passed. CGC fetch/push destination independently checked against the authorized repo.
 No persistent system/environment changes, dependencies or services. Temporary test-only
 subreaper adoption restores the original setting; only disposable fixtures are released/reaped.
-No development failures observed. No production runtime, inherited test/helper or schema edits.
+No test/development failures observed. A post-commit validation helper initially compared the
+seven-file session scope against moving HEAD and rejected the two-file evidence follow-up;
+its scope comparison was corrected to the fixed starting SHA and passed. No product defect.
+No production runtime, inherited test/helper or schema edits.
 
 ## FRONTIER ASSESSMENT
 
@@ -158,5 +161,9 @@ otherwise. No automatic mutation, retry or V4. Reconcile present repository evid
 ## LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting verified checkpoint: `294ac10677af0990281cf655aa0e8c414306653d`.
-This acceptance implementation is pending normal commit/push and independent verification.
-Use HEAD for this commit's self-reference; never invent a self-containing hash.
+Acceptance implementation: `f57fe1df85c84fea08d51410dcd6ffbc6497cc41` — **REMOTE_VERIFIED**.
+Normal forward push succeeded. Independent local HEAD, origin/main and live remote main all
+equalled that SHA; working tree clean. This documentation-only follow-up records the observed
+publication and acceptance row 41. Its own HEAD must be pushed and independently verified;
+the final report carries its resolved SHA. No self-containing hash, no repeated runtime tests.
+If follow-up publication fails, retain the local evidence commit and report its actual status.

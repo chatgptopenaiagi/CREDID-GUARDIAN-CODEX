@@ -50,7 +50,7 @@ claim that future external-effect implementations already satisfy them.
 | 38 | No secret material was intentionally committed. | COMPLETE | Development publication scan; no secret input used. Not universal proof. |
 | 39 | Documentation is complete. | PARTIAL | Mission/contract/progress preserved; later implementation docs pending. |
 | 40 | Canonical deterministic test command passes. | COMPLETE | 320 tests pass (318 inherited unchanged + two real parent-death tests); exact final commands/output in progress. |
-| 41 | Git publication of CGC V3 itself is verified. | COMPLETE | Real active staging interruption acceptance implementation dd02dd81cf92d5e4436f759b1cf55d17cdb7e08a pushed normally; local/tracking/live main equality and clean tree verified 2026-09-23. Evidence follow-up HEAD checked after publication; final report carries its resolved SHA. |
+| 41 | Git publication of CGC V3 itself is verified. | COMPLETE | Abrupt parent-death/refusal acceptance implementation f57fe1df85c84fea08d51410dcd6ffbc6497cc41 pushed normally; local/tracking/live main equality and clean tree verified 2026-09-23. Evidence follow-up HEAD checked after publication; final report carries its resolved SHA. |
 | 42 | The final V3 checkpoint is resumable. | PARTIAL | Development handoff and runtime fresh-process continuity readback exist; complete V3 safe-resume workflow pending. |
 | 43 | V4 or cloud work has not begun without authorization. | COMPLETE | No V4/cloud/GUI/ARX implementation. |
 
