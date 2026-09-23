@@ -207,3 +207,12 @@ SIGINT/SIGTERM, timeout and child death preserve old index+lock or complete new 
 work and handoff; released controls finish real checkpoints. No runtime/test dependency package
 is installed, no production loader setting changed and unsupported environments are not silently
 skipped. See [active staging contract](../docs/V3_CONTRACT.md#real-active-git-add-index-replacement-interruption).
+
+V3 abrupt parent death: `test_parent_death.py` reuses the real add shim/peer at both rename
+stages. It SIGKILLs CGC, observes surviving Git PID/PPID/session/group, probes both flock
+domains, and launches independent checkpoint refusals plus handoff readback. No mutation
+command or pending-handoff replacement is allowed. A temporary test-runner subreaper adopts
+only the fixture orphan for bounded reaping and restores its prior setting. Harness-only
+release after assertions proves staging can finish without a parent receipt; fallback cleanup
+kills/reaps the orphan. Production CGC does not acquire an orphan-reaper capability. Existing
+staging release controls remain unchanged. See the [parent-death contract](../docs/V3_CONTRACT.md#abrupt-cgc-parent-death-with-active-staging).

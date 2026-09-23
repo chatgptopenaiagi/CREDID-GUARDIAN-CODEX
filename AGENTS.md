@@ -15,7 +15,9 @@ broader mutation/crash hardening remains PARTIAL.
 Active local-bare index-pack interruption after temporary pack arrival is also verified
 offline; V4 remains ARCHITECTED / runtime NOT_STARTED.
 Real active git add interruption before/after index replacement is verified offline with
-a fixture-only loader shim; broader abrupt-parent/crash and resume acceptance remains PARTIAL.
+a fixture-only loader shim. Abrupt parent death at these gates and fresh-invocation refusal
+are verified offline; broader crash safety and full resume remain PARTIAL. No orphan cleanup
+is promised by production CGC.
 The inspect and handoff-status CLIs are observational; there is no preserve CLI.
 V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete

@@ -783,3 +783,45 @@ four-second timeout; production keeps five seconds. Index.lock may be closed by 
 no open-descriptor ownership claim is made at this gate. Earlier partial writes/object creation,
 CGC-parent SIGKILL with surviving descendants, cross-source publication, arbitrary internal timing
 and power loss remain outside this proof. No runtime/schema/locking/signal redesign or V4 change.
+
+## Abrupt CGC-parent death with active staging
+
+Scoped offline acceptance uses the existing real git add rename gates before and after
+index replacement. SIGKILL kills the CGC Python parent, not Git's separate session/group.
+The child remains blocked and is reparented to a fixture subreaper. That adoption is a
+controlled Linux test topology, not a claim about every host's init/reparenting policy.
+Both CGC source and external handoff-store flocks become available; their persistent lock
+inodes are not deleted. Git index.lock is a separate domain: before replacement it retains
+the complete candidate index beside the unchanged old index; afterward it is absent and
+the complete new index is installed, although Git remains alive. No ref lock is involved.
+
+Fresh independently launched checkpoint calls with current authority refuse GIT_LOCK_PRESENT
+before replacement and EXISTING_STAGING afterward. Without current authority they refuse
+CURRENT_AUTHORITY_REQUIRED. No mutation command is dispatched, pending handoff overwritten,
+lock deleted or child killed. The refusal uses existing repository evidence, not process
+supervision or a claim that all orphan mutations can be detected. Lock availability alone
+is not safety; lock absence alone is not quiescence. HEAD, worktree bytes/modes/sizes/mtimes,
+unrelated tracked/untracked work, config and installed/candidate index remain unchanged
+through fresh refusal. Existing accepted released controls still prove normal completion.
+
+Durable CHECKPOINTING intent and previous_known_good survive byte-identically. The handoff's
+latest_attempt remains PUBLISHED with no error: this means the continuity record was saved,
+NOT that a checkpoint or Git publication completed. local_commit remains null for this intent;
+no CANCELLED/TIMEOUT/GIT_FAILED receipt is invented. Publication is NOT_REQUESTED and
+SAFE_TO_RESUME remains UNKNOWN. A fresh handoff-status process reads exactly the same state.
+Selected paths persist, but the full reviewed SHA256 mapping remains current-call input;
+old intent cannot reconstruct or transfer mutation authority.
+
+Only AFTER the refusal assertions, the harness releases the orphan's FIFO and reaps its
+successful exit. Real staging can complete after parent death without a CGC success receipt.
+HEAD and handoff remain unchanged. Failure cleanup may kill/reap this disposable orphan;
+the test runner restores its original subreaper setting. None of this is production recovery.
+
+SIGKILL cannot be caught, run finally/cleanup handlers or persist a new receipt from its
+victim. Postmortem truth comes from earlier durable evidence plus fresh observation.
+Process death proves neither success nor failure; fresh process does not renew authority.
+These two practical windows close the selected pre-reconciliation acceptance gap. Broader
+crash safety remains PARTIAL: other commands/timings, cross-source writers, hostile same-user
+races, alternate Git/filesystems and power loss are not universally proven. Full fresh-process
+reconciliation is the next separate block; no automatic retry, repair, rollback, orphan reaper,
+lock deletion, safe-resume engine or V4 runtime is introduced.
