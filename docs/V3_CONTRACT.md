@@ -483,9 +483,9 @@ branch/remote, dirty/staged/detached/operation states, aliases/protocols/modes/h
 ahead/diverged/moved/deleted remote, real expected-tip rejection, ref-update/verification
 failures, after-accept uncertainty, failed final handoff, corruption, overlap, shared writer
 exclusion and three synchronized SIGKILL boundaries before ref update, after acceptance and
-before verification. No valuable repository or target network is used. In-command crash,
-object-transfer interruption and broader concurrency hardening remain pending; the following
-section records the accepted active-ref transaction subset.
+before verification. No valuable repository or target network is used. The following sections
+record the accepted active-ref and loose-object transfer interruption subsets; broader
+in-command checkpoint crash and concurrency hardening remain partial.
 
 
 ## Manual mutation cancellation and active ref transactions
@@ -543,10 +543,71 @@ Checkpoint tests also deliver real SIGINT/SIGTERM at commit dispatch and immedia
 real commit acceptance. Staged bytes or the accepted single-parent commit survive; no unverified
 local receipt is manufactured. These are boundary tests, not in-command commit crash proof.
 
-LIMITATIONS / PARTIAL: active object-transfer interruption; in-command add/commit interruption;
+LIMITATIONS / PARTIAL: in-command add/commit interruption;
 SIGKILL of the CGC parent while descendants run; different-source writers sharing a remote;
 full fresh-process Git/test reconciliation and power-loss durability remain outside this
 accepted subset. SIGKILL cannot run the cancellation scope or guarantee descendant cleanup.
 A repeated signal cannot impose a hard bound on blocked filesystem/reaping syscalls. Paths
 and config must remain owner-controlled and quiescent; existing same-user race limits apply.
 No schema, V1/V2 runtime, test command runner, telemetry or Fabric component was added.
+
+
+## Active local bare object-transfer interruption
+
+VERIFIED OFFLINE with unchanged runtime: [transfer tests](../tests/test_transfer_interruption.py)
+and [test-only transfer peer](../tests/helpers/transfer_peer.py). Five tests exercise the actual
+publication fetch into a disposable bare repository, before the adapter can dispatch update-ref.
+This completes the loose-object transfer interruption subset, not universal crash acceptance.
+
+The fixture inserts a test-only `--upload-pack` wrapper into the existing fetch subprocess.
+It runs real `git upload-pack` and forwards its bytes unchanged, pauses after 256 KiB, and
+rendezvous waits for newly materialized complete loose objects while real `unpack-objects`
+and the transfer pipeline are still alive. Twelve deterministic 128 KiB text files keep the
+pack larger than the prefix and the object count below Git's ordinary unpack threshold.
+No packets, objects, successful subprocess exits or inspection receipts are fabricated.
+A gate-release control finishes the same real stream and reaches normal verified publication.
+The wrapper is fixture-only; there is no new runtime transport option or repository config.
+
+The four interrupted cases cover SIGINT and SIGTERM to the CGC caller, SIGKILL of the direct
+fetch child while transfer descendants hold its pipes, and the existing command timeout.
+The fixture shortens the command bound to four seconds. Signals run through mutation_signals;
+the ordinary runner owns process-group creation, pipes, timeout, kill and direct-child reap.
+
+Together the interrupted cases prove:
+
+- At least one new valid Git object exists in the bare object store before interruption.
+  Approved remote ref, all other remote non-object file bytes and source HEAD/tracking/index/
+  worktree remain unchanged. Full source byte/mode/size/mtime snapshots compare equal.
+- Exactly one object-transfer command and zero update-ref commands dispatch. Returned state
+  is PUBLICATION_UNCERTAIN / LOCAL_CHECKPOINT_ONLY; ref_update_succeeded=false; remote_commit
+  and tracking_commit remain null; SAFE_TO_RESUME stays UNKNOWN. No automatic retry occurs.
+- SIGINT/SIGTERM report CANCELLED; timeout reports TIMEOUT. Direct fetch SIGKILL also reports
+  TIMEOUT in this fixture: descendants still hold the pipes, so EOF is unavailable until the
+  runner's deadline kills the group. Child death is not misreported as successful transfer.
+- The prior good handoff and pending PUBLISHING local receipt survive. Latest attempt records
+  CANCELLED for signals, VERIFICATION_FAILED for timeout, without fabricating remote evidence.
+  Fresh-process handoff-status reconstructs the exact state, including curated failures/next action.
+- After fetch death but before timeout/group cleanup, another publisher using a different
+  store still receives WRITER_BUSY and creates no store or publication. This specifically
+  covers the new dead-child/live-descendant interval; earlier writer tests are not duplicated.
+- The runner reaps its direct child; sampled transfer descendants share that child's process
+  group and are terminated. Both CGC writer locks can subsequently be reacquired. The test
+  worker temporarily acts as a Linux subreaper to collect orphaned fixture descendants without
+  killing survivors before assertions. Descendant reaping is test hygiene, not a CGC guarantee.
+- Previously present object bytes and newly completed objects survive. Any remaining object-store
+  files, including temporary fragments, are left intact by later read-only reconciliation and
+  authority refusal. No automatic GC, lock deletion, object cleanup or ref recreation occurs.
+
+Recovery here is intentionally observational. Fresh Git ls-remote confirms the old tip and
+fresh handoff-status retains uncertainty; neither grants publication authority. A later call
+without current publication approval refuses before mutation and leaves evidence/objects intact.
+No automatic second publication, resume engine or repair is exercised. A full fresh-process
+Git/test/intent reconciliation workflow remains future work.
+
+LIMITATIONS: this proves an actively receiving loose-object path, not every byte boundary,
+large-pack index-pack temporary files, all Git versions/filesystems, power loss or memory limits.
+CGC-parent SIGKILL is not tested here and cannot run cleanup; descendants may survive and keep
+mutating after its flock releases. In-command add/commit interruption and different-source writers
+sharing one remote also remain outside this block. The test-only wrapper and subreaper must not
+be mistaken for production security controls. Existing quiescent-path/configuration, authority,
+size and native-Windows restrictions remain. No runtime, schema, quota source or API changed.

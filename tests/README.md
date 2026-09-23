@@ -167,5 +167,15 @@ V3 active mutation interruption: `test_mutation_interruption.py` adds 17 tests, 
 SIGINT/SIGTERM, child death, timeout, repeated-signal cleanup, active writer exclusion,
 retained Git-lock refusal and fresh-process failed-handoff equality are covered. Checkpoint
 signals cover commit dispatch/acceptance boundaries. Tests remain local to disposable /tmp
-repositories; active transfer, in-command commit and abrupt-parent descendants are not proven.
+repositories; that block did not prove active transfer, in-command commit or abrupt-parent descendants.
 See [scope and recovery evidence](../docs/V3_CONTRACT.md#manual-mutation-cancellation-and-active-ref-transactions).
+
+
+V3 active object transfer: `test_transfer_interruption.py` adds five tests using the test-only
+`helpers/transfer_peer.py`. A real upload-pack stream is gated after 256 KiB; real receiving
+Git has written loose objects before SIGINT/SIGTERM, fetch-child death or timeout. The gate-release
+control proves the stream completes normally. Tests verify unchanged refs/source, retained objects
+and handoffs, fresh-process readback, no retry, current-authority refusal, and source-lock retention
+while a dead fetch's descendants hold pipes. A fixture subreaper collects killed grandchildren;
+CGC only promises direct-child reaping. Large-pack/index-pack and abrupt-parent death remain unproven.
+See [transfer contract](../docs/V3_CONTRACT.md#active-local-bare-object-transfer-interruption).

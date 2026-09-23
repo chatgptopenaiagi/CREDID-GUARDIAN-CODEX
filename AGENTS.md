@@ -9,7 +9,8 @@ VERIFIED OFFLINE in disposable Linux Git fixtures. Handoff state grants no mutat
 authority. Explicit local-bare publication and independent verification are also verified
 offline; general push/network transport, full safe resume and automation remain pending.
 Opt-in manual SIGINT/SIGTERM cancellation and active Git ref-transaction exclusion are
-verified offline; broader mutation/transfer crash hardening remains PARTIAL.
+verified offline. Active local-bare loose-object transfer cancellation is also verified offline;
+broader mutation/crash hardening remains PARTIAL.
 The inspect and handoff-status CLIs are observational; there is no preserve CLI.
 V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete
