@@ -266,11 +266,12 @@ specific destination. No serialized record, config or credential confers authori
                                            ['Publication VERIFIED by fresh fetch, tracking read, ls-remote and direct bare-ref read; safe resume remains unverified.']})
                     store.publish(final, now=now, inspection=observation)
                     result.update(handoff_saved=True, preservation_outcome='REMOTE_VERIFIED')
-                except (ValueError, OSError, CacheError, KeyboardInterrupt):
+                except (ValueError, OSError, CacheError, KeyboardInterrupt) as error:
                     # Keep both the pending local receipt and prior good continuity.
                     # Do not publish another good slot that would evict prior evidence.
                     try:
-                        store.record_failure('VERIFICATION_FAILED', now=now)
+                        store.record_failure('CANCELLED' if isinstance(error, KeyboardInterrupt)
+                                             else 'VERIFICATION_FAILED', now=now)
                     except (ValueError, OSError, CacheError):
                         pass
                     raise

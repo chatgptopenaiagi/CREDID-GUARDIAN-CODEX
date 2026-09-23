@@ -58,6 +58,8 @@ def _selection(selected):
 def _snapshot(project, now, expected_head, branch):
     observation = ins.inspect_project(project, now=now)
     if observation['status'] != 'OBSERVED':
+        if observation['error_code'] == 'CANCELLED':
+            raise KeyboardInterrupt
         _fail('INSPECTION_REFUSED')
     snap = observation['snapshot']
     if snap['head'] != expected_head or snap['branch'] != branch:
@@ -272,9 +274,10 @@ Result UNKNOWN resume status is deliberate; no project test execution is implied
                     result['handoff_saved'] = False
                     store.publish(completed, now=now, inspection=observation)
                     result.update(outcome='LOCAL_CHECKPOINT', handoff_saved=True)
-                except (ValueError, OSError, CacheError, KeyboardInterrupt):
+                except (ValueError, OSError, CacheError, KeyboardInterrupt) as error:
                     try:
-                        store.record_failure('VERIFICATION_FAILED', now=now)
+                        store.record_failure('CANCELLED' if isinstance(error, KeyboardInterrupt)
+                                             else 'VERIFICATION_FAILED', now=now)
                     except (ValueError, OSError, CacheError):
                         pass
                     raise

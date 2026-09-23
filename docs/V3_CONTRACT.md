@@ -367,8 +367,9 @@ individual full inspections retain their own 20-second bound. These are not hard
 wall-time, CPU/RSS, syscall or power-loss guarantees. SIGKILL of CGC during a running Git
 child cannot guarantee descendant cleanup. Four synchronized SIGKILL boundaries before/after
 staging and commit prove old/new HEAD, preserved work/index and restart lock release; they
-do not prove interruption inside Git's ref transaction or every mutation syscall. Dedicated
-SIGINT/SIGTERM executor adapters and broader crash acceptance remain future work.
+do not prove interruption inside Git's ref transaction or every mutation syscall. The opt-in
+signal scope below now covers graceful cancellation; broader active-command and abrupt-parent
+death acceptance remains partial.
 
 Test coverage also includes exact tree/parent and fresh-process handoff readback, failed
 project test notes, subset/ignored preservation, literal names, additions/deletions/renames,
@@ -460,8 +461,9 @@ If remote verification succeeds but the final handoff write fails, returned publ
 VERIFIED with preservation_outcome PARTIAL and handoff_saved=false; retain and reconcile Git.
 
 Failure calls record_failure rather than publishing another good slot: the pending local
-receipt and prior good continuity both survive. Durable latest_failure has the existing generic
-VERIFICATION_FAILED code; detailed stage/error remains in the return value. After process death,
+receipt and prior good continuity both survive. Durable latest failure uses CANCELLED for caught
+KeyboardInterrupt, otherwise the existing generic VERIFICATION_FAILED code; detailed stage/error
+remains in the return value. After process death,
 the durable PUBLISHING record is intent, not proof that transfer/ref update occurred. Its
 push_attempted=false is literal (no git push), not proof no publication occurred. Fresh Git
 reconciliation is required. No successful remote receipt is fabricated from that pending state.
@@ -482,4 +484,69 @@ ahead/diverged/moved/deleted remote, real expected-tip rejection, ref-update/ver
 failures, after-accept uncertainty, failed final handoff, corruption, overlap, shared writer
 exclusion and three synchronized SIGKILL boundaries before ref update, after acceptance and
 before verification. No valuable repository or target network is used. In-command crash,
-SIGINT/SIGTERM cleanup and broader concurrency hardening remain the next acceptance block.
+object-transfer interruption and broader concurrency hardening remain pending; the following
+section records the accepted active-ref transaction subset.
+
+
+## Manual mutation cancellation and active ref transactions
+
+IMPLEMENTED / VERIFIED OFFLINE within this scope: [signals.py](../src/cgc/signals.py),
+[interruption tests](../tests/test_mutation_interruption.py) and their
+[test-only Git transaction peer](../tests/helpers/mutation_peer.py).
+The current caller may opt into process signal ownership for one synchronous adapter call:
+
+```python
+from cgc.signals import mutation_signals
+
+with mutation_signals():
+    result = publish(**currently_approved_arguments)
+```
+
+The same scope supports `checkpoint`. All existing current-approval, selection, history,
+identity and destination requirements still apply. This example supplies no authority.
+No CLI or automatic invocation was introduced. The main thread is required; worker-thread
+entry raises SIGNAL_SCOPE_REQUIRES_MAIN_THREAD before changing handlers. Previously installed
+SIGINT/SIGTERM handlers are restored on normal and exceptional exit. Handlers are installed
+only inside this explicit scope, never on import or silently by a library adapter.
+
+The first SIGINT/SIGTERM raises KeyboardInterrupt. The existing Git runner kills its command
+process group and reaps the direct child before adapter locks unwind. Subsequent SIGINT/SIGTERM
+in the same scope are ignored to let cleanup and best-effort failure persistence finish.
+Use the scope around one call and exit promptly; it is not a reusable cancellation loop.
+Interrupted inspection remains CANCELLED rather than being relabeled INSPECTION_REFUSED.
+Caught cancellation after pending intent records latest_attempt.error_code=CANCELLED when
+storage permits, retaining both good slots. Other operational failures remain VERIFICATION_FAILED.
+An interruption before intent exists cannot promise a new durable failure receipt.
+
+The synchronized publication tests replace only one fixture update-ref invocation with a
+real `git update-ref --stdin` transaction. They wait for Git's `prepare: ok` or `commit: ok`
+acknowledgement, with Git still alive waiting on stdin. The production runner supplies the
+actual timeout, signal cleanup and process reaping. This is a controlled real Git transaction
+fixture, not proof of interrupting every syscall in the ordinary one-shot update-ref command.
+
+| Observed interruption | Surviving Git evidence | Returned / durable conclusion |
+|---|---|---|
+| SIGINT/SIGTERM after prepare | Old bare tip, prepared Git lock retained; source HEAD/index/work unchanged | PUBLICATION_UNCERTAIN, LOCAL_CHECKPOINT_ONLY; CANCELLED latest attempt; pending PUBLISHING intent and prior continuity retained |
+| SIGINT/SIGTERM after commit acknowledgement but before exit | New bare tip, old tracking tip, unchanged source checkpoint | Same uncertainty; no fabricated remote receipt or safe-resume claim |
+| Active prepared Git child SIGKILL or command timeout | Old tip and Git lock retained | GIT_FAILED or TIMEOUT return; generic failed latest attempt; prior continuity retained |
+| Competing checkpoint/publication at either active stage | No contender staging, ref update, store creation or handoff replacement | WRITER_BUSY, even with a different handoff store |
+
+Fresh-process handoff-status JSON exactly matches durable state after these failures.
+Both CGC locks can be reacquired after command cleanup. Git's retained prepared lock is
+not a stale CGC lock: a subsequent explicit publication refuses UNSAFE_REMOTE_LAYOUT and
+leaves it untouched. Human Git reconciliation is required; no automatic unlink, retry or
+rollback. After accepted-but-unverified publication without a retained Git lock, a separately
+approved call using the independently observed current tip verifies equality without
+republishing. That is the existing manual path, not a resume engine or restored authority.
+
+Checkpoint tests also deliver real SIGINT/SIGTERM at commit dispatch and immediately after
+real commit acceptance. Staged bytes or the accepted single-parent commit survive; no unverified
+local receipt is manufactured. These are boundary tests, not in-command commit crash proof.
+
+LIMITATIONS / PARTIAL: active object-transfer interruption; in-command add/commit interruption;
+SIGKILL of the CGC parent while descendants run; different-source writers sharing a remote;
+full fresh-process Git/test reconciliation and power-loss durability remain outside this
+accepted subset. SIGKILL cannot run the cancellation scope or guarantee descendant cleanup.
+A repeated signal cannot impose a hard bound on blocked filesystem/reaping syscalls. Paths
+and config must remain owner-controlled and quiescent; existing same-user race limits apply.
+No schema, V1/V2 runtime, test command runner, telemetry or Fabric component was added.

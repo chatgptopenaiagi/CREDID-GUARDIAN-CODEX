@@ -424,3 +424,25 @@ zero failures/errors/skips. No observed deterministic failure; deletion-race saf
 in review and covered in the final 25-test publication module. Current next block is active
 mutation/publication crash/concurrency hardening, not more transport, resume or automation.
 Full commands/times, exact scope, changed files and publication evidence are in V3_PROGRESS.md.
+
+
+## 2026-09-23 — Scoped active transaction cancellation and concurrency
+
+Verified clean local/tracking/live main at b12b7d05d82ac3affc90fa8fccda3488168f627b.
+Selected the smallest active-command subset of the authorized crash/concurrency block:
+explicit caller-owned SIGINT/SIGTERM scope, real prepared/accepted Git ref transactions,
+shared source-writer exclusion, and truthful retained failure state. Existing source writer
+lock and Git group cleanup work under cancellation; no transport or lock redesign needed.
+
+Signal ownership is opt-in because these are library primitives, not a preserve CLI.
+One cancellation raises KeyboardInterrupt; repeated signals cannot interrupt failure
+persistence inside that scope. Prior handlers restore on exit. Use existing CANCELLED
+handoff error code and preserve cancellation across the inspection/adapter boundary.
+No schema change or source of authority. Known-good continuity is retained, not recast as
+verified remote preservation. A prepared Git transaction killed by cleanup leaves its lock;
+refuse and preserve it, never automatically repair. Accepted remote state can be independently
+observed and explicitly reverified without republishing through the existing adapter.
+
+Broader transfer/commit crash and abrupt-parent descendant safety remain PARTIAL, explicitly
+separate from this completed subset. No telemetry, fresh-resume engine, network transport,
+automation or Agent Fabric runtime. Exact verification and next action: V3_PROGRESS.md.

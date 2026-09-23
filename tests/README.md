@@ -160,3 +160,12 @@ V3 publication: `test_publication.py` uses disposable local bare remotes only. I
 explicit authority, forward-only expected-tip publication, independent ref verification,
 refusals, retained continuity, race rejection and synchronized process death. No target
 network transport. See [contract](../docs/V3_CONTRACT.md#explicit-local-bare-publication-and-independent-verification).
+
+
+V3 active mutation interruption: `test_mutation_interruption.py` adds 17 tests, using
+`helpers/mutation_peer.py` for real prepared/committed interactive Git ref transactions.
+SIGINT/SIGTERM, child death, timeout, repeated-signal cleanup, active writer exclusion,
+retained Git-lock refusal and fresh-process failed-handoff equality are covered. Checkpoint
+signals cover commit dispatch/acceptance boundaries. Tests remain local to disposable /tmp
+repositories; active transfer, in-command commit and abrupt-parent descendants are not proven.
+See [scope and recovery evidence](../docs/V3_CONTRACT.md#manual-mutation-cancellation-and-active-ref-transactions).
