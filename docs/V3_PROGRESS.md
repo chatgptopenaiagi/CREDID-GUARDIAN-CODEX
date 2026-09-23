@@ -188,14 +188,21 @@ cleanup, resume engine, publication expansion or V4 implementation. Reconcile ne
 
 Starting repository checkpoint: `4543a3739f09647bd54c45b2334f7937c6712dae`.
 Previous V3 engineering evidence: `fd1dbcabf10a748e0160f78f9311ae948a9a8260`.
-Current acceptance implementation: **HEAD after normal commit/publication**; resolved hash and
-independent remote equality belong in the final report/evidence follow-up. No self-containing SHA.
+Acceptance implementation: `cf804e34e45e6d3728185468f9746cac3c349f53`.
+Final evidence checkpoint: **HEAD after normal commit/publication**; its resolved hash and
+independent publication result belong in the final report. No self-containing SHA.
 
 ## PUBLICATION STATE
 
-Entry equality independently verified. Current coherent block is validated and awaits normal
-forward commit/push with independent local/tracking/live verification. No remote claim for local
-uncommitted work. If push fails, retain the local checkpoint and report the failure truthfully.
+Acceptance implementation **REMOTE_VERIFIED** on 2026-09-23. Normal forward push succeeded.
+Independent reads established local HEAD = origin/main = live remote main =
+`cf804e34e45e6d3728185468f9746cac3c349f53`; working tree clean.
+
+This documentation-only evidence follow-up records that observed equality and acceptance row 41.
+Its own HEAD must be committed/pushed normally and independently verified for the final report.
+Runtime/tests remain unchanged from the 308-test result; no redundant regression. Final links
+and staged whitespace are checked. If evidence publication fails, retain the local evidence
+commit and report LOCAL_CHECKPOINT_ONLY; never invent remote equality.
 
 ## OPERATIONS / INTEGRITY
 
