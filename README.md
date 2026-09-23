@@ -12,6 +12,8 @@ Opt-in manual SIGINT/SIGTERM cancellation and active Git ref-transaction exclusi
 verified offline. Active local-bare loose-object transfer cancellation is also verified offline.
 Real in-command commit interruption at fixture pre/post-commit stages is verified offline;
 broader mutation/crash hardening remains PARTIAL.
+Active local-bare index-pack interruption after temporary pack arrival is also verified
+offline; V4 remains ARCHITECTED / runtime NOT_STARTED.
 The inspect and handoff-status CLIs are observational; there is no preserve CLI.
 V1/V2 remain accepted. See the local-checkpoint contract in docs/V3_CONTRACT.md.
 Resume by present repository evidence and [V3 progress](docs/V3_PROGRESS.md), under the complete

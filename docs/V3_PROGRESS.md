@@ -4,209 +4,204 @@
 
 **PARTIAL.** Attempt, bounded inspection, durable handoff, manual checkpoint, local-bare
 publication and independent verification remain accepted. Signal/ref-transaction, loose-object
-transfer and current **real active commit pre/post-acceptance interruption acceptance are
-COMPLETE / VERIFIED OFFLINE within their scoped contracts**. Broader crash safety and full
-safe resume remain PARTIAL. Network publication, automation and Agent Fabric remain NOT_STARTED.
-The [complete mission](V3_MISSION.md), including all 100 architectural keypoints, and current
-user instructions remain authoritative. V1/V2 are unchanged and accepted.
+transfer, real active commit pre/post-acceptance and current **active index-pack interruption
+after temporary pack arrival are COMPLETE / VERIFIED OFFLINE within their scoped contracts**.
+Broader crash safety and full safe resume remain PARTIAL. Network publication, automation and
+Agent Fabric remain NOT_STARTED. V4 is ARCHITECTED / runtime NOT_STARTED and parked.
+The [complete mission](V3_MISSION.md), all 100 architectural keypoints and current user
+instructions remain authoritative. V1/V2 and [V4 mission](V4_MISSION.md) are unchanged.
 
 THE GUARDIAN OBSERVES. CODEX PRESERVES. PRESERVE BEFORE EXPANDING.
 
 ## CURRENT SESSION BLOCK
 
-Verified root, clean main, empty diff, whitespace, recent history and independent live remote.
+Verified root, clean main, empty diff/whitespace, recent history and independent live remote.
 Entry HEAD = origin/main = live refs/heads/main =
-`7e44417341daab653c5e2c9009552fa240944875`. Historical equality was independently checked.
-Prior transfer acceptance implementation `586bd6bb1d627de39eadf19e2858876f12924af8` remains accepted.
+`4543a3739f09647bd54c45b2334f7937c6712dae` (V4 architecture documentation).
+Last completed V3 evidence checkpoint: `fd1dbcabf10a748e0160f78f9311ae948a9a8260`;
+its implementation is `1bc957dffb8ffd034289dea1415b92c5fbdcad83`. V4 was not reverted.
 
-Read current progress and relevant checkpoint/runner/signal/handoff paths. Reconciled already-read
-instructions, full mission/architecture/security/V1/V2 records and relevant prior tests against
-exact checkpoint bytes. No newer conflicting work. Selected only the recorded next action:
-**in-command local checkpoint commit interruption**. Earlier dispatch/return, ref-transaction
-and transfer coverage is retained, not duplicated or redesigned.
+Reconciled all 14 authoritative documents with the exact versions read in the preceding task;
+inspected publication/checkpoint/runner/signals/handoff and accepted interruption fixtures.
+Recorded frontier still applied: **active local-bare index-pack interruption after temporary
+pack arrival**. Earlier accepted coverage was neither duplicated as inherited test discovery
+nor redesigned. Runtime, prior tests/helpers and schemas remain unchanged.
 
-Uncovered boundary: real Git alive before acceptance versus alive after HEAD advances but before
-normal process completion. Fixture-only pre/post-commit hook gates provide observable stages.
-Git performs actual staging/commit operations; no mocked success, HEAD, index or receipt.
-Existing runtime satisfies final assertions: **no runtime edits or demonstrated runtime defect**.
+Before new tests, a disposable probe reused the real transfer gate with 128 additional small
+blobs. Git 2.55.0 actually ran fetch → upload-pack/pack-objects → index-pack --stdin. At the gate,
+a temporary pack contained 196544 bytes with PACK v2 header/count 147; remote tip remained old.
+Released stream completed VERIFIED with final .pack/.idx/.rev files. Those exact size/count
+observations describe the probe, not universal file-size or Git-version guarantees.
 
 ## CAPACITY
 
 Included-capacity percentage **UNKNOWN**. No reliable current source or human percentage;
-no estimation, extrapolation or purchased-credit inference. Live quota reads zero.
-The <=20% preservation trigger has **NOT** activated. One block, validation, publication and STOP.
+no estimated/extrapolated value, purchased-credit inference or account investigation.
+Capacity preservation threshold activated: **NO**. No live quota read consumed.
 
 ## COMPLETE
 
-- Ten new tests plus a fixture helper use real Git commit processes in disposable Linux /tmp
-  repositories. Hook PID/parent/process-group rendezvous and independent command-line/PID checks
-  prove Git itself is still active. Two release controls complete verified real commits.
-- Eight interrupted cases cover pre/post-commit SIGINT, SIGTERM, timeout and abrupt SIGKILL of
-  the Git command process group. Parent signals reuse mutation_signals. Test command bound is
-  four seconds; production remains five. No claim of CGC-parent SIGKILL cleanup.
-- Before acceptance: old HEAD, reviewed change staged, unrelated untracked work intact. After
-  acceptance: new commit with exactly the old HEAD as parent and exactly the intended tree,
-  selected change committed, unrelated work intact. Accepted commit never rolled back.
-- Both return commit_attempted=true, local_commit=null, outcome=PARTIAL, SAFE_TO_RESUME=UNKNOWN
-  and publication_status=NOT_REQUESTED. Signals return CANCELLED, timeout TIMEOUT and abrupt
-  command-group death GIT_FAILED. Exactly one commit dispatch; no automatic retry/publication.
-- Index bytes at the gate survive interruption unchanged; logical staged entries equal reviewed
-  bytes. Before acceptance index also matches dispatch bytes. Working file bytes/modes/mtimes
-  and repository configuration survive unchanged. No automatic reset, lock deletion or repair.
-- Prior good continuity survives beside CHECKPOINTING intent without a new local receipt.
-  Latest failure records CANCELLED for signals, otherwise VERIFICATION_FAILED. Fresh-process
-  handoff-status exactly reproduces saved state; fresh Git HEAD/status/parent/tree reads expose
-  repository reality without changing the interrupted return value or fabricating a receipt.
-- A contender with fresh observed HEAD and a different store receives WRITER_BUSY at both active
-  commit stages, without staging or store creation. This tests the actual in-command interval,
-  rather than confusing stale-HEAD refusal with lock exclusion.
-- Existing runner kills the command group and reaps the direct Git child; hook terminates.
-  Previous signal handlers restore, both CGC locks release. Test-only subreaper collects orphaned
-  hooks without killing survivors before assertions; production descendant reaping is not claimed.
-- A later explicit stale/repeated request refuses EXISTING_STAGING before acceptance or
-  TARGET_CHANGED after acceptance. No duplicate commit, index change or handoff overwrite.
+- Six new tests in test_pack_interruption.py reuse the existing real-stream helper unchanged.
+  Twelve large text blobs plus 128 small distinct blobs select index-pack without config overrides.
+- The gate requires real active index-pack, a nonempty temporary PACK v2 file, count over 100,
+  and an open receiver descriptor to that exact file. No final .pack/.idx or ref movement yet.
+- SIGINT/SIGTERM to CGC return CANCELLED. Timeout, fetch SIGKILL and index-pack SIGKILL return
+  TIMEOUT in this gated fixture because remaining pipeline processes retain pipes until cleanup.
+  Production five-second command bound is unchanged; test helper uses four seconds.
+- All interrupted cases dispatch one transfer, zero update-ref commands. PUBLICATION_UNCERTAIN /
+  LOCAL_CHECKPOINT_ONLY, known local checkpoint, null remote/tracking receipts,
+  ref_update_succeeded=false and SAFE_TO_RESUME=UNKNOWN remain truthful.
+- Full source byte/mode/size/mtime snapshots match, including HEAD/tracking/index/config/worktree;
+  all remote non-object bytes and old object bytes survive. Source must be clean under current
+  publication rules; untracked-source mutation support is not claimed.
+- Temporary pack survives with observed prefix intact; no final pack/index appears. No rollback,
+  fragment deletion, GC/prune, repair, automatic retry, ref recreation or inferred publication.
+- Previous good handoff survives beside pending PUBLISHING/local receipt. Latest failure is
+  CANCELLED or VERIFICATION_FAILED; known failures and NEXT_EXACT_ACTION survive unchanged.
+  Fresh-process handoff-status JSON equals saved state; fresh ls-remote confirms old remote tip.
+- A later no-authority request refuses before mutation, preserving every object-store file,
+  source snapshot, remote metadata and durable handoff. Historical intent grants no new authority.
+- After either fetch or receiver death, a competing publisher with a different store receives
+  WRITER_BUSY while the pipeline still holds pipes. No contender store/handoff/ref mutation.
+- Existing runner reaps direct fetch and kills its group; sampled descendants terminate and both
+  CGC locks reacquire. Existing fixture-only subreaper collects orphaned descendants without
+  killing survivors before assertions. No runtime descendant-reaping guarantee is invented.
+- Gate-release control completes real receiving/indexing, verifies the resulting pack with
+  verify-pack, performs approved ref/tracking updates and independently reports VERIFIED;
+  safe resume remains UNKNOWN. No runtime defect or change was necessary.
 
 ## PARTIAL
 
-Overall V3, general crash acceptance and safe resume remain PARTIAL. The tested in-command
-stages are real Git waiting on fixture hooks. They bracket acceptance but do not prove every
-hookless object/index/ref mutation syscall, active add/index replacement, arbitrary Git versions,
-filesystems, power loss, abrupt-parent descendants or cross-source writers.
-
-Production continues to refuse executable hooks and core.hooksPath config. Only the test commit
-subprocess receives a fixture-only hook override after preflight, with no source config or hook
-file changes. This proves controlled Git lifecycle behavior, not support for production hooks.
+Overall V3, broader mutation/crash acceptance and evidence-based safe resume remain PARTIAL.
+This proves temporary-pack arrival with receiving index-pack active, not every completed-pack,
+index-finalization, delta-resolution or filesystem instruction. Active git add/index replacement,
+hookless commit mutation syscalls, abrupt CGC-parent descendants and cross-source writers remain
+unproven. Do not generalize one Git/Linux fixture to all environments or power-loss durability.
 
 ## NOT_STARTED
 
-General HTTPS/SSH/Git-push transport; valuable target publication; automatic retry, rollback,
-GC, lock deletion or repair; preserve CLI; full resume engine; project test runner; Guardian
-autonomous authority; automatic/background mutation; Agent Fabric/CWM/HHS/ARX/AI integration;
-GUI/mobile/V4. No telemetry or new capability framework.
+Full fresh-process Git/test/intent reconciliation and resume engine; project test runner;
+Guardian authority integration/automation; general HTTPS/SSH/Git-push transport; valuable target
+publication; automatic retry, rollback, GC, cleanup or repair; preserve CLI; Agent Fabric runtime.
+V4 protocol/capsule/MCP/plugin/SDK/portable core/desktop/web/mobile/gateway remain NOT_STARTED.
+No telemetry, quota reader change, new signal handling or lock framework.
 
 ## TESTS PASSED / DEVELOPMENT FAILURES
 
-Historical entry: 292 tests passed in 53.000s, zero failures/errors/skips. Not rerun as a baseline.
-Initial new suite: **10 tests in 10.320s, five passed and five assertion failures, zero errors/skips**.
-All failures were the same incorrect fixture expectation that pre-commit holds index.lock.
-The real Git rendezvous showed that lock absent. Post-acceptance cases already passed.
-Corrected tests to observed no-lock behavior and EXISTING_STAGING refusal; no runtime fix.
+Historical baseline: 302 passed in 69.620s, not rerun as a baseline.
+One disposable real-Git probe completed normally before adding tests.
+Initial six new tests: **6 passed in 18.425s**. After adding exact receiver-descriptor ownership
+and handling normal receiver reap during death observation, focused result:
 
 ```text
-TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_commit_interruption -q
-Ran 10 tests in 15.094s — OK
+TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_pack_interruption -q
+Ran 6 tests in 17.974s — OK
+```
 
-TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_commit_interruption test_checkpoint test_mutation_interruption -q
-Ran 50 tests in 27.688s — OK
+Publication/interruption integration:
+
+```text
+TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_pack_interruption test_publication test_mutation_interruption test_transfer_interruption test_commit_interruption -q
+Ran 63 tests in 63.046s — OK
 ```
 
 Relevant V3 regression:
 
 ```text
-TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_preservation test_inspection test_handoff test_checkpoint test_publication test_mutation_interruption test_transfer_interruption test_commit_interruption -q
-Ran 149 tests in 52.192s — OK
+TMPDIR=/tmp PYTHONPATH=src:tests python3 -B -m unittest test_preservation test_inspection test_handoff test_checkpoint test_publication test_mutation_interruption test_transfer_interruption test_commit_interruption test_pack_interruption -q
+Ran 155 tests in 71.725s — OK
 ```
 
-Final full regression:
+Full deterministic regression (once before publication):
 
 ```text
 TMPDIR=/tmp PYTHONPATH=src python3 -B -m unittest discover -s tests -q
-Ran 302 tests in 69.620s — OK
+Ran 308 tests in 85.581s — OK
 ```
 
-**All corrected/final runs: zero failures, errors or skips.** All 292 inherited tests and runtime
-unchanged. Full regression ran once. No runtime/test edits after final verification; subsequent
-changes are documentation evidence only.
+**All runs passed with zero failures, errors or skips.** No development test failure observed.
+Full regression ran once. Runtime and all 302 inherited tests/helpers are unchanged; no test
+code changed after verification. Subsequent edits are documentation evidence only.
 
-Static/documentation checks passed: 35 Python ASTs, three JSON files, 153 local Markdown
-file/anchor links and all 100 mission keypoints. All 59 tracked/new project files screened;
-only two known synthetic credential-URL fixtures in test_handoff.py and test_inspection.py matched.
-No real credential finding; pattern screening cannot prove universal absence. Expected CGC
-fetch/push destination verified without credential output. Whitespace passed; exact new test/
-helper contents and documentation diff reviewed. Runtime and mission texts are unchanged.
+Static/documentation checks passed: 36 Python ASTs, three JSON files, 176 local Markdown
+file/anchor links, all 100 V3 keypoints and unchanged V4 mission/boundary. Exact seven-file
+scope checked; 54 other tracked files are byte-identical, including runtime, inherited tests/
+helpers and schemas. All 61 tracked/new files screened; only the two unchanged known synthetic
+credential-URL fixtures in test_handoff.py and test_inspection.py matched. No real credential
+finding; pattern screening cannot establish universal secret absence. Exact new test and
+documentation diff/status/whitespace reviewed. Approved CGC fetch/push destination verified.
 
 ## IMPORTANT DISCOVERIES
 
-A commit can be fully accepted while its Git process is still waiting on post-commit work.
-Cancellation must not imply HEAD stayed old. The interrupted adapter correctly withholds a local
-success receipt; fresh Git evidence establishes the surviving commit separately. Before acceptance,
-staged reviewed bytes survive and prevent a blind repeat. The pre-commit gate has no index.lock
-in this Git environment: lock artifacts must be observed, not extrapolated from other Git stages.
-
-Durable uncertainty plus independent HEAD/index/status evidence answers whether work survived
-without guessing, duplicate commits or destructive cleanup. No telemetry or automatic reconciliation
-was needed. Current authority remains separate from all stored information.
+A pack fragment can outlive a gracefully cancelled CGC call because bounded group cleanup kills
+Git without running its own temporary-file handlers. That file is not a remote receipt. Both
+fetch death and receiving index-pack death can leave live pipeline processes holding pipes;
+source writer authority must remain held until the runner finishes group cleanup. Existing
+behavior meets the tested boundary without redesign. Artifact presence alone cannot answer
+whether publication happened: read the approved ref and retain durable uncertainty separately.
 
 ## KNOWN FAILURES / LIMITATIONS
 
-No unresolved deterministic failures. The five initial assertion failures were corrected as
-fixture assumptions, not hidden or presented as production defects. Hook gates and temporary
-worker subreaper are test-only. No production hook bypass, signal redesign or lock redesign.
+No known deterministic failure. Read-only evidence and refusal preserve artifacts; this block
+neither declares every fragment reusable nor tests an authorized retry/repair protocol.
+SIGKILL of CGC itself cannot execute handlers; descendants may continue after flock releases.
+Only child death and caller graceful cancellation are exercised. Fixture subreaper is test
+hygiene, not a production control. Polling waits for observed state rather than assuming readiness.
+No hard syscall/RSS/decompressed-object, hostile same-user path/config race, native-Windows,
+arbitrary filesystem/Git-version or power-loss guarantee. Existing quiescent-target rules apply.
+Storage failure can prevent a new failure receipt; retain earlier durable intent truthfully.
 
-SIGKILL of CGC itself cannot execute cleanup; descendants may continue after its flock releases.
-Only command-group death, caller graceful cancellation and bounded timeout are tested here.
-No universal power-loss, hard syscall deadline, native-Windows, hostile same-user filesystem/config
-race or bind-mount guarantee. Existing strict owner-controlled/quiescent target rules remain.
-Storage failure can retain only earlier intent; success/failure persistence remains best effort.
-No automatic rollback, lock cleanup, duplicate commit, publication or SAFE_TO_RESUME claim.
+## TESTS REMAINING / FRONTIER ASSESSMENT
 
-## TESTS REMAINING
-
-Large-pack/index-pack transfer interruption; active staging/index replacement; interruption
-inside hookless commit mutation syscalls; abrupt CGC-parent death with descendants; cross-source
-publication concurrency; full fresh-process Git/test/intent reconciliation. No live quota read
-required. Accepted stage evidence is not a universal durability or recovery guarantee.
+Selected pack-arrival boundary is COMPLETE. Broader crash-hardening frontier is **PARTIAL**.
+The existing untested active staging/index replacement boundary is material: git add changes
+recoverable staged work before commit begins, so real-commit coverage cannot establish it.
+Audit that single next boundary before claiming broad mutation acceptance. Abrupt-parent,
+cross-source and later pack/index timing limitations remain explicit, not silently accepted.
+Full fresh-process reconciliation remains a subsequent V3 goal; it is not implemented here.
 
 ## FILES CREATED / MODIFIED
 
-Created: `tests/test_commit_interruption.py`, `tests/helpers/commit_peer.py`.
-Modified: `AGENTS.md`, `README.md`, `docs/V3_PROGRESS.md`, `docs/V3_CONTRACT.md`,
-`docs/V3_ACCEPTANCE.md`, `tests/README.md`.
-Runtime, existing tests, schemas, V1/V2 records and mission texts unchanged. No unrelated
-architecture/decision documents edited because no runtime design changed.
+Created: tests/test_pack_interruption.py.
+Modified: README.md, AGENTS.md, docs/V3_PROGRESS.md, docs/V3_CONTRACT.md,
+docs/V3_ACCEPTANCE.md, tests/README.md.
+All runtime, inherited tests/helpers, schemas, V1/V2 records and V3/V4 mission texts unchanged.
+Architecture/decision records need no runtime-design revision for this acceptance-only block.
 
 ## DO_NOT_REPEAT
 
-Do not repeat accepted implementation, dispatch/return cancellation, ref/loose-transfer or these
-real commit gate tests without defect evidence. Do not assume index.lock exists at every stage.
-No live quota discovery, credential access, automatic retry/rollback/repair/lock deletion,
-blind staging, force push, reset/clean, unrelated repository checks or Fabric/V4 work.
-No success receipt from an attempt, no authority from a handoff, no safe resume from HEAD alone.
+Do not repeat accepted inspection/handoff/checkpoint/publication, ref/loose-transfer/commit or
+this pack-arrival implementation/coverage without defect evidence. Do not guess receiving Git
+path from size alone, infer publication from objects, or delete artifacts to make state look clean.
+No quota discovery, credentials, automatic retry/rollback/repair/lock deletion, force push,
+reset/clean, unrelated repository checks, networking, resume engine or V4 runtime work.
 
 ## NEXT_EXACT_ACTION
 
-After verified publication, STOP. Next scoped acceptance block: **audit and test active
-local-bare index-pack interruption after temporary pack arrival using real Git fixtures**.
-The existing transfer proof explicitly covers loose objects only; examine that remaining pack
-storage path without redesigning publication. Preserve refs, source work and all uncertain
-artifacts. Do not implement GC/repair, automatic retry, network transport, full resume or automation.
-Other staging/parent-death boundaries remain documented, not silently promoted to complete.
+After verified publication, STOP. Next scoped block: **audit and test real active git add
+interruption at an observable staging/index-write boundary in disposable Linux Git fixtures**.
+Investigate observable Git behavior first, preserve staged/worktree evidence and prior continuity,
+and do not extrapolate in-command coverage from dispatch/return mocks. No automatic rollback,
+cleanup, resume engine, publication expansion or V4 implementation. Reconcile newer evidence first.
 
 ## LAST SAFE CHECKPOINT
 
-Starting verified checkpoint: `7e44417341daab653c5e2c9009552fa240944875`.
-Acceptance implementation checkpoint: `1bc957dffb8ffd034289dea1415b92c5fbdcad83`.
-Final evidence checkpoint: **HEAD after normal commit/publication**; its resolved hash and
-independent publication result belong in the final report. No self-containing hash.
-Prior detailed acceptance evidence remains in Git history.
+Starting repository checkpoint: `4543a3739f09647bd54c45b2334f7937c6712dae`.
+Previous V3 engineering evidence: `fd1dbcabf10a748e0160f78f9311ae948a9a8260`.
+Current acceptance implementation: **HEAD after normal commit/publication**; resolved hash and
+independent remote equality belong in the final report/evidence follow-up. No self-containing SHA.
 
 ## PUBLICATION STATE
 
-Acceptance implementation **REMOTE_VERIFIED** on 2026-09-23. Normal forward push to the
-approved CGC origin/main succeeded. Independent live query confirmed local HEAD = origin/main
-= live refs/heads/main = `1bc957dffb8ffd034289dea1415b92c5fbdcad83`; working tree clean.
-
-This documentation-only follow-up records that observed equality and acceptance row 41.
-Its own HEAD is committed/pushed normally and independently verified for the final report.
-Runtime/tests remain unchanged from the 302-test verification; no redundant regression.
-Final document links and staged whitespace checked. If evidence publication fails, retain
-the local evidence commit and report LOCAL_CHECKPOINT_ONLY; never invent remote equality.
+Entry equality independently verified. Current coherent block is validated and awaits normal
+forward commit/push with independent local/tracking/live verification. No remote claim for local
+uncommitted work. If push fails, retain the local checkpoint and report the failure truthfully.
 
 ## OPERATIONS / INTEGRITY
 
-Session live quota reads **0**; V3 **0**; V2 **0**; historical V1 **1**. No /status percentage.
-Target network operations **0**. Only disposable Linux /tmp targets/stores/hooks are used.
-Test workers, groups and fixture directories cleaned by teardown. Subreaper settings die with
-worker processes. No persistent system/environment/security changes, installs, services, auth
-access, default cache creation or unrelated repository inspection/mutation. CGC-only network:
-entry live ref check and authorized final normal publication/verification.
+Capacity UNKNOWN; live quota reads this session 0, V3 0, V2 0, historical V1 1. No auth files,
+account scraping, default cache, installs, services or persistent system/environment changes.
+All target mutations use disposable Linux /tmp repositories. Existing helper's process-local
+subreaper ends with the worker; test teardown removes fixtures only after artifact assertions.
+No unrelated project inspected or modified. CGC network use is entry live ref check and authorized
+normal checkpoint publication/independent verification. No target network publication.

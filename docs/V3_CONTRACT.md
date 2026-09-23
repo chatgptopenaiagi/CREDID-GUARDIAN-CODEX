@@ -667,3 +667,60 @@ CGC-parent SIGKILL, power loss, arbitrary filesystem/Git versions and different-
 remain outside this subset. No SIGKILL handler or guaranteed abrupt-parent descendant cleanup.
 The two observable hook stages bracket acceptance but do not cover every intermediate instruction.
 No runtime/schema/authority, networking, automatic recovery or telemetry change.
+
+## Active local bare index-pack interruption
+
+VERIFIED OFFLINE with unchanged runtime: [pack interruption tests](../tests/test_pack_interruption.py).
+Six tests reuse the existing [real-stream peer](../tests/helpers/transfer_peer.py) without modifying
+it. Disposable Linux fixtures retain twelve large deterministic text blobs and add 128 small
+distinct blobs. Observed Git 2.55.0 selects real `index-pack --stdin`, not `unpack-objects`, with
+no unpack-limit override. The upload-pack/pack-objects stream remains real and unmodified.
+
+The peer gates after 256 KiB. Tests wait for an active index-pack descendant, a nonempty
+`objects/pack/tmp_pack_*` with a PACK v2 header declaring over 100 objects, and an open descriptor
+from that exact receiver to that file. All sampled pipeline processes share the runner's group.
+No final .pack/.idx exists at the gate and the approved remote tip is still old. This proves an
+active receiving/index-pack command, not every later delta-resolution/index-write instruction.
+The release control completes the same stream, produces a pack/index accepted by `verify-pack`,
+updates the approved refs and reaches independent VERIFIED publication with safe resume UNKNOWN.
+
+Five interruption cases cover SIGINT/SIGTERM to the CGC worker, ordinary command timeout,
+SIGKILL of the direct fetch child and SIGKILL of the actual index-pack receiver. SIGINT/SIGTERM
+return CANCELLED. Both child-death cases and timeout return TIMEOUT in this gated fixture:
+remaining pipeline processes still hold pipes, so the runner reaches its deadline before group
+cleanup. That outcome is not a universal mapping of child death to TIMEOUT. Production command
+bound remains five seconds; the inherited fixture uses four. CGC-parent SIGKILL is not tested.
+
+For every interrupted case, exactly one transfer and zero update-ref commands were dispatched.
+PUBLICATION_UNCERTAIN / LOCAL_CHECKPOINT_ONLY retains the known local checkpoint, null remote
+and tracking receipts, ref_update_succeeded=false and SAFE_TO_RESUME=UNKNOWN. Source file bytes,
+modes, sizes and mtimes (including HEAD, tracking, index and config) and all remote non-object
+file bytes remain unchanged. Publication requires a clean source; no dirty/untracked-source
+publication support is implied. Previously present remote objects retain their bytes.
+
+The observed temporary pack survives cleanup with its captured prefix intact; no final .pack/.idx
+appears. Group SIGKILL cannot run Git's cleanup handlers even when CGC itself handles graceful
+cancellation. CGC does not delete the fragment, GC, prune, repair, retry or manufacture publication.
+Remaining artifacts are neither automatically classified as corruption nor treated as receipts.
+Fresh read-only ls-remote confirms the old branch tip. A later call lacking current publication
+authority refuses without changing the object store, source, remote metadata or handoff.
+This is not an authorized retry/repair protocol or proof that every temporary file is safe to reuse.
+
+Previous known-good continuity survives beside pending PUBLISHING/local-commit evidence. The
+latest failure records CANCELLED for signals or VERIFICATION_FAILED for timeout/child death;
+known failures and NEXT_EXACT_ACTION survive. Fresh-process handoff-status reconstructs the exact
+durable state. Neither object presence nor historical intent backfills a remote success receipt.
+
+After either child death, a competing publisher using a different store gets WRITER_BUSY while
+the pipeline still holds pipes. The existing source lock stays owned until runner cleanup ends.
+The direct Git child is reaped, sampled descendants terminate and both CGC locks reacquire.
+The inherited test-only subreaper collects orphaned descendants without killing survivors before
+assertions; production promises direct-child reaping, not that subreaper behavior.
+
+LIMITATIONS / PARTIAL: active git add/index replacement, hookless commit syscalls, abrupt CGC-parent
+death/descendant mutation, different-source remote writers, full fresh-process reconciliation and
+power-loss durability remain outside this proof. The test does not cover completed-pack-before-ref
+timings, every compression/delta variant, arbitrary Git versions/filesystems or hard syscall/RSS
+bounds. Existing owner-controlled/quiescent target assumptions remain. This closes the selected
+temporary-pack arrival boundary only; overall crash hardening remains PARTIAL. No runtime, helper,
+schema, signal/locking architecture, quota source, transport or V4 semantics changed.

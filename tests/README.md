@@ -188,3 +188,12 @@ Released controls prove real commits complete. Index/worktree/previous continuit
 readback, active contender refusal and stale-repeat refusal are checked. Production still refuses
 hooks; the subprocess hook override and worker subreaper are test-only. No runtime edits.
 See [commit interruption scope](../docs/V3_CONTRACT.md#real-active-local-commit-interruption).
+
+V3 active index-pack: `test_pack_interruption.py` adds six tests reusing the unchanged
+`helpers/transfer_peer.py`. A larger real object count selects index-pack on Git 2.55.0.
+The gate requires an active receiver with an open descriptor to a nonempty temporary PACK file.
+SIGINT/SIGTERM, timeout, fetch death and receiving index-pack death preserve uncertainty,
+temporary artifacts, source/remote refs and durable handoff. Child-death contenders stay blocked
+until group cleanup. A released control produces a valid pack/index and verified publication.
+No inherited tests or runtime changed; broader staging/abrupt-parent boundaries remain partial.
+See [pack interruption scope](../docs/V3_CONTRACT.md#active-local-bare-index-pack-interruption).
