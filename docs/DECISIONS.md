@@ -604,3 +604,27 @@ package/configuration change or unrelated process/repository mutation. Temporary
 files later disappeared for an unknown reason; preserve curated command observations without
 claiming retained replay artifacts or harness file deletion. Publication self-reference: HEAD;
 resolved SHA and independent post-push three-ref verification belong in the final report.
+
+## 2026-09-24 — Authority separation cannot omit controller-UID peers
+
+Starting clean Windows main independently matched tracking/live main at
+`6902579cbcde6aa3aa91b0aa75385404da7c5499`. The sole Windows worker completed a documentation-only
+[authority-separation audit](V3_QUIESCENCE.md#13-controller-and-worker-authority-separation-audit--2026-09-24).
+No Fedora command/probe/experiment ran. Earlier A–J negative witnesses remain historical and intact.
+
+Decision D: **CLOSURE UNAVAILABLE UNDER CURRENT UNPRIVILEGED SCOPE**, meaning the evidenced and
+authorized scope, not a universal Linux impossibility. Audit A–H separately: user/PID namespaces,
+distinct worker UID, controller-owned delegation, transient systemd lifecycle and restricted
+path access do not establish exclusive controller authority against an outside controller-UID
+peer. Namespace delegation can enforce worker-side reachability; do not misdescribe it as merely
+cosmetic. It does not automatically constrain that outside peer. Alternate control descriptors,
+thread interfaces, manager/deputy IPC, credential transitions and controller continuity remain
+explicit obligations. No minimal operational profile is selected or falsely accepted conditionally.
+
+Specify fourteen closed-admission obligations and a future falsification gate, with no producer
+or runtime/schema/test/mission change. A new experiment first needs an owner decision and evidence
+for an independently enforced controller-control-plane boundary, including peer exclusion,
+delegation/IPC policy and any required environment changes. Do not provision that boundary in this
+block or assume an operator's absence declaration proves it. Filesystem exclusivity and real-project
+P3 remain UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED; V4 runtime NOT_STARTED.
+Validation and publication accounting are in progress; this checkpoint self-reference is HEAD.

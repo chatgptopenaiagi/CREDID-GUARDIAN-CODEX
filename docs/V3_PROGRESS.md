@@ -2,27 +2,135 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 remains active.** Authority-separation audit COMPLETE.
+Decision D: **CLOSURE UNAVAILABLE UNDER CURRENT UNPRIVILEGED SCOPE**, limited to the evidenced,
+authorized environment; no universal Linux impossibility is claimed. No minimal operational
+profile selected. Earlier containment PARTIAL / same-UID admission OPEN remain unchanged.
+Filesystem exclusivity and real-project P3 UNKNOWN.
+**PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.** V4 ARCHITECTED / runtime NOT_STARTED.
+Accepted captured READ_ONLY_ANALYSIS / HANDOFF_ONLY verifier remains unchanged.
+
+## VERIFIED STARTING CHECKPOINT
+
+Windows-native root/status/diffs/whitespace/history and independent remote checks established
+clean main: HEAD = origin/main = live main =
+`6902579cbcde6aa3aa91b0aa75385404da7c5499`.
+PRIMARY_AGENT = WINDOWS_NATIVE_CODEX.
+PRIMARY_REPOSITORY_PATH = C:\Codex-Projects\CREDID-GUARDIAN-CODEX.
+FEDORA_CODEX_AGENT = NONE. FEDORA_ROLE = SUBORDINATE_EXECUTION_OR_INSPECTION_ENVIRONMENT.
+No Fedora invocation was necessary in this audit. No sub-agent or second repository controller.
+
+## CURRENT SESSION BLOCK
+
+Audit/threat model/profile feasibility only:
+[quiescence section 13](V3_QUIESCENCE.md#13-controller-and-worker-authority-separation-audit--2026-09-24).
+Reviewed inherited contracts and historical observations, checked Linux/systemd primary sources,
+and specified requirements without re-running A–J or changing any runtime behavior.
+
+## COMPLETE / IMPORTANT DISCOVERIES
+
+- A–H comparison distinguishes authority, self/descendant egress, both worker-UID and
+  controller-UID peer ingress, alternate interfaces, continuity and actual availability.
+- Distinct worker identity may reduce worker authority but cannot alone exclude peers with
+  the controller's underlying UID. Same-owner modes do not identify one authorized process.
+- Namespace delegation is a real kernel enforcement candidate, but outside controller peers
+  are not automatically subject to worker namespace restrictions.
+- Explicit roles/trust boundaries, inherited-FD/alias/thread-interface and manager/helper IPC
+  obligations, fork/exec/reparent/controller-death requirements.
+- Fourteen conceptual closed-admission obligations; missing evidence cannot become SATISFIED.
+  Positive detection of a forbidden move invalidates closure rather than proving containment.
+- Decision D and precise external prerequisite before profile selection/new experimentation.
+
+## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+
+Existing launch identity and descendant membership evidence remains valid within its historical
+scope. Containment PARTIAL; admission OPEN. Stronger composed protections UNKNOWN; no claim that
+distinct mappings, privileged helpers or a protected broker are already available or impossible.
+New provisioning would be REQUIRES_ENVIRONMENT_CHANGE and needs separate scope/authorization.
+No production-positive mutation profile. Filesystem/Windows writer exclusivity unassessed.
+No contradiction requiring V3/V4 mission or producer-contract revision was found.
+
+Production producer, schema, coordination/admission runtime, supervisor, mutation gate, recovery,
+automatic orphan cleanup, full safe resume, automation and V4 runtime remain NOT_STARTED.
+
+## FILES CHANGED
+
+Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md and docs/DECISIONS.md.
+Historical contract/experiment records retained. No source/schema/test/helper/mission edits.
+
+## VALIDATION
+
+PASS: 46 Python AST parses; 3 JSON parses; 270 local Markdown links/anchors; balanced fences;
+all 100 V3 keypoints; all eight candidate rows and fourteen admission obligations present.
+All 72 untouched tracked files are byte-identical to this session's pre-edit SHA256 snapshot
+and match canonical starting Git content, including runtime/tests/helpers/schema and V3/V4
+missions. Historical quiescence and decision text retained as exact prefixes; prior progress
+retained under historical headings. Exact three-document scope; no untracked temporary artifacts.
+Whitespace checks and changed-document recognizable credential-pattern checks passed (not proof
+of universal secret absence). Exact unstaged/staged diff reviewed before publication.
+
+## TESTS EXECUTED / NOT EXECUTED
+
+Documentation/static validation only. No Fedora capability probe or containment experiment.
+No crash, parent-death, reconciliation, verifier or full regression rerun; no executable change
+or discovered runtime defect warrants it. Historical 389-pass result is not a new test run.
+
+## OPERATIONS / INTEGRITY
+
+Only Windows repository documentation/Git operations and public primary-documentation reads.
+No Linux side effects, fixtures, process scan, package installation, persistent user/configuration
+change, enabled service, credential access, quota read or unrelated repository access. Some
+freedesktop rendered manual URLs failed; project documentation/source provided the cited evidence.
+No unsafe fallback or unsupported claim about installed systemd API authorization.
+
+## DO_NOT_REPEAT
+
+Do not repeat A–J or accepted crash/verifier tests merely to seek closure. Do not narrow away
+controller-UID peers, promote namespace creation/UID labels/path denial into isolation proof,
+or implement a producer solely to report UNKNOWN. No automatic provisioning or V4 work.
+
+## NEXT_EXACT_ACTION
+
+OBTAIN AN EXPLICIT OWNER DECISION AND EVIDENCE FOR AN INDEPENDENTLY ENFORCED LINUX
+CONTROLLER-CONTROL-PLANE BOUNDARY THAT EXCLUDES UNTRUSTED CONTROLLER-UID PEERS, INCLUDING
+ITS DELEGATION/MANAGER IPC POLICY AND ANY REQUIRED ENVIRONMENT CHANGE, BEFORE SELECTING
+A PROFILE OR AUTHORIZING A NEW DISPOSABLE EXPERIMENT.
+If unavailable or declined, retain CLOSURE UNAVAILABLE UNDER CURRENT SCOPE. No current
+permission to install, create users, change services/WSL/security settings or start runtime.
+Filesystem exclusivity remains a separate gate. Stop after this audit checkpoint.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Starting checkpoint independently verified: `6902579cbcde6aa3aa91b0aa75385404da7c5499`.
+Current coherent documentation checkpoint uses HEAD as self-reference. Resolved SHA, normal push
+result, independently observed three-ref equality and final clean status belong in the final
+report after publication. No self-containing hash or premature publication claim.
+
+## Historical accepted Linux feasibility evidence
+
+### Historical Linux feasibility — OVERALL STATUS
+
 **PARTIAL; V3 remains active.** Launch-bound Linux feasibility block COMPLETE within its
 experimental scope: containment PARTIAL; same-UID cgroup admission OPEN. Current real-project
 P3 UNKNOWN. Quiescence specification remains complete; **PRODUCTION QUIESCENCE PRODUCER =
 NOT_STARTED**. Accepted captured READ_ONLY_ANALYSIS / HANDOFF_ONLY verifier unchanged.
 V4 remains ARCHITECTED / runtime NOT_STARTED.
 
-## VERIFIED STARTING CHECKPOINT
+### Historical Linux feasibility — VERIFIED STARTING CHECKPOINT
 
 Native Windows root C:\Codex-Projects\CREDID-GUARDIAN-CODEX; clean main. Required status,
 unstaged/staged diffs, whitespace, history and independent remote observations established
 HEAD = origin/main = live main = `9f5f11681e552fcc8e6aa978cf90dbe1def6b9b7`.
 One Windows controller only; no interactive Linux Codex or delegated agent. No quota reads.
 
-## CURRENT SESSION BLOCK
+### Historical Linux feasibility — CURRENT SESSION BLOCK
 
 Bounded capability inspection plus disposable Linux-native A–J experiments through
 `wsl.exe -d FedoraLinux-44 -- ...`. Detailed classified observations, candidate comparison,
 side effects and limits: [quiescence evidence](V3_QUIESCENCE.md#12-windows-controlled-fedora-containment-feasibility--2026-09-24).
 No production source, tests, helpers, schema or mission changes.
 
-## COMPLETE / IMPORTANT DISCOVERIES
+### Historical Linux feasibility — COMPLETE / IMPORTANT DISCOVERIES
 
 - Available: pidfds, /proc start/boot/namespace identity, existing unprivileged cgroup-v2
   delegation through foreground transient user scopes, basic user/PID namespace creation.
@@ -37,7 +145,7 @@ No production source, tests, helpers, schema or mission changes.
 - Candidate-level distinction preserved: kernel set membership and stable instance observation
   work; worker/controller admission-authority separation is still missing.
 
-## PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
+### Historical Linux feasibility — PARTIAL / NOT_STARTED / KNOWN LIMITATIONS
 
 Containment PARTIAL; tested cgroup admission OPEN. Stronger namespace/control-access composition
 UNKNOWN. Direct /init.scope control unavailable to UID 1000, but user delegation is available.
@@ -51,7 +159,7 @@ Producer, production coordination/admission layer, schema, mutation gate, recove
 orphan cleanup, full safe resume, automation and V4 runtime remain NOT_STARTED.
 No defect in repository executable code was discovered. No existing test was modified.
 
-## TESTS EXECUTED / NOT EXECUTED
+### Historical Linux feasibility — TESTS EXECUTED / NOT EXECUTED
 
 Main purpose-built bounded A–J fixture: one execution, exit 0, all assertions passed, five
 worker exits 0. Supplementary retained-pidfd identity probe: exit 0; old terminal handle ESRCH
@@ -65,13 +173,13 @@ documentation only, no discovered executable defect. Historical 389-pass evidenc
 historical. Real same-integer PID reuse, stronger namespace restriction, filesystem closure,
 Windows process scanning and live quota investigation NOT_EXECUTED.
 
-## FILES CHANGED
+### Historical Linux feasibility — FILES CHANGED
 
 Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md and docs/DECISIONS.md.
 The existing evidence chain is extended; historical results below are retained.
 No disposable executable/log or unrelated Windows artifact belongs in Git.
 
-## VALIDATION
+### Historical Linux feasibility — VALIDATION
 
 PASS: 46 Python AST parses; 3 JSON parses; 268 local Markdown links/anchors; balanced fences;
 all 100 V3 architectural keypoints. Exact three-document change scope, no untracked artifacts,
@@ -82,7 +190,7 @@ the corrected canonical-byte comparison passed. No source change or test failure
 Changed-document recognizable credential-pattern checks passed (not universal secret proof).
 Exact changed-file diff reviewed before publication. No full regression rerun was warranted.
 
-## OPERATIONS / INTEGRITY
+### Historical Linux feasibility — OPERATIONS / INTEGRITY
 
 Fedora initially stopped; WSL invocation started it normally. Existing user manager and two
 short-lived scope objects used; no package install, enabled service, persistent configuration,
@@ -91,14 +199,14 @@ quota read. Temporary objects and exact cleanup observations are recorded in sec
 Raw Linux temporary files are no longer retained; curated command observations are durable.
 No production CGC process supervisor or cleanup promise results from fixture-only subreaping.
 
-## DO_NOT_REPEAT
+### Historical Linux feasibility — DO_NOT_REPEAT
 
 Do not rerun accepted crash/verifier blocks or A–J merely to seek a positive outcome.
 Do not infer quiescence from absent PIDs/locks, empty cgroup, stable snapshots or a registry.
 No filesystem-exclusivity claim from Linux-native location, and no authority from evidence.
 No installation, persistent environment change, production producer or V4 follows automatically.
 
-## NEXT_EXACT_ACTION
+### Historical Linux feasibility — NEXT_EXACT_ACTION
 
 SPECIFY AND AUDIT THE SMALLEST DISPOSABLE PROFILE THAT SEPARATES WORKER CGROUP
 MIGRATION/ADMISSION AUTHORITY FROM ITS CONTROLLER, INCLUDING NAMESPACE/ALTERNATE-INTERFACE
@@ -107,12 +215,13 @@ Use the observed escapes as requirements. If no profile can be justified under e
 unprivileged capabilities, record closure unavailable under that scope. Filesystem exclusivity
 remains an independent unproven gate. Do not begin this next block in this session.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical Linux feasibility — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting checkpoint independently verified at `9f5f11681e552fcc8e6aa978cf90dbe1def6b9b7`.
 This documentation checkpoint uses HEAD for self-reference. Normal commit/push and independent
 post-publication local/tracking/live equality plus final clean status are required; resolved SHA
 and actual outcome belong in the final report. No publication is inferred before those checks.
+
 
 ## Historical accepted quiescence contract evidence
 

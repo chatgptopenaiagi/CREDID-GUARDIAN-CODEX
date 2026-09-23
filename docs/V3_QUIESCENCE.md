@@ -511,3 +511,218 @@ Use these negative witnesses as requirements; do not repeat A–J merely to obta
 If no profile can be justified under existing unprivileged capabilities, record closure unavailable
 under that scope. Filesystem exclusivity remains a separate unproven gate. No production runtime,
 environment reconfiguration, recovery or V4 implementation is authorized by this next-action record.
+
+## 13. Controller and worker authority-separation audit — 2026-09-24
+
+**Decision D: CLOSURE UNAVAILABLE UNDER CURRENT UNPRIVILEGED SCOPE.** This is a DERIVATION
+about the evidenced, authorized environment, not a theorem that every possible unprivileged
+Linux isolation composition is impossible. No available candidate below establishes all required
+properties. No minimal operational profile is selected; further combinations remain UNKNOWN.
+The missing boundary is enforced exclusive control-plane authority, including exclusion of
+external peers sharing the controller's underlying UID, not merely a different worker UID label.
+
+Starting clean Windows main: local HEAD = origin/main = live main =
+`6902579cbcde6aa3aa91b0aa75385404da7c5499`. This block is audit/specification only. No Fedora
+command, capability probe, new scope, namespace, account, fixture or runtime test was executed.
+Section 12 remains historical OBSERVED_FACT evidence; its egress, ingress and round-trip
+counterexamples are preserved, not rerun. No new live Fedora availability claim is made.
+The previously read foundation/mission/contracts remain unchanged; current evidence and scope
+are reconciled against them. Windows Codex is the sole repository worker. A proposed Linux
+TRUSTED_CONTROLLER is a separate process role, not another Codex agent or Windows visibility.
+
+### Source-grounded premises and evidence limits
+
+The following are documented mechanisms, not new Fedora acceptance results. Sources were
+consulted on 2026-09-24; upstream documentation does not prove installed configuration parity.
+
+- The kernel's [cgroup v2 delegation rules](https://docs.kernel.org/admin-guide/cgroup-v2.html#delegation-containment)
+  require migration write authority at destination and common ancestor. Namespace delegation
+  also constrains source/destination reachability in the writer's cgroup namespace. This is a
+  real enforcement candidate, beyond pathname hiding; it does not confine an outside writer
+  still acting from an ancestor namespace with sufficient permissions. Thread migration has
+  its own domain constraints and must be considered separately.
+- [User namespaces](https://man7.org/linux/man-pages/man7/user_namespaces.7.html) map IDs for
+  permission checks; relabeling the caller as namespace root does not alone separate underlying
+  file ownership. Capabilities are namespace-relative. A matching namespace-owner EUID in the
+  parent has capabilities in the child namespace. Thus controller-owner peers cannot simply be
+  assumed excluded by creating another user namespace. Different mapped host identities need
+  evidenced mapping authority; no subordinate-ID allocation/helper policy was established here.
+- [PID namespaces](https://man7.org/linux/man-pages/man7/pid_namespaces.7.html) affect PID views
+  and namespace-init lifecycle. They are not a cgroup-file authorization mechanism. A host-side
+  actor's control authority is not removed by a worker's restricted PID view.
+- [systemd delegation](https://systemd.io/CGROUP_DELEGATION/) allocates subtree management to
+  a delegate. It is not authentication of one process among every process using that user ID.
+  The [upstream manager interface](https://raw.githubusercontent.com/systemd/systemd/main/man/org.freedesktop.systemd1.xml)
+  includes transient-unit and process-attachment operations. Local availability/authorization
+  of each operation is UNKNOWN; the earlier user-scope launch is the only relevant live evidence.
+  Treat manager access as another control path requiring policy, not an assumed exploit or denial.
+- [chmod](https://man7.org/linux/man-pages/man2/chmod.2.html) distinguishes ownership from
+  process identity. Owner-only modes do not distinguish two unrestricted processes sharing that
+  owner. [Open descriptors](https://man7.org/linux/man-pages/man2/open.2.html) and descriptor-relative
+  access survive pathname changes; close-on-exec is not close-on-fork. A preopened cgroup FD may
+  still face operation-specific kernel checks: neither universal bypass nor revocation is assumed.
+- [No-new-privileges](https://man7.org/linux/man-pages/man2/PR_SET_NO_NEW_PRIVS.2const.html)
+  constrains privilege gains through exec and is inherited. It does not revoke existing file
+  authority or establish IPC isolation. It is a possible future requirement, not configured here.
+
+Some freedesktop rendered manual URLs failed to load; systemd's project documentation/source
+supplied the cited material instead. No undocumented Fedora helper behavior is inferred.
+
+### Roles, trust and failure boundaries
+
+All role restrictions below are SPECIFIED requirements, not implemented protections. The kernel
+and correctly configured system manager are in the trusted computing base; malicious administrator
+or kernel compromise is outside this model. Ordinary same-UID peers are explicitly inside it.
+
+| Role | Allowed role / forbidden effect | Required evidence and assumption; UNKNOWN trigger |
+|---|---|---|
+| TRUSTED_CONTROLLER | Bind launches and domain; exclusively administer membership before capture; no new admission during protected capture | Retained instance/domain handles, kernel credentials, delegation and epoch provenance; correctness assumed, peer-injection resistance required; lost continuity invalidates proof |
+| UNTRUSTED_OR_SEMI_TRUSTED_WORKER | Execute admitted fixture workload; must not alter membership/control policy or invoke a privileged deputy | Enforced credential/namespace/FD/IPC restrictions before release; cooperation is never evidence; uncovered route gives UNKNOWN |
+| WORKER_DESCENDANT | Fork/exec only under inherited restrictions; cannot gain controller rights | Inheritance and executable-transition proof for complete subtree; unaccounted helper/transition invalidates coverage |
+| EXTERNAL_SAME_UID_PEER | Continue unrelated work outside domain; may not enter, move workers or impersonate/inject into controller | Separately consider worker-UID peers and controller-UID peers; lack of enforced controller-peer distinction is the present blocker |
+| EXTERNAL_OTHER_UID_PEER | Unrelated execution; no domain writes/delegated admission | Ownership, supplementary groups, ACL/capability and broker policy coverage; UID difference alone is insufficient |
+| SYSTEM_MANAGER | Maintain specified boundary and lifecycle under fixed policy; not admit on arbitrary peer request | Independently administered delegation/API policy and generation binding; restart, policy change or ambiguous authorization gives UNKNOWN |
+| KERNEL | Enforce accepted credentials/namespaces/domain and expose lifecycle evidence | Supported semantics/configuration assumed, observed boot/namespace identity required; change or unsupported layout invalidates continuity |
+
+The controller must also be protected against peer changes to its executable/configuration and
+where applicable ptrace, signal, descriptor or IPC access. These are control-plane integrity
+requirements, not a new audit of project filesystem writers. Peer-caused controller death must
+fail closed even if denial of service is not prevented. Existing trusted Python caller semantics
+are unchanged; they do not become a same-UID isolation proof for a future Linux controller.
+
+### Candidate comparison
+
+All judgments are DERIVATION except availability explicitly attributed to section 12. 'Conditional'
+means additional evidence/enforcement required, not SATISFIED. Continuity is UNKNOWN in every
+candidate: no authority-separated controller lifetime/epoch has been accepted. Same-UID ingress
+includes peers sharing the controller UID, not just the worker UID. No ranking by convenience.
+
+| Profile | Authority separation | Self-egress prevention | Descendant-egress prevention | Same-UID ingress prevention | Alternate-interface coverage | Controller continuity | Available now | Proof status |
+|---|---|---|---|---|---|---|---|---|
+| A: same UID + delegated cgroup | Absent in tested profile | Contradicted | No general protection; grandchild escaped | Contradicted by owned peer | Round-trip gap witnessed | UNKNOWN | PROVEN_IN_EXISTING_EVIDENCE for primitive only | CONTRADICTED closure; admission OPEN |
+| B: user namespace | Different namespace alone insufficient; mappings matter | UNKNOWN | UNKNOWN | Parent/controller-owner peer gap | UNKNOWN | UNKNOWN | Basic creation historically proven; separation UNKNOWN | UNKNOWN |
+| C: PID namespace composition | Does not separate cgroup authorization | UNKNOWN | Visibility/lifecycle alone insufficient | Outside controller peer unaffected | UNKNOWN | UNKNOWN | Basic creation historically proven | UNKNOWN |
+| D: distinct underlying worker UID/GID | SPECIFIABLE if mapping/launch authority supplied | Conditional on complete access denial | Conditional on inherited denial | Worker-peer case conditional; controller-peer gap remains | UNKNOWN | UNKNOWN | No accepted distinct-ID launch mechanism | REQUIRES_ENVIRONMENT_CHANGE for new provisioning; existing availability UNKNOWN |
+| E: controller-owned delegated subtree | Same owner UID is not controller-process exclusivity | Contradicted for unchanged same-UID access | Same gap | Controller-peer gap remains | UNKNOWN | UNKNOWN | Delegation historically proven | CONTRADICTED as sufficient alone |
+| F: namespace + distinct UID + cgroup | CONDITIONALLY_FEASIBLE component separation; not full profile | Conditional on enforced boundary | Conditional on inheritance | Needs independently enforced controller-peer exclusion | UNKNOWN | UNKNOWN | Full composition UNKNOWN | UNKNOWN; not selected |
+| G: transient systemd scope/service | Scope lifetime is not identity separation; user service not automatically stronger | No denial proven | No denial proven | User-manager/delegation peer gap | Manager API policy UNKNOWN | UNKNOWN | User scope historically proven; service isolation untested | UNKNOWN; privileged policy would require separate scope |
+| H: controller-created child with restricted access | Same-owner chmod/path hiding insufficient | UNKNOWN if composed; unchanged access contradicted | Same gap | Owner peers not distinguished | Inherited FDs/aliases/API unresolved | UNKNOWN | Child creation proven; asymmetric access not proven | CONTRADICTED as sufficient alone |
+
+A cgroup namespace with nsdelegate deserves explicit consideration within B/F: a worker confined
+to that namespace can face kernel migration reachability restrictions even if a pathname is known.
+However, the external controller-UID peer remains outside that restriction. Neither a private
+mount view nor a worker-only syscall restriction constrains that peer automatically. Restricting
+all such peers would itself require an accepted environment-wide boundary, absent here.
+No syscall-filter, LSM or broker composition is declared impossible; none is evidenced sufficiently
+to select a minimal closed profile. Moving to the whole user subtree would change the finite
+universe, include unrelated processes and still need admission closure; it is not a solution here.
+
+Distinct UID means different underlying kernel credentials, with supplementary groups and relevant
+capabilities accounted for, not simply different numbers displayed in namespaces. It would make
+controller-owned control files potentially inaccessible to workers. It would also require a trusted
+launch/credential transition and observation/teardown design across that boundary. New accounts,
+subordinate-ID provisioning or privileged broker policy are REQUIRES_ENVIRONMENT_CHANGE if needed;
+none is authorized or performed. Already-present mappings/helper authority remain UNKNOWN rather
+than asserted absent. Even their discovery alone would not resolve the controller-UID peer gap.
+
+### Threat and alternate-interface ledger
+
+Every row is a proof obligation. 'UNKNOWN' describes unaccepted mitigation, not a newly observed
+attack. The earlier migration counterexamples remain the only executed adversarial witnesses.
+
+| Threat / interface class | Required boundary and falsifier | Present result |
+|---|---|---|
+| Worker self-migration via cgroup.procs | Deny every destination/ancestor route or enforce non-escape independently; any successful out-of-domain move falsifies closure | A contradicted; replacement UNKNOWN |
+| Child/grandchild migration | Same denial must hold after fork, detach and reparent | Earlier grandchild escaped; inheritance of a new boundary UNKNOWN |
+| Worker moving another worker or admitting peers | Audit authority of writer and target binding, not only who owns target PID; peer movement must not bypass controller | UNKNOWN mitigation; no assumption that self-only testing covers it |
+| Same-UID ingress | Exclude both worker-UID and controller-UID outside peers throughout epoch | A OPEN; distinct worker UID alone leaves controller-peer gap |
+| cgroup.threads / threaded layouts | Cover thread moves and layout-changing authority; initial candidate must refuse unsupported threaded topology | No threaded acceptance; UNKNOWN |
+| Parent/sibling/delegated child interfaces | Account for cgroup.procs, threads, type, subtree controls, ownership/mode changes and further delegation | Parent/common-ancestor authority cannot be omitted; UNKNOWN replacement |
+| Bind mounts / alternate paths / namespace views | Denial must follow effective authority across aliases; prevent namespace re-entry or newly exposed control views | PATH_DENIAL != CAPABILITY_DENIAL; UNKNOWN |
+| Inherited or transferred descriptors | No writable control FD, ancestor dirfd, namespace FD or broker socket may reach untrusted code; inspect fixed allowlist before fork workload release, not only exec | UNKNOWN; later hiding/chmod cannot be assumed to revoke a handle |
+| Controller /proc, ptrace, signal, FD access | Protect controller from impersonation/injection/capability theft; death must invalidate epoch | No hostile same-UID controller protection accepted |
+| Exec | Bound executable/helper policy and credential/capability transitions; privilege gain or restored control route invalidates profile | Earlier identity continuity does not prove authority continuity |
+| Fork / new namespaces | Descendants receive only allowed descriptors and restrictions; no inherited control authority or namespace escape route | Required inheritance proof UNKNOWN |
+| Reparenting | Adoption must not transfer controller descriptors/authority; lifecycle accounting survives ancestry loss | Earlier membership survives; new authority model untested |
+| systemd D-Bus / controller IPC | Only the bound authorized controller can request admission/policy changes; authenticate each operation and seal epoch against new requests | Installed per-method policy UNKNOWN; a unit name or same UID is not sufficient proof |
+| Privileged helpers / delegated IPC | No migration deputy accessible through filesystem or abstract sockets, descriptor passing or permitted offload | Higher-authority helper availability/denial UNKNOWN; no credential/helper inventory performed |
+| PATH / shell / systemd-run / sudo-like routes | Fixed launch policy, no uncontrolled interpreter/helper substitution, no inherited manager channel; existence is neither permission nor an exploit | Earlier systemd-run route known; other local routes UNKNOWN, not invoked |
+| Controller death / manager restart | Invalidate epoch immediately; surviving workers remain possible; no fallback from missing observer to empty domain | Parent death evidence preserved; no cleanup guarantee or automatic recovery |
+
+A closed design must account for preopened descriptors separately from reopening through an alias.
+Kernel checks may reject a specific FD-mediated migration, but this requires exact documented and
+accepted semantics, not an assumption that a hidden mount revoked access. Worker cooperation,
+denying one pathname, and an empty registry cannot discharge any omitted row.
+
+### Refined closed-admission predicate
+
+CLOSED_ADMISSION_WITHIN_PROFILE is a proposed conceptual predicate, not a schema field or emitted
+result. All fourteen obligations must be supported by fresh, bound evidence:
+
+| ID | Required evidence |
+|---|---|
+| CA1 | Controller instance/credentials/control authority bound to current retained provenance |
+| CA2 | Each admitted root bound to race-safe launch identity before untrusted execution |
+| CA3 | Exact finite domain identity, supported topology and complete declared scope |
+| CA4 | Worker self-egress prevented by enforced authority boundary |
+| CA5 | Descendant egress prevented across fork/exec/detach/reparent transitions |
+| CA6 | Unrelated worker-UID, controller-UID and other-UID peer ingress excluded |
+| CA7 | Workers cannot admit/move peers through direct or deputy operations |
+| CA8 | Alternate control paths, namespaces and broker interfaces excluded or accounted for |
+| CA9 | Inherited/transferred descriptors, credentials and capabilities accounted for |
+| CA10 | Controller and enforcing-manager continuity maintained throughout interval |
+| CA11 | Violation/lost coverage invalidates affected claims immediately, without waiting for expiry |
+| CA12 | Ordered start/end of a sealed admission epoch; all contributing observations inside it |
+| CA13 | Claim-local freshness and dependencies; old evidence remains historical |
+| CA14 | Current trusted provenance; serialized labels/digests cannot authenticate themselves |
+
+Fork inheritance within an established domain can be an enforced admission path for descendants;
+it is not permission for arbitrary external roots. Any such fork invalidates an earlier empty
+claim and requires new observation. For the section-7 protected quiescence capture, admission
+must remain closed and active/new writers cannot be promoted to quiescence. A known denied
+attempt can be recorded without pretending the boundary failed; a successful forbidden transition
+contradicts closure. Pure detection after escape does not satisfy CA4/CA5: it only invalidates
+proof. No runtime watcher or guarantee of zero-latency physical detection is implemented here.
+
+Failure rules: missing proof/observer continuity -> UNKNOWN; trustworthy prohibited ingress/egress
+-> closure UNSATISFIED and coverage CONTRADICTED, with affected writer coverage UNKNOWN. These are
+conceptual claim states, not new verifier enums or a blanket SAFE_TO_RESUME=NO. Real-project P3
+is still UNKNOWN. For any later closed-domain experiment, teardown requires positive owned-instance
+terminal evidence plus valid domain-empty/continuity evidence, then removal only of owned empty
+objects. Controller death cannot authorize orphan killing, lock deletion or forced teardown.
+
+### Decision, stopping boundary and next exact action
+
+The smallest missing prerequisite is an independently enforced distinction between the admitted
+controller and every untrusted actor able to wield its UID/control interfaces. Worker-only
+namespacing, distinct worker UID, modes or a transient scope do not supply that distinction in
+the evidence available here. This is why D is selected, rather than accepting a conditional
+profile whose essential security boundary is merely assumed. No contradiction requires revising
+the existing producer contract or V3/V4 missions; their missing-evidence rule already applies.
+
+An owner-provisioned separate control identity, protected manager policy or other independently
+enforced boundary could be considered in a separately authorized environment design. These are
+alternatives requiring proof, not a selected minimal profile or instructions to create users,
+enable services, reconfigure WSL or install tooling. An operator assertion that peers are absent
+is insufficient. If provisioning is necessary, label it REQUIRES_ENVIRONMENT_CHANGE and stop
+before execution. No filesystem-exclusivity or Windows-writer work is folded into this dependency.
+
+Future falsification, only after that prerequisite is supplied and a profile is selected: use one
+disposable domain, one controller-bound root/child and one outside peer representing each relevant
+credential class. Challenge the claimed boundary through allowed interface classes, especially
+an outside controller-UID peer, a retained control FD and a manager request during a sealed epoch.
+Any successful prohibited admission/egress falsifies the profile; denial of one route is not full
+acceptance. Controller death or authority-changing exec must invalidate proof as specified. Do not implement this now,
+repeat A–J, or narrow away controller peers just to produce a positive result.
+
+NEXT_EXACT_ACTION: **obtain an explicit owner decision and evidence for an independently enforced
+Linux controller-control-plane boundary that excludes untrusted controller-UID peers, including
+its delegation/manager IPC policy and any required environment change, before selecting a profile
+or authorizing a new disposable experiment.** If that prerequisite is declined or unavailable,
+retain CLOSURE UNAVAILABLE UNDER CURRENT SCOPE; no producer follows. This is the unresolved audit
+dependency, not a new implementation roadmap or permission to change the environment.
+
+Audit COMPLETE; process containment PARTIAL; tested admission OPEN; filesystem exclusivity UNKNOWN;
+real-project P3 UNKNOWN. **PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.** V4 runtime NOT_STARTED.
+PROCESS_CONTAINMENT != FILESYSTEM_EXCLUSIVITY; LINUX_PROCESS_QUIESCENCE != FILESYSTEM_WRITER_QUIESCENCE.
+No source/schema/test/mission change, quota read, Fedora side effect or production behavior change.
