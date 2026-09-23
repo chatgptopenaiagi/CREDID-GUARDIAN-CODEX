@@ -167,15 +167,22 @@ full resume, Guardian automation, telemetry, Fabric or V4.
 ## LAST SAFE CHECKPOINT
 
 Starting verified checkpoint: `b12b7d05d82ac3affc90fa8fccda3488168f627b`.
-Current coherent implementation checkpoint: **HEAD after normal commit/publication**;
-resolved hash and independent publication result belong in the final report/evidence follow-up.
+Current implementation checkpoint: `3721dd022d14b0470dbde429483312f9cc6314be`.
+Final evidence checkpoint: **HEAD after normal commit/publication**; its resolved hash and
+independent publication result belong in the final report.
 Never invent a self-containing commit hash. Prior evidence remains accessible in Git history.
 
 ## PUBLICATION STATE
 
-Entry local/tracking/live equality verified. Current block publication is pending the final
-validation gate, normal forward commit/push and independent equality check. No claim of
-remote preservation for uncommitted work. Record actual results after those operations.
+Implementation **REMOTE_VERIFIED** on 2026-09-23. Normal forward push to the approved CGC
+origin/main succeeded. An independent live query confirmed local HEAD = origin/main = live
+refs/heads/main = `3721dd022d14b0470dbde429483312f9cc6314be`; working tree clean.
+
+This documentation-only follow-up records that observed equality and acceptance row 41.
+Its own HEAD is committed/pushed normally and independently verified for the final report.
+Runtime/tests are unchanged from the 287-test verification; no redundant regression required.
+Final document targets and staged whitespace checked before publication. If follow-up push
+fails, retain the local evidence commit and report LOCAL_CHECKPOINT_ONLY; never invent equality.
 
 ## OPERATIONS / INTEGRITY
 
