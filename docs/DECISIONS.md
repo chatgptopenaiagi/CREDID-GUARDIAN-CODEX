@@ -713,3 +713,27 @@ work or R6. Next exact action in progress addresses those gaps before scoped obs
 No production runtime/schema/test/mission change. Historical containment PARTIAL/admission OPEN;
 filesystem exclusivity/P3 UNKNOWN. R6 = NOT_EXECUTED; PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED;
 V4 RUNTIME = NOT_STARTED. Publication self-reference HEAD; final report resolves it after push.
+
+## 2026-09-24 — Mechanical vectors, inherited-filter conflict and narrowed reads
+
+Starting clean Windows HEAD/tracking/live main matched ce41ad2020ddfcaa7a2a3687ade86c6eb8358ea4.
+Decision B: **M4 PARTIAL; SPECIFIC FILTER/CODEC DESIGN GAP REMAINS.** The candidate remains
+conditional. [Section 17](V3_QUIESCENCE.md#17-mechanical-vectors-and-narrowed-read-only-package--2026-09-24)
+and [ABI specialization](V3_QUIESCENCE_LAB_ABI.md#7-mechanical-specialization-review) distinguish
+exact generated C/W filters and fixed request bytes from absent full native implementation.
+The extra [vector companion](V3_QUIESCENCE_LAB_VECTORS.md) holds bulky mechanical fixtures only.
+
+Offline checks passed for 11 D-Bus bodies, 19 lab packets and 20 C/W cBPF interpreter cases.
+No kernel enforcement or full syscall-image conformance claim. The old pre-fork B union omitted
+the peer ptrace operation; inherited denial cannot be widened later. Complete common/B/peer
+generation and incoming D-Bus negative decoding remain explicit gates, not implementation discretion.
+
+The privileged read-only package is narrowed with fixed targets, budgets and no arbitrary includes;
+RO-3 metadata/body approval is separable. No RO item was executed or interactively requested.
+No root route, R6, account/unit/policy provisioning or production/V4 code. Read-only approval will
+not close native artifact or privileged acceptance gaps. NEXT_EXACT_ACTION remains nonprivileged
+mechanical completion while the package awaits separate owner approval.
+
+Historical containment PARTIAL/admission OPEN; filesystem exclusivity and P3 UNKNOWN.
+RO-1–RO-5 = NOT_EXECUTED. R6 = NOT_EXECUTED. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.
+V4 RUNTIME = NOT_STARTED. Publication self-reference HEAD; resolved hash follows normal push.

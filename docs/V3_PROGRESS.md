@@ -2,19 +2,87 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 active. Decision B: M4 PARTIAL; SPECIFIC FILTER/CODEC DESIGN GAP REMAINS.**
+ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER remains conditional. Historical containment PARTIAL,
+same-UID admission OPEN; filesystem exclusivity and real-project P3 UNKNOWN.
+**RO-1–RO-5 = NOT_EXECUTED. R6 = NOT_EXECUTED.
+PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.**
+
+## VERIFIED STARTING CHECKPOINT
+
+Clean Windows main independently matched HEAD, origin/main and live main at
+`ce41ad2020ddfcaa7a2a3687ade86c6eb8358ea4`. Windows Codex remained sole project worker.
+Fedora was subordinate via wsl.exe, with read-only XML signature introspection only.
+
+## CURRENT BLOCK / EVIDENCE
+
+[Section 17](V3_QUIESCENCE.md#17-mechanical-vectors-and-narrowed-read-only-package--2026-09-24)
+records this block. [ABI specialization](V3_QUIESCENCE_LAB_ABI.md#7-mechanical-specialization-review)
+specifies filter stages, installation order, fixed launch/peer encoding and remaining gaps.
+[Exact vectors](V3_QUIESCENCE_LAB_VECTORS.md) contain request bytes, protocol cases and generated
+final C/W cBPF bytes. Offline model checks: 11 D-Bus positive body round trips, 19 protocol cases,
+20 cBPF interpreter cases. No native full image, kernel filter installation or hostile peer.
+The previous B_BOOT union omitted a peer-required operation: later filters cannot restore it.
+
+## REMAINING GATES
+
+M4_PARTIAL_REMAINING_DESIGN_GAP: generate and subset-check common/bootstrap/B/per-selector peer
+filters; complete incoming D-Bus signal/error decoder and exact negative-frame corpus; establish
+whole-image syscall-site and FD conformance. Do not implement missing choices during R6.
+M1/M3/M5 remain PARTIAL; M2 requires installed effective-policy confirmation.
+The [narrowed read-only package](V3_QUIESCENCE.md#privileged-read-only-approval-request) is prepared
+for separate owner review. It names targets, APIs, budgets, exclusions and refusal conditions.
+RO-3 metadata/content split; no vague configuration-tree or arbitrary include traversal.
+No interactive approval requested in this block. Publication does not authorize execution.
+
+## VALIDATION / SCOPE
+
+Only four existing evidence/design documents and one vector companion changed. No production,
+tests, schemas, missions, source/binary/build artifact or sensitive local policy body changed.
+PASS: 46 Python ASTs, 3 JSON files, 291 local Markdown links/anchors, balanced fences and all
+100 V3 keypoints. All 72 untouched tracked files match pre-edit raw bytes and canonical Git
+content, including source/tests/schema and V3/V4 missions. Eleven vector lengths/digests checked.
+Whitespace passed; exact working/staged diff review is required before publication.
+Full historical regression is not needed for these documentation-only changes.
+
+## OPERATIONS / CLEANUP
+
+No privileged read, root route, unit/account/policy provisioning, manager mutation, package install,
+native build or persistent configuration change. Offline models used Windows memory and wrote
+only intended documentation. No disposable process/domain/fixture requires teardown.
+One orchestration syntax error had no command or edit side effects; corrected model checks passed.
+Ordinary read-only WSL/D-Bus bookkeeping is possible; no zero-host-write claim.
+
+## NEXT_EXACT_ACTION
+
+FINISH GENERATED COMMON/BOOTSTRAP/B/PEER FILTER SPECIALIZATION AND THE FINITE INCOMING D-BUS
+DECODER/NEGATIVE-BYTE CORPUS IN DISPOSABLE NONPRIVILEGED DESIGN VALIDATION. KEEP RO-1–RO-5
+PENDING SEPARATE OWNER APPROVAL AND R6 BLOCKED. NO PROVISIONING OR PRODUCTION/V4 IMPLEMENTATION.
+The precise mechanical remainders are in the ABI conformance matrix; read approval alone cannot
+close them. Stop after this coherent evidence/publication block.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Starting checkpoint `ce41ad2020ddfcaa7a2a3687ade86c6eb8358ea4`; this checkpoint self-reference HEAD.
+Final report resolves normal commit/push, three-ref equality and clean working tree.
+
+## Historical M1–M5 evidence
+
+### Historical M1–M5 evidence — OVERALL STATUS
+
 **PARTIAL; V3 active.** M1–M5 nonprivileged evidence block complete with explicit remaining gates.
 Decision C: **M1M5 PARTIAL; NATIVE ARTIFACT / FILTER / PROTOCOL DESIGN STILL INCOMPLETE.**
 ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER remains conditional; R6 not ready.
 Historical containment PARTIAL, admission OPEN, filesystem exclusivity and real-project P3 UNKNOWN.
 **R6 = NOT_EXECUTED. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.**
 
-## VERIFIED STARTING CHECKPOINT
+### Historical M1–M5 evidence — VERIFIED STARTING CHECKPOINT
 
 Clean Windows main independently matched HEAD, origin/main and live main at
 `2f763a0da8ba29a08a2d641058386d5ef78d7130`. Windows Codex remained sole repository worker;
 Fedora commands originated only through wsl.exe. No secondary agent or root command.
 
-## CURRENT BLOCK / EVIDENCE
+### Historical M1–M5 evidence — CURRENT BLOCK / EVIDENCE
 
 [Section 16](V3_QUIESCENCE.md#16-m1m5-installed-evidence-and-native-contract--2026-09-24)
 records installed NSS/ranges, manager/polkit/deputy metadata, exact privileged read-only request
@@ -32,7 +100,7 @@ User-manager normal-exit analogue observed MainPID=0 with active/populated domai
 completion. System-manager parity/crash/reexec acceptance NOT_EXECUTED. Exact limitations and
 compile/diagnostic failures retained in section 16; no historical A–J rerun.
 
-## PARTIAL / NEXT DEPENDENCIES
+### Historical M1–M5 evidence — PARTIAL / NEXT DEPENDENCIES
 
 M1: complete allocation/ownership coverage and future root executor still required.
 M2: inaccessible local policy and deputy grants need RO-3/4; advertised defaults insufficient.
@@ -41,12 +109,12 @@ M4: exact bootstrap filter specialization and fixed D-Bus codec/vector work rema
 M5: user analogue does not establish privileged unit death/continuity; same-PID reexec remains a gate.
 Read-only approval alone cannot close M3–M5. No provisioning or R6 authority is inferred.
 
-## FILES CHANGED
+### Historical M1–M5 evidence — FILES CHANGED
 
 Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md, docs/DECISIONS.md and new
 docs/V3_QUIESCENCE_LAB_ABI.md. No runtime/verifier/schema/test/mission changes.
 
-## VALIDATION
+### Historical M1–M5 evidence — VALIDATION
 
 PASS: 46 Python AST parses, 3 JSON parses, 280 local Markdown links/anchors, balanced fences,
 all 100 V3 keypoints. All 72 untouched tracked files match pre-edit SHA256 bytes and canonical
@@ -56,7 +124,7 @@ Historical quiescence/decisions prefixes and prior progress preserved; five obse
 rows and eight FD states present. Whitespace checks passed; exact working/staged diff review
 is required before publication. Native smoke results do not substitute for role acceptance.
 
-## OPERATIONS / CLEANUP
+### Historical M1–M5 evidence — OPERATIONS / CLEANUP
 
 One Linux-native /tmp/cgc-m1m5-ngplw4x0 directory with owned source/binary, and one transient
 user unit of matching basename. All children exited normally; exact files/directory removed;
@@ -65,13 +133,13 @@ No root unit, users, policy edits, packages, persistent service or configuration
 WSL/D-Bus/user-manager bookkeeping possible; no zero-host-write claim. No sensitive policy output
 or generated binary entered Git. RO-1–RO-5 were specified, not executed.
 
-## TESTS EXECUTED / NOT EXECUTED
+### Historical M1–M5 evidence — TESTS EXECUTED / NOT EXECUTED
 
 Documentation/static validation plus the two explicitly bounded unprivileged analogues above.
 No full historical regression, crash/verifier rerun, R6, hostile peers, root credential change,
 system-manager mutation, restart/reexec or WSL shutdown.
 
-## NEXT_EXACT_ACTION
+### Historical M1–M5 evidence — NEXT_EXACT_ACTION
 
 COMPLETE THE FIXED NATIVE BOOTSTRAP/FILTER SPECIALIZATION AND D-BUS LAUNCH/PEER CODEC
 SPECIFICATION WITH DETERMINISTIC VECTORS, THEN REVIEW RO-1–RO-5 FOR SEPARATELY SCOPED PRIVILEGED
@@ -79,7 +147,7 @@ READ-ONLY APPROVAL. KEEP R6 BLOCKED UNTIL ARTIFACT AND ENVIRONMENT PROOF GATES A
 Do not request broad design approval again. Do not execute the observation package, provision
 accounts or implement production/V4 from this checkpoint. Stop after this coherent block.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical M1–M5 evidence — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting checkpoint `2f763a0da8ba29a08a2d641058386d5ef78d7130`; this checkpoint self-reference HEAD.
 Resolved commit, normal push, independent three-ref equality and clean tree follow publication.

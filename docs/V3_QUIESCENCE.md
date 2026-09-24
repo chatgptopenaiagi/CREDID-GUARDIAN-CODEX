@@ -1683,3 +1683,110 @@ Sources: [nss-systemd v259](https://raw.githubusercontent.com/systemd/systemd/v2
 [systemd service v259](https://raw.githubusercontent.com/systemd/systemd/v259/man/systemd.service.xml),
 [systemd kill v259](https://raw.githubusercontent.com/systemd/systemd/v259/man/systemd.kill.xml).
 Installed observations above, not upstream pages, support the local-policy statements.
+
+## 17. Mechanical vectors and narrowed read-only package — 2026-09-24
+
+Starting checkpoint ce41ad2020ddfcaa7a2a3687ade86c6eb8358ea4 independently matched clean Windows
+HEAD, origin/main and live main. Windows remained sole controller. Fedora was accessed only
+through wsl.exe for unprivileged XML interface introspection; no second agent, root route,
+provisioning, manager mutation, R6 or historical experiment rerun.
+
+The [ABI specialization](V3_QUIESCENCE_LAB_ABI.md#7-mechanical-specialization-review) and
+[deterministic vectors](V3_QUIESCENCE_LAB_VECTORS.md) record actual mechanical progress separately
+from missing implementation. The vector companion is justified by long exact hex/ASCII fixtures;
+no binary or executable design tool is added to Git. Existing evidence remains historical truth.
+
+OBSERVED_FACT: offline Windows Python models passed 11 D-Bus body round trips, 19 lab packet
+acceptance/rejection cases and 20 generated C/W instruction-interpreter checks. No native filter
+was installed, no socket request sent and no complete image built. A first orchestration call
+failed to parse because nested template delimiters collided; no command or edit occurred from
+that call. Corrected transport ran once successfully. No hidden acceptance retry.
+
+DERIVATION: the former B_BOOT union cannot admit a peer ptrace test it already denied. The common
+bootstrap must be an explicitly reviewed superset and each child must narrow. This does not
+falsify the conditional root-owned broker architecture; it blocks the proposed mechanical
+implementation until generated common/B/peer filters satisfy the subset check. Positive request
+body vectors do not establish a complete incoming D-Bus decoder or installed authorization.
+
+Decision **B. M4 PARTIAL; SPECIFIC FILTER/CODEC DESIGN GAP REMAINS.**
+M4_PARTIAL_REMAINING_DESIGN_GAP. Exact remaining gates: full bootstrap/B/peer cBPF specialization;
+finite incoming signal/error decoder and byte-exact negative frame corpus; full native syscall
+site and FD conformance. Read-only approval cannot resolve these by itself. M1/M3/M5 remain
+PARTIAL; M2 still requires effective privileged read-only policy confirmation.
+
+## PRIVILEGED READ-ONLY APPROVAL REQUEST
+
+This section narrows and supersedes the execution scope of section 16's RO package; historical
+non-execution remains unchanged. **RO-1–RO-5 = NOT_EXECUTED.** No approval is requested interactively
+in this block. This is an owner-reviewable API contract for a later, separately approved read.
+It is not a shell, installation recipe, grant to follow arbitrary includes or authorization to
+test a policy by exercising a privileged operation.
+
+### WHAT YOU WOULD BE APPROVING
+
+Read the small amount of Linux account-allocation metadata needed to avoid identity collisions;
+check whether the proposed identities are already used; inspect the local rules that might let
+those identities operate systemd or a privileged helper; and read kernel/manager continuity
+metadata. Return only bounded conclusions, coverage errors and digests. Policy bodies stay local.
+
+Approval would not permit creating accounts, starting a root broker, installing units or policy,
+testing manager mutations, killing processes, executing R6, changing WSL, or implementing a
+production producer. It would not prove permanent identity exclusivity, effective dynamic denial,
+an injection-free credential transition, uninterrupted manager generation or filesystem exclusivity.
+
+### Shared exact reader contract
+
+Run as an explicitly authorized local administrator for denied reads only; use the current
+unprivileged Fedora identity for already-readable material. Do not use sudo/su/pkexec/run0 merely
+to discover whether a root route works. A later approval must name the privileged executor.
+Windows still owns repository decisions; the reader has no Git operations or repository writes.
+
+Filesystem API: lstat fixed root -> open(O_RDONLY|O_CLOEXEC|O_NOFOLLOW|O_NONBLOCK) -> fstat ->
+require regular file and identical device/inode -> bounded pread -> fstat again. Changed identity,
+size/mtime/ctime, symlink, nonregular input, parse error, excess file/byte/time budget or unreadable
+source returns INCOMPLETE. Directories use O_DIRECTORY|O_NOFOLLOW and bounded getdents64;
+no recursive filesystem traversal. No locks, writes, chmod, ownership changes or evaluation of
+policy code. Do not read shadow/gshadow or expand file references found in arbitrary policy text.
+
+All output is an allowlisted structured summary, never raw file text. No secret values,
+authentication material, environment/cmdline dump, browser/token/password data. Do not invoke
+CheckAuthorization, authentication agents or interactive prompts. No network sockets; local
+AF_UNIX calls only to already-running system/login managers, with NO_AUTO_START and no
+interactive flag. Unknown NSS remote source refuses rather than contacts it. File access may
+update atime; WSL/manager/audit bookkeeping is possible. Read-only means no requested mutation,
+not zero host writes. One attempt per item; no broader fallback. Combined deadline 60 seconds.
+
+RO-1/2 additionally require a separately reviewed parameter record with exactly two proposed
+names, candidate UID_C/GID_C and UID_W/GID_W and their expected namespace mapping. No values are
+reserved by this document. Absent record => NOT_EXECUTED; do not infer a free identity from a scan.
+No account database password field is collected, including the placeholder field in passwd.
+
+| ID / blocker | Exact command or API and targets | Run as / network | Maximum input and time | Expected output / excluded collection | Side effects, need, if declined |
+|---|---|---|---|---|---|
+| RO-1 / M1 | Reader contract on /etc/nsswitch.conf, /etc/login.defs, /etc/subuid, /etc/subgid; parse only passwd/group source names, UID/GID ranges and candidate-overlapping subordinate mappings. With sources restricted to observed files+systemd, getpwnam_r/getgrnam_r on the two proposed names and getpwuid_r/getgrgid_r on four candidate numbers; systemd Manager.GetDynamicUsers, return candidate collision booleans only | Unprivileged first; admin only denied metadata; no external network/provider | 4 files, 64 KiB each, 256 KiB total; NSS reply buffers <=64 KiB; dynamic-user reply<=64 KiB; 10 seconds | <=4 KiB: ranges, source list, collision booleans, coverage errors, digests; no unrelated account list or password fields | Reads/local manager bookkeeping; verifies allocation prerequisites, not reservation. Declined/incomplete => refuse allocation |
+| RO-2 / M1 | Enumerate /proc numeric directories <=4096; for each status parse only Uid/Gid/Groups; read uid_map/gid_map and retain only candidate-owner or candidate-containing matches, no cmdline/environ. login1 ListUsers/ListSessions and systemd ListUnits, then only loaded service User/Group/SupplementaryGroups/DynamicUser properties; lstat only /var/lib/systemd/linger/NAME_C and NAME_W | Authorized admin where hidepid/permissions deny; local existing managers only | <=12288 proc regular files, <=8 KiB/file, <=96 MiB total; <=4096 unit records, <=16384 bounded property replies, <=16 MiB bus total; 20 seconds hard deadline | <=8 KiB: candidate matches, counts, inaccessible/raced objects, namespace coverage and matching service/session identifiers; no unrelated process names/IDs in exported summary | Proc scan races; this can only falsify exclusivity or show a bounded snapshot. Declined/time exceeded => M1 coverage UNKNOWN |
+| RO-3A / M2 | lstat and bounded getdents64 only /etc/polkit-1/rules.d and /usr/share/polkit-1/rules.d; classify basename/order/owner/mode/type/size of regular *.rules; no file contents | Admin only inaccessible directory; no network | 2 directories, <=64 entries each, <=16 KiB names; 5 seconds | <=4 KiB metadata, skipped/nonregular counts; no policy bodies | Atime/audit possible; establishes exact RO-3B inventory. Declined => local rule coverage UNKNOWN |
+| RO-3B / M2 | Only regular *.rules admitted by RO-3A, opened with reader contract; local human/static review of systemd1/pkexec/empower action, UID/group, unit/verb and admin-identity predicates in rule order. Read /usr/share/polkit-1/actions/org.freedesktop.systemd1.policy and org.freedesktop.policykit.policy only; no rule evaluation | Authorized admin read; no network | <=64 rule files plus2 fixed action files; <=64 KiB each, <=4224 KiB total; 10 seconds | <=8 KiB: path/digest, relevant grant/deny/default classes, dynamic dependencies/coverage; no raw bodies or sensitive literal values | Cannot prove arbitrary JS/deputy behavior by text review. Dynamic/unknown branches stay UNKNOWN. Declined => M2 unresolved |
+| RO-4 / M2 | Reader contract on /etc/sudoers; follow only explicitly declared regular local includes under /etc/sudoers.d; refuse symlinks, remote plugins, other paths, commands or unbounded include graphs. Also /etc/dbus-1/system.d and /usr/share/dbus-1/system.d regular org.freedesktop.systemd1.conf and org.freedesktop.PolicyKit1.conf if present; parse service/caller grants and unresolved includes only | Authorized admin for sudoers, unprivileged readable D-Bus rules; no network | <=32 sudo files plus4 fixed D-Bus files; <=64 KiB each, <=2304 KiB total; 10 seconds | <=8 KiB: grants applicable to candidate identities/groups, aliases/include coverage, systemd/polkit send-policy classes; no configuration text or credentials | No sudo/pkexec invocation. Missing include/policy/backend => UNKNOWN; existence is not authorization. Declined => deputy closure unproved |
+| RO-5 / M3/M5 | Read exactly /proc/sys/fs/suid_dumpable, /proc/sys/kernel/yama/ptrace_scope, /sys/kernel/security/lsm, /sys/fs/selinux/enforce, /proc/1/stat; readlink /proc/1/ns/{user,pid,mnt,cgroup}; systemd Properties.Get Version/Features and D-Bus GetNameOwner(org.freedesktop.systemd1). No configuration-tree review | Unprivileged first, admin only denied LSM/process metadata; local existing bus only | 5 files<=4 KiB each,4 links<=1 KiB each,3 bus replies<=8 KiB each; total48 KiB; 5 seconds | <=4 KiB: named scalar values, manager start/boot-context fields and namespace identifiers, owner and coverage errors; no full stat record or process command | Preconditions only; cannot detect every same-PID reexec or prove policy invariance. Declined => conditional model remains |
+
+RO-3 is split because directory inventory can be approved without approving policy bodies.
+The older vague RO-5 "unit/reexec configuration metadata" scope is removed. RO-4 no longer
+permits arbitrary deputy/include discovery. Sources outside the named roots are missing evidence,
+not permission to broaden access. RO-2's upper bound is a refusal ceiling, not a target scan size;
+an administrator may narrow it further at the cost of explicitly incomplete coverage.
+If any local policy may contain credentials, inspect locally without exporting values; return
+only the policy class/location and mark unsupported interpretation UNKNOWN. No policy text enters Git.
+
+The package is prepared for separate approval, but these approved reads would not make R6 ready.
+No approval package item was executed in this block. Full privilege transition, native artifact,
+system-unit survivor and manager-continuity acceptance still need their own future authority.
+
+NEXT_EXACT_ACTION: finish the remaining generated common/bootstrap/B/peer filter specialization
+and finite incoming D-Bus decoder/negative-byte corpus in a disposable nonprivileged design
+validation block. Keep RO-1–RO-5 pending separate owner approval and keep R6 blocked. Do not
+provision or infer permission to execute the package from its publication.
+
+Historical containment PARTIAL; same-UID admission OPEN. FILESYSTEM EXCLUSIVITY = UNKNOWN.
+REAL-PROJECT P3 = UNKNOWN. RO-1–RO-5 = NOT_EXECUTED. R6 = NOT_EXECUTED.
+PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.
