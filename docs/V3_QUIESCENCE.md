@@ -1467,3 +1467,219 @@ than executing it under this design authorization. No production or broad provis
 Historical containment PARTIAL and same-UID admission OPEN unchanged. Filesystem exclusivity
 UNKNOWN; real-project P3 UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED; V4 runtime
 NOT_STARTED. DESIGN_COMPLETE != PROOF_COMPLETE. BROKER_DEATH != DOMAIN_TEARDOWN.
+
+## 16. M1–M5 installed evidence and native contract — 2026-09-24
+
+**Decision C: M1M5 PARTIAL; NATIVE ARTIFACT / FILTER / PROTOCOL DESIGN STILL INCOMPLETE.**
+Starting clean Windows main independently matched tracking/live main at
+`2f763a0da8ba29a08a2d641058386d5ef78d7130`. Windows Codex remained sole worker.
+This block performed unprivileged metadata reads and two bounded analogues, not R6 or provisioning.
+Owner design approval remains unchanged. The mechanical
+[native ABI companion](V3_QUIESCENCE_LAB_ABI.md) is the sole new document; it avoids embedding
+another long syscall/FD/wire specification in this already lengthy evidence chain.
+
+### M1 identity preflight and launch
+
+OBSERVED_FACT: Fedora caller UID 1000, x86_64. /etc/nsswitch.conf selects `files systemd`
+for passwd and `files [SUCCESS=merge] systemd` for group. Therefore local account files alone
+are incomplete identity evidence. Configured ordinary UID/GID range is 1000–60000, system range
+201–999. No local passwd/group names matched cgcqc_/cgcqw_. No identities were allocated.
+Subuid/subgid each had one range, 524288–589823; names were not collected. Current UID/GID maps
+were identity mappings 0..4294967294. /var/lib/systemd/linger contained zero entries; this does
+not prove absence of sessions/services or future lingering.
+
+Installed nss-systemd can resolve manager-backed identities; DynamicUser support is a design
+route available in systemd, not a currently allocated CGC account. No DynamicUser unit was created.
+The selected profile retains dedicated accounts because it needs explicit lifecycle/peer tests.
+
+Exact allocation algorithm (future privileged preflight, no account mutation in this block):
+
+1. Validate manifest LAB_ID/name syntax and obtain an administrator-approved interval within
+   observed system range 201–999. No fallback to ordinary or DynamicUser ranges. If exhausted,
+   REFUSE_IDENTITY_ALLOCATION; owner must choose a new scoped policy, not install/change one here.
+2. ALLOCATE_C_IDENTITY scans ascending candidates. For each, resolve both names and numeric IDs
+   through getpwnam_r/getpwuid_r/getgrnam_r/getgrgid_r against **all configured NSS sources**;
+   record only collision booleans. NSS timeout/unavailable/incomplete source -> refuse.
+3. Check candidate against local UID/GID records, subordinate ranges, manager dynamic identities,
+   active process real/effective/saved/fs IDs, active service User/Group/SupplementaryGroups,
+   login/session/linger state and reservation ledger. Unreadable coverage -> refuse.
+4. Require no supplemental/admin membership or sudo/polkit grant; specifically exclude wheel
+   and empower, not only numeric primary group. Check namespace mappings exposing candidate.
+5. Under a single administrator-controlled provisioning window, reserve the selected UID=GID
+   pair in the lab ledger. ALLOCATE_W_IDENTITY repeats with C pair excluded. Return candidates
+   plus snapshot/coverage provenance; **not yet collision-free allocated identities**.
+6. Recheck immediately before actual account creation, then verify locked/non-login/no-home/
+   empty groups/no session/no lingering and new NSS resolution. No check can exclude concurrent
+   privileged modification without the explicit TCB window. Unrelated use never authorizes cleanup.
+
+M1 is PARTIALLY_RESOLVED_WITH_EXACT_REMAINING_GATE. Readable ranges and NSS are known; active
+ownership, complete policy grants and root executor are not. No sudo, su, root WSL invocation
+or authentication challenge ran. Prefix absence is a point-in-time fact, not reservation.
+
+Future executor is exactly a separately approved administrator invoking the **system**
+org.freedesktop.systemd1.Manager.StartTransientUnit, not a user manager or B RPC. The root route
+would be Windows wsl.exe with explicit -d FedoraLinux-44 -u root and one reviewed native launch
+client, no shell; that route is NOT_TRIED and not authorized to execute by this block.
+The launch client is a separate administrative artifact, not a new generic operation in cgc-lab.
+
+Review record: name=LAB_ID.service, mode=fail, aux=[], ExecStart signature a(sasb) containing
+one (absolute LAB_ROOT/bin/cgc-lab, [same path,"--manifest",MANIFEST_PATH], false);
+User/Group strings "0", SupplementaryGroups empty string array, Environment=["LANG=C","LC_ALL=C"],
+WorkingDirectory="/", Type="exec", Restart="no", ExitType="cgroup", KillMode="process",
+SendSIGKILL=false, SendSIGHUP=false, Delegate=true, Slice="system.slice", TasksMax uint64=16,
+LimitNOFILE/LimitNOFILESoft uint64=64, LimitCORE/LimitCORESoft uint64=0, UMask uint32=63,
+WatchdogUSec uint64=0 and RuntimeMaxUSec uint64=max. No ExecStop or inherited application FDs.
+Exact handling of manager-injected environment and capability property encoding remains artifact
+review, not hidden launch discretion. Store image/source/manifest digests and full typed property
+list in approval record. Fresh readback must match InvocationID (observed, never invented),
+ControlGroup=/system.slice/LAB_ID.service and MainPID bound to a live pidfd plus start identity.
+Failure before binding refuses all subsequent lab operations. Same PID alone is insufficient.
+
+### M2 installed policy and deputy review
+
+OBSERVED_FACT: systemd 259.8-1.fc44; polkit 127-2.fc44.2. Relevant installed action XML advertised
+auth_admin for any/inactive, auth_admin_keep for active for manage-units, manage-unit-files,
+set-environment and reload-daemon. D-Bus systemd policy allows transport of mutation methods
+to manager/service/scope interfaces; authorization is still evaluated by the destination.
+Installed action digest: 05b867df07111f0693828fce4db65e6d14d653244952f7a598f4a4b600164d3b.
+Installed systemd bus policy digest: 42529cc9b571a23e0e28ec96c7855bb8c2ccb277e626c3dd305bc5b5bd485af5.
+
+The vendor rules directory contained seven active .rules plus one .rules.example. Relevant
+observations: 50-default.rules identifies wheel as administrator group; empower.rules grants all
+actions to empower members. Other readable vendor rules targeted specific unrelated services;
+their presence does not prove absence of further deputies. /etc/dbus-1/system.d was empty.
+Reading /etc/polkit-1/rules.d failed with PermissionError. No elevation or workaround followed.
+No raw rules, unrelated account list or security-policy contents are committed; only these
+scope-relevant findings and digests. Active rules can override advertised defaults.
+
+| ROUTE | EXISTS | CALLER AUTH MODEL | CAN MUTATE LAB | EFFECTIVE POLICY KNOWN? | R6 MUST ATTACK? / STATUS |
+|---|---|---|---|---|---|
+| systemctl / systemd-run | Yes | Caller bus credentials + manager checks | If authorized | No | Yes, API equivalent; frontend not extra authority by itself |
+| System Manager/Service/Scope D-Bus | Yes | Transport allows calls; manager/polkit decides | Attach, transient units, properties, stop/restart, unit files, environment | Partial installed evidence | Yes T7/T8 and aliases |
+| PolicyKit | Yes | Ordered local/vendor rules, admin identity, subject/session/cache | Indirect grant | No: local directory unreadable | Privileged read-only confirmation |
+| sudo | Yes, root-owned mode 4111 | sudoers/plugins/session policy | Potential root deputy | No; not invoked, config not read | Preflight policy review, no credential challenge |
+| pkexec | Yes, root-owned mode 4755 | Polkit/application policy | Potential privileged execution | No | Deny access/grants; no execution in this block |
+| run0 | Yes | systemd/PolicyKit route; empower rule observed | Potential privileged launch | No | Include policy review; never infer exploitability |
+| Other service/deputy routes | Bounded vendor metadata only | Service-specific | UNKNOWN | No exhaustive proof | Fixed worker no-exec/no-socket helps; outside peers still require policy coverage |
+
+**M2_REQUIRES_PRIVILEGED_READ_ONLY_POLICY_CONFIRMATION.** Do not claim effective denial.
+If confirmation finds grants, future policy must deny dedicated lab identities all relevant
+manager/deputy mutations without interactive fallback or cached authorization reuse. Exact rule
+content/order cannot be selected safely yet; no rule installed. Privileged read permission itself
+would not authorize calling AttachProcesses/StartTransientUnit as a test.
+
+### M3/M4 safe native evidence
+
+OBSERVED_FACT: gcc/cc/clang/ld/readelf available; GCC 16.2.1-2.fc44, ld 2.46.1-1.fc44.
+glibc 2.43-8.fc44 x86_64 and i686 installed, glibc-static absent. pkg-config libsystemd failed:
+development metadata unavailable, not proof that runtime systemd libraries are absent.
+Installed x86-64 syscall header supplied ABI numbers recorded in the companion.
+No package installed. Selected future image is freestanding C11 plus assembly, with fixed branches;
+full broker/controller/worker code and role-filter binaries do not exist.
+
+A disposable raw-syscall C smoke artifact was built under Linux-native tmpfs
+/tmp/cgc-m1m5-ngplw4x0. Flags: -std=c11 -O2 -Wall -Wextra -Werror -ffreestanding -fno-builtin
+-fno-stack-protector -fno-pie -mno-red-zone -nostdlib -static -no-pie -Wl,--build-id=none.
+readelf program headers had no INTERP. Native exit 0 checked:
+
+- Current nonroot UID remained unchanged after setresuid(uid,uid,uid); PR_SET_DUMPABLE(0)
+  followed by that same-ID operation still yielded PR_GET_DUMPABLE=0.
+- A gated owned child was bound using pidfd_open, released and reaped normally.
+- An unprivileged no_new_privs/seccomp filter returned EPERM for getppid in parent and fork child.
+
+This smoke filter allowed other calls after architecture/x32 checks: **not** the proposed
+deny-by-default role filter, and no security acceptance claim. No ptrace, hostile peer, identity
+change, manager mutation attack or R6 case ran. Same-ID setresuid does not exercise the
+root-to-C transition or its dumpability reset; M3_BOOTSTRAP_SEQUENCE_REQUIRES_PRIVILEGED_ACCEPTANCE.
+Future sequence remains root gated fork -> retained pidfd -> nondumpability/FD closure ->
+empty groups/bounding/ambient drops -> GID then UID transition -> explicit dumpable=0 ->
+zero remaining caps/no_new_privs -> verified exact FD inventory -> role filter -> READY -> seal.
+No exec follows drop. All multi-syscall transitions remain non-atomic; privileged policy stability
+and no prior tracer are prerequisites. Current sysctl values are not continuous proof.
+
+Smoke source SHA256: 7db36cb77d09eddd6e3fdf1665dd57f16bb90596caf499b89cbbe03851dbc2d7.
+Smoke binary SHA256: a9263a838a5be9da01302ffedea79a87c84e0ef0d3199998e1dc9beb3b6c892a.
+First compilation failed because source transport altered escaped newlines; corrected by hex
+transport without changing system settings. Successful run's three diagnostic labels were
+truncated by incorrect literal lengths; exit status/internal checks, not those label strings,
+support the observations. No repeat run was used to conceal this diagnostic defect. Artifacts
+were deleted after evidence capture as required; hashes do not promise retained replay sources.
+
+### M5 user-manager analogue and continuity
+
+A separate branch of the same unprivileged smoke artifact forked one child that slept three
+seconds and exited; its parent exited normally immediately. Existing user manager reported
+degraded, but accepted one transient unit cgc-m1m5-ngplw4x0.service with Type=exec, Restart=no,
+ExitType=cgroup, KillMode=process, SendSIGKILL=no, SendSIGHUP=no, TasksMax=16, LimitNOFILE=64.
+InvocationID ec780e75d2644585a7366adb2e3aa5f2. No system-manager mutation, kill or restart occurred.
+
+OBSERVED_FACT after 0.5 seconds: ActiveState=active, SubState=running, MainPID=0,
+ExecMainStatus=0, Result=success; unit cgroup events populated=1/frozen=0.
+After another four seconds: inactive/dead, MainPID=0, success, empty ControlGroup property.
+Independent final read: LoadState=not-found / ActiveState=inactive and exact old cgroup path absent.
+Thus main-process exit did not immediately end this unit/domain. This is a user-manager,
+same-UID normal-exit analogue, not proof of root/system-manager policy, crash survival or cleanup
+under attack. Actual B/C death, system manager restart/reexec and WSL restart remain NOT_EXECUTED.
+
+DERIVATION: ExitType=cgroup tracks remaining processes; MainPID, active state, cgroup existence
+and empty evidence must be observed separately. KillMode=process limits configured stop targeting,
+not host/OOM behavior. No automatic descendant cleanup is promised. Manager reexec can preserve
+PID; continuity must bind live bus owner, manager process/start/boot context, unit InvocationID,
+bound event stream and absence of missed reload/reexec interval. None alone proves generation
+continuity. A gap, Reloading, bus owner change or known reexec invalidates; no silent rebind.
+How to independently exclude an unobserved same-PID reexec remains an M5 acceptance gate.
+No system restart is requested merely to test it.
+
+### PRIVILEGED_OBSERVATION_REQUEST
+
+**NOT EXECUTED.** This is a review package, not permission or a root shell recipe. All rows are
+bounded read-only interfaces for an approved administrator; they must never trigger authentication
+or dump credentials. No shadow/gshadow, tokens, cookies, environment dump or unrelated file content.
+Per-row deadline 10 seconds, total 60 seconds; exceeding limit returns INCOMPLETE, not truncation PASS.
+Administrator returns curated fields locally; policy bodies stay out of Git and the final report.
+
+| ID / blocker | EXACT COMMAND / API SCOPE | WHY / expected output | Required privilege; sensitivity; max output | Mutation/side-effect risk / alternative if declined |
+|---|---|---|---|---|
+| RO-1 / M1 | lstat and read-only parse /etc/nsswitch.conf, /etc/login.defs, /etc/subuid, /etc/subgid; getpwnam_r/getgrnam_r for exact proposed names and getpwuid_r/getgrgid_r for approved candidate IDs; systemd Manager.GetDynamicUsers | NSS coverage, ranges and collision booleans; no allocation | Admin visibility as needed; account-metadata sensitivity; 8 KiB projected | NSS may contact configured provider/manager; no writes; refuse allocation if incomplete |
+| RO-2 / M1 | For only approved candidate IDs: enumerate /proc/[0-9]*/status Uid/Gid/Groups and uid_map/gid_map; login1 Manager.ListSessions/ListUsers then matching records; lstat matching linger entries; systemd ListUnits then relevant User/Group/SupplementaryGroups properties | Existing process/service/session use, mappings and coverage-error counts | Root visibility; process/account metadata; 8 KiB matches/counts, no cmdline/environ | Read-only scan can race; does not reserve IDs; decline -> M1 blocked |
+| RO-3 / M2 | lstat/getdents of /etc/polkit-1/rules.d and /usr/share/polkit-1/rules.d; no-follow read regular *.rules, <=64 KiB/file, <=64 files; inspect action-relevant predicates/order locally | Effective rule coverage, grants/denials for future C/W and admin groups, file digests | Root read of inaccessible local rules; policy-sensitive; 8 KiB curated summary only | File reads/atime; no evaluation mutation, CheckAuthorization or prompts; decline -> M2 UNKNOWN |
+| RO-4 / M2 | Locally inspect /etc/sudoers and only its declared include graph, metadata/parsed grants for exact C/W names/groups; inventory applicable pkexec/run0 policy and D-Bus includes affecting systemd service/scope/manager | Deputy grants and include coverage; do not run sudo/pkexec/run0 | Root config visibility; authorization-policy sensitivity; 8 KiB summary, <=128 KiB input/file and <=64 files | Reads only; external policy backends unresolved -> UNKNOWN; decline -> no deputy-closure claim |
+| RO-5 / M3/M5 | Read /proc/sys/fs/suid_dumpable, /proc/sys/kernel/yama/ptrace_scope; read accessible LSM status; systemd Properties.Get of Version/Features; bus GetNameOwner(systemd1); /proc/1/stat and namespace links; review installed v259 unit/reexec configuration metadata | Preconditions/continuity sources, not credential-transition or crash proof | Root only for denied status sources; kernel/config metadata; 4 KiB | Read-only, possible bus activation; no Reload/Reexecute; decline -> retain conditional model |
+
+PRIVILEGED_READ_ONLY_REQUEST_M1 = RO-1 + RO-2. Exact candidate names/IDs must be supplied in
+the reviewed request record; absent values refuse, not wildcard account dumping. Root launch
+capability itself needs separate explicit execution approval later; this package does not test it.
+RO-3 stops at regular policy files; symlink/unbounded include graph is a coverage refusal, not
+permission to traverse arbitrary files. RO-4 is local administrator review, not publication of
+sudo configuration. No persisted cache or temporary authorization is revoked/changed.
+
+Read-only observations cannot discharge actual privilege-drop behavior, compiled filter conformance,
+system-unit death semantics or hostile R6 acceptance. Those need separately authorized disposable
+tests after design completion. No privilege request is hidden inside the next design step.
+
+### Disposition and remaining gates
+
+| Blocker | This block's classification | Exact remainder |
+|---|---|---|
+| M1 | PARTIALLY_RESOLVED_WITH_EXACT_REMAINING_GATE | RO-1/2, concrete allocation/provisioning transaction and launch client property encoding |
+| M2 | REQUIRES_PRIVILEGED_OBSERVATION | RO-3/4; effective local rules/deputies unknown; configuration only if review proves necessary |
+| M3 | PARTIALLY_RESOLVED_WITH_EXACT_REMAINING_GATE | Full native image review/build and root-to-nonroot transition acceptance; RO-5 gives prerequisites only |
+| M4 | PARTIALLY_RESOLVED_WITH_EXACT_REMAINING_GATE | Bootstrap filter specialization and fixed D-Bus encoding/decoder vectors remain incomplete; smoke is not full filter |
+| M5 | PARTIALLY_RESOLVED_WITH_EXACT_REMAINING_GATE | System-manager parity, crash/cleanup and uninterrupted reexec coverage; normal user analogue insufficient |
+
+Changes actually performed: owned temporary C source/binary and one short-lived user transient unit;
+all processes exited normally, exact source/binary/directory removed, unit not-found and cgroup absent.
+No account, root unit, policy, persistent service, package, configuration, production or unrelated
+repository change. Ordinary WSL/D-Bus/user-manager bookkeeping may persist. No zero-host-write claim.
+
+NEXT_EXACT_ACTION: **complete the fixed native bootstrap/filter specialization and D-Bus
+launch/peer codec specification with deterministic vectors, then review RO-1–RO-5 for separately
+scoped privileged read-only approval. Keep R6 blocked until artifact and environment proof gates
+are satisfied.** Do not request broad design approval again or execute the observation package now.
+Historical containment PARTIAL, admission OPEN, filesystem exclusivity UNKNOWN, real-project P3 UNKNOWN.
+R6 = NOT_EXECUTED. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.
+
+Sources: [nss-systemd v259](https://raw.githubusercontent.com/systemd/systemd/v259/man/nss-systemd.xml),
+[systemd service v259](https://raw.githubusercontent.com/systemd/systemd/v259/man/systemd.service.xml),
+[systemd kill v259](https://raw.githubusercontent.com/systemd/systemd/v259/man/systemd.kill.xml).
+Installed observations above, not upstream pages, support the local-policy statements.

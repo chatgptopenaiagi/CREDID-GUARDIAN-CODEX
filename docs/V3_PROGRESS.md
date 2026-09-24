@@ -2,20 +2,106 @@
 
 ## OVERALL STATUS
 
+**PARTIAL; V3 active.** M1–M5 nonprivileged evidence block complete with explicit remaining gates.
+Decision C: **M1M5 PARTIAL; NATIVE ARTIFACT / FILTER / PROTOCOL DESIGN STILL INCOMPLETE.**
+ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER remains conditional; R6 not ready.
+Historical containment PARTIAL, admission OPEN, filesystem exclusivity and real-project P3 UNKNOWN.
+**R6 = NOT_EXECUTED. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.**
+
+## VERIFIED STARTING CHECKPOINT
+
+Clean Windows main independently matched HEAD, origin/main and live main at
+`2f763a0da8ba29a08a2d641058386d5ef78d7130`. Windows Codex remained sole repository worker;
+Fedora commands originated only through wsl.exe. No secondary agent or root command.
+
+## CURRENT BLOCK / EVIDENCE
+
+[Section 16](V3_QUIESCENCE.md#16-m1m5-installed-evidence-and-native-contract--2026-09-24)
+records installed NSS/ranges, manager/polkit/deputy metadata, exact privileged read-only request
+package RO-1–RO-5 and cleanup. One [native ABI companion](V3_QUIESCENCE_LAB_ABI.md) isolates
+mechanical image, syscall/filter, FD, protocol and peer specifications without production code.
+
+Observed files+systemd NSS, system IDs 201–999, ordinary IDs 1000–60000, no local lab-prefix
+collision. Vendor empower grant and wheel admin rule observed; local polkit directory unreadable.
+Effective denial NOT proved. M2_REQUIRES_PRIVILEGED_READ_ONLY_POLICY_CONFIRMATION.
+GCC/raw static syscall build feasible without static glibc. Full role image remains absent.
+
+Owned native micro-checks passed for same-ID nondumpability, gated-child pidfd/reaping and tiny
+seccomp denial inherited by fork. No real credential drop, ptrace attack or full role filter.
+User-manager normal-exit analogue observed MainPID=0 with active/populated domain, then natural
+completion. System-manager parity/crash/reexec acceptance NOT_EXECUTED. Exact limitations and
+compile/diagnostic failures retained in section 16; no historical A–J rerun.
+
+## PARTIAL / NEXT DEPENDENCIES
+
+M1: complete allocation/ownership coverage and future root executor still required.
+M2: inaccessible local policy and deputy grants need RO-3/4; advertised defaults insufficient.
+M3: root-to-C bootstrap race and complete native artifact require acceptance.
+M4: exact bootstrap filter specialization and fixed D-Bus codec/vector work remains incomplete.
+M5: user analogue does not establish privileged unit death/continuity; same-PID reexec remains a gate.
+Read-only approval alone cannot close M3–M5. No provisioning or R6 authority is inferred.
+
+## FILES CHANGED
+
+Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md, docs/DECISIONS.md and new
+docs/V3_QUIESCENCE_LAB_ABI.md. No runtime/verifier/schema/test/mission changes.
+
+## VALIDATION
+
+PASS: 46 Python AST parses, 3 JSON parses, 280 local Markdown links/anchors, balanced fences,
+all 100 V3 keypoints. All 72 untouched tracked files match pre-edit SHA256 bytes and canonical
+Git content, including runtime/tests/schema/helpers and V3/V4 missions. Three existing evidence
+documents plus one new ABI document only; no generated source/binary or temporary artifact.
+Historical quiescence/decisions prefixes and prior progress preserved; five observation-request
+rows and eight FD states present. Whitespace checks passed; exact working/staged diff review
+is required before publication. Native smoke results do not substitute for role acceptance.
+
+## OPERATIONS / CLEANUP
+
+One Linux-native /tmp/cgc-m1m5-ngplw4x0 directory with owned source/binary, and one transient
+user unit of matching basename. All children exited normally; exact files/directory removed;
+unit LoadState=not-found/ActiveState=inactive and original cgroup absent independently verified.
+No root unit, users, policy edits, packages, persistent service or configuration changes.
+WSL/D-Bus/user-manager bookkeeping possible; no zero-host-write claim. No sensitive policy output
+or generated binary entered Git. RO-1–RO-5 were specified, not executed.
+
+## TESTS EXECUTED / NOT EXECUTED
+
+Documentation/static validation plus the two explicitly bounded unprivileged analogues above.
+No full historical regression, crash/verifier rerun, R6, hostile peers, root credential change,
+system-manager mutation, restart/reexec or WSL shutdown.
+
+## NEXT_EXACT_ACTION
+
+COMPLETE THE FIXED NATIVE BOOTSTRAP/FILTER SPECIALIZATION AND D-BUS LAUNCH/PEER CODEC
+SPECIFICATION WITH DETERMINISTIC VECTORS, THEN REVIEW RO-1–RO-5 FOR SEPARATELY SCOPED PRIVILEGED
+READ-ONLY APPROVAL. KEEP R6 BLOCKED UNTIL ARTIFACT AND ENVIRONMENT PROOF GATES ARE SATISFIED.
+Do not request broad design approval again. Do not execute the observation package, provision
+accounts or implement production/V4 from this checkpoint. Stop after this coherent block.
+
+## LAST SAFE CHECKPOINT / PUBLICATION
+
+Starting checkpoint `2f763a0da8ba29a08a2d641058386d5ef78d7130`; this checkpoint self-reference HEAD.
+Resolved commit, normal push, independent three-ref equality and clean tree follow publication.
+
+## Historical accepted R1–R5 manifest
+
+### Historical R1–R5 manifest — OVERALL STATUS
+
 **PARTIAL; V3 active.** R1–R5 lab-contract design/review block complete; executable handoff PARTIAL.
 Decision B: **R1R5 MANIFEST PARTIAL; SPECIFIC CAPABILITY EVIDENCE STILL REQUIRED.**
 Candidate ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER remains conditional, not accepted.
 Containment PARTIAL; historical same-UID admission OPEN; filesystem exclusivity and P3 UNKNOWN.
 **PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.** V4 runtime NOT_STARTED.
 
-## VERIFIED STARTING CHECKPOINT
+### Historical R1–R5 manifest — VERIFIED STARTING CHECKPOINT
 
 Clean Windows main independently matched HEAD, origin/main and live main at
 `5c9b6254a0e96731e45152e0dde9fffd3879be75`.
 Windows Codex remained sole worker; Fedora only read-only discovery via wsl.exe.
 No secondary agent. Owner design/change-planning approval remains in force, not provisioning approval.
 
-## CURRENT BLOCK / COMPLETE
+### Historical R1–R5 manifest — CURRENT BLOCK / COMPLETE
 
 [Section 15](V3_QUIESCENCE.md#15-disposable-lab-manifest-and-r1r5-review--2026-09-24)
 records exact symbolic objects/allocation rules, fixed launch vector and proposed typed unit
@@ -30,7 +116,7 @@ PolicyKit actions advertise auth_admin/auth_admin_keep defaults. These are not e
 acceptance. suid_dumpable=2 and ptrace_scope=0 reconfirmed. Conditional no-exec bootstrap argument
 is recorded; no claim of race acceptance from endpoint values. No privileged observation ran.
 
-## PARTIAL / BLOCKERS
+### Historical R1–R5 manifest — PARTIAL / BLOCKERS
 
 M1: exact authorized root executor, protected launch environment and collision-free IDs.
 M2: installed effective manager/deputy policy, including local/cached grants and aliases.
@@ -40,12 +126,12 @@ M5: installed unit survivor and manager continuity behavior.
 All block R6 execution readiness; missing evidence is not an engineering default.
 Candidate code, provisioning, R6, production producer and V4 remain NOT_STARTED.
 
-## FILES CHANGED
+### Historical R1–R5 manifest — FILES CHANGED
 
 Only docs/V3_QUIESCENCE.md, docs/V3_PROGRESS.md and docs/DECISIONS.md.
 Historical evidence retained; runtime/verifier/tests/schema/helpers/missions unchanged.
 
-## VALIDATION
+### Historical R1–R5 manifest — VALIDATION
 
 PASS: 46 Python AST parses, 3 JSON parses, 274 local Markdown links/anchors and balanced fences.
 All 72 untouched tracked files match pre-edit SHA256 bytes and canonical HEAD content; source,
@@ -54,12 +140,12 @@ document scope, no untracked artifacts, historical prefixes/prior progress prese
 rows, 6 change rows and 5 R1–R5 rows checked. Whitespace and recognizable credential-pattern
 checks passed. Exact working/staged diff review remains the publication gate.
 
-## TESTS EXECUTED / NOT EXECUTED
+### Historical R1–R5 manifest — TESTS EXECUTED / NOT EXECUTED
 
 Documentation/static checks and bounded read-only discovery only. No containment, hostile
 worker, crash/verifier or historical regression rerun. T1–T14 are NOT_EXECUTED designs.
 
-## OPERATIONS / LIMITATIONS
+### Historical R1–R5 manifest — OPERATIONS / LIMITATIONS
 
 No root command, users, installed image, units, cgroups, namespaces, policy change, package,
 configuration change or temporary fixture created. No credential/account dump or quota read.
@@ -67,7 +153,7 @@ WSL/D-Bus can cause ordinary activation/bookkeeping; no zero-host-write claim.
 Rendered systemd manual fetches returned 403; upstream v259 source was available.
 No current filesystem exclusivity or production-positive mutation claim.
 
-## NEXT_EXACT_ACTION
+### Historical R1–R5 manifest — NEXT_EXACT_ACTION
 
 RESOLVE M1–M5 WITH A CONCRETE IDENTITY/LAUNCH PREFLIGHT PLAN, INSTALLED EFFECTIVE MANAGER-POLICY
 REVIEW AND REVIEWABLE NATIVE BOOTSTRAP/FILTER/PROTOCOL ARTIFACT SPECIFICATION; VALIDATE THE
@@ -76,7 +162,7 @@ If evidence requires a privileged observation, list its exact read-only scope fo
 do not execute it under design authorization. Do not repeat broad owner design approval.
 No provisioning, production producer or V4 follows this checkpoint. Stop after this block.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical R1–R5 manifest — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting checkpoint `5c9b6254a0e96731e45152e0dde9fffd3879be75`; this checkpoint self-reference HEAD.
 Resolved hash, normal push, independent three-ref equality and clean tree are reported after

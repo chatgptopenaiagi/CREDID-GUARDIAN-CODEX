@@ -684,3 +684,32 @@ No privileged changes, R6 or production code/schema/test/mission edits. Only thr
 documents changed. Containment PARTIAL; historical admission OPEN; filesystem exclusivity and
 real-project P3 UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED; V4 runtime NOT_STARTED.
 Next exact action and validation/publication accounting are in V3 progress; checkpoint uses HEAD.
+
+## 2026-09-24 — Installed M1–M5 evidence and remaining native contract gaps
+
+Clean Windows main independently matched tracking/live main at
+`2f763a0da8ba29a08a2d641058386d5ef78d7130`. Sole Windows worker completed bounded unprivileged
+Fedora discovery and owned native/user-manager analogues; no root boundary or R6 execution.
+See [section 16](V3_QUIESCENCE.md#16-m1m5-installed-evidence-and-native-contract--2026-09-24)
+and the narrowly scoped [native ABI companion](V3_QUIESCENCE_LAB_ABI.md).
+
+Decision C: **M1M5 PARTIAL; NATIVE ARTIFACT / FILTER / PROTOCOL DESIGN STILL INCOMPLETE.**
+Configured files+systemd NSS invalidates local-passwd-only allocation. Installed vendor policy
+includes wheel administration and empower grants; local polkit rules are unreadable without
+privilege. M2_REQUIRES_PRIVILEGED_READ_ONLY_POLICY_CONFIRMATION, not effective-denial PASS.
+RO-1–RO-5 explicitly bound future read-only identity/policy/kernel observations and sensitive-data
+handling; no package request was executed or used to authorize privileged operations.
+
+A freestanding static native smoke artifact compiled without unavailable static glibc. Same-ID
+nondumpability, owned-child pidfd/reaping and small seccomp fork-inheritance checks exited 0.
+They do not prove root credential transition or the full role filter. One user-manager unit
+remained active/populated after its main process exited, then ended naturally; no system-manager
+parity/crash acceptance. Artifacts, unit and cgroup cleanup verified. Compilation transport and
+truncated diagnostic-label defects are recorded without rewriting history.
+
+Freeze native architecture, protocol and FD direction while retaining explicit incomplete
+bootstrap-filter/D-Bus codec work. Read-only privileged facts cannot replace that design/artifact
+work or R6. Next exact action in progress addresses those gaps before scoped observation approval.
+No production runtime/schema/test/mission change. Historical containment PARTIAL/admission OPEN;
+filesystem exclusivity/P3 UNKNOWN. R6 = NOT_EXECUTED; PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED;
+V4 RUNTIME = NOT_STARTED. Publication self-reference HEAD; final report resolves it after push.
