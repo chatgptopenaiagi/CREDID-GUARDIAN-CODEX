@@ -737,3 +737,28 @@ mechanical completion while the package awaits separate owner approval.
 Historical containment PARTIAL/admission OPEN; filesystem exclusivity and P3 UNKNOWN.
 RO-1–RO-5 = NOT_EXECUTED. R6 = NOT_EXECUTED. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED.
 V4 RUNTIME = NOT_STARTED. Publication self-reference HEAD; resolved hash follows normal push.
+
+## 2026-09-24 — Executable M4 validation without authority promotion
+
+Starting clean Windows three-ref checkpoint: 9816a4b696a26c6fef31820cbc244707e859f572.
+Decision **B: M4_PARTIAL; SPECIFIC FILTER GAP REMAINS.** See
+[section 18](V3_QUIESCENCE.md#18-nonprivileged-executable-m4-evidence) and
+[ABI section 8](V3_QUIESCENCE_LAB_ABI.md#8-executable-nonprivileged-mechanical-validation).
+
+Retain isolated docs/lab source and JSON because reproducible executable evidence materially
+improves on design prose/hash-only records. All 16 candidate filters generated and installed in
+owned nonroot Linux fixtures; scalar/subset checks, worker inheritance/broadening denial, finite
+decoder corpus/mutations and own-FD analogue passed. No generic manager transport or root launcher.
+No production runtime, tests, schema or mission edits; no binaries retained.
+
+Do not confuse the generated union's monotonicity with a minimal bootstrap authority design.
+Continuation rights, pre-fork C PID binding, broad credential/PID templates and missing fixed
+B creation/attachment/FD setup remain exact blockers. Full native broker/peer/decoder integration
+is not established by a static syscall-probe fixture. Kernel fixture pass != production acceptance.
+Next exact action resolves that installation/binding conflict with inert owned nonprivileged objects.
+
+RO package unchanged and unexecuted; R6 unexecuted. No accounts, root services, policy changes,
+manager mutations, packages or WSL restart. Temporary files/processes/descriptors cleaned up.
+Historical containment PARTIAL/admission OPEN; filesystem exclusivity and real-project P3 UNKNOWN.
+PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.
+Publication self-reference HEAD; final report resolves the new hash after normal push.

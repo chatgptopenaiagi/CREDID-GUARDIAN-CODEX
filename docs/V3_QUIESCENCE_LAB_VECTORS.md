@@ -441,3 +441,25 @@ def generate(rules):
  return a
 
 ~~~
+
+## Executed full-frame and filter corpus
+
+The earlier fixtures and their historical limits above are unchanged. The new
+[executable harness](lab/m4_validate.py) consumes these exact positive frames;
+[execution evidence](lab/m4_evidence.json) contains complete raw hexadecimal negative frames
+V-D20..V-D40, base identifiers, pinned expected rejection stages and observed INVALIDATED results.
+No prose mutation recipe is needed to reconstruct those 21 frames. The harness generates them
+deterministically and asserts expected rejection independently of the decoder's returned reason.
+
+Eleven full request frames round-trip byte-identically; five incoming replies/errors pass;
+640 deterministic structural/truncation mutations are checked; the 19 existing protocol cases
+plus six numeric-grammar cases pass; auth line parsing has one positive and eight negative cases.
+These are executable analogue results, not a native transport or authorization test.
+
+Generator CGC-M4-MECHANICAL-2 emits all 16 named stage candidates, complete immutable rules,
+canonical instruction listings, instruction counts, serialized bytes and SHA256. It validates
+4516 scalar boundary cases and 15 subset edges. Compact evidence retains each stage digest;
+the source regenerates full arrays with deterministic ordering. C_READY and W_RELEASED digests
+still equal those published above. Kernel installations succeeded for all candidates, but
+the [remaining bootstrap limits](V3_QUIESCENCE_LAB_ABI.md#8-executable-nonprivileged-mechanical-validation)
+prevent M4 completion. Generation and kernel acceptance do not certify a minimal authority profile.

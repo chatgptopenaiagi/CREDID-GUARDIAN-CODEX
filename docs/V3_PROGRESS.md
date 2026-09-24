@@ -2,19 +2,88 @@
 
 ## OVERALL STATUS
 
+**V3 ACTIVE / PARTIAL. Decision B: M4_PARTIAL; SPECIFIC FILTER GAP REMAINS.**
+Executable nonprivileged mechanical validation now exists. The generated common union is not
+the required minimal setup-only bootstrap, and the full fixed broker bootstrap is still absent.
+ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER remains conditional.
+**RO-1–RO-5 = NOT_EXECUTED. R6 = NOT_EXECUTED.
+PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.**
+Historical containment PARTIAL; same-UID admission OPEN; filesystem exclusivity/P3 UNKNOWN.
+
+## VERIFIED STARTING CHECKPOINT
+
+Clean Windows HEAD, origin/main and live main independently matched
+`9816a4b696a26c6fef31820cbc244707e859f572`. Windows remained sole repository controller.
+FedoraLinux-44 was subordinate through wsl.exe; no secondary agent.
+
+## CURRENT EVIDENCE
+
+[Quiescence section 18](V3_QUIESCENCE.md#18-nonprivileged-executable-m4-evidence) and
+[ABI section 8](V3_QUIESCENCE_LAB_ABI.md#8-executable-nonprivileged-mechanical-validation)
+separate actual execution from remaining authority/design gates.
+Retained [standalone source](lab/m4_validate.py) and [result/corpus](lab/m4_evidence.json)
+make the generated filters, exact negative bytes and owned native fixture reproducible.
+
+PASS: 16 generated candidates; 4516 scalar boundary checks; 15 subset edges; 16 kernel installs
+and finite syscall probes; worker fork inheritance and parent/child broadening refusal.
+Static native x86-64 image has no interpreter/imports and one syscall site.
+PASS: 11 full-frame round trips; five incoming positive cases; 21 pinned full-byte negatives;
+640 deterministic mutations; 25 protocol cases; nine auth cases; 90 FD model checks plus live
+extra-FD refusal. Models and fixture results do not establish native broker/decoder acceptance.
+
+## REMAINING GATES
+
+G1–G4: common setup-only versus inherited continuation rights, live target/credential specialization,
+and missing B CREATE/ATTACH/FD sequence. T4 uses dummy PID4242, never a real attachment attempt.
+G5: mechanical image exists; full future B/C/W/peer branch conformance absent.
+G6–G8: finite executable analogue and full corpus exist; native/transport integration still pending.
+G9: own-FD analogue exists; actual root-role inventories and races unproved. G10 reproducible artifacts retained.
+No generated/installed filter is promoted to closed admission. M1/M2/M3/M5 gates unchanged.
+RO package unchanged; privileged evidence would not resolve these mechanical design gaps.
+
+## VALIDATION / OPERATIONS
+
+Only evidence documents and isolated docs/lab source/JSON change. Runtime/tests/schema/missions
+remain preserved; no binary retained. PASS: 47 Python ASTs, four JSON files, 305 local Markdown
+links/anchors, balanced fences and all 100 keypoints. All 72 untouched tracked files match raw
+pre-edit hashes and canonical Git content. Historical evidence prefixes and vector digests remain
+preserved. Whitespace passed; exact working/staged review is required before publication.
+Historical regression was not run because production/runtime/test/schema content is unchanged.
+Fedora kernel 6.18.33.2-microsoft-standard-WSL2; disposable /tmp filesystem tmpfs.
+Two native fixture versions were run, the second adding explicit child broadening refusal.
+All owned fixture/driver directories, processes and FDs were cleaned up; exact native paths
+independently absent. No privileged action, persistent configuration, package, unit or account change.
+
+## NEXT_EXACT_ACTION
+
+RESOLVE THE BOOTSTRAP INSTALLATION / LIVE-IDENTITY BINDING CONFLICT AND IMPLEMENT THE FIXED B
+CREATE/ATTACH/FD SETUP SEQUENCE AGAINST DISPOSABLE INERT OWNED OBJECTS; REGENERATE NARROW
+CREDENTIAL/OWNED-PID PREDICATES AND VALIDATE NATIVE BRANCH CONFORMANCE.
+Remain nonprivileged. Keep RO-1–RO-5 and R6 unexecuted. Do not implement production/V4 or accept
+the broad common union merely because it installs. Stop after this coherent block.
+
+## PUBLICATION
+
+Starting checkpoint `9816a4b696a26c6fef31820cbc244707e859f572`; this checkpoint self-reference HEAD.
+Normal commit/push, resolved hash, three-ref equality and clean tree are reported after publication.
+
+## Historical mechanical-vector block
+
+### Historical mechanical-vector block — OVERALL STATUS
+
 **PARTIAL; V3 active. Decision B: M4 PARTIAL; SPECIFIC FILTER/CODEC DESIGN GAP REMAINS.**
 ROOT_OWNED_BROKER_WITH_BOUND_CONTROLLER remains conditional. Historical containment PARTIAL,
 same-UID admission OPEN; filesystem exclusivity and real-project P3 UNKNOWN.
 **RO-1–RO-5 = NOT_EXECUTED. R6 = NOT_EXECUTED.
 PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.**
 
-## VERIFIED STARTING CHECKPOINT
+### Historical mechanical-vector block — VERIFIED STARTING CHECKPOINT
 
 Clean Windows main independently matched HEAD, origin/main and live main at
 `ce41ad2020ddfcaa7a2a3687ade86c6eb8358ea4`. Windows Codex remained sole project worker.
 Fedora was subordinate via wsl.exe, with read-only XML signature introspection only.
 
-## CURRENT BLOCK / EVIDENCE
+### Historical mechanical-vector block — CURRENT BLOCK / EVIDENCE
 
 [Section 17](V3_QUIESCENCE.md#17-mechanical-vectors-and-narrowed-read-only-package--2026-09-24)
 records this block. [ABI specialization](V3_QUIESCENCE_LAB_ABI.md#7-mechanical-specialization-review)
@@ -24,7 +93,7 @@ final C/W cBPF bytes. Offline model checks: 11 D-Bus positive body round trips, 
 20 cBPF interpreter cases. No native full image, kernel filter installation or hostile peer.
 The previous B_BOOT union omitted a peer-required operation: later filters cannot restore it.
 
-## REMAINING GATES
+### Historical mechanical-vector block — REMAINING GATES
 
 M4_PARTIAL_REMAINING_DESIGN_GAP: generate and subset-check common/bootstrap/B/per-selector peer
 filters; complete incoming D-Bus signal/error decoder and exact negative-frame corpus; establish
@@ -35,7 +104,7 @@ for separate owner review. It names targets, APIs, budgets, exclusions and refus
 RO-3 metadata/content split; no vague configuration-tree or arbitrary include traversal.
 No interactive approval requested in this block. Publication does not authorize execution.
 
-## VALIDATION / SCOPE
+### Historical mechanical-vector block — VALIDATION / SCOPE
 
 Only four existing evidence/design documents and one vector companion changed. No production,
 tests, schemas, missions, source/binary/build artifact or sensitive local policy body changed.
@@ -45,7 +114,7 @@ content, including source/tests/schema and V3/V4 missions. Eleven vector lengths
 Whitespace passed; exact working/staged diff review is required before publication.
 Full historical regression is not needed for these documentation-only changes.
 
-## OPERATIONS / CLEANUP
+### Historical mechanical-vector block — OPERATIONS / CLEANUP
 
 No privileged read, root route, unit/account/policy provisioning, manager mutation, package install,
 native build or persistent configuration change. Offline models used Windows memory and wrote
@@ -53,7 +122,7 @@ only intended documentation. No disposable process/domain/fixture requires teard
 One orchestration syntax error had no command or edit side effects; corrected model checks passed.
 Ordinary read-only WSL/D-Bus bookkeeping is possible; no zero-host-write claim.
 
-## NEXT_EXACT_ACTION
+### Historical mechanical-vector block — NEXT_EXACT_ACTION
 
 FINISH GENERATED COMMON/BOOTSTRAP/B/PEER FILTER SPECIALIZATION AND THE FINITE INCOMING D-BUS
 DECODER/NEGATIVE-BYTE CORPUS IN DISPOSABLE NONPRIVILEGED DESIGN VALIDATION. KEEP RO-1–RO-5
@@ -61,7 +130,7 @@ PENDING SEPARATE OWNER APPROVAL AND R6 BLOCKED. NO PROVISIONING OR PRODUCTION/V4
 The precise mechanical remainders are in the ABI conformance matrix; read approval alone cannot
 close them. Stop after this coherent evidence/publication block.
 
-## LAST SAFE CHECKPOINT / PUBLICATION
+### Historical mechanical-vector block — LAST SAFE CHECKPOINT / PUBLICATION
 
 Starting checkpoint `ce41ad2020ddfcaa7a2a3687ade86c6eb8358ea4`; this checkpoint self-reference HEAD.
 Final report resolves normal commit/push, three-ref equality and clean working tree.

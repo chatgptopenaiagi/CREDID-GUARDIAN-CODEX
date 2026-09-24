@@ -1790,3 +1790,60 @@ provision or infer permission to execute the package from its publication.
 Historical containment PARTIAL; same-UID admission OPEN. FILESYSTEM EXCLUSIVITY = UNKNOWN.
 REAL-PROJECT P3 = UNKNOWN. RO-1–RO-5 = NOT_EXECUTED. R6 = NOT_EXECUTED.
 PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.
+
+## 18. Nonprivileged executable M4 evidence
+
+Starting Windows HEAD/tracking/live main independently matched
+9816a4b696a26c6fef31820cbc244707e859f572 with a clean tree. The initially truncated user message
+was completed before implementation. Windows remained sole repository worker; Fedora commands
+originated through wsl.exe. No second agent, root route, privileged reads or R6.
+
+[ABI section 8](V3_QUIESCENCE_LAB_ABI.md#8-executable-nonprivileged-mechanical-validation) records
+the executable work and limitations. The retained [harness](lab/m4_validate.py) and
+[evidence](lab/m4_evidence.json) are isolated documentation-lab artifacts, deliberately retained
+to make instructions, byte corpus, native fixture and results reproducible. No production import
+or test integration. Standard Python only, existing GCC; no dependency installation.
+
+OBSERVED_FACT: 16 stage candidates generated, 4516 scalar boundary checks passed, 15 monotonic
+subset edges passed; all candidate instruction counts<=4096. Eleven complete positive D-Bus
+frames decode/re-encode exactly, five incoming return/error cases pass, all 21 raw negative frames
+reject at pinned stages, and 640 bounded mutations pass. Twenty-five lab-protocol and nine auth-line
+cases pass. These Python analogues do not claim native parser memory safety or live caller identity.
+
+OBSERVED_FACT: Linux x86-64 kernel 6.18.33.2-microsoft-standard-WSL2; /tmp is tmpfs, not /mnt/c.
+Owned native fixture was compiled static/freestanding, no interpreter/imports, one syscall site.
+All 16 generated filters installed and allowed/denied probes returned expected results. W fork
+child inherited denials and could not install a broadening filter. No ptrace attach, manager
+message, actual credential change, cgroup mutation or historical A–J test occurred.
+
+FD analogue uses owned fstat/fcntl/proc metadata and refuses a live extra descriptor. Ninety
+model-inventory checks pass. Actual root-cgroup, namespace/pidfd role identity and concurrent FD
+replacement are not accepted by this analogue. No number-only identity promotion.
+
+Two fixture builds/runs occurred: first parent broadening check, then a material change added
+the explicit child-broadening check and reran the final image. Native paths
+/tmp/cgc-m4-l81amofm and /tmp/cgc-m4-q0vuakod were independently confirmed absent after normal
+completion. Transfer-driver temporary directories were context-managed; final bounded directory
+observation found none with the created driver prefix. No unrelated object/process was removed.
+Temporary pipes/socketpairs, one additional fork child per worker fixture, sources and binaries
+were owned and closed/reaped/removed. No persistent system configuration or privileged object.
+
+DERIVATION / DECISION **B: M4_PARTIAL; SPECIFIC FILTER GAP REMAINS.** A generated union is not
+the requested minimal setup-only common filter. Required continuation rights and live C identity
+must be reconciled with the pre-fork installation schedule. B_BOOT still lacks a complete fixed
+CREATE/ATTACH/FD setup implementation; broad credential/PID template predicates are not accepted
+instance-bound authority. T4 uses a dummy bound PID only. Native fixture coverage is mechanical,
+not a complete future-role image. Internal byte constructors are test helpers, not a completed
+closed-enum native operational client. These are exact remaining gates, not problems privileged
+read approval can fix. The root-owned broker candidate is still conditional, not universally
+contradicted; installed filters alone do not prove containment.
+
+RO-1–RO-5 approval package remains unchanged and NOT_EXECUTED. R6 = NOT_EXECUTED.
+Historical containment PARTIAL and same-UID admission OPEN. FILESYSTEM EXCLUSIVITY = UNKNOWN.
+REAL-PROJECT P3 = UNKNOWN. PRODUCTION QUIESCENCE PRODUCER = NOT_STARTED. V4 RUNTIME = NOT_STARTED.
+
+NEXT_EXACT_ACTION: resolve the concrete bootstrap installation/live-identity binding conflict
+and implement the fixed B CREATE/ATTACH/FD setup sequence against disposable inert owned objects,
+then regenerate narrow credential/owned-PID predicates and validate native branch conformance.
+Keep this nonprivileged; do not execute RO-1–RO-5 or R6. Do not promote the union merely because
+the kernel accepted it. No production runtime or mission change follows from these results.

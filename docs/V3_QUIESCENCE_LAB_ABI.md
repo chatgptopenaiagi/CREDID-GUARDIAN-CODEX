@@ -453,3 +453,199 @@ Remaining mechanical work is specifically complete bootstrap/B/peer scalar cBPF 
 incoming D-Bus signal/error decoder and byte-exact negative frame corpus, then syscall-site/FD
 conformance against a reviewable disposable image. RO review is independently useful but cannot
 close these gaps. No generic D-Bus runtime capability exists; no native codec exists either.
+
+## 8. Executable nonprivileged mechanical validation
+
+Starting checkpoint 9816a4b696a26c6fef31820cbc244707e859f572. Status **M4_PARTIAL**;
+decision **B: SPECIFIC FILTER GAP REMAINS**. This section supersedes only the previous absence
+of executable mechanical validation. It does not accept the candidate as a runnable root lab.
+
+The retained [standalone harness](lab/m4_validate.py) and [execution record](lab/m4_evidence.json)
+are review artifacts, not production modules. Retention is justified by repeatability of exact
+instruction generation, raw negative frames and the native source; hashes alone were insufficient.
+No production importer, test-suite integration, manager client or root launch entry exists.
+Run offline with `python -B docs/lab/m4_validate.py`. Output contains every canonical rule,
+instruction listing, serialized little-endian instruction byte string, count, SHA256, stage,
+architecture and generator/source identity. Ordering is explicit and deterministic.
+The compact retained JSON records hashes/counts and full negative frames; full generated arrays
+are regenerated rather than copied into another large document. Source digest is of LF source.
+
+For independent native replay, copy only this harness and the vector document to a Linux-native
+temporary directory, preserving `lab/m4_validate.py` beside `V3_QUIESCENCE_LAB_VECTORS.md`, then
+run that copy with `python3 -B .../lab/m4_validate.py --kernel` as a nonroot x86-64 Linux user.
+The only runtime selector is `--kernel`; it refuses root and unsupported architecture. It creates
+one /tmp/cgc-m4-* directory, compiles its fixed C string, executes finite numeric stage selectors,
+and removes owned artifacts. There is no shell, arbitrary executable option, D-Bus transport,
+manager mutation, cgroup provisioning or credential transition. Windows remains repository owner.
+
+### Generated stages and monotonicity
+
+The source function `tables()` is the immutable machine-readable rule table. Predicates are
+argument-index / inclusive unsigned-low / unsigned-high triples; exact values have equal bounds.
+Canonical output groups alternatives into one entry per syscall. Duplicate clauses, repeated
+argument predicates, contradictory intervals and unsupported range widths refuse generation.
+Set union is explicit before canonicalization, not accidental duplicate-key overwrite.
+
+| Stage | Instructions | Credential/capability contract, not exercised here | Next legal stage |
+|---|---|---|---|
+| COMMON_BOOTSTRAP_FILTER | 2021 | Trusted setup union; no_new_privs=1 | B_BOOT |
+| B_BOOT | 2021 | Future privileged B; setup rights still live | B_CHILD_SETUP |
+| B_CHILD_SETUP | 2021 | Future trusted gated forks; no role request dispatch | B_SEALED, C_BOOTSTRAP, W_BOOTSTRAP, P_BOOTSTRAP |
+| B_SEALED | 1035 | Future B with setup capabilities dropped; retained observations only | Teardown/exit |
+| C_BOOTSTRAP | 821 | Future root-to-C drop; gate/FD normalization | C_READY |
+| C_READY | 173 | Future UID_C, empty groups/capabilities, no_new_privs=1 | Exit |
+| W_BOOTSTRAP | 795 | Future root-to-W drop; release gate | W_RELEASED |
+| W_RELEASED | 155 | Future UID_W, empty groups/capabilities, no_new_privs=1 | Same-filter fork descendant / exit |
+| P_BOOTSTRAP | 987 | Future peer credential drop and finite selector setup | One P_T* below |
+| P_T3 | 169 | Future UID_W; fixed migration witness only | Exit |
+| P_T4 | 257 | Future UID_C; exact bound-C attack only | Exit |
+| P_T6 | 169 | Future peer; two fixed aliases only | Exit |
+| P_T7 | 169 | Future peer; fixed attachment messages only | Exit |
+| P_T8 | 169 | Future peer; fixed transient/property messages only | Exit |
+| P_T9 | 115 | Future wrong-sender peer; one channel message | Exit |
+| P_T14 | 115 | Future data-FD transfer witness only | Exit |
+
+OBSERVED_FACT: all 16 candidates generated; 4516 syscall/argument boundary checks matched the
+instruction interpreter, including outside-range and high-word cases. All 15 declared graph
+edges passed sufficient clause-containment subset proofs. The full transition list is retained
+in JSON. Equality is intentional for COMMON/B_BOOT/B_CHILD_SETUP, T3/T6, T7/T8 and T9/T14;
+different paths/messages are native-code restrictions, not different syscall sets. Unexpected
+digest equality refuses. C/W bytes remain equal to their previous published hashes.
+
+Every program checks native x86-64 architecture and rejects negative/x32 numbers; unmatched
+calls return EPERM. Bounds, forward jumps, terminal returns, duplicates and unsupported opcodes
+are validated. No instruction count exceeds 4096. Reversing rule input produces identical bytes.
+This establishes structural consistency, not sufficiency of the authority boundary.
+
+### Exact unresolved filter specialization
+
+The generated candidates deliberately expose three remaining defects rather than labeling a
+union as a solved bootstrap. They must not be installed as a future privileged broker policy:
+
+1. A setup-only common filter cannot inherit into later B observation and T4 ptrace branches
+   while denying those operations initially. The generated union admits the later operations
+   and is therefore **not** the requested setup-only minimal common profile. A precise branch
+   installation boundary must replace that union without a denial-to-allow transition.
+2. B_BOOT is an inheritance/observation candidate, not an executed CREATE/ATTACH bootstrap.
+   Its declared fixed native domain-creation, migration, socket-option and FD-remapping sequence
+   is still absent. Credential predicates cover u32 IDs; pidfd acquisition admits a PID range;
+   these are explicitly too broad for final instance-bound setup. Future exact credentials and
+   owned-child scalar values must be specialized from authenticated live bindings, not guessed.
+3. P_T4 constrains ptrace to ATTACH=16/DETACH=17, zero address/data and dummy bound PID4242.
+   Actual C PID is not known before its launch. Binding it before inherited common-filter
+   installation requires an explicit launch/staging design. No arbitrary-target ptrace test ran.
+   Openat/readlinkat path contents and borrowed control handles remain trusted-code obligations;
+   cBPF does not dereference paths. A numeric target alone is not live-instance authentication.
+
+T4's former omitted syscall is now represented and subset-tested, but its live binding problem
+is not solved by that representation. Successful future attachment would falsify the boundary;
+no code-injection operation is admitted by its final scalar table. No generic hostile peer runs.
+The [kernel seccomp documentation](https://www.kernel.org/doc/html/latest/userspace-api/seccomp_filter.html)
+supports inheritance and narrowing and explains why pointer contents are outside this filter.
+
+B_SEALED explicitly admits read0 only on 0,19..23,32..35,60..63; write1 only on 1,2,16..18,20;
+channel sendmsg/recvmsg only on7; close/fstat only0..63; poll<=64; pread on19,22,23,60..63;
+readonly no-follow openat only directory slots3..6,21 and fixed flags; directory enumeration on21;
+waitid uses P_PIDFD and slots8..59; wait4 only own children/-1/WNOHANG; dup3 targets44..63;
+empty-only unlinkat is scoped to directory3. The table cannot distinguish a replaced FD's object
+identity, verify empty state or authenticate an arbitrary pidfd-open argument. Those remaining
+code/identity checks are mandatory, not implied by scalar filtering.
+
+### Native fixture execution and conformance
+
+OBSERVED_FACT: existing GCC16.2.1 compiled the freestanding fixed source with no installation.
+ELF is x86-64/static, with no interpreter, NEEDED dependency or undefined import; disassembly
+contains one syscall instruction in the noinline/noclone veneer. Source/image/disassembly digests
+and exact argv are retained. This image accepts only numeric indexes into its compiled table,
+not paths, PIDs, units, commands or payload programs. It is not the future B/C/W/R6 binary.
+
+| Role/source operation | Syscall | Stage / expected action | FD / reason |
+|---|---|---|---|
+| entry/run, establish no_new_privs | prctl157 option38 | Fixture prelude before candidate installation | No FD; owned process only |
+| run, install candidate | seccomp317 mode1/flags0 | Fixture prelude | Pointer to compiled immutable array |
+| checks, allowed operation | clock_gettime228 clock1 | Every candidate ALLOW | No FD; actual successful operation |
+| checks, negative probes | getppid110, clone3435, execve59, unshare272, ptrace101 request0 | Every candidate EPERM | Null/zero arguments; no target attack or exec |
+| worker, socket probe | socket41 AF_UNIX/CLOEXEC/STREAM | W_RELEASED EPERM | No socket created |
+| worker/child, broadening probe | seccomp317 with ALLOW-only filter | W_RELEASED EPERM in parent and child | No authority regained |
+| worker, one owned child | fork57, wait461(-1,options0) | W_RELEASED ALLOW | Child repeats denial checks then exits normally |
+| entry/child completion | exit60 | Every candidate ALLOW, status0 | No helper runtime |
+
+All 16 candidate installations and bounded probe runs exited0. Fork child inherited denials and
+could not add the broadening filter. Architecture/x32 behavior was model-tested, not exercised by
+killing a native child. The first fixture version checked parent broadening; the final version
+added the explicit child check and was recompiled/reexecuted for that material change. Both
+temporary native directories were removed. No accepted historical A–J experiment or R6 rerun.
+
+This is **KERNEL_FIXTURE_VALIDATED**, not native broker conformance. Native code exercises the
+mechanical ABI and denial paths; domain creation, actual credential drops, peer traffic and FD
+lifecycle branches are not implemented. No full future-image syscall coverage is claimed.
+
+### FD validator, incoming decoder and exact corpus
+
+The executable FD analogue compares kind, access mode, device and inode from owned fstat,
+fcntl and bounded /proc/self/fd+fdinfo observations. A live extra dup is detected/refused. Ninety
+checks cover nine state labels with accepted inventory and injected extra/type/access/identity/
+socket/namespace/cgroup/pidfd mismatches. Root cgroups, namespace and pidfd object classes are
+synthetic negative labels; actual stable B/C/W inventories are not instantiated. The single-thread
+snapshot accounts for its own directory-enumeration descriptor disappearing; it is not a race-free
+FD attestation mechanism. Full native G9 remains conditional on the missing bootstrap sequence.
+
+The finite executable Python D-Bus analogue decodes all 11 existing full positive request frames
+and re-encodes byte-identically. Five positive incoming return/error cases pass. It validates
+fixed headers, bounds before reads, padding, duplicate fields, sender/reply serial, fixed routes,
+signatures, variants, duplicate properties and trailing bytes. Known arrays/structs have a hard
+depth ceiling6; recursive variant types are rejected rather than interpreted. Python bounded
+integers model the future native overflow-safe checks; no claim of native parser memory safety.
+
+Full V-D20..V-D40 negative bytes, base identifiers, independently pinned expected rejection stage
+and INVALIDATED outcomes are in the JSON record. V-D20..35 are no longer prose-only. Additional
+cases cover body/header overflow, trailing garbage, duplicate property and recursive variant.
+All 21 rejected at the required stage. A deterministic 640-case header/truncation mutation pass
+rejected every invalid case without crash/hang; accepted bytes must equal an existing canonical
+vector. This is bounded coverage, not exhaustive fuzzing or proof of security completeness.
+
+NameOwnerChanged for systemd owner changes invalidates; Reloading invalidates. Unexpected
+signals, including PropertiesChanged (not required by this fixed query profile), refuse; no
+automatic rebinding. Bus disconnect remains a transport invalidation contract because no bus
+transport is implemented. Error acceptance is limited to AccessDenied/InteractiveAuthorizationRequired
+for T7/T8 context; generic errors invalidate and remote body text is omitted. Auth OK-line decoder
+passes one positive/eight rejection cases; no connection, fallback or FD negotiation exists.
+
+CGC_LAB_PROTO_V1 uses an anchored finite ASCII grammar and exact expected-tuple comparison,
+not JSON parser permissiveness. All 19 prior cases and six additional invalid u64 sequence forms
+pass, including ancillary-envelope refusal. Credentials/rights/truncation here are supplied model
+envelopes, not kernel-authenticated received messages. A real socket/credential parser remains
+part of future image acceptance; this model does not authenticate a live controller.
+
+The harness has internal byte constructors for fixed fixtures and deliberately malformed frames;
+those are **generic byte-construction helpers**, not a safe native closed-enum operational codec.
+Its CLI exposes no arbitrary target and has no D-Bus transport, shell, process-attachment or
+manager authority. Native fixed-branch integration must still remove general-purpose construction
+from the operational path. NO_TRANSPORT is not a proof that an eventual client has no generic API.
+
+### M4 conformance matrix
+
+Y means this exact mechanical artifact only; P means partial; N means absent; NA means inapplicable.
+All production acceptance values are false. Kernel column means install/probe, not actual role work.
+
+| Artifact | Specified | Generated | Compiled | Model tested | Kernel fixture | Round trip | Negative tested | Privilege required for next acceptance | Production accepted | Blocks R6 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| COMMON_BOOTSTRAP_FILTER | P | Y | Y | Y | Y | NA | Y | No for stage redesign | false | Y |
+| B_BOOT | P | Y | Y | Y | Y | NA | Y | Eventually | false | Y |
+| B_SEALED | P | Y | Y | Y | Y | NA | Y | Eventually | false | Y |
+| C_READY | Y scalar | Y | Y | Y | Y | NA | Y | Root transition later | false | Y |
+| W_RELEASED | Y scalar | Y | Y | Y | Y | NA | Y | Root transition later | false | Y |
+| Peer filters | P live binding | Y | Y | Y | Y | NA | Y | Actual attacks later | false | Y |
+| FD validator | P model | NA | N native | Y | P owned FD | NA | Y | Root objects later | false | Y |
+| Native image | P mechanical fixture | Y | Y | NA | Y | NA | Y | Future full roles | false | Y |
+| Lab protocol parser | Y analogue | NA | N native | Y | N | P exact tuple | Y | No for native parser | false | Y |
+| D-Bus auth | P no transport | NA | N native | Y | N | NA | Y | No for parser | false | Y |
+| D-Bus encoder | P internal helper | NA | N native | Y | N | Y | Y | No for fixed integration | false | Y |
+| D-Bus decoder | Y finite analogue | NA | N native | Y | N | Y | Y | No for native integration | false | Y |
+| Negative corpus | Y | Y full bytes | NA | Y | NA | NA | Y | No | false | N |
+
+G1–G4 remain PARTIAL because generation/installability does not make the bootstrap authority
+minimal or bind real instances. G5 has actual mechanical-image evidence but not future-role
+conformance. G6–G8 have executable finite analogue/corpus coverage. G9 has an owned-FD analogue,
+not actual role inventory closure. G10 has retained reproducible source and evidence.
+M4_MECHANICAL_SPECIFICATION_COMPLETE is therefore **not** satisfied. R6 remains blocked.
